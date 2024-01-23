@@ -55,7 +55,7 @@ If no code is highlighted/selected, this will run the line the cursor is on. If 
 
 You can also run the entire code chunk by clicking the small green arrow on the righthand side of the code chunk.
 
-In your code chunk, be sure to comment the code. Before each expression, add a comment that indicates which expression it is (e.g., `#1a`, `#1b`).
+In your code chunk, be sure to comment the code. Before each expression, add a comment that indicates which exercise it is (e.g., `#1a`, `#1b`).
 
 ```{r}
 
@@ -63,7 +63,7 @@ In your code chunk, be sure to comment the code. Before each expression, add a c
 
 ### 2. Basic Variables (10 pts)
 
-Here is a small program that converts a mass in kilograms to a mass in grams and then prints out the resulting value.
+Here is a small bit of code that converts a mass in kilograms to a mass in grams and then prints out the resulting value.
 
 ```{r}
 mass_kg <- 2.62
@@ -71,7 +71,7 @@ mass_g <- mass_kg * 1000
 mass_g
 ```
 
-In the code chunk below, create similar code to convert a mass in pounds to a mass kilograms.
+In the code chunk below, create similar code to convert a mass in pounds to a mass kilograms. Remember to comment your code!
 
 a.  Create a variable to store a body mass in pounds. Assign this variable a value of 3.5 (an appropriate mass for a *Sylvilagus audubonii*).
 b.  Convert the variable from body mass in pounds to body mass in kilograms (by dividing it by 2.2046), and assign it to a new variable.
@@ -147,7 +147,7 @@ site1_npp_day
 site2_npp_day
 ```
 
-Be sure to run the code chunk above in order to answer the questions.
+Be sure to run the code chunk above in order to answer the following questions.
 
 At the end of this question, add a new code chunk (`Ctrl + Shift + I` or `Cmd + Shift + I`). In that code chunk, add additional lines of code come accomplish the following:
 
@@ -159,7 +159,7 @@ Add code chunk here:
 
 ### 6. Basic Vectors (15 pts)
 
-Run the following code chunk to use for answering Q6.
+Run the following code chunk to use for answering Question 6.
 
 ```{r}
 numbers <- c(5, 2, 26, 8, 16)
@@ -179,7 +179,7 @@ Add code chunk here:
 
 ### 7. Nulls in Vectors (15 pts)
 
-Run the following code chunk to use for answering Q7.
+Run the following code chunk to use for answering Question 7.
 
 *Hint: remember `na.rm = TRUE`?*
 
@@ -187,7 +187,12 @@ Run the following code chunk to use for answering Q7.
 numbers <- c(7, 6, 22, 5, NA, 42)
 ```
 
-In a new code chunk below, calculate the following: a. The smallest number in the `numbers` vector b. The largest number in the `numbers` vector c. The average of the numbers in the `numbers` d. The sum of the values in the `numbers` vector
+In a new code chunk below, calculate the following:
+
+a.  The smallest number in the `numbers` vector
+b.  The largest number in the `numbers` vector
+c.  The average of the numbers in the `numbers`
+d.  The sum of the values in the `numbers` vector
 
 Add code chunk here:
 
