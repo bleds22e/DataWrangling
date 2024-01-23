@@ -216,4 +216,3 @@ weight_rounded
 ```
 
 Start working on Exercise 4.
-
