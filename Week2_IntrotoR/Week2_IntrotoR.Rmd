@@ -202,4 +202,4 @@ weight_rounded
 
 ### Let's Practice
 
-Start working on Exercise 4.
+Start working on Exercises 4 and 5.
