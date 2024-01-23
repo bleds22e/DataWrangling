@@ -64,6 +64,7 @@ Rmarkdown (.Rmd) is a file format that lets us incorporate text and code into on
 Code chunks look like this:
 
 ```{r}
+# This is a code chunk!
 
 ```
 
@@ -78,7 +79,8 @@ A quick shortcut for adding a code chunk is `Ctrl + Alt + i` (`Cmd + Opt + i` on
 Let's work with an example code chunk.
 
 ```{r}
-
+# convert grams to kg
+50 / 1000 * 2.2
 ```
 
 ## Assigning Objects
@@ -92,7 +94,7 @@ The short-cut for `<-` is `Alt + -` (or `Option + -` on a Mac)
 Note: You can technically use either `<-` or `=`. I recommend getting used to `<-`, as this is standard practice (now) in R and recommended in style guides. The reasons why are complicated and don't often arise in most situations, but it is still good practice.
 
 ```{r}
-
+weight_g <- 50
 ```
 
 We can see that this object has been created by looking in the Environment tab.
@@ -100,13 +102,21 @@ We can see that this object has been created by looking in the Environment tab.
 Objects works just like the value itself. For example, we can use them in mathematical expression.
 
 ```{r}
-
+weight_g / 1000
+weight_g / 1000 * 2.2
+weight_lb <- weight_g / 1000 * 2.2
 ```
 
 The object won't change unless you assign a new value to it directly using the assignment operator (`<-`).
 
 ```{r}
+weight_g
 
+weight_g * 2
+weight_g
+
+weight_g <- 26
+weight_g
 ```
 
 ### Some RStudio Tips
@@ -136,7 +146,7 @@ A function call consists of two main parts.
 For example:
 
 ```{r}
-
+sqrt(49)
 ```
 
 Here,`sqrt()` is the name of the function, and `49` is the argument.
@@ -144,7 +154,8 @@ Here,`sqrt()` is the name of the function, and `49` is the argument.
 We can also pass objects as the argument in functions.
 
 ```{r}
-
+weight_lb <- 0.11
+sqrt(weight_lb)
 ```
 
 ### Data Types
@@ -154,25 +165,26 @@ Another useful function is `str()`, which is short for "structure."
 It will tell us information about the dimensions and data type of an object.
 
 ```{r}
-
+# numeric
+str(weight_lb)
 ```
 
 Another data type is for text data. We write text inside of quotation marks.
 
 ```{r}
-
+"hello"
 ```
 
 If we look at the structure of some text we see that it is type "character."
 
 ```{r}
-
+str("hello world")
 ```
 
 Many functions can take multiple arguments. For example, let's use a function to round `weight_lb` to one decimal place.
 
 ```{r}
-
+round(weight_lb, 1)
 ```
 
 Functions return values, so as with other values and expressions, if we don't save the output of a function then there is no way to access it later.
@@ -180,13 +192,14 @@ Functions return values, so as with other values and expressions, if we don't sa
 It is common to forget this when dealing with functions and expect the function to have changed the value of the variable. However, if we look at `weight_lb`, we see that it hasn't been rounded.
 
 ```{r}
-
+weight_lb
 ```
 
 To save the output of a function we assign it to a variable.
 
 ```{r}
-
+weight_rounded <- round(weight_lb, 1)
+weight_rounded
 ```
 
 ### Let's Practice
