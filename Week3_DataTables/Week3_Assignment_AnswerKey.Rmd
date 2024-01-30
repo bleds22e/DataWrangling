@@ -1,0 +1,102 @@
+---
+title: 'Week 3: Answer Key'
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+library(dplyr)
+library(readr)
+```
+
+Exercise 1
+
+```{r}
+# read in shrubs data
+shrubs <- read_csv("shrub-volume-data.csv")
+
+print("1a")
+select(shrubs, length)
+
+print("1b")
+select(shrubs, site, experiment)
+
+print("1c")
+mutate(shrubs, area = length * width)
+
+print("1d")
+arrange(shrubs, length)
+
+print("1e")
+filter(shrubs, height > 5)
+
+print("1f")
+filter(shrubs, height > 4 & width > 2)
+
+print("1g")
+filter(shrubs, experiment == 1 | experiment == 3)
+
+print("1h")
+filter(shrubs, !is.na(height))
+
+print("1i")
+shrub_volumes <- mutate(shrubs, volume = length * width * height)
+shrub_volumes
+```
+
+Exercise 2
+
+```{r}
+ppt_data <- read.csv("tucson_precip.csv", header = FALSE)
+monthly_mean_ppt <- colMeans(ppt_data)
+plot(monthly_mean_ppt, type = "l", xlab = "Month", ylab = "Mean Precipitation")
+```
+
+Exercise 3
+
+```{r}
+surveys <- read_csv("surveys.csv")
+
+print("3a")
+select(surveys, year, month, day, species_id)
+
+print("3b")
+select_cols <- select(surveys, year, species_id, weight)
+filter_rows <- filter(select_cols, !is.na(weight))
+weight_kg <- mutate(filter_rows, weight_kg = weight/1000)
+weight_kg
+
+print("3c")
+filter(weight_kg, species_id == "SH")
+```
+
+Exercise 4
+
+```{r}
+print("4a")
+surveys %>% 
+  select(year, species_id, weight) %>% 
+  filter(!is.na(weight)) %>% 
+  mutate(weight_kg = weight / 1000)
+
+print("4b")
+surveys %>% 
+  select(year, month, day, species_id) %>% 
+  filter(species_id == "SH")
+```
+
+Exercise 5
+```{r}
+surveys %>% 
+  filter(species_id == "DO" | species_id == "DS" | species_id == "DM") %>% 
+  mutate(species_id = tolower(species_id)) %>% 
+  select(month, day, year, species_id, weight, hindfoot_length) %>% 
+  filter(!is.na(weight), !is.na(hindfoot_length)) %>% 
+  arrange(species_id, desc(weight))
+```
+

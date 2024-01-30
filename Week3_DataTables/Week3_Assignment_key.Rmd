@@ -41,11 +41,16 @@ Feb 5 at midnight MST
 
 To complete these exercises, we will need functions from the `dplyr` package and the `readr` package (`read_csv()`). Add a code chunk below and load these 2 packages into the workspace before beginning.
 
+```{r}
+library(dplyr)
+library(readr)
+```
+
 ### 1. Shrub Volume Data Basics (20 pts)
 
 Dr. Morales is interested in studying the factors controlling the size and carbon storage of shrubs. She has conducted an experiment looking at the effect of three different treatments on shrub volume at four different locations.
 
-Get familiar with the data by importing it using `read_csv()` and use `dplyr` functions to complete the following tasks. Remember to add a code chunk!
+Get familiar with the data by importing it using `read.csv()` and use `dplyr` functions to complete the following tasks. Remember to add a code chunk!
 
 a.  Select the data from the length column.
 b.  Select the data from the site and experiment columns.
@@ -56,6 +61,39 @@ f.  Filter the data to include only plants with heights greater than 4 and width
 g.  Filter the data to include only plants from Experiment 1 or Experiment 3 (using '\|' for “or”).
 h.  Filter the data to remove rows with null values in the height column (using `!is.na`)
 i.  Create a new data frame called `shrub_volumes` that includes all of the original data and a new column containing the volumes (length \* width \* height). Remember to add a line of code afterwards with the name of the dataframe so the dataframe is printed.
+
+```{r}
+# read in shrubs data
+shrubs <- read_csv("shrub-volume-data.csv")
+
+# a. Select the data from the length column.
+select(shrubs, length)
+
+# b. Select the data from the site and experiment columns.
+select(shrubs, site, experiment)
+
+# c. Add a new column named area containing the area of the shrub, which is the length times the width.
+mutate(shrubs, area = length * width)
+
+# d. Sort the data by length.
+arrange(shrubs, length)
+
+# e. Filter the data to include only plants with heights greater than 5.
+filter(shrubs, height > 5)
+
+# f. Filter the data to include only plants with heights greater than 4 and widths greater than 2 (using , or & to include two conditions).
+filter(shrubs, height > 4 & width > 2)
+
+# g. Filter the data to include only plants from Experiment 1 or Experiment 3 (using '|' for “or”).
+filter(shrubs, experiment == 1 | experiment == 3)
+
+# h. Filter the data to remove rows with null values in the height column (using !is.na)
+filter(shrubs, !is.na(height))
+
+# i. Create a new data frame called shrub_volumes that includes all of the original data and a new column containing the volumes (length * width * height).
+shrub_volumes <- mutate(shrubs, volume = length * width * height)
+shrub_volumes
+```
 
 ### 2. Code Shuffle (15 pts)
 
@@ -72,9 +110,14 @@ Finally, add a comment above the code that describes what it does. The comment c
 It’s OK if you don’t know exactly how the details of the program work at this point; you just need to figure out the right order of the lines based on when variables are defined and when they are used.
 
 ```{r}
-plot(monthly_mean_ppt, type = "l", xlab = "Month", ylab = "Mean Precipitation")
-monthly_mean_ppt <- colMeans(ppt_data)
+# read in precip data
 ppt_data <- read.csv("tucson_precip.csv", header = FALSE)
+
+# calculate montly averages
+monthly_mean_ppt <- colMeans(ppt_data)
+
+# plot the monthly averages
+plot(monthly_mean_ppt, type = "l", xlab = "Month", ylab = "Mean Precipitation")
 ```
 
 ### 3. Portal Data Manipulation (20 pts)
@@ -85,7 +128,23 @@ Load the `surveys.csv` file into R using `read_csv()`.
 
 a.  Use `select()` to create a new data frame with just the year, month, day, and species_id columns in that order.
 b.  Use `mutate()`, `select()`, and `filter()` with `!is.na()` to create a new data frame with the year, species_id, and weight in kilograms of each individual, with no null weights. The weight in the table is given in grams so you will need to create a new column for weight in kilograms by dividing the weight column by 1000.
-c.  Use the `filter()` function to get all of the rows in the data frame for the species ID `SH`.
+c.  Use the `filter()` function to get all of the rows from the final data frame you created in b for the species ID `SH`.
+
+```{r}
+surveys <- read_csv("surveys.csv")
+
+# a
+select(surveys, year, month, day, species_id)
+
+# b
+select_cols <- select(surveys, year, species_id, weight)
+filter_rows <- filter(select_cols, !is.na(weight))
+weight_kg <- mutate(filter_rows, weight_kg = weight/1000)
+weight_kg
+
+# c
+filter(weight_kg, species_id == "SH")
+```
 
 ### 4. Portal Data Manipulation Pipes (20 pts)
 
@@ -93,6 +152,19 @@ Using the same data as you did in Exercise 3, use pipes (either `|>` or `%>%`) t
 
 a.  Use `mutate()`, `select()`, and `filter()` with `!is.na()` to create a new data frame with the year, species_id, and weight in kilograms of each individual, with no null weights.
 b.  Use the `filter()` and `select()` to get the year, month, day, and species_id columns for all of the rows in the data frame where species_id is `SH`.
+
+```{r}
+# a.
+surveys %>% 
+  select(year, species_id, weight) %>% 
+  filter(!is.na(weight)) %>% 
+  mutate(weight_kg = weight / 1000)
+
+# b. 
+surveys %>% 
+  select(year, month, day, species_id) %>% 
+  filter(species_id == "SH")
+```
 
 ### 5. Portal Data Challenge (20 pts)
 
@@ -102,6 +174,15 @@ Develop a data manipulation pipeline for the Portal surveys table that produces 
 -   The table should contain information on the date, the species ID, the weight and hindfoot length.
 -   The data should not include null values for either weight or hindfoot length.
 -   The table should be sorted first by the species (so that each species is grouped together) and then by weight, with the largest weights at the top.
+
+```{r}
+surveys %>% 
+  filter(species_id == "DO" | species_id == "DS" | species_id == "DM") %>% 
+  mutate(species_id = tolower(species_id)) %>% 
+  select(month, day, year, species_id, weight, hindfoot_length) %>% 
+  filter(!is.na(weight), !is.na(hindfoot_length)) %>% 
+  arrange(species_id, desc(weight))
+```
 
 # Turning in Your Assignment
 
