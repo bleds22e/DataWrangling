@@ -37,15 +37,26 @@ Feb 12 at midnight MST
 
 # Assignment Exercises
 
-### 1. Set-Up (5 pts)
+### 1. Set-Up
 
 Load the `readr` and `dplyr` packages.
 
-Read in the following data sets using `read_csv()`. Even if they already exist in your current working environment, you will need to have the code to read them in this document to successfully `Knit`.
+```{r}
+library(readr)
+library(dplyr)
+```
+
+Read in the following data sets using `read_csv()`:
 
 -   `surveys.csv`
 -   `species.csv`
 -   `plots.csv`
+
+```{r}
+surveys <- read_csv("surveys.csv")
+species <- read_csv("species.csv")
+plots <- read_csv("plots.csv")
+```
 
 ### 2. Portal Data Aggregation (10 pts)
 
@@ -54,6 +65,28 @@ Using the `surveys` data frame, complete the following:
 a.  Use the `group_by()` and `summarize()` functions to get a count of the number of individuals in each species ID.
 b.  Use the `group_by()` and `summarize()` functions to get a count of the number of individuals in each species ID in each year.
 c.  Use the `filter()`, `group_by()`, and `summarize()` functions to get the mean mass of species `DO` in each year.
+
+```{r}
+# 1. Use the group_by() and summarize() functions to get a count of the number of individuals in each species ID.
+
+surveys %>% 
+  group_by(species_id) %>% 
+  summarize(count = n())
+
+# 2. Use the group_by() and summarize() functions to get a count of the number of individuals in each species ID in each year.
+
+surveys %>% 
+  group_by(species_id, year) %>% 
+  summarize(count = n())
+
+# 3. Use the filter(), group_by(), and summarize() functions to get the mean mass of species DO in each year.
+ 
+ surveys %>%
+  filter(species_id == "DO") %>%
+  group_by(year) %>%
+  summarize(avg_mass = mean(weight, na.rm = TRUE))
+
+```
 
 ### 3. Shrub Volume Aggregation (10 pts)
 
@@ -66,11 +99,12 @@ This code calculates the average height of a plant at each site:
 ```{r}
 shrub_dims <- read_csv('shrub-volume-data.csv')
 shrub_dims %>% 
-  group_by(site) %>% 
-  summarize(avg_height = mean(height))
+  group_by(experiment) %>% 
+  summarize(avg_height = mean(height, na.rm = TRUE),
+            max_height = max(height, na.rm = TRUE))
 ```
 
-Modify the code to calculate and print the average height of a plant in each experiment.
+Modify the code to calculate and print the average height of a plant in *each experiment*.
 
 Add a line of code to use `max()` to determine the maximum height of a plant at each site.
 
@@ -84,11 +118,38 @@ a.  Use `inner_join()` to create a table that contains the information from both
 b.  Use `inner_join()` twice to create a table that contains the information from all three tables.
 c.  Use `inner_join()` and `filter()` to get a data frame with the information from the surveys and plots tables where the plot_type is Control.
 
+```{r}
+# 1.
+
+inner_join(surveys, species, by = "species_id")
+
+# 2.
+inner_join(surveys, species, by = "species_id") %>% 
+inner_join(., plots, by = "plot_id")
+
+# 3.
+
+surveys %>% 
+  inner_join(plots, by = "plot_id") %>% 
+  filter(plot_type == "Control")
+```
+
 ### 5. Portal Data `dplyr` Review (20 pts)
 
 We want to do an analysis comparing the size of individuals on the Control plots to the Long-term Krat Exclosures.
 
 Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the plot type is either Control or Long-term Krat Exclosure. Only include cases where Taxa is Rodent. Remove any records where the weight is missing.
+
+```{r}
+surveys %>% 
+  inner_join(species, by = "species_id") %>% 
+  inner_join(plots, by = "plot_id") %>% 
+  filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure") %>% 
+  filter(taxa == "Rodent") %>% 
+  select('year', 'genus', 'species', 'weight', 'plot_type') %>% 
+  filter(!is.na(weight))
+```
+
 
 ### 6. Shrub Volumn Bind (10 pts)
 
@@ -105,11 +166,15 @@ _Answer:_
 
 Based on your answer above, bind the `shrub_dims` and `new_data` data frames together.
 
+```{r}
+bind_cols(shrub_dims, new_data)
+```
+
 ### 7. Shrub Volume Join (10 pts)
 
 This is a follow-up to Shrub Volume Aggregation.
 
-In addition to the main data table on shrub dimensions (`shrub_dims` from Q3), Dr. Morales has two additional data tables. The first describes the manipulation for each experiment. The second provides information about the different sites. Run the following code chunk to bring them into your environment.
+In addition to the main data table on shrub dimensions, Dr. Morales has two additional data tables. The first describes the manipulation for each experiment. The second provides information about the different sites. Run the following code chunk to bring them into your environment.
 
 ```{r}
 experiments <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-volume-experiments.csv")
@@ -118,15 +183,43 @@ sites <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-volume-
 
 Use `inner_join()` to combine `experiments` with the shrub dimensions data to add a manipulation column to the shrub data.
 
-Next, combine the `sites` data frame with both the data on shrub dimensions and the data on experiments to produce a single data frame that contains all of the data.
+Next, combine the `sites` data frame with both the data on shrub dimensions and the data on experiments to produce a single data frame that contains all of the data. Save this data frame as `shrub_data`.
+
+```{r}
+
+# 1. Import the experiments data and then use `inner_join` to combine
+inner_join(shrub_dims, experiments, by = "experiment")
+
+# 2. Import the sites data and the combine it with both the data on shrub
+# dimensions and the data on experiments to produce a single data frame
+# that contains all of the data.
+
+shrub_dims_experiments <- inner_join(shrub_dims, experiments, by = "experiment")
+shrub_data <- inner_join(shrub_dims_experiments, sites, by = "site")
+shrub_data
+```
 
 ### 8. Extracting vectors from data frames (10 pts)
 
-Using the `shrub_data` data frame you just created in Question 7:
+Using the `shrub_data` dataframe you just created in Question 7:
 
 a.  Use `$` to extract the latitude column into a vector
 b.  Use `[]` to extract the manipulation column into a vector
 c.  Extract the `width` column into a vector and calculate the mean width, removing null values.
+
+```{r}
+# 1. Use `$` to extract the `weight` column into a vector
+
+shrub_data$latitude
+
+# 2. Use `[]` to extract the `month` column into a vector
+
+shrub_data[["manipulation"]]
+
+#3. Extract the `hindfoot_length` column into a vector and calculate the average value using `mean`. 
+
+mean(shrub_data$width, na.rm = TRUE)
+```
 
 
 ### 9. Building data frames from vectors (10 pts)
@@ -140,3 +233,8 @@ height <- c(9.6, 7.6, 2.2, 1.5, 4.0, 3.0, 4.5, 2.3, 7.5, 3.2)
 ```
 
 Make a data frame that contains these three vectors as columns along with a genus column containing the name "Cercidium" on all rows and a species column containing the word "microphyllum" on all rows.
+
+```{r}
+data.frame(genus = "Cercidium", species = "microphyllum", length, width, height)
+```
+
