@@ -106,7 +106,7 @@ shrub_dims %>%
 
 Modify the code to calculate and print the average height of a plant in *each experiment*.
 
-Add a line of code to use `max()` to determine the maximum height of a plant at each site.
+Add a line of code to use `max()` to determine the maximum height of a plant at each experiment.
 
 Also, remember to modify the code so that there are no NAs produced in the final output.
 
@@ -150,10 +150,10 @@ surveys %>%
   filter(!is.na(weight))
 ```
 
-
 ### 6. Shrub Volumn Bind (10 pts)
 
 First, run the following code chunk to produce a data frame with additional data related to the shrub volumn data (`shrub_dims`).
+
 ```{r}
 new_data <- data.frame(respiratory_rate = c(2.2, 4.0, 6.1, 2.3, 4.1, 6.2, 1.8, 3.5, 5.7, 1.9, 3.5, 5.8, 2.0, 4.7, 6.2),
                        average_temp_C = c(15.1, 20.2, 24.7, 15.2, 22.0, 25.1, 14.2, 19.0, 23.6, 14.9, 20.3, 24.1, 19.2, 22.7, 25.0))
@@ -162,7 +162,7 @@ new_data <- data.frame(respiratory_rate = c(2.2, 4.0, 6.1, 2.3, 4.1, 6.2, 1.8, 3
 
 Take a look at the new dataframe that has just been produced. Should this data be bound to the shrub volumn data by bind_rows() or bind_cols()? How do you know?
 
-_Answer:_
+*Answer:*
 
 Based on your answer above, bind the `shrub_dims` and `new_data` data frames together.
 
@@ -221,7 +221,6 @@ shrub_data[["manipulation"]]
 mean(shrub_data$width, na.rm = TRUE)
 ```
 
-
 ### 9. Building data frames from vectors (10 pts)
 
 You have data on the length, width, and height of 10 individuals of the Foothills Palo Verde tree (*Cercidium microphyllum*) stored in the following vectors:
@@ -237,4 +236,3 @@ Make a data frame that contains these three vectors as columns along with a genu
 ```{r}
 data.frame(genus = "Cercidium", species = "microphyllum", length, width, height)
 ```
-
