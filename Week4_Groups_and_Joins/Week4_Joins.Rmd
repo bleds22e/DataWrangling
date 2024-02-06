@@ -9,63 +9,134 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Joins and Binds
+# Binds and Joins
 
 In today's lesson, we will be talking about how to bring multiple dataframes together into one data frame.
 
-## Joins
+Often times, we have a lot of data for one project that are related but storing all of the data in one file would add unnecessary redundancy (e.g., data in certain rows would need to be repeated too often). Other times, data has been collected separately and needs to be combined before analysis.
 
-Why use multiple tables
-When we talked about data structure we discussed splitting data into multiple tables.
-This lets us avoid redundant information, like listing the full taxonomy for every individual of a species, which makes storage more efficient and allows us to make changes in one place, not hundreds of places.
-Each table contains a single kind of information
-Let’s look at this in the Portal dataset
+Being able to join together data from related tables is a key skill in data science, and for working with larger data structures (databases with their own languages, like SQL).
+
+## Binds vs. Joins
+
+We have 2 main methods of combining datasets: binds and joins. They work in different ways.
+
+### Binds
+
+One way we can combine data sets in through binds. Binds act similarly to gluing datasets together.
+
+They don't match up data based on unique identifiers; instead they match up data by column name (`bind_rows`) or row position (`bind_cols`). 
+
+![](binds.png)
+These can be very useful, but you need to be careful using them, especially `bind_cols`, as the function will automatically assume that the rows are in the correct positions.
+
+Let's work with an example.
+
+The `surveys` data only goes through 2002, but we have a lot more data from the site! Let's pull down all of the rodent data since 2002 from the `portalr` package, a package we made to make working with the (actual) Portal data a bit easier
+```{r}
+# load our packages
+library(portalr)
 library(dplyr)
+library(readr)
+
+# read in the surveys df
+surveys <- read_csv("surveys.csv")
+
+# load the new rodent data and do a little cleaning
+new_rodents <- summarize_individual_rodents() %>% 
+  select(month, day, year, plot_id = plot, species_id = species, sex, hindfoot_length = hfl, weight = wgt) %>% 
+  filter(year > 2002) %>% 
+  mutate(record_id = seq(nrow(surveys) + 1, nrow(surveys) + nrow(.)))
+```
+
+When we look at the `new_rodents` data frame, we can see the same columns as in `surveys`, though the `record_id` column is at the end.
+
+We want to bind these two dataframes together so that we have _all_ of the rodent data in one dataframe. To do so, we would use `bind_rows()`. Even though columns are getting matched up, the things we are binding together are multiple rows, hence `bind_rows()`.
+
+The arguments for both `bind_rows()` and `bind_cols()` are the names of the dataframes you want to bind together.
 
 ```{r}
-surveys <- read_csv("surveys.csv")
+all_rodents <- bind_rows(surveys, new_rodents)
+
+head(all_rodents)
+tail(all_rodents)
+```
+
+
+## Joins
+
+### Multiple Data Tables
+
+When we talked about data structure, one of the things we discussed was splitting data into multiple tables. This lets us avoid unnecessary redundant information, like listing the full taxonomy for every individual of a species. This, in turn, makes storage more efficient and allows us to make changes in one place, not hundreds of places.
+
+Our goal is for each table to contain a single kind of information.
+
+Let’s look at this in the Portal dataset.
+
+```{r}
+# surveys <- read_csv("surveys.csv")
 species <- read_csv("species.csv")
 plots <- read_csv("plots.csv")
 ```
 
-In the Portal dataset
-surveys: information about individuals
-species: information about species
-plots: information about plots
-If a species name changes we only need to change it in the species table
-Basic join
-Connect tables using joins
-To enable us to make these connections the tables need one or more columns that link them together
-In the case of the Portal data there is one column that links the surveys and species tables, species_id
-There is also one column that links the surveys and plots tables, plot_id
+In the Portal dataset:
 
-Let’s join the surveys and the species tables together using an “inner join”
-To do this we use the inner_join function
-It takes three arguments:
-The first of the two tables we want to join
-The second of the two tables we want to join
-And the column, or columns, that provide the linkage between the two tables
+-   `surveys`: information about individuals
+-   `species`: information about species
+-   `plots`: information about plots
+
+This way, if a species name changes (for example), we only need to change it in the species table rather than tens of thousands of times.
+
+### How Joins Work
+
+Joins are arguably the more complicated of the two types of ways to combine data, but they are, therefore, the more flexible and useful.
+
+The magic of comes comes because they _match up columns of data based on unique identifiers in each row of data_.
+
+In the following diagram, the two example data frames have the column `x1` in common, and each of the values in `x1` are unique (no repeats in the same data frame). When combining the datasets, all of the columns are added, and their rows are matched up to their respective values in the `x1` column.
+
+This can happen a couple ways, depending on which data frame is the reference and how much data you want to retain.
+
+![](joins.png)
+
+To enable us to make these connections the tables need one (or more) columns that link them together.
+
+In the case of the Portal data, there is one column that links the `surveys` and `species` tables: `species_id`
+There is also one column that links the `surveys` and `plots` tables: plot_id
+
+Let’s join the surveys and the species tables together using an “inner join.”
+
+To do this we use the inner_join function from `dplyr`. It takes three arguments:
+
+1) The first of the two tables we want to join
+2) The second of the two tables we want to join
+3) The column, or columns, that provide the linkage between the two tables
+
+```{r}
 combined <- inner_join(surveys, species, join_by(species_id))
-Looking at the combined table, we can see that on every row with a particular value for species_id the join has added the matching values on genus, species, and taxa
-So one way to think about this join is that it adds the relevant information in the species table to the surveys table
-Often for scientific data we can think about there being one main table, the surveys table in our case, and multiple supplementary tables that provide additional details
+combined
+```
 
-Inner joins keep information from both tables when both tables have a matching value in the join column
-Here’s a visualization of what an inner join looks like:
-Illustration of an inner join showing two tables being joined.
-First table has 1, 2, 3 in column 1 and x1, x2, x3 in column 2.
-Second table has 1, 2, 4, in column 1 and y1, y2, y4 in column 2.
-Combined table has 1 and 2 in column 1, x1 and x2 in column 2, and y1 and y2 in column 3.
+Looking at the combined table, we can see that on every row with a particular value for `species_id`, the join has added the matching values on `genus`, `species`, and `taxa`.
 
-Any rows in either table that don’t have a matching value in the other table are dropped
-So when we did our join all of the rows with missing species_id values were dropped
-Scroll to Line 324 in the surveys table
-record_id’s 324-326 are missing species IDs
-If we look in combined we’ll see that those rows are not present
-There are other joins that behave differently
-Left joins keep all rows in the first, or left, table
-So if we want to keep rows with missing species IDs we could use left_join
+One way to think about this join is that it adds the relevant information in the species table to the surveys table. Often for scientific data we can think about there being one main table, the surveys table in our case, and multiple supplementary tables that provide additional details.
+
+Inner joins keep information from both tables when both tables have a matching value in the join column.
+
+Let's go back up and look at the visualization of the inner join. When we use the `inner_join` function to merge together table a and b, the result only has rows for which the common column (`x1`) have the same values in each table (A and B).
+
+Translating this to the rodent data, that means that we dropped any rows for which there is no matching `species_id`.
+
+Scroll to Line 324 in the `surveys` table; these have missing species IDs. If you look in the `combined` table, ou'll notice that `record_id`, 324-326 are missing from the table.
+
+The other join functions might have handled this differently, based on how they work.
+
+For example, feft joins keep all rows in the first, or left, table. If we wanted to keep rows with missing species IDs in the `surveys` data frame, we could use `left_join()`.
+
+```{r}
 combined <- left_join(surveys, species, join_by(species_id))
+```
+
 There are also right joins, which keep all rows in the second, or right, table
 And full joins, which keep all rows from both tables
 For our exercises we’ll focus on using inner joins
