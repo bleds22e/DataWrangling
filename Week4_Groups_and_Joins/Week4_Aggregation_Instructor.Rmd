@@ -49,9 +49,26 @@ The `group_by()` function doesn't seem to change the data frame visually in any 
 
 ## Combining `group_by()` and `summarize()`
 
-After grouping a data frame, we can pipe it into a `summarize()` function to calculate values for each group.
+Often times, we are interested in calculating summary statistics for our data, such as the mean, standard deviation, minimums, maximums, etc.
 
-For example, we can use a new function (`n()`), which will count up the number of rows per group. That will give us the number of rodents caught during that year, which we will consider the abundance.
+Fortunately, the `dplyr` has a handy-dandy function to make this easy to do with data frames. The `summarize()` function creates a new dataframe with columns and values we give it.
+
+Similar to `mutate()`, what is on the left of the `=` is the name of the new column, and what is on the right of the `=` is the value(s) to put in the new column.
+
+```{r}
+surveys %>% 
+  summarise(min_weight = min(weight, na.rm = TRUE))
+```
+
+After grouping a data frame, we can pipe it into a `summarize()` function to calculate values for *each group*.
+
+```{r}
+surveys %>% 
+  group_by(year) %>% 
+  summarise(min_weight = min(weight, na.rm = TRUE))
+```
+
+As another example, we can use a new function (`n()`), which will count up the number of rows per group. That will give us the number of rodents caught during that year, which we will consider the abundance.
 
 ```{r}
 surveys %>% 
@@ -151,7 +168,6 @@ surveys %>%
   # calculate the total number of individuals per species per year
   summarise(abundance = n()) %>% 
   # remove groups based on species_id (leave groups for each year)
-  ungroup(species_id) %>% 
   mutate(total_abund = sum(abundance), # total number caught per year
          relative_abund = abundance / total_abund) # relative abundance
 ```
