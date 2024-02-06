@@ -35,13 +35,17 @@ datasets.
 Let's go ahead and load our usual packages.
 
 ```{r}
-
+# load packages
+library(dplyr)
+library(readr)
 ```
 
 And load the `surveys`, `species`, and `plots` data.
 
 ```{r}
-
+surveys <- read_csv("surveys.csv")
+species <- read_csv("species.csv")
+plots <- read_csv("plots.csv")
 ```
 
 ## Binds vs. Joins
@@ -96,7 +100,10 @@ The arguments for both `bind_rows()` and `bind_cols()` are the names of
 the dataframes you want to bind together.
 
 ```{r}
+all_rodents <- bind_rows(surveys, new_rodents)
 
+head(all_rodents)
+tail(all_rodents)
 ```
 
 Notice that the data has been successfully rearranged to have the
@@ -122,7 +129,9 @@ Our goal is for each table to contain a single kind of information.
 Let’s look at this in the Portal dataset.
 
 ```{r}
-
+# surveys <- read_csv("surveys.csv")
+species <- read_csv("species.csv")
+plots <- read_csv("plots.csv")
 ```
 
 In the Portal dataset:
@@ -175,7 +184,8 @@ arguments:
     tables, specified in a `join_by()` function,
 
 ```{r}
-
+combined <- inner_join(surveys, species, join_by(species_id))
+combined
 ```
 
 Looking at the combined table, we can see that on every row with a
@@ -211,7 +221,7 @@ we wanted to keep rows with missing species IDs in the `surveys` data
 frame, we could use `left_join()`.
 
 ```{r}
-
+combined <- left_join(surveys, species, join_by(species_id))
 ```
 
 There are also right joins, which keep all rows in the second (or right)
@@ -228,13 +238,17 @@ To join more than two tables, we start by joining two tables, then join the resu
 For Portal, we could start by joining the `surveys` and the `species` tables. We can then combine the resulting table with the `plots` table to get a fully merged data frame. 
 
 ```{r}
-
+full_data <- surveys %>% 
+  inner_join(species, join_by(species_id)) %>% 
+  inner_join(plots, join_by(plot_id))
 ```
 
 If it helps you to keep track of which data tables are being joined when (especially for left and right joins), you can also use the placeholder for your chosen pipe.
 
 ```{r}
-
+full_data <- surveys %>% 
+  inner_join(., species, join_by(species_id)) %>% 
+  inner_join(., plots, join_by(plot_id))
 ```
 
 ### Let's Practice
