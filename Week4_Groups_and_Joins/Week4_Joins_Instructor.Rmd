@@ -14,8 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Binds and Joins
 
-In today's lesson, we will be talking about how to bring multiple
-dataframes together into one data frame.
+In today's lesson, we will be talking about how to bring multiple data
+frames together into one data frame.
 
 Often times, we have a lot of data for one project that are related but
 storing all of the data in one file would add unnecessary redundancy
@@ -79,7 +79,7 @@ the `portalr` package, a package we made to make working with the
 library(portalr)
 
 # load the new rodent data and do a little cleaning
-# don't worry if you don't know what the mutate function is doing!
+# don't worry if you don't know what every bit of this code is doing, though some of it should look familiar :)
 new_rodents <- summarize_individual_rodents() %>% 
   select(month, day, year, plot_id = plot, species_id = species, sex, hindfoot_length = hfl, weight = wgt) %>% 
   filter(year > 2002) %>% 
@@ -91,13 +91,13 @@ new_rodents
 When we look at the `new_rodents` data frame, we can see the same
 columns as in `surveys`, though the `record_id` column is at the end.
 
-We want to bind these two dataframes together so that we have *all* of
-the rodent data in one dataframe. To do so, we would use `bind_rows()`.
+We want to bind these two data frames together so that we have *all* of
+the rodent data in one data frame. To do so, we would use `bind_rows()`.
 Even though columns are getting matched up, the things we are binding
 together are multiple rows, hence `bind_rows()`.
 
 The arguments for both `bind_rows()` and `bind_cols()` are the names of
-the dataframes you want to bind together.
+the data frames you want to bind together.
 
 ```{r}
 all_rodents <- bind_rows(surveys, new_rodents)
@@ -128,12 +128,6 @@ Our goal is for each table to contain a single kind of information.
 
 Let’s look at this in the Portal dataset.
 
-```{r}
-# surveys <- read_csv("surveys.csv")
-species <- read_csv("species.csv")
-plots <- read_csv("plots.csv")
-```
-
 In the Portal dataset:
 
 -   `surveys`: information about individuals
@@ -143,15 +137,17 @@ In the Portal dataset:
 This way, if a species name changes (for example), we only need to
 change it in the species table rather than tens of thousands of times.
 
-When we need to combine the datasets together to use data from multiple data frames, we use a join function.
+When we need to combine the datasets together to use data from multiple
+data frames, we use a join function.
 
 ### How Joins Work
 
 Joins are arguably the more complicated of the two types of ways to
-combine data, but they are, therefore, the more flexible and useful of the two.
+combine data, but they are, therefore, the more flexible and useful of
+the two.
 
-The magic comes because they *match up columns of data based on
-unique identifiers in each row of data*.
+The magic comes because they *match up columns of data based on unique
+identifiers in each row of data*.
 
 In the following diagram, the two example data frames have the column
 `x1` in common, and each of the values in `x1` are unique (no repeats in
@@ -168,15 +164,16 @@ To enable us to make these connections, the tables need one (or more)
 columns that link them together.
 
 In the case of the Portal data, there is one column that links the
-`surveys` and `species` tables: `species_id` 
+`surveys` and `species` tables: `species_id`
 
-There is also one column that links the `surveys` and `plots` tables: `plot_id`
+There is also one column that links the `surveys` and `plots` tables:
+`plot_id`
 
 Let’s join the surveys and the species tables together using an “inner
 join.”
 
-To do this, we use the inner_join function from `dplyr`. It takes three
-arguments:
+To do this, we use the `inner_join` function from `dplyr`. It takes
+three arguments:
 
 1)  The first of the two tables we want to join
 2)  The second of the two tables we want to join
@@ -210,8 +207,8 @@ Translating this to the rodent data, that means that we dropped any rows
 for which there is no matching `species_id`.
 
 Scroll to Line 324 in the `surveys` table; these have missing species
-IDs. If you look in the `combined` table, ou'll notice that `record_id`,
-324-326 are missing from the table.
+IDs. If you look in the `combined` table, you'll notice that
+`record_id`, 324-326 are missing from the table.
 
 The other join functions might have handled this differently, based on
 how they work.
@@ -225,17 +222,21 @@ combined <- left_join(surveys, species, join_by(species_id))
 ```
 
 There are also right joins, which keep all rows in the second (or right)
-table, and full joins, which keep all rows from both tables, even there isn't a matching row. 
+table, and full joins, which keep all rows from both tables, even there
+isn't a matching row.
 
 For our exercises, we’ll focus on using inner joins.
 
-## Multi-table Joins 
+## Multi-table Joins
 
-Sometimes, we need to combine more than two tables. 
+Sometimes, we need to combine more than two tables.
 
-To join more than two tables, we start by joining two tables, then join the resulting table to a third table, and so on. 
+To join more than two tables, we start by joining two tables, then join
+the resulting table to a third table, and so on.
 
-For Portal, we could start by joining the `surveys` and the `species` tables. We can then combine the resulting table with the `plots` table to get a fully merged data frame. 
+For Portal, we could start by joining the `surveys` and the `species`
+tables. We can then combine the resulting table with the `plots` table
+to get a fully merged data frame.
 
 ```{r}
 full_data <- surveys %>% 
@@ -243,7 +244,9 @@ full_data <- surveys %>%
   inner_join(plots, join_by(plot_id))
 ```
 
-If it helps you to keep track of which data tables are being joined when (especially for left and right joins), you can also use the placeholder for your chosen pipe.
+If it helps you to keep track of which data tables are being joined when
+(especially for left and right joins), you can also use the placeholder
+for your chosen pipe.
 
 ```{r}
 full_data <- surveys %>% 
