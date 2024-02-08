@@ -186,6 +186,7 @@ Use `inner_join()` to combine `experiments` with the shrub dimensions data to ad
 Next, combine the `sites` data frame with both the data on shrub dimensions and the data on experiments to produce a single data frame that contains all of the data. Save this data frame as `shrub_data`.
 
 ```{r}
+# grading note; if someone saved over the `shrubs_dim` dataframe in question 3, then they might have a different answer
 
 # 1. Import the experiments data and then use `inner_join` to combine
 inner_join(shrub_dims, experiments, by = "experiment")
