@@ -15,16 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Set-up
 
-```{r}
-download.file("https://ndownloader.figshare.com/files/5629542",
-              "ACACIA_DREPANOLOBIUM_SURVEY.txt")
-download.file("https://ndownloader.figshare.com/files/5629536",
-              "TREE.txt")
-download.file("https://esapubs.org/archive/ecol/E084/093/Mammal_lifehistories_v2.txt",
-              "Mammal_lifehistories_v2.txt")
-```
-
-Read in the packages we will need. You can either load all of them individually (`readr`, `dplyr`, `ggplot2`) or load the `tidyverse` "meta" package.
+Read in the packages we will need. You can either load all of them individually (`readr`, `dplyr`, `ggplot2`) or load the `tidyverse` package.
 
 ```{r}
 library(tidyverse)
@@ -38,21 +29,21 @@ Check to see if `ACACIA_DREPANOLOBIUM_SURVEY.txt` is in your workspace. If not, 
 acacia <- read_tsv("ACACIA_DREPANOLOBIUM_SURVEY.txt", na = c("", "dead"))
 ```
 
-1.  Make a scatter plot with `CIRC` on the x axis and `AXIS1` (the maximum canopy width) on the y axis. Label the x axis "Circumference" and the y axis "Canopy Diameter".
-2.  The same plot as (1), but with both axes scaled logarithmically (using `scale_x_log10` and `scale_y_log10`).
-3.  The same plot as (1), but with points colored based on the `ANT` column (the species of ant symbiont living with the acacia)
-4.  The same plot as (3)), but instead of different colors show different species of ant (values of `ANT`) each in a separate subplot.
-5.  The same plot as (4) but add a simple model of the data by adding `geom_smooth`.
+a.  Make a scatter plot with `CIRC` on the x axis and `AXIS1` (the maximum canopy width) on the y axis. Label the x axis "Circumference" and the y axis "Canopy Diameter".
+b.  The same plot as (a), but with both axes scaled logarithmically (using `scale_x_log10` and `scale_y_log10`).
+c.  The same plot as (a), but with points colored based on the `ANT` column (the species of ant symbiont living with the acacia)
+d.  The same plot as (c)), but instead of different colors show different species of ant (values of `ANT`) each in a separate subplot.
+e.  The same plot as (d) but add a simple model of the data by adding `geom_smooth`.
 
 ```{r}
-# 1
+# 1a
 
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter")
 #ggsave("Graphing-acacia-ants-R-1.jpeg")
 
-# 2
+# 1b
 
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
@@ -61,14 +52,14 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   labs(x = "Circumference", y = "Canopy Diameter")
 #ggsave("Graphing-acacia-ants-R-2.jpeg")
 
-# 3
+# 1c
 
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1, color = ANT)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter")
 #ggsave("Graphing-acacia-ants-R-3.jpeg")
 
-# 4
+# 1d
 
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
@@ -76,7 +67,7 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   facet_wrap(~ANT)
 #ggsave("Graphing-acacia-ants-R-4.jpeg")
 
-# 5
+# 1e
 
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
@@ -88,7 +79,7 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
 
 ### 2. Mass vs. Metabolism (20 pts)
 
-The relationship between the body size of an organism and its metabolic rate is one of the most well studied and still most controversial areas of organismal physiology. We want to graph this relationship in the [Artiodactyla](http://en.wikipedia.org/wiki/Even-toed_ungulate) using a subset of data from a large compilation of body size data ([Savage et al. 2004](https://doi.org/10.1111/j.0269-8463.2004.00856.x)). You can copy and paste this data frame into your program:
+The relationship between the body size of an organism and its metabolic rate is one of the most well studied and still most controversial areas of organismal physiology. We want to graph this relationship in the [Artiodactyla](http://en.wikipedia.org/wiki/Even-toed_ungulate) using a subset of data from a large compilation of body size data ([Savage et al. 2004](https://doi.org/10.1111/j.0269-8463.2004.00856.x)). Run this code chunk to get started.
 
 ```{r}
 size_mr_data <- data.frame(
@@ -146,10 +137,10 @@ ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate)) +
 
 In this exercise, we will be making a number of different histograms with the `acacia` dataset.
 
-1.  Make a bar plot of the number of acacia with each mutualist ant species (using the `ANT` column).
-2.  Make a histogram of the height of acacia (using the `HEIGHT` column). Label the x axis "Height (m)" and the y axis "Number of Acacia".
-3.  Make a plot that shows histograms of both `AXIS1` and `AXIS2`. Due to the way the data is structured you’ll need to add a 2nd geom_histogram() layer that specifies a new aesthetic. To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument alpha = 0.3. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x axis "Canopy Diameter(m)" and the y axis "Number of Acacia".
-4.  Use `facet_wrap()` to make the same plot as (3) but with one subplot for each treatment. Set the number of bins in the histogram to 10.
+a.  Make a bar plot of the number of acacia with each mutualist ant species (using the `ANT` column).
+b.  Make a histogram of the height of acacia (using the `HEIGHT` column). Label the x axis "Height (m)" and the y axis "Number of Acacia".
+c.  Make a plot that shows histograms of both `AXIS1` and `AXIS2`. Due to the way the data is structured you’ll need to add a 2nd geom_histogram() layer that specifies a new aesthetic. To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument alpha = 0.3. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x axis "Canopy Diameter(m)" and the y axis "Number of Acacia".
+d.  Use `facet_wrap()` to make the same plot as (c) but with one subplot for each treatment. Set the number of bins in the histogram to 10.
 
 ```{r}
 # 1
@@ -185,13 +176,15 @@ ggplot(data = acacia) +
 
 ### 4. Acacia and Ants Data Manipulation (20 pts)
 
-Check to see if `TREE_SURVEYS.txt` is in your workspace. If not, [download `TREE_SURVEYS.txt`](https://ndownloader.figshare.com/files/5629536). Use `read_tsv` from the `readr` package to read in the data using the following command:
+Run the following line of code to use `read_tsv` from the `readr` package to read in the data from "TREE.txt". This line of code is using the `col_types` argument to specify the the `HEIGHT` and `AXIS_2` columns should have their data read is as the data class "double," which is like "numeric."
 
 ```{r}
 trees <- read_tsv("TREE.txt",
                   col_types = list(HEIGHT = col_double(),
                                    AXIS_2 = col_double()))
 ```
+
+Now that you have the `trees` data frame, do the following.
 
 1.  Update the `trees` data frame with a new column named `canopy_area` that contains the estimated canopy area calculated as the value in the `AXIS_1` column times the value in the `AXIS_2` column. Show output of the `trees` data frame with just the `SURVEY`, `YEAR`, `SITE`, and `canopy_area` columns.
 2.  Make a scatter plot with `canopy_area` on the x axis and `HEIGHT` on the y axis. Color the points by `TREATMENT` and plot the points for each value in the `SPECIES` column in a separate subplot. Label the x axis "Canopy Area (m)" and the y axis "Height (m)". Make the point size 2.
@@ -250,7 +243,7 @@ We want to compare the circumference to height relationship in acacia and to the
 
 ### 6. Adult vs. Newborn Size (20 pts)
 
-Larger organisms have larger offspring. We want to explore the form of this relationship in mammals.
+Larger organisms have larger offspring. We want to explore the form of this relationship in mammals. First, read in the data frame.
 
 ```{r}
 mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt", 
@@ -313,3 +306,10 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   facet_wrap(~ order) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 ```
+### 7. Reflection (25 pts)
+
+Reflections are graded for completion only.
+
+Write about 5 sentences addressing *at least* one of the following questions.
+
+- 
