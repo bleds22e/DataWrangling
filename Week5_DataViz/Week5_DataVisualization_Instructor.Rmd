@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This week, we will be focusing on how to build plots in R with another package in the `tidyverse` called `ggplot2`.
 
-While we won't use any `dplyr` functions during the lesson, we will use a few of them in this week's assignment. That means that we are now using 3 different packages from the `tidyverse`. 
+While we won't use any `dplyr` functions during the lesson, we will use a few of them in this week's assignment. That means that we are now using 3 different packages from the `tidyverse`.
 
 ## Load the `tidyverse`
 
@@ -32,8 +32,8 @@ Now, let's load the `tidyverse` package this time and see what happens.
 ```{r}
 library(tidyverse)
 ```
-This message is telling us that we have now loaded the following packages into our workspace:
-`dplyr`, `forcats`, `ggplot2`, `lubridate`, `purrr`, `readr`, `stringr`, `tibble`, and `tidyr`. By the end of the course, we will have used functions from ~6 of these packages. 
+
+This message is telling us that we have now loaded the following packages into our workspace: `dplyr`, `forcats`, `ggplot2`, `lubridate`, `purrr`, `readr`, `stringr`, `tibble`, and `tidyr`. By the end of the course, we will have used functions from \~6 of these packages.
 
 This specific lesson will be using `readr` and `ggplot2`.
 
@@ -46,10 +46,11 @@ It also gives us some information about functions from `dplyr` that have the sam
 For the next set of lessons, we'll be working with data on acacia size from an experiment in Kenya. The experiment is designed to understand the influence of herbivores on vegetation by excluding herbivores of different sizes.
 
 There are 3 different treatments:
-    -   The top-left image shows *Megaherbivore exclosures*, which use wires 2m high to keep out animals like elephants and giraffes.
-    -   The top-right image shows *Mesoherbivore exclosures*, which use fences starting 1/3m off the ground to exclude things like impala.
-    -   The bottom-left image shows *full exclosures*, which use fences all the way to the ground to keep out all mammalian herbivores
-    -   The bottom-right image shows *control plots*
+
+-   The top-left image shows *Megaherbivore exclosures*, which use wires 2m high to keep out animals like elephants and giraffes.
+-   The top-right image shows *Mesoherbivore exclosures*, which use fences starting 1/3m off the ground to exclude things like impala.
+-   The bottom-left image shows *full exclosures*, which use fences all the way to the ground to keep out all mammalian herbivores.
+-   The bottom-right image shows *control plots*
 
 ![Pictures of 4 experimental treatments. (A) Megaherbivore fences consist of two parallel wires starting 2-m above ground level. (B) Mesoherbivore fences consist of 11 parallel wires starting \~0.3 m above ground level and continuing to 2.4-m above ground level. (C) Total-exclusion fences consist of 14 wires up to 2.4-m above ground level, with a 1-m high chain-link barrier at ground level. (D) Open control plots are unfenced, with boundaries demarcated by short wooden posts at 10-m intervals.](https://esapubs.org/archive/ecol/E095/064/images/Fig2.png)
 
@@ -73,6 +74,7 @@ In order to read this data into our working environment, we will use another fun
 ```{r}
 acacia <- read_tsv("ACACIA_DREPANOLOBIUM_SURVEY.txt")
 ```
+
 When we take a look at the data, we can also see that it includes information on whether or not the plant is dead in the `HEIGHT` column.
 
 First of all, is this good data structure? Why or why not?
@@ -87,13 +89,15 @@ The argument is passed as a vector in order to allow multiple different values t
 # na = c("", "dead") will read in the data with correct NA values
 acacia <- read_tsv("ACACIA_DREPANOLOBIUM_SURVEY.txt", na = c("", "dead"))
 ```
+
 Looking at the data frame, we can see that it includes information on:
-    -   the time and location of the sampling
-    -   the experimental treatment
-    -   the size of each *Acacia* including a height, the canopy diameter measured in the direction (or axis) or the largest diameter and the diameter of the axis perpendicular to that, and the circumference of the shrub
-    -   information on the number of flowers, buds, and fruits
-    -    information on the species of ant associated with the shrub 
-    
+
+-   the time and location of the sampling
+-   the experimental treatment
+-   the size of each *Acacia* including a height, the canopy diameter measured in the direction (or axis) or the largest diameter and the diameter of the axis perpendicular to that, and the circumference of the shrub
+-   information on the number of flowers, buds, and fruits
+-   information on the species of ant associated with the shrub
+
 For those of you who may not know, there is a very interesting ant-acacia mutualism where the *Acacia* develops special structures that serve as houses for the ants and the ants protect the acacia by swarming herbivores that try to eat the *Acacia*.
 
 ## Making plots with `ggplot2`
@@ -103,19 +107,13 @@ For those of you who may not know, there is a very interesting ant-acacia mutual
 Here are some resources you might find helpful now or in the future:
 
 -   [ggplot2 Book](https://ggplot2-book.org/getting-started.html)
--   [UC Business Analytics ggplot2
-    intro](https://uc-r.github.io/ggplot_intro)
--   [R for Data Science Data Visualization
-    chapter](https://r4ds.had.co.nz/data-visualisation.html)
+-   [UC Business Analytics ggplot2 intro](https://uc-r.github.io/ggplot_intro)
+-   [R for Data Science Data Visualization chapter](https://r4ds.had.co.nz/data-visualisation.html)
 -   [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/index.html)
 
-The `gg` in `ggplot2` stands for "Grammar of Graphics." The "grammar"
-part is based on an idea that all statistical plots have the same
-fundamental features: data and mapping (and specific components of
-mapping).
+The `gg` in `ggplot2` stands for "Grammar of Graphics." The "grammar" part is based on an idea that all statistical plots have the same fundamental features: data and mapping (and specific components of mapping).
 
-The design is that you work iteratively, building up layer upon layer
-until you have your final plot.
+The design is that you work iteratively, building up layer upon layer until you have your final plot.
 
 The typical structure looks like this:
 
@@ -128,16 +126,14 @@ The typical structure looks like this:
 
 To build a `ggplot`, we start with the `ggplot()` function. This is the base plot that you can then start adding things onto.
 
-```{r}
-ggplot()
-```
-
-We can also add optional arguments for information to be shared across different components of the plot.
+We can also add arguments for information to be shared across different components of the plot.
 
 The first thing we can do is specify the data that we want to use to build the plot.
+
 ```{r}
 ggplot(data = acacia)
 ```
+
 Not too much going on here...
 
 The next step is to add the `mapping`, which describes which columns of the data are used for different aspects of the plot.
@@ -162,6 +158,7 @@ We then adding something called a `geom`, which stands for `geometry`. In this c
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   geom_point()
 ```
+
 Hooray, our first plot!
 
 If we want to make any changes to the layer, we can pass additional arguments to the `geom`.
@@ -176,6 +173,7 @@ For example, we can change:
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   geom_point(size = 3, color = "blue", alpha = 0.5)
 ```
+
 To modify the labels of your plot, we use the `labs` function.
 
 ```{r}
@@ -197,7 +195,7 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   theme_bw()
 ```
 
-### Rescaling Axes
+### Re-scaling Axes
 
 One helpful feature of `ggplot2` is that we can plot our data on rescaled axes. This doesn't change the data points themselves, rather the presentation.
 
@@ -212,6 +210,7 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   scale_y_log10() +
   scale_x_log10()
 ```
+
 #### Let's Practice!
 
 First, work through the Set-Up section of the assignment. Once you're ready to go, start working on Question 1a and 1b.
@@ -253,9 +252,9 @@ If you finish those, you should now have all the skills to work on Question 2 (w
 
 So far, we've seen that `ggplot2` makes graphs by combining information on
 
-  -   Data
-  -   Mapping of parts of that data to aspects of the plot (`aes()`)
-  -   A geometric object to represent the data (`geom`)
+-   Data
+-   Mapping of parts of that data to aspects of the plot (`aes()`)
+-   A geometric object to represent the data (`geom`)
 
 Up until now, we have only used one `geom`, `geom_point()`. There are *many* other `geoms` that we can use, though!
 
@@ -273,7 +272,6 @@ The default statistical transformation for `geom_bar` is`stat_count()`. It will 
 ggplot(acacia, aes(x = TREATMENT)) +
   geom_bar()
 ```
-
 
 When creating a histogram, [`geom_histogram()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html) works similarly. Let's look at the distribution of circumferences in the dataset.
 
@@ -302,26 +300,27 @@ Let's practice making some histograms. Work on Question 3.
 
 ### Position
 
--   geom's also come with a default position
--   In many cases the position is `"identity"`, which just means the object is plotted in the position determined by the data, but not always
--   Let's remake our histogram, but color the bars by the treatment
+Each `geom` function also comes with a default position. In many cases the position is `"identity"`, which means the object is plotted in the position determined by the data. While common, this isn't always the case.
+
+Let's remake our histogram and color the bars by the treatment.
 
 ```{r}
 ggplot(acacia, aes(x = CIRC, color = TREATMENT)) +
   geom_histogram(binwidth = 5)
 ```
 
--   You can see that the total height of the bars stayed the same
--   That's because ggplot has just colored the pieces of each bar that correspond to each treatment
--   It does this because the default `position` for `geom_histogram` is `"stacked"`, which stacks the bars on top of one another and therefore makes a stacked histogram.
--   If we want separate overlapping histograms then we need to change the position
+Compared to the histogram directly above, we can see that the total height of the bars stayed the same. This is because `ggplot` has colored the pieces of each bar that correspond to each treatment.
+
+This happens because the default `position` for `geom_histogram` is `"stacked"`, which stacks the bars on top of one another and, therefore, makes a stacked histogram.
+
+If we want separate overlapping histograms, then we need to change the position to `"identity"`.
 
 ```{r}
 ggplot(acacia, aes(x = CIRC, color = TREATMENT)) +
   geom_histogram(binwidth = 5, position = "identity")
 ```
 
--   And then add some transparency so we can see all of the histograms
+Close, but not quite there! To see all of the treatments, we need to make the columns partially transparent.
 
 ```{r}
 ggplot(acacia, aes(x = CIRC, color = TREATMENT)) +
@@ -330,12 +329,11 @@ ggplot(acacia, aes(x = CIRC, color = TREATMENT)) +
 
 ### Layers
 
--   So far we've only plotted one layer or geom at a time, but we can combine multiple layers in a single plot
-    -   `ggplot()` sets defaults for all layers
-    -   Can combine multiple layers using `+`
-    -   The first geom is plotted first and then additional geoms are layered on top
--   Combine different kinds of layers
--   Add a linear model
+So far we've only plotted one layer or `geom` at a time, but we can combine multiple layers in a single plot.
+
+The `ggplot()` function sets the default for all layers. The first `geom` is plotted first and then additional `geoms` are layered on top.
+
+For example, we can add a linear regression onto our scatter plot with the `geom_smooth()` function.
 
 ```{r}
 ggplot(acacia, aes(x = CIRC, y = HEIGHT)) +
@@ -343,13 +341,11 @@ ggplot(acacia, aes(x = CIRC, y = HEIGHT)) +
   geom_smooth(method = "lm")
 ```
 
--   Both the `geom_point` layer and the `geom_smooth` layer use the defaults form `ggplot`
+Both the `geom_point` layer and the `geom_smooth` layer are using the arguments that we set in the `ggplot()` function: `acacia` for data and `x = CIRC, y = HEIGHT` for the aesthetics.
 
--   Both use `acacia` for data and `x = CIRC, y = HEIGHT` for the aesthetic
+The `geom_smooth` function uses the statistical transformation `stat_smooth()` to produce a smoothed representation of the data. We've set it to include a linear model.
 
--   `geom_smooth` uses the statistical transformation `stat_smooth()` to produce a smoothed representation of the data
-
--   Do this by treatment
+What if we wanted to create the same plot for each treatment? We can add the `TREATMENT` column into the `aes()` function.
 
 ```{r}
 ggplot(acacia, aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
@@ -357,14 +353,13 @@ ggplot(acacia, aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
   geom_smooth(method = "lm")
 ```
 
--   Because the color aesthetic is the default it is inherited by geom_smooth
--   One set of points and one model for each treatment
+Because the color aesthetic is the default set in `ggplot()` function, it is inherited by `geom_smooth()`, too.
 
-### Changing values across layers
+### Changing Values across Layers
 
--   We can also plot data from different columns or even data frames on the same graph
--   To do this we need to better understand how layers and defaults work
--   So far we've put all of the information on data and aesthetic mapping into `ggplot()`
+When we want all of the layers to have the same defaults, putting those defaults into the `ggplot` function makes a lot of sense. However, sometimes we want to plot data from different columns or even data frames on the same graph.
+
+To do this we need to better understand how layers and defaults work. So far we've put all of the information on data and aesthetic mapping into `ggplot()`.
 
 ```{r}
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
@@ -372,8 +367,7 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   geom_smooth(method = "lm")
 ```
 
--   This sets the default data frame and aesthetic, which is then used by `geom_point()` and `geom_smooth()`
--   Alternatively instead of setting the default we could just give these values directly to `geom_point()` and \`geom_smo
+This sets the default data frame and aesthetic, which is then used by `geom_point()` and `geom_smooth()`. Alternatively, instead of setting the default, we could just give these values directly to `geom_point()` and `geom_smooth()`.
 
 ```{r}
 ggplot() +
@@ -383,11 +377,9 @@ ggplot() +
   geom_smooth(method = "lm")
 ```
 
--   We can see that this information is no longer shared with other geoms since it is no longer the default, so we've asked for a smooth of nothing and so no smoother is shown
+When we plot this, we can see that this information is no longer shared with other geoms since it is no longer the default, meaning we've asked for a smooth of nothing, so no smoother is shown.
 
--   Can use this combine different aesthetics
-
--   Make a single model across all treatments while still coloring points
+We can use this to combine different aesthetics into one plot. For example, we can make a single model across all treatments while still coloring the points.
 
 ```{r}
 ggplot() +
@@ -395,22 +387,15 @@ ggplot() +
              mapping = aes(x = CIRC, y = HEIGHT,
                            color = TREATMENT)) +
   geom_smooth(data = acacia,
-              mapping = aes(x = CIRC, y = HEIGHT))
+              mapping = aes(x = CIRC, y = HEIGHT),
+              method = "lm")
 ```
 
--   `color` is only set in the aesthethic for the point layer
+Because the `color` aesthetic is only set for the point layer, the smooth layer is made with all x and y values, producing one single linear regression.
 
--   So the smooth layer is made across all x and y values
+This same sort of change can be used to plot different columns on the same plot by changing the values of x or y or even columns from different data frames.
 
--   *Check if this makes sense to everyone*
-
--   This same sort of change can be used to plot different columns on the same plot by changing the values of x or y
-
--   If we wanted to plot two different columns as Y we could change the value of y in the aesthetic
-
--   If we wanted to use data from two different data frames we could change the value of data
-
--   We can also keep all of the values that are shared as defaults if we want to
+We can also condense this code by putting the data frame and mappings that are used in all `geoms` into the `ggplot` function and then specify the arguments that are for specific `geoms` within their respective `geoms`.
 
 ```{r}
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
@@ -418,80 +403,40 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   geom_smooth(method = "lm")
 ```
 
-> Do Task 3 in [Acacia and ants histograms](%7B%7B%20site.baseurl%20%7D%7D/exercises/Graphing-acacia-ants-histograms-R).
+#### Let's Practice!
 
-### Understanding defaults (optional if students struggling after exercise)
+Try Question 3c.
 
--   Let's move some things around to help understand where to put different information data and mapping
+### Saving Plots
 
-```{r}
-ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
-  geom_point() +
-  geom_smooth(method = "lm")
-```
+Often, we want to save our plots to put into other documents. Thankfully, we have a shortcut for saving plots made with `ggplot2` using a function called `ggsave()`.
 
--   What happens if we move `data` and `mapping` to one layer
-
-```{r}
-ggplot() +
-  geom_point(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
-  geom_smooth(method = "lm")
-```
-
--   What about the other layer
-
-```{r}
-ggplot() +
-  geom_point() +
-  geom_smooth(data = acacia, mapping = aes(x = CIRC, y = AXIS1), method = "lm")
-```
-
--   What if we move one to each layer (error)
-
-```{r}
-ggplot() +
-  geom_point(data = acacia) +
-  geom_smooth(mapping = aes(x = CIRC, y = AXIS1), method = "lm")
-```
-
--   So, each geom needs access to `data` and `mapping`
--   If they are not in the geom then the geom uses the defaults `ggplot()`
--   If we want different `data` or `mapping` for different layers then provide different values to different geoms
-
-```{r}
-ggplot(data = acacia, mapping = aes(x = CIRC)) +
-  geom_point(mapping = aes(y = AXIS1), color = "black") +
-  geom_point(mapping = aes(y = AXIS2), color = "grey")
-```
-
-### Grammar of graphics
-
--   Uniquely describe any plot based on a defined set of information
--   Leland Wilkinson
--   Geometric object(s)
-    -   Data
-    -   Mapping
-    -   Statistical transformation
-    -   Position (allows you to shift objects, e.g., spread out overlapping data points)
--   Facets
--   Coordinates (coordinate systems other than cartesian, also allows zooming)
-
-### Saving plots as new files
+By default, `ggsave()` will save the most recent plot you've made.
 
 ```{r}
 ggsave("acacia_by_treatment.jpg")
 ```
 
--   The type of the file is determined by the file extension
+The type of the file is determined by the file extension. You can use `.jpg`, `.png`, `.pdf`, etc.
 
 ```{r}
 ggsave("acacia_by_treatment.pdf")
 ```
 
--   Lots of optional arguments including size
+There are many optional arguments that you can include, such as height and width.
 
 ```{r}
 ggsave("acacia_by_treatment.pdf", height = 5, width = 5)
 ```
 
-> Assign the rest of the exercises.
+If you save the output of the `ggplot` to an object, you can reference that object in the `ggsave()` function.
+
+```{r}
+scatterplot <- ggplot(acacia, aes(CIRC, HEIGHT)) +
+  geom_point()
+ggsave("scatterplot.png", scatterplot)
+```
+
+#### Let's Practice!
+
+You should now have all of the skills to complete the assignment.
