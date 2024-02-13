@@ -6,16 +6,10 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
 # Week 5 Assignment
-
-# Assignment Exercises
-
-### Set-up
-
-Load the packages we will need. You can either load all of them individually (`readr`, `dplyr`, `ggplot2`) or load the `tidyverse` package.
 
 ```{r}
 library(tidyverse)
@@ -23,17 +17,9 @@ library(tidyverse)
 
 ### 1. Acacia and Ants (20 pts)
 
-Read in the acacia data frame by running the following code chunk.
-
 ```{r}
 acacia <- read_tsv("ACACIA_DREPANOLOBIUM_SURVEY.txt", na = c("", "dead"))
 ```
-
-a.  Make a scatter plot with `CIRC` on the x axis and `AXIS1` (the maximum canopy width) on the y axis. Label the x axis "Circumference" and the y axis "Canopy Diameter".
-b.  The same plot as (a), but with both axes scaled logarithmically (using `scale_x_log10` and `scale_y_log10`).
-c.  The same plot as (a), but with points colored based on the `ANT` column (the species of ant symbiont living with the acacia)
-d.  The same plot as (c), but instead of different colors show different species of ant (values of `ANT`) each in a separate subplot.
-e.  The same plot as (d) but add a simple model of the data by adding `geom_smooth`.
 
 ```{r}
 # 1a
@@ -79,8 +65,6 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
 
 ### 2. Mass vs. Metabolism (20 pts)
 
-The relationship between the body size of an organism and its metabolic rate is one of the most well studied and still most controversial areas of organismal physiology. We want to graph this relationship in the [Artiodactyla](http://en.wikipedia.org/wiki/Even-toed_ungulate) using a subset of data from a large compilation of body size data ([Savage et al. 2004](https://doi.org/10.1111/j.0269-8463.2004.00856.x)). Run this code chunk to get started.
-
 ```{r}
 size_mr_data <- data.frame(
   body_mass = c(32000, 37800, 347000, 4200, 196500, 100000,
@@ -98,13 +82,6 @@ size_mr_data <- data.frame(
     "Cervidae", "Cervidae", "Cervidae", "Cervidae", "Suidae",
     "Tayassuidae", "Tragulidae", "Tragulidae"))
 ```
-
-Make the following plots with appropriate axis labels:
-
-a.  A plot of body mass vs. metabolic rate
-b.  A plot of body mass vs. metabolic rate, with log10 scaled axes (this stretches the axis, but keeps the numbers on the original scale), and the point size set to 3.
-c.  The same plot as (b), but with the different families indicated using color.
-d.  The same plot as (b), but with the different families each in their own subplot.
 
 ```{r}
 # 1.  A graph of body mass vs. metabolic rate
@@ -134,13 +111,6 @@ ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate)) +
 ```
 
 ### 3. Acacia and Ants Histograms (20 pts)
-
-In this exercise, we will be making a number of different histograms with the `acacia` dataset.
-
-a.  Make a bar plot of the number of acacia with each mutualist ant species (using the `ANT` column).
-b.  Make a histogram of the height of acacia (using the `HEIGHT` column). Label the x axis "Height (m)" and the y axis "Number of Acacia".
-c.  Make a plot that shows histograms of both `AXIS1` and `AXIS2`. Due to the way the data is structured, you’ll need to add a 2nd geom_histogram() layer that specifies a new aesthetic. To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument `alpha = 0.3`. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x axis "Canopy Diameter (m)" and the y axis "Number of Acacia".
-d.  Use `facet_wrap()` to make the same plot as (c) but with one subplot for each treatment. Set the number of bins in the histogram to 10.
 
 ```{r}
 # 1
@@ -176,21 +146,11 @@ ggplot(data = acacia) +
 
 ### 4. Acacia and Ants Data Manipulation (20 pts)
 
-Run the following line of code to use `read_tsv` from the `readr` package to read in the data from "TREE.txt". This line of code is using the `col_types` argument to specify the the `HEIGHT` and `AXIS_2` columns should have their data read is as the data class "double," which is like "numeric."
-
 ```{r}
 trees <- read_tsv("TREE.txt",
                   col_types = list(HEIGHT = col_double(),
                                    AXIS_2 = col_double()))
 ```
-
-Now that you have the `trees` data frame, do the following:
-
-a.  Update the `trees` data frame with a new column named `canopy_area` that contains the estimated canopy area calculated as the value in the `AXIS_1` column times the value in the `AXIS_2` column. Show output of the `trees` data frame with just the `SURVEY`, `YEAR`, `SITE`, and `canopy_area` columns.
-b.  Make a scatter plot with `canopy_area` on the x axis and `HEIGHT` on the y axis. Color the points by `TREATMENT` and plot the points for each value in the `SPECIES` column in a separate subplot. Label the x axis "Canopy Area (m)" and the y axis "Height (m)". Make the point size 2.
-c.  That's a big outlier in the plot from (b). 50 by 50 meters is a little too big for a real Acacia, so filter the data to remove any values for `AXIS_1` and `AXIS_2` that are over 20 and update the data frame. Then remake the graph.
-d.  Using the data without the outlier (i.e., the data generated in (c)), find out how the abundance of each species has been changing through time. Use `group_by`, `summarize`, and `n` to make a data frame with `YEAR`, `SPECIES`, and an `abundance` column that has the number of individuals in each species in each year. Print out this data frame.
-e.  Using the data frame generated in (d), make a line plot with points (by using `geom_line` in addition to `geom_point`) with `YEAR` on the x axis and `abundance` on the y axis with one subplot per species. To let you seen each trend clearly let the scale for the y axis vary among plots by adding `scales = "free_y"` as an optional argument to `facet_wrap`.
 
 ```{r}
 
@@ -230,12 +190,9 @@ ggplot(data = abundance_time, mapping = aes(x = YEAR, y = abundance)) +
   geom_line() +
   facet_wrap(~SPECIES, scales = "free_y")
 #ggsave("Graphing-acacia-ants-data-manip-R-5.jpeg")
-
 ```
 
 ### 5. Adult vs. Newborn Size (20 pts)
-
-Larger organisms have larger offspring. We want to explore the form of this relationship in mammals. First, read in the data frame. This code uses a handy function called `rename` from the `tidyverse` to rename columns.
 
 ```{r}
 mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt", 
@@ -250,12 +207,6 @@ mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt",
          litter_size = `litter size`,
          litters_per_year = `litters/year`)
 ```
-
-a.  Graph adult mass vs. newborn mass. Label the axes with clearer labels than the column names.
-b.  It looks like there's a regular pattern here, but it's definitely not linear. Let's see if log-transformation straightens it out. Graph adult mass vs. newborn mass, with both axes scaled logarithmically. Label the axes.
-c.  This looks like a pretty regular pattern, so you wonder if it varies among different groups. Graph adult mass vs. newborn mass, with both axes scaled logarithmically, and the data points colored by order. Label the axes.
-d.  Coloring the points was useful, but there are a lot of points and it's kind of hard to see what's going on with all of the orders. Use `facet_wrap` to create a subplot for each order.
-e.  Now let's visualize the relationships between the variables using a simple linear model. Create a new graph like your faceted plot, but using `geom_smooth` to fit a linear model to each order. You can do this using the optional argument `method = "lm"` in `geom_smooth`.
 
 ```{r}
 
@@ -295,16 +246,3 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   facet_wrap(~ order) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 ```
-
-### 6. Reflection (25 pts)
-
-Reflections are graded for completion only.
-
-Write about 5 sentences addressing *at least* one of the following questions.
-
--   What has worked well for you in this course for you so far?
--   What has been particularly challenging for you so far?
--   Is there anything that I can do to help your learning in the course?
--   Other reflections about the content of the module that you would like to share.
-
-*Answer*:
