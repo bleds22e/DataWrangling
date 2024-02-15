@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.width = 4, fig.height = 4, fig.align = "center")
 ```
 
 # Data Visualization
@@ -52,7 +52,7 @@ There are 3 different treatments:
 -   The bottom-left image shows *full exclosures*, which use fences all the way to the ground to keep out all mammalian herbivores.
 -   The bottom-right image shows *control plots*
 
-![Pictures of 4 experimental treatments. (A) Megaherbivore fences consist of two parallel wires starting 2-m above ground level. (B) Mesoherbivore fences consist of 11 parallel wires starting \~0.3 m above ground level and continuing to 2.4-m above ground level. (C) Total-exclusion fences consist of 14 wires up to 2.4-m above ground level, with a 1-m high chain-link barrier at ground level. (D) Open control plots are unfenced, with boundaries demarcated by short wooden posts at 10-m intervals.](https://esapubs.org/archive/ecol/E095/064/images/Fig2.png)
+![Pictures of 4 experimental treatments. (A) Megaherbivore fences consist of two parallel wires starting 2-m above ground level. (B) Mesoherbivore fences consist of 11 parallel wires starting \~0.3 m above ground level and continuing to 2.4-m above ground level. (C) Total-exclusion fences consist of 14 wires up to 2.4-m above ground level, with a 1-m high chain-link barrier at ground level. (D) Open control plots are unfenced, with boundaries demarcated by short wooden posts at 10-m intervals.](UHURU_treatments.png)
 
 ### Download the Data
 
@@ -227,7 +227,7 @@ The first way is to show the different groups on the same plot by having one asp
 
 For example, let's say we want to look at the influence of experimental treatment on the *Acacia* size.
 
-```{r}
+```{r fig.width=6}
 ggplot(acacia, aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
   geom_point(size = 3, alpha = 0.5)
 ```
@@ -317,15 +317,15 @@ This happens because the default `position` for `geom_histogram` is `"stacked"`,
 
 If we want separate overlapping histograms, then we need to change the position to `"identity"`.
 
-```{r}
-ggplot(acacia, aes(x = CIRC, color = TREATMENT)) +
+```{r fig.width=6}
+ggplot(acacia, aes(x = CIRC, fill = TREATMENT)) +
   geom_histogram(binwidth = 5, position = "identity")
 ```
 
 Close, but not quite there! To see all of the treatments, we need to make the columns partially transparent.
 
-```{r}
-ggplot(acacia, aes(x = CIRC, color = TREATMENT)) +
+```{r fig.width=6}
+ggplot(acacia, aes(x = CIRC, fill = TREATMENT)) +
   geom_histogram(binwidth = 5, position = "identity", alpha = 0.5)
 ```
 
@@ -349,7 +349,7 @@ The `geom_smooth` function uses the statistical transformation `stat_smooth()` t
 
 What if we wanted to create the same plot for each treatment? We can add the `TREATMENT` column into the `aes()` function.
 
-```{r}
+```{r fig.width=6}
 ggplot(acacia, aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
   geom_point() +
   geom_smooth(method = "lm")
@@ -371,7 +371,7 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
 
 This sets the default data frame and aesthetic, which is then used by `geom_point()` and `geom_smooth()`. Alternatively, instead of setting the default, we could just give these values directly to `geom_point()` and `geom_smooth()`.
 
-```{r}
+```{r fig.width=6}
 ggplot() +
   geom_point(data = acacia,
              mapping = aes(x = CIRC, y = HEIGHT,
@@ -383,7 +383,7 @@ When we plot this, we can see that this information is no longer shared with oth
 
 We can use this to combine different aesthetics into one plot. For example, we can make a single model across all treatments while still coloring the points.
 
-```{r}
+```{r fig.width=6}
 ggplot() +
   geom_point(data = acacia,
              mapping = aes(x = CIRC, y = HEIGHT,
@@ -399,7 +399,7 @@ This same sort of change can be used to plot different columns on the same plot 
 
 We can also condense this code by putting the data frame and mappings that are used in all `geoms` into the `ggplot` function and then specify the arguments that are for specific `geoms` within their respective `geoms`.
 
-```{r}
+```{r fig.width=6}
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   geom_point(mapping = aes(color = TREATMENT)) +
   geom_smooth(method = "lm")
