@@ -197,7 +197,7 @@ e.  Using the data frame generated in (d), make a line plot with points (by usin
 # 1
 
 trees <- mutate(trees, canopy_area = AXIS_1 * AXIS_2)
-select(trees, SURVEY, YEAR, SITE, canopy_area)
+select(trees, SURVEY, YEAR, SITE, SPECIES, canopy_area)
 
 # 2
 

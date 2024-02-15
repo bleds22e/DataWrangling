@@ -157,7 +157,7 @@ trees <- read_tsv("TREE.txt",
 # 1
 
 trees <- mutate(trees, canopy_area = AXIS_1 * AXIS_2)
-select(trees, SURVEY, YEAR, SITE, canopy_area)
+select(trees, SURVEY, YEAR, SITE, SPECIES, canopy_area)
 
 # 2
 
