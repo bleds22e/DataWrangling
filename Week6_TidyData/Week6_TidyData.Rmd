@@ -109,6 +109,12 @@ plants <- plants %>%
   select(-Veg)
 ```
 
+## Good Links
+https://biol355.github.io/Labs/axoltl_lab.html
+
+https://biol355.github.io/Lectures/13_data_tidy.html
+
+https://www.rforecology.com/post/reshaping-data-in-r/
 ----
 
 ## Semester Carpentry version
