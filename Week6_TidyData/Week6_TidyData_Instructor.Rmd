@@ -28,7 +28,7 @@ However, to analyze the data, we typically need data to be in a tidy format. We 
 First, let's load the `tidyverse`.
 
 ```{r}
-
+library(tidyverse)
 ```
 
 Now, let's read in our data for this lesson.
@@ -47,7 +47,11 @@ Is this good data structure?
 Before we get started, let's add a `treeid` column to our data frame using the `mutate` function from `dplyr`. We want one `treeid` for each row because there is one tree for each row
 
 ```{r}
+macroplots <- macroplots %>%
+  mutate(TreeID = 1:n(), .before = PlotID) 
+  # the .before argument determines where the new column will be placed
 
+head(macroplots)
 ```
 
 ## Wide Data vs. Long Data
@@ -78,7 +82,12 @@ The `pivot_longer()` function takes the following arguments (as we as many other
 Any redundant or unnecessary columns will be automatically removed.
 
 ```{r}
+macro_long <- macroplots %>%
+  pivot_longer(TreeGirth1:TreeGirth5, 
+               names_to = "Stem", 
+               values_to = "Girth")
 
+head(macro_long)
 ```
 
 As a reminder, the colon specifies all columns starting at `TreeGirth1` and ending at `TreeGirth5`
@@ -92,7 +101,10 @@ To do so, we can use a function (from `dplyr`) called `na_if`. This function all
 The arguments in `na_if` are the vector (column) you want the values replaced in and the value to be replaced.
 
 ```{r}
+macro_long <- macro_long %>%
+  mutate(Girth = na_if(Girth, 0))
 
+head(macro_long)
 ```
 
 ### Drop Rows with `NA` Values
@@ -100,7 +112,10 @@ The arguments in `na_if` are the vector (column) you want the values replaced in
 Often, we might want to remove these rows altogether. To remove rows that have `NA` values in a specific column, we could use the `filter` function and `!is.na()`, as we have in the past. Alternatively, we could use the `drop_na()` function, which does the same thing.
 
 ```{r}
+macro_long <- macro_long %>% 
+  drop_na(Girth)
 
+head(macro_long)
 ```
 
 ### `extract()` Values from a Column
@@ -119,7 +134,10 @@ The arguments for `extract` are:
 -   the regular expression specifying what to extract
 
 ```{r}
+macro_long %>%
+  extract(Stem, "Stem", "TreeGirth(.)")
 
+head(macro_long)
 ```
 
 Here, `TreeGirth.` means the phrase "TreeGirth" followed by a single value. The `()` indicate what part of this string to extract, so just the number at the end of the string.
@@ -131,7 +149,10 @@ You may notice that this number is on the left side of the column, not the right
 To convert it to it's actual type (numeric), we can add the optional argument `convert = TRUE` to `extract`.
 
 ```{r}
+macro_long <- macro_long %>%
+  extract(Stem, "Stem", "TreeGirth(.)", convert = TRUE)
 
+head(macro_long)
 ```
 
 Adding the `convert = TRUE` argument is a helpful addition when extracting numbers so you can then work with the column as numbers.
@@ -148,7 +169,11 @@ We can do so using the `separate()` function, which takes the following argument
 -   the separator value, character, or position
 
 ```{r}
+macro_long <- macro_long %>%
+  separate(SpCode, c("Genus", "Species"), sep = 4)
 
+head(macro_long)
+# if separated by a - or a space, put in quotation marks (e.g., "-")
 ```
 
 ## Pivot Wider
@@ -160,7 +185,11 @@ For example, this is fairly common for analyses of community-level data. Many pa
 Let's demonstrate with an example calculating the number of stems per species. First, we need to group and summarize the data.
 
 ```{r}
+stem_counts <- macro_long %>% 
+  group_by(PlotID, Genus, Species) %>% 
+  summarize(Count = n())
 
+head(stem_counts)
 ```
 To get the site x species matrix, we need to make the dataset wider. Since the species ID will end up as column names, we need to bring the columns back together. 
 
@@ -171,7 +200,9 @@ To bring multiple columns together into one column, we use a function that does 
 We specify the data, the name of the new column, and the columns to combine.
 
 ```{r}
-
+stem_counts <- stem_counts %>% 
+  unite("SpeciesID", Genus, Species, sep = "_")
+head(stem_counts)
 ```
 
 There is also one species code for unknown species. While in long format, we would likely convert this to an `NA` value, because it will become a column name, we probably want to make it something interpretable.
@@ -185,7 +216,13 @@ The `replace` function, when used inside the `mutate` function, the arguments ar
 -   the value to use as the replacement
 
 ```{r}
+filter(stem_counts, SpeciesID == "UnID_")
 
+stem_counts <- stem_counts %>% 
+  mutate(SpeciesID = replace(SpeciesID, SpeciesID == "UnID_", "Unknown"))
+
+filter(stem_counts, SpeciesID == "UnID_")
+filter(stem_counts, SpeciesID == "Unknown")
 ```
 
 Now we can go ahead and convert the data into a wider format.
@@ -199,7 +236,8 @@ Using `pivot_wider()` will spread values from one column into column names. It w
 -   the name of column that contains the values to fill in the cells
 
 ```{r}
-
+stem_counts %>% 
+  pivot_wider(names_from = SpeciesID, values_from = Count)
 ```
 
 Ok, that is a lot of `NA` values...
@@ -207,7 +245,10 @@ Ok, that is a lot of `NA` values...
 In this case, it would likely make sense to replace these `NA` values with 0. We can do this in a couple ways. With `pivot_wider()`, there is an optional argument to specify what value to use for any empty cells after the conversion.
 
 ```{r}
-
+stem_counts %>% 
+  pivot_wider(names_from = SpeciesID,
+              values_from = Count,
+              values_fill = 0)
 ```
 
 
@@ -226,7 +267,9 @@ gappy_data
 We can fill in these gaps using the `fill()` function. The default direction is "down," but other directions are possible.
 
 ```{r}
-
+complete_data <- gappy_data %>%
+  fill(Species)
+head(complete_data)
 ```
 
 ## Renaming Columns
@@ -242,19 +285,20 @@ colnames(rodents)
 We can select a few columns: date, site, and trap ID.
 
 ```{r, eval=FALSE}
-
+rodents %>% select(Date, Site, Trap ID)
 ```
 
 Well, that doesn't work. How do we get around it? We use backticks to deal with names with spaces or special charaters.
 
 ```{r}
-
+rodents %>% select(Date, Site, `Trap ID`)
 ```
 While function, this get gets annoying after a while. Thankfully, the `tidyverse` has a helpful function for renaming columns.
 
 The argument in `rename()` is the new name of the column equal to the old name.
 
 ```{r}
-
+rodents <- rodents %>% 
+  rename(TrapID = `Trap ID`)
 ```
 
