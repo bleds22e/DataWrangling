@@ -77,6 +77,8 @@ d.  Use `facet_wrap()` to make the same plot as (c) but with one subplot for eac
 
 Run the following line of code to use `read_tsv` from the `readr` package to read in the data from "TREE.txt". This line of code is using the `col_types` argument to specify the the `HEIGHT` and `AXIS_2` columns should have their data read is as the data class "double," which is like "numeric."
 
+The code might spit out a warning, but everything should work fine (you'll see the `trees` object in your environment).
+
 ```{r}
 trees <- read_tsv("TREE.txt",
                   col_types = list(HEIGHT = col_double(),
@@ -85,7 +87,7 @@ trees <- read_tsv("TREE.txt",
 
 Now that you have the `trees` data frame, do the following:
 
-a.  Update the `trees` data frame with a new column named `canopy_area` that contains the estimated canopy area calculated as the value in the `AXIS_1` column times the value in the `AXIS_2` column. Show output of the `trees` data frame with just the `SURVEY`, `YEAR`, `SITE`, `SPECIES`, and `canopy_area` columns.
+a.  Update the `trees` data frame with a new column named `canopy_area` that contains the estimated canopy area calculated as the value in the `AXIS_1` column times the value in the `AXIS_2` column. Show output of the `trees` data frame with just the `SURVEY`, `YEAR`, `SITE`, `SPECIES`, and `canopy_area` columns. (*Hint: do not use the pipe here. We want*
 b.  Make a scatter plot with `canopy_area` on the x axis and `HEIGHT` on the y axis. Color the points by `TREATMENT` and plot the points for each value in the `SPECIES` column in a separate subplot. Label the x axis "Canopy Area (m)" and the y axis "Height (m)". Make the point size 2.
 c.  That's a big outlier in the plot from (b). 50 by 50 meters is a little too big for a real Acacia, so filter the data to remove any values for `AXIS_1` and `AXIS_2` that are over 20 and update the data frame. Then remake the graph.
 d.  Using the data without the outlier (i.e., the data generated in (c)), find out how the abundance of each species has been changing through time. Use `group_by`, `summarize`, and `n` to make a data frame with `YEAR`, `SPECIES`, and an `abundance` column that has the number of individuals in each species in each year. Print out this data frame.
