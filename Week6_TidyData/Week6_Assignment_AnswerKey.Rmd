@@ -1,0 +1,155 @@
+---
+title: "Week 6 Assignment"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Week 6 Assignment
+
+# Assignment Exercises
+
+### Set-up
+
+Load the packages we will need. You can either load all of them individually (`readr`, `dplyr`, `tidyr`, `ggplot2`) or load the `tidyverse` package.
+
+```{r}
+library(tidyverse)
+```
+
+### 1. Forest Area per Country (15 pts)
+
+
+```{r}
+forest <- read_csv("forest_per_country.csv", skip = 4, col_names = TRUE)
+```
+
+
+```{r}
+# a
+forest <- forest %>% 
+  pivot_longer(`1990`:`2022`, names_to = "Year", values_to = "ForestArea_sqkm")
+forest
+
+# b.
+forest <- forest %>% 
+  drop_na(ForestArea_sqkm)
+forest
+  
+# c
+ggplot(forest, aes(Year, ForestArea_sqkm)) +
+  geom_point(alpha = 0.5, color = "forestgreen") +
+  labs(x = "Year",
+       y = "Forest Area (sq. km)") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+```
+
+### 2. OECD Data (10 pts)
+
+
+```{r}
+oecd <- read_csv("oecd_annual_data.csv", skip = 4, col_names = TRUE)
+head(oecd)
+```
+
+```{r}
+#a
+oecd <- oecd %>% 
+  fill(OECD_member)
+oecd
+
+#b
+oecd <- oecd %>% 
+  pivot_longer(`2000`:`2022`, names_to = "Year", values_to = "MarineProtectedArea_sqkm")
+oecd
+```
+
+### 3. Santa Cruz Rodents Data Cleaning (20 pts)
+
+
+```{r}
+rodents <- read_csv("capture_data.csv")
+```
+
+
+### 4. Remembering Joins (15 pts)
+
+```{r}
+veg <- read_csv("microsite_grouped_veg.csv")
+
+#a
+veg <- veg %>% 
+  rename(RecordID = `...1`, TrapID = `Trap Location`, DistancetoVeg_m = `Distance to Vegetation (m)`,
+         VegetationType = `Type of Vegetation`, PercentCover = `Percent Veg Cover`, DistancetoWater_m = `Distance to Water (m)`)
+veg
+
+#b
+veg <- veg %>% 
+  select(Site, TrapID, Grouped_Veg)
+veg
+
+#c
+inner_join(rodents, veg)
+```
+
+### 5. Santa Cruz Rodents Wrangling (20 pts)
+
+```{r}
+#a
+rodents <- rodents %>% 
+  separate(Date, into = c("Year", "Month", "Day"), sep = "-")
+rodents
+
+#b
+rodents <- rodents %>% 
+  unite("Date", Year:Day, sep = "-")
+rodents
+
+#c
+sp_by_site <- rodents %>% 
+  group_by(Site, Species) %>% 
+  summarize(Count = n())
+sp_by_site
+
+#d
+sp_by_site %>% 
+  pivot_wider(names_from = Species,
+              values_from = Count,
+              values_fill = 0)
+```
+
+### 6. Mammals (20 pts)
+
+The code chunk below has some made-up mammal data. Run the code chunk below to complete question 5.
+
+```{r}
+mammals <- data.frame(site = c(1,1,2,3,3,3), 
+                      taxon = c('Suncus etruscus', 'Sorex cinereus', 
+                                'Myotis nigricans', 'Notiosorex crawfordi', 
+                                'Suncus etruscus', 'Myotis nigricans'),
+                      density = c(6.2, 5.2, 11.0, 1.2, 9.4, 9.6),
+                      mass = c(4.2, 5, 9.1, 8.6, 4.1, 8.7))
+```
+
+```{r}
+mammals <- mammals %>% 
+  separate(taxon, c("genus", "species"), sep = " ")
+mammals
+
+mammals <- mammals %>% 
+  pivot_longer(density:mass, names_to = "measurement", values_to = "value")
+mammals
+
+mammals <- mammals %>% 
+  unite("taxon", genus, species, sep = " ")
+mammals
+
+mammals <- mammals %>% 
+  pivot_wider(names_from = measurement, values_from = value)
+mammals
+```

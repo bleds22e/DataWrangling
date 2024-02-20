@@ -278,7 +278,7 @@ Last but very much not least, we often need to change the names of columns.
 
 Let's read in a new .csv file with some less-than-desirable column names.
 ```{r}
-rodents <- read_csv("https://raw.githubusercontent.com/bleds22e/santa-cruz-rodents/main/data/capture_raw.csv")
+rodents <- read_csv("capture_data.csv")
 
 colnames(rodents)
 ```

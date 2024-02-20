@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Load the packages we will need. You can either load all of them individually (`readr`, `dplyr`, `tidyr`, `ggplot2`) or load the `tidyverse` package.
 
 ```{r}
-library(tidyverse)
+
 ```
 
 ### 1. Forest Area per Country (15 pts)
@@ -39,25 +39,6 @@ c.  Let's remind ourselves how to plot the data. Make a scatterplot of the data 
 
     Add the following line of code to the end of your ggplot code so we can see the years along the x-axis: `theme(axis.text.x = element_text(angle = 45, vjust = 0.5))`.
 
-```{r}
-# a
-forest <- forest %>% 
-  pivot_longer(`1990`:`2022`, names_to = "Year", values_to = "ForestArea_sqkm")
-forest
-
-# b.
-forest <- forest %>% 
-  drop_na(ForestArea_sqkm)
-forest
-  
-# c
-ggplot(forest, aes(Year, ForestArea_sqkm)) +
-  geom_point(alpha = 0.5, color = "forestgreen") +
-  labs(x = "Year",
-       y = "Forest Area (sq. km)") +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
-```
 
 ### 2. OECD Data (10 pts)
 
@@ -67,31 +48,18 @@ Run this line of code to read in the file. Like the forest data, this data has a
 
 ```{r}
 oecd <- read_csv("oecd_annual_data.csv", skip = 4, col_names = TRUE)
-head(oecd)
 ```
 
 a.  Use the `fill()` function to fill in the values in the first column.
 b.  Use `pivot_longer()` to put the data in a tidy format. You'll need to use the same trick with the year column names as you did in 1a.
 
-```{r}
-#a
-oecd <- oecd %>% 
-  fill(OECD_member)
-
-#b
-oecd <- oecd %>% 
-  pivot_longer(`2000`:`2022`, names_to = "Year", values_to = "MarineProtectedArea_sqkm")
-```
-
 ### 3. Santa Cruz Rodents Data Cleaning (20 pts)
 
 Start by reading in the rodent data from the Santa Cruz River, `capture_data.csv`.
 
-```{r}
-rodents <- read_csv("capture_data.csv")
-```
-
 Take a look at the data. You'll likely notice immediately that there are some issues to be fixed.
+
+For this question, there isn't really a good way for me to show you the output in the answer key; you'll want to take a look at the data frame in R to make sure the issue got fixed.
 
 a.  Rename any column that needs to be renamed and save the output. This is the data frame we will use for the remainder of the questions.
 
@@ -105,33 +73,6 @@ d.  If we look at the data classes for the columns, we can see that the column f
 
 e.  In both the Hair Sample and Position columns, there is a `?`. Use the `na_if` function inside a `mutate` function to convert those `?` to `NA` values.
 
-```{r}
-#a
-rodents <- rodents %>% 
-  rename(TrapID = `Trap ID`, Status = `Status (R/N)`, TotalWeight = `Total Weight`,
-         BagWeight = `Bag weight`, AnimalWeight = `Animal Weight`, 
-         HindfoodLength = `Hind foot length`, TailLength = `Tail length`,
-         HairSample = `Hair sample (Y/N)`, Position = `Position (R/L)`)
-
-#b 
-rodents <- rodents %>% 
-  fill(Site)
-
-#c
-rodents <- rodents %>% 
-  mutate(Species = replace(Species, Species == "SIOC?", "SIOC"),
-         Species = replace(Species, Species == "DIME?", "DIME"))
-
-#d
-rodents <- rodents %>% 
-  mutate(TailLength = replace(TailLength, TailLength == "~15.5", "15.5"))
-
-#e
-rodents <- rodents %>% 
-  mutate(HairSample = na_if(HairSample, "?"),
-         Position = na_if(Position, "?"))
-
-```
 
 ### 4. Remembering Joins (15 pts)
 
@@ -139,21 +80,6 @@ Let's remind ourselves about joins from Week 4.
 
 Read in the vegetation data that goes along with the Santa Cruz rodent data. The .csv file is called `microsite_grouped_veg.csv`
 
-```{r}
-veg <- read_csv("microsite_grouped_veg.csv")
-
-#a
-veg <- veg %>% 
-  rename(RecordID = `...1`, TrapID = `Trap Location`, DistancetoVeg_m = `Distance to Vegetation (m)`,
-         VegetationType = `Type of Vegetation`, PercentCover = `Percent Veg Cover`, DistancetoWater_m = `Distance to Water (m)`)
-
-#b
-veg <- veg %>% 
-  select(Site, TrapID, Grouped_Veg)
-
-#c
-inner_join(rodents, veg)
-```
 a. Rename the columns that should be renamed. Use a consistent structure (and make the Site and Trap Location column names match those from the rodents data frame).
 b. Select the Site, Trap Location and Grouped Veg columns and save those as a new dataframe
 c. Use an `inner_join()` to join those same 2 data frames
@@ -170,30 +96,6 @@ b.  Use `unite()` to bring them back together into 1 Date column
 c.  Summarize the data so that we have a count of each species per site. Save this output as a new data frame (do not overwrite the rodents data frame)
 
 d.  Convert the data from (c) from long format to wide format. Use an argument in the `pivot_wider` function to have all blank cells filled with 0 instead of `NA`.
-
-```{r}
-#a
-rodents <- rodents %>% 
-  separate(Date, into = c("Year", "Month", "Day"), sep = "-")
-rodents
-
-#b
-rodents <- rodents %>% 
-  unite("Date", Year:Day, sep = "-")
-rodents
-
-#c
-sp_by_site <- rodents %>% 
-  group_by(Site, Species) %>% 
-  summarize(Count = n())
-sp_by_site
-
-#d
-sp_by_site %>% 
-  pivot_wider(names_from = Species,
-              values_from = Count,
-              values_fill = 0)
-```
 
 ### 6. Mammals (20 pts)
 
@@ -213,17 +115,3 @@ b.  Use `pivot_longer` so that `density` and `mass` end up in one column and the
 c.  Even though the data from (b) is longer, it isn't tidier. Explain why not.
 c.  Use the `unite()` function to bring the genus and species column back together as one column with whatever separator you choose.
 d.  Use `pivot_wider()` to bring the data frame back to it's original state.
-
-```{r}
-mammals <- mammals %>% 
-  separate(taxon, c("genus", "species"), sep = " ")
-
-mammals <- mammals %>% 
-  pivot_longer(density:mass, names_to = "measurement", values_to = "value")
-
-mammals <- mammals %>% 
-  unite("taxon", genus, species, sep = " ")
-
-mammals <- mammals %>% 
-  pivot_wider(names_from = measurement, values_from = value)
-```
