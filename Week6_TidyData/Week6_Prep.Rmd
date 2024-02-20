@@ -1,0 +1,119 @@
+---
+title: "Prep"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Number of species in `trees.txt`
+
+```{r}
+# 6 + NA
+trees %>% 
+  distinct(SPECIES)
+```
+
+```{r}
+# remove NA species
+trees <- trees %>% 
+  filter(!is.na(SPECIES))
+```
+
+Demonstrate separate and unite with species column
+```{r}
+# separate
+
+genus_sp <- trees %>% 
+  separate(SPECIES, into = c("GENUS", "SPECIES"), sep = "_")
+
+
+# unite
+genus_sp %>% 
+  unite("SPECIES", GENUS:SPECIES, sep = " ")
+
+genus_sp <- genus_sp %>% 
+  unite("SPECIES", GENUS:SPECIES, sep = " ", na.rm = TRUE)
+
+```
+
+Convert to pivot_wider (species by site)
+
+```{r}
+sp_by_site <- genus_sp %>% 
+  group_by(TREATMENT, SPECIES) %>% 
+  summarise(ABUND = n())
+
+sp_by_site %>% 
+  pivot_wider(names_from = TREATMENT, values_from = ABUND )
+```
+## Practice with santa cruz rodents
+
+```{r}
+rodents <- read_csv("capture_data.csv")
+plants <- read_csv("microsite_raw.csv")
+```
+
+Trying to select with spaces
+```{r}
+rodents %>% select(Date, Site, Trap ID)
+```
+
+Use backticks to deal with names with spaces
+
+```{r}
+rodents %>% select(Date, Site, `Trap ID`)
+```
+But that gets annoying after a while.
+
+We can use a tidyverse function called `rename` to address this issue
+
+```{r}
+rodents %>% 
+  rename(TrapID = `Trap ID`) %>% 
+  select(Date, Site, TrapID)
+```
+
+Create day, month, year column
+```{r}
+yr_mo_day <- rodents %>% 
+  separate(Date, into = c("Year", "Month", "Day"), sep = "-")
+```
+
+Reunite dates
+```{r}
+dates <- yr_mo_day %>% 
+  unite("Date", Year:Day, sep = "-") %>% 
+  mutate(Date = as_date(Date))
+```
+
+### Plant Data
+
+```{r}
+head(plants)
+plants <- plants %>% 
+  rename(VegType = `Type of Vegetation`) %>% 
+  separate(VegType, into = c("Veg1", "Veg2"), sep = "/")
+
+# pivot longer
+plants <- plants %>% 
+  pivot_longer(Veg1:Veg2,
+               names_to = "Veg",
+               values_to = "VegetationType")
+
+plants <- plants %>% 
+  filter(!is.na(VegetationType)) %>% 
+  select(-Veg)
+```
+
+## Good Links
+https://biol355.github.io/Labs/axoltl_lab.html
+
+https://biol355.github.io/Lectures/13_data_tidy.html
+
+https://www.rforecology.com/post/reshaping-data-in-r/
+----

@@ -1,0 +1,197 @@
+---
+title: "Week 6 Assignment"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Week 6 Assignment
+
+# Assignment Exercises
+
+### Set-up
+
+Load the packages we will need. You can either load all of them individually (`readr`, `dplyr`, `tidyr`, `ggplot2`) or load the `tidyverse` package.
+
+```{r}
+library(tidyverse)
+```
+
+### 1. Forest Area per Country (20 pts)
+
+These data are downloaded from the WHO and contain the amount of forest (sq. km) per country. The first 3 rows of the file are metadata or empty, which we do not want. I've added the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with this.
+
+```{r}
+forest <- read_csv("forest_per_country.csv", skip = 4, col_names = TRUE)
+```
+
+a.  Currently, this data is in a wide format. We want to convert this to a longer format and make it tidy. Use the `pivot_longer` function to do so. Overwrite the `forest` dataframe so that it contains the long version of the data.
+
+    Because the column names start with numbers, which R does not like, we need to put the column names either in backticks or quotation marks (e.g., "1990":"2022").
+
+b.  Remove any rows that have `NA` in the forest area column using the `drop_na()` function.
+
+c.  Let's remind ourselves how to plot the data. Make a scatterplot of the data with year on the x-axis and forest area on the y-axis. Make the points partially tranparent and the color "forestgreen." Add more descriptive axes labels and a theme.
+
+    Add the following line of code to the end of your ggplot code so we can see the years along the x-axis: `theme(axis.text.x = element_text(angle = 45, vjust = 0.5))`.
+
+```{r}
+# a
+forest <- forest %>% 
+  pivot_longer(`1990`:`2022`, names_to = "Year", values_to = "ForestArea_sqkm")
+forest
+
+# b.
+forest <- forest %>% 
+  drop_na(ForestArea_sqkm)
+forest
+  
+# c
+ggplot(forest, aes(Year, ForestArea_sqkm)) +
+  geom_point(alpha = 0.5, color = "forestgreen") +
+  labs(x = "Year",
+       y = "Forest Area (sq. km)") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+```
+
+### 2. OECD Data (20 pts)
+
+```{r}
+oecd <- read_csv("oecd_annual_data.csv", skip = 4, col_names = TRUE)
+head(oecd)
+```
+
+a.  fill
+b.  pivot longer
+c.  histogram of data, colored by OECD member
+
+```{r}
+#a
+oecd <- oecd %>% 
+  fill(OECD_member)
+
+#b
+oecd <- oecd %>% 
+  pivot_longer(`2000`:`2022`, names_to = "Year", values_to = "MarineProtectedArea_sqkm")
+```
+
+### 3. Santa Cruz Rodents Data Cleaning (20 pts)
+
+Start by reading in the rodent data from the Santa Cruz River, `capture_data.csv`.
+
+```{r}
+rodents <- read_csv("capture_data.csv")
+```
+
+Take a look at the data. You'll likely notice immediately that there are some issues to be fixed.
+
+a.  Rename any column that needs to be renamed and save the output. This is the data frame we will use for the remainder of the questions.
+
+b.  Next we need to fill in the missing values in the `Site` column.
+
+c.  In the `Species` column, there are 2 different species that have question marks next to their names. Using the `replace` function inside of a `mutate` function, remove the question marks (e.g., `SIOC?` should become `SIOC` and `DIME?` should become `DIME`.
+
+    (This is just for practice. In reality, we might want to create a code for unknown species or a column for unclear ID).
+
+d.  If we look at the data classes for the columns, we can see that the column for tail length is character when it should be numeric. This usually indicates that there is a special character or letter somewhere in the column. As it turns out, in the last row, the value is `~15.5` instead of `15.5`. Use the `replace` function inside of `mutate` to convert that value to `15.5`.
+
+e.  In both the Hair Sample and Position columns, there is a `?`. Use the `na_if` function inside a `mutate` function to convert those `?` to `NA` values.
+
+```{r}
+#a
+rodents <- rodents %>% 
+  rename(TrapID = `Trap ID`, Status = `Status (R/N)`, TotalWeight = `Total Weight`,
+         BagWeight = `Bag weight`, AnimalWeight = `Animal Weight`, 
+         HindfoodLength = `Hind foot length`, TailLength = `Tail length`,
+         HairSample = `Hair sample (Y/N)`, Position = `Position (R/L)`)
+
+#b 
+rodents <- rodents %>% 
+  fill(Site)
+
+#c
+rodents <- rodents %>% 
+  mutate(Species = replace(Species, Species == "SIOC?", "SIOC"),
+         Species = replace(Species, Species == "DIME?", "DIME"))
+
+#d
+rodents <- rodents %>% 
+  mutate(TailLength = replace(TailLength, TailLength == "~15.5", "15.5"))
+
+#e
+rodents <- rodents %>% 
+  mutate(HairSample = na_if(HairSample, "?"),
+         Position = na_if(Position, "?"))
+
+```
+
+### 4. Santa Cruz Rodents Wrangling (20 pts)
+
+Let's practice splitting and combining columns as well as pivoting the Santa Cruz rodent data.
+
+a.  Use the `separate()` function to split the date column into 3 separate columns.
+
+b.  Use `unite()` to bring them back together into 1 Date column
+
+c.  Summarize the data so that we have a count of each species per site. Save this output as a new data frame (do not overwrite the rodents data frame)
+
+d.  Convert the data from (c) from long format to wide format. Use an argument in the `pivot_wider` function to have all blank cells filled with 0 instead of `NA`.
+
+```{r}
+#a
+rodents <- rodents %>% 
+  separate(Date, into = c("Year", "Month", "Day"), sep = "-")
+rodents
+
+#b
+rodents <- rodents %>% 
+  unite("Date", Year:Day, sep = "-")
+rodents
+
+#c
+sp_by_site <- rodents %>% 
+  group_by(Site, Species) %>% 
+  summarize(Count = n())
+sp_by_site
+
+#d
+sp_by_site %>% 
+  pivot_wider(names_from = Species,
+              values_from = Count,
+              values_fill = 0)
+```
+
+### 5. Mammals (20 points
+
+```{r}
+mammals <- data.frame(site = c(1,1,2,3,3,3), 
+                      taxon = c('Suncus etruscus', 'Sorex cinereus', 
+                                'Myotis nigricans', 'Notiosorex crawfordi', 
+                                'Suncus etruscus', 'Myotis nigricans'),
+                      density = c(6.2, 5.2, 11.0, 1.2, 9.4, 9.6),
+                      mass = c(4.2, 5, 9.1, 8.6, 4.1, 8.7))
+```
+
+a.  separate
+b.  pivot longer
+c.  unite
+d.  pivot wider
+
+```{r}
+mammals <- mammals %>% 
+  separate(taxon, c("genus", "species"), sep = " ")
+
+mammals <- mammals %>% 
+  pivot_longer(density:mass, names_to = "measurement", values_to = "value")
+
+mammals <- mammals %>% 
+  unite("taxon", genus, species, sep = " ")
+
+mammals <- mammals %>% 
+  pivot_wider(names_from = measurement, values_from = value)
+```
