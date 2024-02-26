@@ -61,7 +61,7 @@ ggplot(forest, aes(Year, ForestArea_sqkm)) +
 
 ### 2. OECD Data (10 pts)
 
-We have some data from the Organisation for Economic Co-operation and Development (OECD) about various global fishing economies and sustainability. This dataset has the area of protected marine reserves. 
+We have some data from the Organisation for Economic Co-operation and Development (OECD) about various global fishing economies and sustainability. This dataset has the area of protected marine reserves.
 
 Run this line of code to read in the file. Like the forest data, this data has a few rows of metadata at the top of the document that we need to skip.
 
@@ -154,10 +154,11 @@ veg <- veg %>%
 #c
 inner_join(rodents, veg)
 ```
-a. Rename the columns that should be renamed. Use a consistent structure (and make the Site and Trap Location column names match those from the rodents data frame).
-b. Select the Site, Trap Location and Grouped Veg columns and save those as a new dataframe
-c. Use an `inner_join()` to join those same 2 data frames
-d. In your own words (~2-3 sentences), explain how the inner join in (c) worked.
+
+a.  Rename the columns that should be renamed. Use a consistent structure (and make the Site and Trap Location column names match those from the rodents data frame).
+b.  Select the Site, Trap Location and Grouped Veg columns and save those as a new dataframe
+c.  Use an `inner_join()` to join the microsite data frame with the cleaned capture data from Question 3.
+d.  In your own words (\~2-3 sentences), explain how the inner join in (c) worked.
 
 ### 5. Santa Cruz Rodents Wrangling (20 pts)
 
@@ -211,8 +212,8 @@ mammals <- data.frame(site = c(1,1,2,3,3,3),
 a.  Use the `separte()` function to create columns for the genus and species (from the taxon column)
 b.  Use `pivot_longer` so that `density` and `mass` end up in one column and the values end up in another column
 c.  Even though the data from (b) is longer, it isn't tidier. Explain why not.
-c.  Use the `unite()` function to bring the genus and species column back together as one column with whatever separator you choose.
-d.  Use `pivot_wider()` to bring the data frame back to it's original state.
+d.  Use the `unite()` function to bring the genus and species column back together as one column with whatever separator you choose.
+e.  Use `pivot_wider()` to bring the data frame back to it's original state.
 
 ```{r}
 mammals <- mammals %>% 

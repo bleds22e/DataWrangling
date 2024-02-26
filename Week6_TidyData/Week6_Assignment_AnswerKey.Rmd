@@ -74,6 +74,32 @@ oecd
 
 ```{r}
 rodents <- read_csv("capture_data.csv")
+
+#a
+rodents <- rodents %>% 
+  rename(TrapID = `Trap ID`, Status = `Status (R/N)`, TotalWeight = `Total Weight`,
+         BagWeight = `Bag weight`, AnimalWeight = `Animal Weight`, 
+         HindfoodLength = `Hind foot length`, TailLength = `Tail length`,
+         HairSample = `Hair sample (Y/N)`, Position = `Position (R/L)`)
+
+#b 
+rodents <- rodents %>% 
+  fill(Site)
+
+#c
+rodents <- rodents %>% 
+  mutate(Species = replace(Species, Species == "SIOC?", "SIOC"),
+         Species = replace(Species, Species == "DIME?", "DIME"))
+
+#d
+rodents <- rodents %>% 
+  mutate(TailLength = replace(TailLength, TailLength == "~15.5", "15.5"))
+
+#e
+rodents <- rodents %>% 
+  mutate(HairSample = na_if(HairSample, "?"),
+         Position = na_if(Position, "?"))
+
 ```
 
 
