@@ -1,0 +1,61 @@
+---
+title: 'Week 7: Dates and Strings'
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Working with Dates and Strings
+
+This week, we are going to learn a bit about how to work with some of the more troublesome data types in R: dates and character strings.
+
+Fortunately, the `tidyverse` includes packages to help us with both.
+```{r}
+library(tidyverse)
+```
+
+
+## Dates and Times with `lubridate`
+
+```{r}
+water <- read_tsv("https://nwis.waterservices.usgs.gov/nwis/iv/?sites=09482495&parameterCd=00060&startDT=2023-01-01T00:00:00.000-07:00&endDT=2023-12-31T23:59:59.999-07:00&siteStatus=all&format=rdb",
+                  skip = 27, col_names = TRUE)
+
+head(water)
+```
+```{r}
+water <- read_tsv("https://nwis.waterservices.usgs.gov/nwis/iv/?sites=09482495&parameterCd=00060&startDT=2023-01-01T00:00:00.000-07:00&endDT=2023-12-31T23:59:59.999-07:00&siteStatus=all&format=rdb",
+                  skip = 27, 
+                  col_names = TRUE) %>% 
+  slice(-1)
+
+head(water)
+```
+```{r}
+water <- water %>% 
+  rename(discharge_ft3_s = `307121_00060`,
+         qualification_code = `307121_00060_cd`) %>% 
+  mutate(discharge_ft3_s = as.double(discharge_ft3_s))
+
+head(water)  
+```
+
+
+
+```{r}
+ggplot(water, aes(datetime, `307121_00060`)) +
+  geom_point()
+```
+
+
+```{r}
+water <- water %>% 
+  mutate(datetime = ymd_hm(datetime))
+
+head(water)
+```
+
