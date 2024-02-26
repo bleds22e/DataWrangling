@@ -47,13 +47,16 @@ head(water)
 
 
 ```{r}
-ggplot(water, aes(datetime, `307121_00060`)) +
+ggplot(water, aes(datetime, discharge_ft3_s)) +
   geom_point()
 ```
 
 
 ```{r}
-water <- water %>% 
+water %>% 
+  mutate(datetime = as_datetime(datetime, format = "%Y-%m-%d %H:%M", tz = "MST"))
+
+water %>% 
   mutate(datetime = ymd_hm(datetime))
 
 head(water)
