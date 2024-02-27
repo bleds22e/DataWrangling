@@ -1,0 +1,152 @@
+---
+title: "Assignment 7, Part I"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Details
+
+### Purpose
+
+The goal of this assignment is to work with dates and times using the `lubridate` package.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+March 11 at midnight MST
+
+# Assignment Exercises
+
+The assignment for week 7 is divided into 2 parts: 
+
+-   Part 1: `lubridate`
+-   Part 2: `stringr`
+
+### 1. Set-Up (5 pts)
+
+Load in the `tidyverse`.
+
+```{r}
+library(tidyverse)
+```
+
+### 2. When Did You Knit This Document? (5 pts)
+
+Write code to do the following:
+
+a.   The first line should print only the date that you knit this document.
+b.   The second line should print the date and time that you knit this document.
+
+```{r}
+#a
+today()
+
+#b
+now()
+```
+
+
+### 3. Plant Vouchers (20 pts)
+
+During my PhD, I collected plant vouchers from my field site that I eventually submitted to the UA Herbarium for identification. I also got DNA sequences for most of them (but not all). Read in that dataset by running the code chunk below.
+
+```{r}
+vouchers <- read_csv("https://raw.githubusercontent.com/weecology/DNA_metabarcoding/master/data/collection_data/plant_voucher_collection.csv")
+vouchers
+```
+
+a.    Using the `make_date` function and the `mutate()` function, create a new column called "collection_date" that has the year, month, and day that I collected the voucher specimen for each plant. Save this new column in the `vouchers` dataframe.
+b.    Using the `min()` function, find the earliest date that I collected a voucher specimen. Using the `summarize()` function is optional.
+c.    What is the latest date that I collected a vocuher specimen?
+d.    What is the span of time (duration) that I was collecting voucher specimens?
+e.    Create a column for the day of year that each specimen was collected.
+
+```{r}
+#a
+vouchers <- vouchers %>% 
+  mutate(collection_date = make_date(year = year,
+                                     month = month,
+                                     day = day), .after = day)
+vouchers
+
+#b
+min(vouchers$collection_date)
+
+#c
+max(vouchers$collection_date)
+
+#d
+as.duration(interval(min(vouchers$collection_date), max(vouchers$collection_date)))
+
+#e
+vouchers %>% 
+  mutate(DOY = yday(collection_date), .after = collection_date)
+```
+
+### 4. NDVI from the Santa Rita Experimental Range (20 pts)
+
+There is a large network of phenocams (cameras set up to take daily images of a landscape to monitor plant phenology) across the US. The Santa Rita Experimental Range (SRER) has one such camera.
+
+One value that can we calculated from these phenocameras is the NDVI of the landscape in the picture, which gives us a measurement of vegetation "greenness."
+
+Run the following code chunk to bring in a subset of the SRER dataset from their phenocam.
+```{r}
+phenocam <- read_csv("neon_srer_ndvi_phencom.csv", skip = 17, col_names = TRUE, 
+                    col_types = "ccncc") %>% 
+  select(date, local_std_time, contains("mean"), NDVI_c)
+```
+
+a.    Create a new column in `phenocam` that uses the `unite()` function to join the date and time columns together into one column. Separate the date and time with a space.
+b.    Convert the datetime column you created in (a) to a POSIXct format. Save this new column to `phenocam`.
+c.    What is the duration of the phenocam dataset?
+d.    Create new columns in `phenocam` for the year, the month, and the day of year.
+e.    Using the year and month columns you created in (d), calculate the average NDVI value for each month in the dataset.
+
+```{r}
+#a create datetime column using unite
+phenocam <- phenocam %>% 
+  unite("datetime", date, local_std_time, sep = " ")
+phenocam
+
+#b convert to POSIXct using lubridate
+phenocam <- phenocam %>% 
+  mutate(datetime = ymd_hms(datetime))
+phenocam
+
+#c duration of dataset
+as.duration(interval(min(phenocam$datetime), max(phenocam$datetime)))
+
+#d make separte columns for year, month, and DOY
+phenocam <- phenocam %>% 
+  mutate(year = year(datetime),
+         month = month(datetime),
+         DOY = yday(datetime))
+phenocam
+
+#e calculate mean NVDI per month per year
+phenocam %>% 
+  group_by(year, month) %>% 
+  summarise(mean_NVDI = mean(NDVI_c, na.rm = TRUE))
+
+```
+
