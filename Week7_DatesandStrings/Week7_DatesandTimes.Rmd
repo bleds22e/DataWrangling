@@ -1,5 +1,5 @@
 ---
-title: 'Week 7: Dates and Strings'
+title: 'Week 7: Dates and Times'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -13,9 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This week, we are going to learn a bit about how to work with some of the more troublesome data types in R: dates and character strings.
 
+I've divided the lessons and the assignment into 2 parts this week. Today, we will work with the `lubridate` package to learn about working with dates and times. Part 1 of the Assignment will do the same.
+
 ## Set-Up
 
-Fortunately, the `tidyverse` includes packages to help us with both.
+As is becoming standard for us now, let's start by loading in the `tidyverse`.
 
 ```{r}
 
@@ -35,7 +37,7 @@ When we take a look at the data, we can see a number of rows that we need to ski
 
 Ok, we are close but not quite there. The first row of data is metadata rather than data.
 
-To remove that, we are going to use a new function called `slice()`. This removes rows from a dataframe based on position. We want to remove the first row.
+To remove that, we are going to use a new function called `slice()`, from the `dplyr` package. It allows us to select (or remove, in our case) rows from a dataframe based on position. We want to remove the first row.
 
 ```{r}
 
@@ -73,13 +75,13 @@ First, let's start with functions that return the current date and/or time. Thes
 
 Aside from these functions, we will mostly be using the `lubridate` functions within a `mutate` function to modify entire columns at once.
 
-### `datetime`
+### Making a `datetime` Column
 
 The most generic function in `lubridate` is `as_date` or the variant, `as_datetime`. These convert non-dates into a date data class.
 
 We need to specify the following arguments:
 
--   the datetime data to be converted to a date
+-   the data to be converted to a datetime
 -   the format of the datetime data
 -   optionally, we can specify the time zone
 
@@ -95,17 +97,17 @@ The way we specify the format of the datetime is a bit unusual. We use "conversi
 
 The characters that are used to separate the date and time data are interpreted literally. What does that mean? If the date is separated by `-`, the conversion specifications should be separated by `-`, too.
 
+For example, if our dates were formatted as `02/29/24`, the corresponding conversion format would be `%m/%d/%y`.
+
+Let's convert our datetime column to a datetime data class.
+
 ```{r}
 
 ```
 
 We can now see that the `datetime` column is something new, called `POSIXct`.
 
-You don't need to know too much about what that means. Behind the scenes, the date/time is being stored as the number of seconds since Jan 1, 1970 at 00:00:00 UTC, allowing R to perform mathematical calculations with dates and times.
-
-```{r}
-
-```
+You don't need to know too much about what that means beyond that this is a common way datetimes are stored in R. Behind the scenes, the date/time is being stored as the number of seconds since Jan 1, 1970 at 00:00:00 UTC, allowing R to perform mathematical calculations with dates and times, which I'll demonstrate latter in the lesson.
 
 ### Functions Specifying Date/Time Structure
 
@@ -182,3 +184,5 @@ In particular, `lubridate` has functions to calculate intervals between dates an
 ```{r}
 
 ```
+
+This lesson has really only scraped the surface of working with dates, but it should get you started if you need to do so in the future!

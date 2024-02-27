@@ -68,7 +68,7 @@ now()
 
 ### 3. Plant Vouchers (20 pts)
 
-During my PhD, I collected plant vouchers from my field site that I eventually submitted to the UA Herbarium for identification. I also got DNA sequences for most of them (but not all). Read in that dataset by running the code chunk below.
+During my PhD, I collected plant vouchers from the Portal Project that I eventually submitted to the UA Herbarium for identification. I also got DNA sequences for most of them (but not all). Read in that dataset by running the code chunk below.
 
 ```{r}
 vouchers <- read_csv("https://raw.githubusercontent.com/weecology/DNA_metabarcoding/master/data/collection_data/plant_voucher_collection.csv")
@@ -77,8 +77,8 @@ vouchers
 
 a.    Using the `make_date` function and the `mutate()` function, create a new column called "collection_date" that has the year, month, and day that I collected the voucher specimen for each plant. Save this new column in the `vouchers` dataframe.
 b.    Using the `min()` function, find the earliest date that I collected a voucher specimen. Using the `summarize()` function is optional.
-c.    What is the latest date that I collected a vocuher specimen?
-d.    What is the span of time (duration) that I was collecting voucher specimens?
+c.    Use code to find the last date that I collected a vocuher specimen.
+d.    Find the span of time (duration) that I was collecting voucher specimens.
 e.    Create a column for the day of year that each specimen was collected.
 
 ```{r}
@@ -107,9 +107,9 @@ vouchers %>%
 
 There is a large network of phenocams (cameras set up to take daily images of a landscape to monitor plant phenology) across the US. The Santa Rita Experimental Range (SRER) has one such camera.
 
-One value that can we calculated from these phenocameras is the NDVI of the landscape in the picture, which gives us a measurement of vegetation "greenness."
+One value that we can calculate from these phenocam images is the NDVI of the landscape in the picture, which gives us a measurement of vegetation "greenness." This value is likely to change through time due to seasonal changes in temperature, precipitation, etc.
 
-Run the following code chunk to bring in a subset of the SRER dataset from their phenocam.
+Run the following code chunk to bring in a subset of the SRER phenocam data.
 ```{r}
 phenocam <- read_csv("neon_srer_ndvi_phencom.csv", skip = 17, col_names = TRUE, 
                     col_types = "ccncc") %>% 
@@ -117,10 +117,10 @@ phenocam <- read_csv("neon_srer_ndvi_phencom.csv", skip = 17, col_names = TRUE,
 ```
 
 a.    Create a new column in `phenocam` that uses the `unite()` function to join the date and time columns together into one column. Separate the date and time with a space.
-b.    Convert the datetime column you created in (a) to a POSIXct format. Save this new column to `phenocam`.
-c.    What is the duration of the phenocam dataset?
+b.    Convert the datetime column you created in (a) to a POSIXct format. Save this new column to `phenocam`. You can use whichever function you would like.
+c.    Calculate the duration of the phenocam dataset provided here.
 d.    Create new columns in `phenocam` for the year, the month, and the day of year.
-e.    Using the year and month columns you created in (d), calculate the average NDVI value for each month in the dataset.
+e.    Using the year and month columns you created in (d), calculate the average NDVI value for each month in the dataset (each month in each year).
 
 ```{r}
 #a create datetime column using unite
@@ -147,6 +147,5 @@ phenocam
 phenocam %>% 
   group_by(year, month) %>% 
   summarise(mean_NVDI = mean(NDVI_c, na.rm = TRUE))
-
 ```
 

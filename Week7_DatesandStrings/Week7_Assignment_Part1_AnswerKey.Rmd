@@ -9,7 +9,6 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-
 ```{r message=FALSE}
 library(tidyverse)
 ```
@@ -23,7 +22,6 @@ today()
 #b
 now()
 ```
-
 
 ### 3. Plant Vouchers (20 pts)
 
@@ -88,4 +86,3 @@ phenocam %>%
   summarise(mean_NVDI = mean(NDVI_c, na.rm = TRUE))
 
 ```
-
