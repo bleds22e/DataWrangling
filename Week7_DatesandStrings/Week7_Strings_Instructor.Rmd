@@ -30,7 +30,7 @@ We’ll cover a number of helpful `stringr` functions in this lesson:
 Let's load the `tidyverse` and get started.
 
 ```{r}
-
+library(tidyverse)
 ```
 
 We will use some real data from my postdoc lab that I was tasked with cleaning.
@@ -43,6 +43,9 @@ Many of the tools we are covering in this class (especially the last few weeks w
 
 ```{r}
 url <- "https://raw.githubusercontent.com/bleds22e/FAST_lab_training/master/merging_masters/data/carbon_2020.csv"
+
+carbon <- read_csv(url) %>% rename(SampleID = `Sample ID`)
+carbon
 ```
 
 ### Strings in Vectors
@@ -52,7 +55,8 @@ To start working with strings, let's start with a vector instead of a dataframe.
 Let's pull out the first column (the `Sample ID` column) from the `carbon` dataframe.
 
 ```{r}
-
+sampleID <- carbon$SampleID
+sampleID
 ```
 
 Let's practice with each of our functions.
@@ -60,43 +64,46 @@ Let's practice with each of our functions.
 `str_length(string)`: count the number of characters in the string
 
 ```{r}
-
+str_length(sampleID)
 ```
 
 `str_count(string, pattern)`: count the number of times a pattern matches within a string
 
 ```{r}
-
+str_count(sampleID, "DEEP")
 ```
 
 `str_detect(string, pattern)`: determine if pattern is found within string
 
 ```{r}
-
+str_detect(sampleID, "DEEP")
 ```
 
 `str_subset(string, pattern)`: return subset of strings that match the pattern
 
 ```{r}
-
+str_subset(sampleID, "DEEP")
 ```
 
 `str_extract()`: return portion of each string that matches the pattern
 
 ```{r}
-
+# 3 characters after the /
+str_extract(sampleID, "/(...)")
+months <- str_extract(sampleID, "/(...)")
 ```
 
 `str_remove()` - remove portion of the string that matches the pattern
 
 ```{r}
-
+str_remove(months, "/")
 ```
 
 `str_replace()`: replace portion of string that matches the pattern with something else
 
 ```{r}
-
+# we can also replace values (with something new or with a blank)
+str_replace(months, "/", "")
 ```
 
 ## Using `stringr` in Data Frames
@@ -108,25 +115,30 @@ Let's run through a few examples using the full `carbon` dataframe.
 Perhaps we want only samples that were collected in August. We can use the `str_detect` function to set our condition. This works because the output of `str_detect` is a logical vector, as with other conditional statements or `is.na()`.
 
 ```{r}
-
+carbon %>% 
+  filter(str_detect(SampleID, "AUG"))
 ```
 
 Perhaps we want to filter for sample names over a certain length (for some reason). We can do that as well, though we need to structure our condition a little differently this time, because the output of `str_count` is not a logical vector.
 
 ```{r}
-
+carbon %>% 
+  filter(str_count(SampleID) > 13)
 ```
 
 Alternatively, perhaps we want to create a column with the month the sample was collected. We can use the `str_extract` and `str_replace` columns in a mutate function.
 
 ```{r}
-
+carbon %>% 
+  mutate(Month = str_extract(SampleID, "/(...)"),
+         Month = str_remove(Month, "/"))
 ```
 
 Alternatively, we could create a column for whether or not the sample was taken from below the surface ("DEEP").
 
 ```{r}
-
+carbon %>% 
+  mutate(Deep = str_extract(SampleID, "DEEP"))
 ```
 
 ## Regular Expressions
@@ -140,7 +152,7 @@ I'm not going to go deep into "regex," but you should know that they exist in ca
 As one example, let's say I wanted to pull out all of the characters after the `/` in the `sampleID` vector, since they represent dates. We could use the regular expression `"(?<=/).*"` to do so.
 
 ```{r}
-
+str_extract(sampleID, "(?<=/).*")
 ```
 
 ### Helpful Resources

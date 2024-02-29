@@ -1,0 +1,97 @@
+---
+title: "Assignment 7, Part II"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+### 2. Vectors (10 pts)
+
+```{r}
+lyrics <- c("This ain't Texas (woo),", 
+           "ain't no hold 'em (hey)/",
+           "So lay your cards down, down, down, down")
+```
+
+
+```{r}
+print("2a:")
+str_length(lyrics)
+
+print("2b:")
+str_count(lyrics, "down")
+
+print("2c:")
+str_detect(lyrics, "Texas")
+
+print("2d:")
+str_subset(lyrics, "\\((.*?)\\)")
+
+print("2e:")
+str_extract(lyrics, "\\((.*?)\\)")
+```
+
+### 3. Dugout Data (15 pts)
+
+```{r}
+dugout <- read_csv("elevation_2017.csv") %>% 
+  rename(SoilSalinity = `Soil Salinity`,
+         SoilZone = `Soil Zone`,
+         MajorSalts = `Major Salts in groundwater`)
+dugout
+```
+
+```{r}
+print("3a:")
+dugout %>% 
+  filter(str_detect(SoilSalinity, "slight"))
+
+print("3b:")
+dugout %>% 
+  filter(str_detect(Site_ID, "[A-Z]+"))
+
+print("3c:")
+dugout %>% 
+  mutate(pH = str_replace(pH, "acid", "acidic"))
+```
+
+### 4. Santa Cruz Rodents (20 pts)
+
+```{r}
+rodents <- read_csv("capture_data.csv")
+```
+
+```{r}
+print("Read in data:")
+rodents <- rodents %>% 
+  rename(TailLength = `Tail length`,
+         HairSample = `Hair sample (Y/N)`,
+         Position = `Position (R/L)`)
+
+print("4a:")
+rodents %>% 
+  filter(str_count(Species) != 4)
+
+print("4b:")
+rodents %>% 
+  mutate(TailLength = str_remove(TailLength, "~"))
+
+print("4c")
+rodents <- rodents %>% 
+  mutate(Species = str_remove(Species, "\\?"))
+rodents
+
+print("4d:")
+rodents <- rodents %>% 
+  mutate(HairSample = str_replace(HairSample, "\\?", NA_character_),
+         Position = str_replace(Position, "\\?", NA_character_))
+rodents
+```
