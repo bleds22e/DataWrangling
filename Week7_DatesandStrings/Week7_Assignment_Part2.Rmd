@@ -1,0 +1,115 @@
+---
+title: "Assignment 7, Part II"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Details
+
+### Purpose
+
+The goal of this assignment is to work with dates and times using the `lubridate` package.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+March 11 at midnight MST
+
+# Assignment Exercises
+
+The assignment for week 7 is divided into 2 parts:
+
+-   Part 1: `lubridate`
+-   Part 2: `stringr`
+
+This is Part 2, using `stringr`
+
+### 1. Set-Up (5 pts)
+
+Load in the `tidyverse`.
+
+```{r}
+library(tidyverse)
+```
+
+### 2. Vectors
+
+### 3. Santa Cruz Rodents
+
+Remember the rodent data from the Santa Cruz that we used in our assignment for Week 6? There were quite a few columns that had messy data, and we used a combination of `replace` and `na_if` to address the issues.
+
+Let's use `stringr` functions to complete the same tasks.
+
+First, read in the `capture_data.csv` file.
+
+```{r}
+rodents <- read_csv("capture_data.csv")
+```
+
+a.  species codes should be exactly 4 characters long, not more and not less. filter the dataframe (but do not save it) to show rows that have species codes that do not fit that requirement (hint: use `!=`)
+
+```{r}
+rodents %>% 
+  filter(str_count(Species) != 4)
+```
+
+b.  use `str_remove` to remove the `?` from the species column.
+
+    Because `stringr` by default expects regex in the "pattern" argument and `?` is a special regex character, we need to use the pattern `"\\?"`. The `\\` is an "escape," telling regex to treat the ? as a regular ?, not as a regex symbol.
+
+```{r}
+rodents %>% 
+  mutate(Species = str_remove(Species, "\\?"))
+```
+
+c. same thing, tail length and `~`
+```{r}
+rodents %>% 
+  mutate(`Tail length` = str_remove(`Tail length`, "~"))
+```
+
+d. use str_replace to replace the `?` in hair sample and position with `NA`
+```{r}
+
+```
+
+### 4. Dugout Data
+
+```{r}
+dugout <- read_csv("elevation_2017.csv")
+```
+
+a. salts
+b. "slight"
+c. "black"
+d. site ID has letters 
+```{r}
+dugout %>% 
+  filter(str_detect(Site_ID, "[A-Z]+"))
+```
+e. replace "acid" with "acidic"
+
+```{r}
+dugout %>% 
+```
+

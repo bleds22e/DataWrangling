@@ -1,0 +1,158 @@
+---
+title: 'Week 7: Character Strings'
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Working with Strings
+
+Working with character strings (text data) can be particularly challenging in R. Thankfully, we have the `stringr` to help!
+
+All functions in the `stringr` package start with `str_`. There are *many* helpful functions We’ll only review the basics here, but if you’re looking to accomplish something with a string and aren’t sure how to approach it, the `stringr` package is a good place to start.
+
+## `stringr` Functions
+
+We’ll cover a number of helpful `stringr` functions in this lesson:
+
+-   `str_length()` - count the number of characters in the string
+-   `str_count()` - count the number of times a pattern matches within a string
+-   `str_detect()` - determine if pattern is found within string
+-   `str_subset()` - return subset of strings that match the pattern
+-   `str_extract()` - return portion of each string that matches the pattern
+-   `str_remove()` - remove portion of the string that matches the pattern
+-   `str_replace()` - replace portion of string that matches the pattern with something else
+
+Let's load the `tidyverse` and get started.
+
+```{r}
+library(tidyverse)
+```
+
+We will use some real data from my postdoc lab that I was tasked with cleaning.
+
+```{r}
+url <- "https://raw.githubusercontent.com/bleds22e/FAST_lab_training/master/merging_masters/data/carbon_2020.csv"
+
+carbon <- read_csv(url) %>% rename(SampleID = `Sample ID`)
+carbon
+```
+
+### Strings in Vectors
+
+To start working with strings, let's start with a vector instead of a dataframe.
+
+Let's pull out the first column (the `Sample ID` column) from the `carbon` dataframe.
+
+```{r}
+sampleID <- carbon$SampleID
+sampleID
+```
+
+Let's practice with each of our functions.
+
+`str_length(string)`: count the number of characters in the string
+
+```{r}
+str_length(sampleID)
+```
+
+`str_count(string, pattern)`: count the number of times a pattern matches within a string
+
+```{r}
+str_count(sampleID, "DEEP")
+```
+
+`str_detect(string, pattern)`: determine if pattern is found within string
+
+```{r}
+str_detect(sampleID, "DEEP")
+```
+
+`str_subset(string, pattern)`: return subset of strings that match the pattern
+
+```{r}
+str_subset(sampleID, "DEEP")
+```
+
+`str_extract()`: return portion of each string that matches the pattern
+
+```{r}
+# 3 characters after the /
+str_extract(sampleID, "/(...)")
+months <- str_extract(sampleID, "/(...)")
+```
+
+`str_remove()` - remove portion of the string that matches the pattern
+
+```{r}
+str_remove(months, "/")
+```
+
+`str_replace()`: replace portion of string that matches the pattern with something else
+
+```{r}
+# remove "DEEP" from the names
+str_replace(months, "/", "")
+```
+
+## Using `stringr` in Data Frames
+
+Like we saw with the `lubridate` functions, you will often want to use `stringr` functions within other `tidyverse` functions, such as `filter` or `mutate`.
+
+Let's run through a few quick examples using the full `carbon` dataframe.
+
+For example, perhaps we want only samples that were collected in August. We can use the `str_detect` function to set our condition. This works because the output of `str_detect` is a logical vector, as with other conditional statements or `is.na()`.
+
+```{r}
+carbon %>% 
+  filter(str_detect(SampleID, "AUG"))
+```
+
+Perhaps we want to filter for sample names over a certain length (for some reason). We can do that as well, though we need to structure our condition a little differently this time, because the output of `str_count` is not a logical vector.
+
+```{r}
+carbon %>% 
+  filter(str_count(SampleID) > 13)
+```
+
+Alternatively, perhaps we want to create a column with the month the sample was collected. We can use the `str_extract` and `str_replace` columns in a mutate function.
+
+```{r}
+carbon %>% 
+  mutate(Month = str_extract(SampleID, "/(...)"),
+         Month = str_remove(Months, "/"))
+```
+
+Alternatively, we could create a column for whether or not the sample was taken from below the surface ("DEEP").
+
+```{r}
+carbon %>% 
+  mutate(Deep = str_extract(SampleID, "DEEP"))
+```
+
+## Regular Expressions
+
+While being able to match specific strings is helpful, often we have more complicated requirements, such as counting all the numbers from a string, removing the first 3 characters of a string, or extracting all of the values after a certain symbol.
+
+When we need to perform more complicated tasks using strings, we can turn to something called "regular expressions," or "regex" for short. Regular expressions uses characters and special symbols to define certain search patterns in concise ways.
+
+I'm not going to go deep into "regex," but you should know that they exist in case you need to use them in the future.
+
+As one example, let's say I wanted to pull out all of the characters after the `/` in the `sampleID` vector, since they represent dates. We could use the regular expression `"(?<=/).*"` to do so.
+
+```{r}
+str_extract(sampleID, "(?<=/).*")
+```
+
+### Helpful Resources
+
+While memorizing regular expressions is wildly daunting, there are thankfully numerous resources that we can use to help us out.
+
+[Here](https://regex101.com/) is a website where you can build and test regex.
+
+Honestly, though, I use ChatGPT to build my regex! To build the `"(?<=/).*"` expression from above, I asked ChatGPT to "use regex and `str_extract` to extract everything after a `/`, not including the `/`", and it produced exactly what I needed.
