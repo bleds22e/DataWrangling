@@ -52,9 +52,73 @@ Load in the `tidyverse`.
 library(tidyverse)
 ```
 
-### 2. Vectors
+### 2. Vectors (10 pts)
 
-### 3. Santa Cruz Rodents
+Let's ease into our practice working with strings with some lyrics from the first Black woman to ever hit the top of the Country music charts.
+
+```{r}
+texas <- c("This ain't Texas (woo),", 
+           "ain't no hold 'em (hey)/",
+           "So lay your cards down, down, down, down")
+```
+
+a.  Use `str_length` to determine how many characters are in each string
+b.  Use `str_count` to count the number of times the word "down" occurs in each string.
+c.  Use `str_detect` to find the strings which have the word "Texas" in them.
+d.  Use `str_subset` to select the string that have words in parentheses. Use the following regex as the pattern to match: `\\((.*?)\\)`
+e.  Use `str_extract` to pull out the parentheticals themselves. Use the same regex as in (d)
+
+```{r}
+#a
+str_length(texas)
+
+#b
+str_count(texas, "down")
+
+#c
+str_detect(texas, "Texas")
+
+#d
+str_subset(texas, "\\((.*?)\\)")
+
+#e
+str_extract(texas, "\\((.*?)\\)")
+```
+
+### 3. Dugout Data (15 pts)
+
+Dugouts are human-made water resevoirs on the landscape, often used for cattle or other ranching ventures.
+
+Here is another example of data from my postdoc lab that I was asked to clean up. I'm going to go ahead and clean up the column names for the columns we will be using in the following questions.
+
+```{r}
+dugout <- read_csv("elevation_2017.csv") %>% 
+  rename(SoilSalinity = `Soil Salinity`,
+         SoilZone = `Soil Zone`,
+         MajorSalts = `Major Salts in groundwater`)
+dugout
+```
+You do not need to save any of the outputs for this question.
+
+a.  Using `filter` and `str_detect`, return rows that have "slight" in the `SoilSalinity` column
+b.  Using `filter` and `str_detect`, return rows that have a letter in the `Site_ID` column. The pattern to match is `"[A-Z]+"`.
+c.  Using `mutate` and `str_replace`, replace the word "acid" with "acidic" in the `pH` column.
+
+```{r}
+# a
+dugout %>% 
+  filter(str_detect(SoilSalinity, "slight"))
+
+# b
+dugout %>% 
+  filter(str_detect(Site_ID, "[A-Z]+"))
+
+# c 
+dugout %>% 
+  mutate(pH = str_replace(pH, "acid", "acidic"))
+```
+
+### 4. Santa Cruz Rodents (20 pts)
 
 Remember the rodent data from the Santa Cruz that we used in our assignment for Week 6? There were quite a few columns that had messy data, and we used a combination of `replace` and `na_if` to address the issues.
 
@@ -66,50 +130,50 @@ First, read in the `capture_data.csv` file.
 rodents <- read_csv("capture_data.csv")
 ```
 
-a.  species codes should be exactly 4 characters long, not more and not less. filter the dataframe (but do not save it) to show rows that have species codes that do not fit that requirement (hint: use `!=`)
+The column names in the dataset have not been cleaned. You can either clean up the column names before working through the questions or you can use the column names in backticks throughout the rest of the question--up to you!
+
+We will be using the `Species`, `Tail length`, `Hair sample (Y/N)`, and `Position (R/L)` columns.
+
+Also, you do not need to save any of the outputs from this question, though you can in b-d, if you would like to.
+
+```{r}
+rodents <- rodents %>% 
+  rename(TailLength = `Tail length`,
+         HairSample = `Hair sample (Y/N)`,
+         Position = `Position (R/L)`)
+```
+
+a.  Species codes should be exactly 4 characters long, not more and not less. Filter the dataframe (but do not save it) to show rows that have species codes that do not fit that requirement (hint: use `!=`).
 
 ```{r}
 rodents %>% 
   filter(str_count(Species) != 4)
 ```
 
-b.  use `str_remove` to remove the `?` from the species column.
+b.  Use `str_remove` to remove the `~` from the `Tail Length` column (it is in the last row).
+
+```{r}
+rodents %>% 
+  mutate(TailLength = str_remove(TailLength, "~"))
+```
+
+b.  Use `str_remove` to remove the `?` from the `Species` column.
 
     Because `stringr` by default expects regex in the "pattern" argument and `?` is a special regex character, we need to use the pattern `"\\?"`. The `\\` is an "escape," telling regex to treat the ? as a regular ?, not as a regex symbol.
 
 ```{r}
-rodents %>% 
+rodents <- rodents %>% 
   mutate(Species = str_remove(Species, "\\?"))
+rodents
 ```
 
-c. same thing, tail length and `~`
-```{r}
-rodents %>% 
-  mutate(`Tail length` = str_remove(`Tail length`, "~"))
-```
+d.  Use `str_replace` to replace the `?` in hair sample and position with `NA`. Remember to use `"\\?"`.
 
-d. use str_replace to replace the `?` in hair sample and position with `NA`
-```{r}
-
-```
-
-### 4. Dugout Data
+    `stringr` expects a character value, and NA is not a character value--it is a NULL value. To get around this, we need to use `NA_character_` in place of `NA`, a special work around.
 
 ```{r}
-dugout <- read_csv("elevation_2017.csv")
+rodents <- rodents %>% 
+  mutate(HairSample = str_replace(HairSample, "\\?", NA_character_),
+         Position = str_replace(Position, "\\?", NA_character_))
+rodents
 ```
-
-a. salts
-b. "slight"
-c. "black"
-d. site ID has letters 
-```{r}
-dugout %>% 
-  filter(str_detect(Site_ID, "[A-Z]+"))
-```
-e. replace "acid" with "acidic"
-
-```{r}
-dugout %>% 
-```
-
