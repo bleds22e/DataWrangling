@@ -49,7 +49,7 @@ This is Part 2, using `stringr`
 Load in the `tidyverse`.
 
 ```{r}
-library(tidyverse)
+
 ```
 
 ### 2. Vectors (10 pts)
@@ -71,20 +71,7 @@ d.  Use `str_subset` to select the string that have words in parentheses. Use th
 e.  Use `str_extract` to pull out the parentheticals themselves. Use the same regex as in (d)
 
 ```{r}
-#a
-str_length(lyrics)
 
-#b
-str_count(lyrics, "down")
-
-#c
-str_detect(lyrics, "Texas")
-
-#d
-str_subset(lyrics, "\\((.*?)\\)")
-
-#e
-str_extract(lyrics, "\\((.*?)\\)")
 ```
 
 ### 3. Dugout Data (15 pts)
@@ -108,17 +95,7 @@ b.  Using `filter` and `str_detect`, return rows that have a letter in the value
 c.  Using `mutate` and `str_replace`, replace the word "acid" with "acidic" in the `pH` column.
 
 ```{r}
-# a
-dugout %>% 
-  filter(str_detect(SoilSalinity, "slight"))
 
-# b
-dugout %>% 
-  filter(str_detect(Site_ID, "[A-Z]+"))
-
-# c 
-dugout %>% 
-  mutate(pH = str_replace(pH, "acid", "acidic"))
 ```
 
 ### 4. Santa Cruz Rodents (20 pts)
@@ -130,7 +107,7 @@ Let's use `stringr` functions to complete the same tasks.
 First, read in the `capture_data.csv` file.
 
 ```{r}
-rodents <- read_csv("capture_data.csv")
+
 ```
 
 The column names in the dataset have not been cleaned. You can either clean up the column names before working through the questions or you can use the column names in backticks throughout the rest of the question--up to you!
@@ -140,29 +117,7 @@ We will be using the `Species`, `Tail length`, `Hair sample (Y/N)`, and `Positio
 Also, you do not need to save any of the outputs from this question, though you can in b-d, if you would like to.
 
 ```{r}
-rodents <- rodents %>% 
-  rename(TailLength = `Tail length`,
-         HairSample = `Hair sample (Y/N)`,
-         Position = `Position (R/L)`)
 
-print("4a:")
-rodents %>% 
-  filter(str_count(Species) != 4)
-
-print("4b:")
-rodents %>% 
-  mutate(TailLength = str_remove(TailLength, "~"))
-
-print("4c")
-rodents <- rodents %>% 
-  mutate(Species = str_remove(Species, "\\?"))
-rodents
-
-print("4d:")
-rodents <- rodents %>% 
-  mutate(HairSample = str_replace(HairSample, "\\?", NA_character_),
-         Position = str_replace(Position, "\\?", NA_character_))
-rodents
 ```
 
 a.  Species codes should be exactly 4 characters long, not more and not less. Filter the dataframe (but do not save it) to show rows that have species codes that do not fit that requirement (hint: use `!=`).
