@@ -40,16 +40,10 @@ download.file("https://ndownloader.figshare.com/files/3299474",
 download.file("https://ndownloader.figshare.com/files/3299483",
   "species.csv")
 download.file("https://datacarpentry.org/semester-biology/data/mammal-size-data-clean.tsv",
-  "mammal-size-data-clean.tsv")
+  "mammal-size-data-clean.txt")
 ```
 
 ## Problem Decomposition steps
-
-Open the following images one per tab and cycle through: \*
-<https://i.imgflip.com/80ul6w.jpg> \*
-<https://www.smarterandharder.com/wp-content/uploads/2021/02/breaking-down-problems-1024x683.jpg.webp>
-\*
-<https://thirdsectorlab.co.uk/wp-content/uploads/2021/06/How-do-you-eat-an-elephant.png>
 
 One great way to work through the steps of coding is to break down the
 problem into smaller, more manageable chunks. This can also help you get
@@ -71,9 +65,9 @@ Here are some good guidelines:
 
 ### Let's Practice!
 
-Take a look at Question 5 in the assignment. Spend a few minutes reading
+Take a look at Question 4 in the assignment. Spend a few minutes reading
 through the question, restate the question in your on words, and then
-write down each step in general terms.
+break down the steps.
 
 ### Iteration
 
@@ -84,17 +78,14 @@ produce the output you are looking for.
 When writing more and more complex code, it can help to start simple and
 build the code up.
 
-1.  Experiment
-2.  Write a simpler version
-3.  Make sure it works
-4.  Make sure you understand it
-5.  Modify it to make it more complicated
-6.  Repeat until finished
+> Write a simple version -\> Make sure it works -\> Make sure you
+> understand it -\> Modify it to make it more complicated -\> Repeat
+> until finished
 
 Perhaps we want to calculate the average hindfoot length in cm for each
 rodent species at Portal.
 
-Let's start by breaking down the problem.
+Let's start by breaking down the problem. Then, we can add one piece at a time
 
 ```{r}
 # join species and surveys data
@@ -128,14 +119,14 @@ your assignments, but let's talk about some general strategies together.
 
 2.  **Do not change something without a reason.**
 
--   Develop hypotheses!
-    -   See where the code failed.
-    -   Read the error message.
-    -   Observe what the code is doing.
-        -   Look at the current state of the environment. This gives you
-            a current snapshot of what is going on
-        -   Talk through the code
-        -   [Rubber duck
+Develop hypotheses!
+-   See where the code failed.
+-   Read the error message.
+-   Observe what the code is doing.
+    -   Look at the current state of the environment. This gives you
+        a current snapshot of what is going on
+    -   Talk through the code
+    -   [Rubber duck
             programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
 
 3.  Run the code line by line checking each step.
@@ -147,7 +138,7 @@ Below, we have a code chunk with some code that is mean to summarize
 some of the Portal data and then plot it. However, as you'll see when
 you try to run the code, we have some errors.
 
-Spend a few minutes working through this code chunk to debug it. Utilize
+First, copy the code into a new code chunk below. Spend a few minutes working through this code chunk to debug it. Utilize
 some of the strategies above.
 
 Code chunk to debug: leave as is for reference.
@@ -172,100 +163,6 @@ Insert a code chunk here. Copy the code from above and work to debug it.
 
 Now, let's copy the code into ChatGPT and see what it finds and what it
 gets wrong.
-
-## Introduction to Reproducibility
-
-Our ultimate goal in this course is to work with our data (and
-eventually run analyses) that are fully *computationally reproducible*.
-In plain language, that means we want to be able to rerun a full
-analysis with a single click (or command).
-
-Our very first step is to make sure that our code can run at any time
-and from anywhere (the anywhere part will become more important when we
-are out of Posit Cloud, starting next week).
-
-We want to make sure that anyone (collaborators, advisors, reviewers,
-etc.) can run the analysis without having to make *any* changes to the
-code.
-
-### Setup
-
-> Make sure that `Tools` -\> `Global Options` -\> `General` -\>
-> `Save workspace to ~/.RData on exit` is set to the default `Ask`
-
-### Make sure things you did before don't matter
-
--   Computers store the results of each command run in sequence
--   Change something
--   Looks like it still works
--   Only works because of something you did earlier in the same session
-
-### Clearing environments and restarting R
-
--   Clear R environment using the broom icon on the `Environment` tab.
-
-    -   Doesn't unload packages
-    -   Useful when developing code
-
--   Restart R to get a clean environment
-
-    -   Works locally (not in Posit Cloud; `Session` -\> `Restart R`
-        always reloads environment)
-    -   Does unload packages
-    -   Useful for making sure everything works
-    -   As long is it doesn't secretly reload things
-
--   Run entire file using `Source` button or `Ctrl-Shift-S`
-
--   Makes sure that the code runs fully and produces desired result
-
--   Stop R from storing the state of the environment
-
--   When you close RStudio it will often ask if you want to save your
-    workspace
-
--   *Start to close RStudio*
-
--   *Show Save dialog*
-
--   Or on Posit Cloud it will just do this automatically
-
--   If you do this is will get reloaded when you start R, even when you
-    restart it as described above
-
--   Stop this by `Tools` -\> `Global Options` -\> `General` -\>
-    `Save workspace to ~/.RData on exit` -\> `Never`
-
--   Unclick `Restore .RData into workspace at startup`
-
-### Make sure code works on other computers
-
--   Don't use `setwd()`
-    -   Use projects and relative paths
-        -   In PositCloud, you are already doing this!
-        -   We will talk about what this looks like on your own
-            computers next week
-    -   `data/mydata.csv` not `C:\Users\Batman\DataCarp\data\mydata.csv`
--   Write code that works on all operating systems
-    -   Filenames in code should match actual names exactly, including
-        capitalization
-    -   Use `/` instead of `\` or `\\` in paths
-
-### Clean up extra code
-
--   Remove (or, at a minimum, comment out) experiments from your code
--   Remove `install.packages()` lines from your code
--   Avoid reinstalling packages repeatedly
--   It is good practice to load any packages and data you use in your
-    script at the beginning of the script
-
-```{r eval = FALSE}
-# Use `Ctrl` + `Shift` + `C` (or `Cmd` + `Shift` + `C`) to comment out large chunks of code.
-code
-test
-testing code
-code
-```
 
 ## Finding Help
 
