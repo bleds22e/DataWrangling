@@ -1,0 +1,185 @@
+---
+title: "Assignment 8"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+### 2. Portal Data Review (25 points)
+
+```{r}
+surveys <- read_csv('surveys.csv')
+species <- read_csv('species.csv')
+plots <- read_csv('plots.csv')
+
+# a. Create a data frame with only data for the `species_id` `DO`, with the columns `year`, `month`, `day`, `species_id`, and `weight`.
+print("2a")
+surveys %>%
+  filter(species_id == "DO") %>%
+  select(year, month, day, species_id, weight)
+
+# b. Create a data frame with only data for species IDs `PP` and `PB` and for years starting in 1995, with the columns `year`, `species_id`, and `hindfoot_length`, with no null values for `hindfoot_length`.
+print("2b")
+surveys %>%
+  filter(species_id == "PP" | species_id == "PB") %>%
+  filter(year >= 1995) %>%
+  select(year, species_id, hindfoot_length,) %>%
+  filter(!is.na(hindfoot_length))
+
+# c. Create a data frame with the average `hindfoot_length` for each `species_id` in each `year` with no null values.
+print("2c")
+surveys %>%
+  filter(!is.na(hindfoot_length)) %>%
+  group_by(species_id, year) %>%
+  summarize(mean_hf = mean(hindfoot_length))
+
+# d. Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the `genus` is `"Dipodomys"`.
+print("2d")
+surveys %>%
+  inner_join(species, by = "species_id") %>%
+  inner_join(plots, by = "plot_id") %>%
+  select(year, genus, species, weight, plot_type) %>%
+  filter(genus == "Dipodomys")
+
+# e. Make a scatter plot with `hindfoot_length` on the x-axis and `weight` on the y-axis. Color the points by `species_id`. Include good axis labels.
+print("2e")
+ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length, color = species_id)) +
+  geom_point() +
+  scale_x_log10() +
+  labs(x = "Weight (g)", y = "Hindfoot Length (mm)")
+
+# f. Make a histogram of weights with a separate subplot for each `species_id`.
+# Do not include species with no weights.
+# Set the `scales` argument to `"free_y"` so that the y-axes can vary.
+# Include good axis labels.
+print("2f")
+surveys_with_weights <- filter(surveys, !is.na(weight))
+surveys_with_weights
+
+ggplot(data = surveys_with_weights, mapping = aes(x = weight)) +
+  geom_histogram() +
+  facet_wrap(~species_id, scales = "free_y") +
+  labs(x = "Weight (g)", y = "Number of Individuals")
+
+# g. (Challenge) Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, with a different facet (i.e., subplot) for each of three `plot_type`'s `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`.  
+print("2g, optional")
+plot_data <- surveys %>%
+  inner_join(plots) %>%
+  filter(species_id == "PP" | species_id == "PB" | species_id == "DM") %>%
+  filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure" | plot_type == "Short-term Krat Exclosure")
+plot_data
+
+ggplot(data = plot_data, aes(x = weight, fill = species_id)) +
+  geom_histogram() +
+  facet_wrap(~plot_type) +
+  labs(x = "Weight (g)", y = "Number of Individuals", title = "Size distribution comparison across treatments")
+```
+
+### 3. Megafaunal Extinction (35 points)
+
+
+   
+```{r}
+print("3a")
+mammal_sizes <- read_tsv("mammal-size-data-clean.tsv", na = c("-999"))
+str(mammal_sizes)
+
+# Figure 1
+print("3b")
+mammal_sizes_cleaned <- mammal_sizes %>% 
+  filter(continent != "Insular", continent != "Oceanic", continent != "EA") %>% 
+  filter(status %in% c("extant", "extinct"))
+
+ggplot(mammal_sizes_cleaned, aes(x = mass, fill = status)) +
+  geom_histogram(bins = 25) +
+  scale_x_log10() +
+  facet_wrap(~continent) +
+  labs(x = "Mass (g)", y = "Number of Species")
+
+# Figure 2
+print("3c")
+fig_2_data <- mammal_sizes %>% 
+  filter(continent %in% c("NA", "SA"), order %in% c("Xenarthra", "Carnivora"),
+         status %in% c("extinct", "extant"))
+
+ggplot(fig_2_data, aes(x = mass, fill = status)) +
+  geom_histogram(bins = 19) +
+  scale_x_log10() +
+  facet_wrap(~order+continent) +
+  labs(x = "Mass (g)", y = "Number of Species")
+
+# Figure 3
+print("3d")
+fig_3_data <- mammal_sizes %>%
+  filter(continent == "AUS", status %in% c("extinct", "extant", "historical"))
+
+ggplot(fig_3_data, aes(x = mass, fill = status)) +
+  geom_histogram(bins = 25) +
+  scale_x_log10() +
+  labs(x = "Mass (g)", y = "Number of Species")
+
+# Optional
+
+# This is a fancy way to dynamically eliminate sites with no extinct species
+# But EA can also just be eliminated manually by adding it to the continent
+# filtering step below.
+print("3e, optional")
+extinct_rich_by_continent <- mammal_sizes %>% 
+  filter(status == "extinct") %>% 
+  distinct(continent)
+extinct_rich_by_continent
+
+mammal_sizes_cleaned <- mammal_sizes %>% 
+  inner_join(extinct_rich_by_continent) %>% 
+  filter(continent != "Insular", continent != "Oceanic") %>% 
+  filter(status %in% c("extant", "extinct"))
+mammal_sizes_cleaned
+```
+
+### 4. Palmer Penguins (35 points)
+
+```{r}
+library(palmerpenguins)
+
+# because the data is from a package, it doesnt automatically show up in our environment unless with use the assignment arrow to place it there
+penguins <- penguins
+head(penguins)
+```
+
+```{r}
+# Adelie penguin data from: https://doi.org/10.6073/pasta/abc50eed9138b75f54eaada0841b9b86
+url_adelie <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.219.3&entityid=002f3893385f710df69eeebe893144ff"
+adelie <- read_csv(url_adelie)
+
+# Gentoo penguin data from: https://doi.org/10.6073/pasta/2b1cff60f81640f182433d23e68541ce
+url_gentoo <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.220.3&entityid=e03b43c924f226486f2f0ab6709d2381"
+gentoo <- read_csv(url_gentoo)
+
+# Chinstrap penguin data from: https://doi.org/10.6073/pasta/409c808f8fc9899d02401bdb04580af7
+url_chinstrap <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.221.2&entityid=fe853aa8f7a59aa84cdd3197619ef462"
+chinstrap <- read_csv(url_chinstrap)
+```
+
+```{r}
+penguins_raw <- bind_rows(adelie, gentoo, chinstrap)
+
+penguins_clean <- penguins_raw %>% 
+  select(species = Species, island = Island, bill_length_mm = `Culmen Length (mm)`, bill_depth_mm = `Culmen Depth (mm)`, flipper_length_mm = `Flipper Length (mm)`, body_mass_g = `Body Mass (g)`, sex = Sex, year = `Date Egg`) %>% 
+  mutate(sex = na_if(sex, "."),
+         species = str_extract(species, '\\w*'),
+         sex = tolower(sex),
+         year = lubridate::year(year)) 
+```
+
+Result from the `setdiff()` function:
+```{r}
+setdiff(penguins_clean, penguins)
+```
+
