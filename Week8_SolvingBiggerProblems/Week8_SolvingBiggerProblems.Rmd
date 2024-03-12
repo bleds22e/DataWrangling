@@ -3,6 +3,9 @@ title: 'Week 8: Solving Bigger Problems'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -11,225 +14,315 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Solving Bigger Problems
 
-* Take a break learning commands to talk about general approaches
-* Real computational tasks are complicated. To accomplish them you need to
-  **think before you code**.
+This week, we are going to take a break learning commands to talk about
+general approaches to programming.
 
-## Problem decomposition steps (10 minutes)
+Real computational tasks tend to be complicated. To accomplish them, you
+need to **think before you code**.
 
-Open the following images one per tab and cycle through:
-* <https://i.imgflip.com/80ul6w.jpg>
-* <https://www.smarterandharder.com/wp-content/uploads/2021/02/breaking-down-problems-1024x683.jpg.webp>
-* <https://thirdsectorlab.co.uk/wp-content/uploads/2021/06/How-do-you-eat-an-elephant.png>
+## Set Up
 
-1. Understand the problem
-    1. Restate the problem in your own words
-    2. Determine the inputs and outputs
-    3. Ask for clarification
-2. Break the problem down
-    1.  Write down the pieces, on paper or as comments in a file
-    2.  Break complicated pieces down until all pieces are small and manageable
-3. Code one small piece at a time
-    1.  Test it on it's own
-    2.  Fix any problems before proceeding
+For this lesson and the assignment, we will be using a number of
+datasets, including the 3 datasets with Portal data that we are already
+somewhat familiar with.
 
-### Breaking down an exercise (15 minutes)
+Let's read in the `tidyverse` and download our datasets to get started.
 
-* This week we will be working on more complex exercises
-* Show end result of first exercise
-* Take time 5 minutes to read through one of the exercises
-* Then we'll try to break it down into pieces as a class
+```{r}
+# packages
+library(tidyverse)
 
-### Start simple
+# data
+download.file("https://ndownloader.figshare.com/files/2292172",
+  "surveys.csv")
+download.file("https://ndownloader.figshare.com/files/3299474",
+  "plots.csv")
+download.file("https://ndownloader.figshare.com/files/3299483",
+  "species.csv")
+download.file("https://datacarpentry.org/semester-biology/data/mammal-size-data-clean.tsv",
+  "mammal-size-data-clean.tsv")
+```
 
-1. Experiment
-2. Write a simpler version
-3. Make sure it works
-4. Make sure you understand it
-5. Modify it to make it more complicated
-6. Repeat until finished
+## Problem Decomposition steps
+
+Open the following images one per tab and cycle through: \*
+<https://i.imgflip.com/80ul6w.jpg> \*
+<https://www.smarterandharder.com/wp-content/uploads/2021/02/breaking-down-problems-1024x683.jpg.webp>
+\*
+<https://thirdsectorlab.co.uk/wp-content/uploads/2021/06/How-do-you-eat-an-elephant.png>
+
+One great way to work through the steps of coding is to break down the
+problem into smaller, more manageable chunks. This can also help you get
+an idea of the order in which to approach the coding.
+
+Here are some good guidelines:
+
+1.  Understand the problem
+    a.  Restate the problem in your own words
+    b.  Determine the inputs and outputs
+    c.  Ask for clarification
+2.  Break the problem down
+    a.  Write down the pieces, on paper or as comments in a file
+    b.  Break complicated pieces down until all pieces are small and
+        manageable
+3.  Code one small piece at a time
+    a.  Test it on it's own
+    b.  Fix any problems before proceeding
+
+### Let's Practice!
+
+Take a look at Question 5 in the assignment. Spend a few minutes reading
+through the question, restate the question in your on words, and then
+write down each step in general terms.
+
+### Iteration
+
+As you've probably discovered by now, programming requires a lot of
+iteration to get to code to do exactly what you want it to do and
+produce the output you are looking for.
+
+When writing more and more complex code, it can help to start simple and
+build the code up.
+
+1.  Experiment
+2.  Write a simpler version
+3.  Make sure it works
+4.  Make sure you understand it
+5.  Modify it to make it more complicated
+6.  Repeat until finished
+
+Perhaps we want to calculate the average hindfoot length in cm for each
+rodent species at Portal.
+
+Let's start by breaking down the problem.
+
+```{r}
+# join species and surveys data
+# filter for rodent species only
+# convert hindfoot length to cm
+# group data by species
+# summary data of hindfoot length
+
+surveys <- read_csv("surveys.csv")
+species <- read_csv("species.csv")
+
+avg_rodent_hf_cm <- surveys %>% 
+  inner_join(species, join_by(species_id)) %>% 
+  filter(taxa == "Rodent") %>% 
+  mutate(hindfoot_cm = hindfoot_length / 10) %>% 
+  group_by(species_id) %>% 
+  summarise(mean_hf = mean(hindfoot_cm, na.rm = TRUE))
+```
 
 ## Debugging
 
-Manual Debugging Strategy
+A major part of the iterative process of coding is fixing errors that
+come up! You've already had quite a bit of practice with this working on
+your assignments, but let's talk about some general strategies together.
 
-* How do we figure out what's wrong with a program?
-    * Be a scientist.
-        * Hypothesize about what is wrong.
-        * Make one change that is expected to fix error.
-        * Check if change worked/fixed error.
-    * **Do not change something without a reason.**
-    * Developing hypotheses (observe)
-      * See where the code failed.
-      * Read the error message.
-      * Observe what the code is doing.
-        * Look at the current state of the environment (snapshot of what's going on)
-        * Talk through the code.
-        * [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
-    * Run the code line by line checking each step.
-    * Have a LLM look for problems
+1.  Be a scientist.
+
+-   Hypothesize about what is wrong.
+-   Make one change that is expected to fix error.
+-   Check if change worked/fixed error.
+
+2.  **Do not change something without a reason.**
+
+-   Develop hypotheses!
+    -   See where the code failed.
+    -   Read the error message.
+    -   Observe what the code is doing.
+        -   Look at the current state of the environment. This gives you
+            a current snapshot of what is going on
+        -   Talk through the code
+        -   [Rubber duck
+            programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
+
+3.  Run the code line by line checking each step.
+4.  Use generative AI (e.g., ChatGPT)
 
 ### Example
 
-* Create a file with the following code in it
-* Run it
-* Work through debugging the code
+Below, we have a code chunk with some code that is mean to summarize
+some of the Portal data and then plot it. However, as you'll see when
+you try to run the code, we have some errors.
 
-```{r}
-library(dplyr)
+Spend a few minutes working through this code chunk to debug it. Utilize
+some of the strategies above.
 
-surveys <- read.csv('surveys.csv')
-species <- read.csv('species.csv')
+Code chunk to debug: leave as is for reference.
 
-do_counts_by_year <- survey |>
-  filter(species = "DO") |>
+```{r eval=FALSE}
+surveys <- read_csv('surveys.csv')
+species <- read_csv('species.csv')
+
+do_counts_by_year <- survey %>% 
+  filter(species = "DO") %>% 
   group_by(year)
   summarize(count = n())
 
-ggplot(do_count_by_year, aes(x = year, y = count)) +
+ggplot(do_count_by_year, aes(x = year, y = count)) %>% 
   geom_point() +
   geom_line()
-  labs(x = "Year", y = "Count")
+  labs(x = "Year", y = "Count") +
+  theme_bw()
 ```
 
-### Debugged version of example
+Insert a code chunk here. Copy the code from above and work to debug it.
 
-```{r}
-library(dplyr)
-library(ggplot2)
-
-surveys <- read.csv('surveys.csv')
-
-do_counts_by_year <- surveys |>
-  filter(species_id == "DO") |>
-  group_by(year) |>
-  summarize(count = n())
-
-ggplot(do_counts_by_year, aes(x = year, y = count)) +
-  geom_point() +
-  geom_line() +
-  labs(x = "Year", y = "Count") 
-```
-
-* Now copy the code into a LLM and see what it finds and what it gets wrong
-
-
-
+Now, let's copy the code into ChatGPT and see what it finds and what it
+gets wrong.
 
 ## Introduction to Reproducibility
 
-* Goal - rerun full analysis with a single click (or command)
-* First step - Make sure your code runs anytime and anywhere
-  * next day (who has gotten code working & had it not work the next day?)
-	* desktop vs. laptop
-	* collaborators
-	* advisor
+Our ultimate goal in this course is to work with our data (and
+eventually run analyses) that are fully *computationally reproducible*.
+In plain language, that means we want to be able to rerun a full
+analysis with a single click (or command).
+
+Our very first step is to make sure that our code can run at any time
+and from anywhere (the anywhere part will become more important when we
+are out of Posit Cloud, starting next week).
+
+We want to make sure that anyone (collaborators, advisors, reviewers,
+etc.) can run the analysis without having to make *any* changes to the
+code.
 
 ### Setup
 
-> Make sure that `Tools` -> `Global Options` -> `General` ->
+> Make sure that `Tools` -\> `Global Options` -\> `General` -\>
 > `Save workspace to ~/.RData on exit` is set to the default `Ask`
-
 
 ### Make sure things you did before don't matter
 
-* Computers store the results of each command run in sequence
-* Change something
-* Looks like it still works
-* Only works because of something you did earlier in the same session
+-   Computers store the results of each command run in sequence
+-   Change something
+-   Looks like it still works
+-   Only works because of something you did earlier in the same session
 
 ### Clearing environments and restarting R
 
-* Clear R environment using the broom icon on the `Environment` tab.
-  * Doesn't unload packages
-  * Useful when developing code
-* Restart R to get a clean environment
-  * Works locally (not in Posit Cloud; `Session` -> `Restart R` always reloads environment)
-  * Does unload packages
-  * Useful for making sure everything works
-  * As long is it doesn't secretly reload things
-* Run entire file using `Source` button or `Ctrl-Shift-S`
-* Makes sure that the code runs fully and produces desired result
+-   Clear R environment using the broom icon on the `Environment` tab.
 
-* Stop R from storing the state of the environment
-* When you close RStudio it will often ask if you want to save your workspace
-* *Start to close RStudio*
-* *Show Save dialog*
-* Or on Posit Cloud it will just do this automatically
-* If you do this is will get reloaded when you start R, even when you restart it
-  as described above
-* Stop this by `Tools` -> `Global Options` -> `General` ->
-  `Save workspace to ~/.RData on exit` -> `Never`
-* Unclick `Restore .RData into workspace at startup` 
+    -   Doesn't unload packages
+    -   Useful when developing code
+
+-   Restart R to get a clean environment
+
+    -   Works locally (not in Posit Cloud; `Session` -\> `Restart R`
+        always reloads environment)
+    -   Does unload packages
+    -   Useful for making sure everything works
+    -   As long is it doesn't secretly reload things
+
+-   Run entire file using `Source` button or `Ctrl-Shift-S`
+
+-   Makes sure that the code runs fully and produces desired result
+
+-   Stop R from storing the state of the environment
+
+-   When you close RStudio it will often ask if you want to save your
+    workspace
+
+-   *Start to close RStudio*
+
+-   *Show Save dialog*
+
+-   Or on Posit Cloud it will just do this automatically
+
+-   If you do this is will get reloaded when you start R, even when you
+    restart it as described above
+
+-   Stop this by `Tools` -\> `Global Options` -\> `General` -\>
+    `Save workspace to ~/.RData on exit` -\> `Never`
+
+-   Unclick `Restore .RData into workspace at startup`
 
 ### Make sure code works on other computers
 
-* Don't use `setwd()`
-    * Use projects and relative paths
-    * `data/mydata.csv` not `C:\Users\Batman\DataCarp\data\mydata.csv`
-* Write code that works on all operating systems
-    * Filenames in code should match actual names exactly, including capitalization
-    * Use `/` instead of `\` or `\\` in paths
+-   Don't use `setwd()`
+    -   Use projects and relative paths
+        -   In PositCloud, you are already doing this!
+        -   We will talk about what this looks like on your own
+            computers next week
+    -   `data/mydata.csv` not `C:\Users\Batman\DataCarp\data\mydata.csv`
+-   Write code that works on all operating systems
+    -   Filenames in code should match actual names exactly, including
+        capitalization
+    -   Use `/` instead of `\` or `\\` in paths
 
 ### Clean up extra code
 
-* Remove experiments from your code
-* Or at least comment them out
-* Remove `install.packages()` lines from your code
-* Avoid reinstalling packages repeatedly
+-   Remove (or, at a minimum, comment out) experiments from your code
+-   Remove `install.packages()` lines from your code
+-   Avoid reinstalling packages repeatedly
+-   It is good practice to load any packages and data you use in your
+    script at the beginning of the script
 
-### Checklist
-
-* There is an Assignment Turn In Checklist to help
-* Show link on main page
+```{r eval = FALSE}
+# Use `Ctrl` + `Shift` + `C` (or `Cmd` + `Shift` + `C`) to comment out large chunks of code.
+code
+test
+testing code
+code
+```
 
 ## Finding Help
 
-* Professional programmers use Google regularly
-* Learning how to search, read, and apply online help is a key skill
+In this class, I've provided the instructor versions of the lessons in
+class for you to have a reference sheets. They are super helpful, but
+they won't always have exactly what you need, especially when you are
+working with your own datasets.
 
-> * Ask students for something they want to search
-> * Demo searching for an answer
-> * Highlighting points below
+The good news is that there is help! In fact, professional programmers
+use Google regularly; I am constantly googling how to acheive certain
+tasks, including for the lessons and assignments in this class!
 
-### Tips
+There is a bit of an art to learning how to search, read, and apply
+online help. Let's talk through a few tips that you might find helpful.
 
-#### Search
+### In the Search:
 
-* Get the vocabulary right
-* Avoid extra words
-* Specify the language
+-   Get the vocabulary right
+-   Avoid extra words
+-   Specify the programming language (and specify `tidyverse` if that
+    matters to you)
 
-#### Results
+### Results:
 
-##### Help sites
+**Help sites**
 
-* Read the question
-* Look at the setup
-* Check the age
-* Check the top 2-3 answers
-* Glance at the comments
-* Test & modify the example
-    * But don't blindly paste things you don't understand
-    * Reputation can help - e.g., StackOverflow w/lots of positive votes
+-   Read the question
+-   Look at the setup
+-   Check the age (when was it answered?)
+-   Check the top 2-3 answers
+-   Glance at the comments
+-   Test & modify the example
+    -   But don't blindly paste things you don't understand
+    -   Reputation can help - e.g., StackOverflow w/lots of positive
+        votes
 
-##### Blog posts
+**Blog posts**
 
-* Read the question
-* Look at the setup
-* Use `Find`
+-   Read the question
+-   Look at the setup
+-   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
 
-##### Documentation
+**Documentation**
 
-* Use `Find`
-* Focus on the examples
+-   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+-   Focus on the examples
 
-#### Testing and modifying answers
+### Testing and modifying answers
 
-* Test the example
-* Modify the example
-* But be careful
-    * Malicious code examples exist
-    * Do you trust the site
-    * Does it have a lot of upvotes
-    * Top of searches with lots of hits
+Often, we won't be able to tell right away if the code provided in the
+answer will work for our specific data or situation. We always need to
+test it out.
+
+First, if given a reproducible examples (reprex), meaning is has data
+and code you can copy and paste to run, do so! This can help with
+understanding what the code is doing and whether or not it will work in
+your case.
+
+From there, you can begin to modify the example to include your data and
+specific values.
