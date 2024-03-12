@@ -39,4 +39,306 @@ March 11 at midnight MST
 
 ### 1. Set-Up (5 pts)
 
-Load in the `tidyverse`.
+Load in the `tidyverse`
+
+```{r}
+library(tidyverse)
+```
+
+### 2. Bird Banding Multiple Vectors (15 points)
+
+The number of birds banded at a series of sampling sites has been counted by your field crew and entered into the following vector. Counts are entered in order and sites are numbered starting at one. There is also information on the number of trees at each site, also entered in order.
+
+```{r}
+number_of_birds <- c(28, 32, 1, 0, 10, 22, 30, NA, 145, 27, 
+36, 25, 9, 38, 21, 12, 122, 87, 36, 3, 0, 5, 55, 62, 98, 32, 
+900, 33, 14, 39, 56, 81, 29, 38, 1, 0, 143, 37, 98, 77, 92, 
+83, 34, 98, 40, 45, 51, 17, 22, 37, 48, NA, 91, 73, 54, 46,
+102, 273, 600, 10, 11)
+
+number_of_trees <- c(10, 12, 2, 3, 10, 8, 19, 19, 14, 3, 
+4, 5, 8, 4, 8, 1, 12, 10, 3, 1, 2, 3, 5, 6, 8, 2, 
+90, 3, 4, 3, 6, 8, NA, 4, 0, 1, 14, 3, 10, NA, 9, 
+8, 4, 8, 4, 4, 5, 1, 2, 3, 5, 4, 10, 7, 5, 8,
+10, 30, 26, 1, 6)
+```
+
+a.  How many sites are there?
+b.  How many birds were counted at the 26th site?
+c.  What is the largest number of birds counted?
+d.  What is the average number of birds seen at a site?
+e.  What is the total number of trees counted across all of the sites?
+f.  What is the smallest number of trees counted?
+g.  Produce a vector with the number of birds counted on sites with at least 10 trees.
+h.  Produce a vector with the number of trees counted on sites with at least 10 trees.
+i.  Combine the `number_of_birds` and `number_of_trees` vectors into a dataframe that also includes a year column with the year 2012 in every row and site column containing the numbers 1 through 61.
+
+```{r}
+# 1. How many sites are there?
+print("2a")
+length(number_of_birds)
+
+# 2. How many birds were counted at the 26th site?
+print("2b")
+number_of_birds[26]
+
+# 3. What is the largest number of birds counted?
+print("2c")
+max(number_of_birds, na.rm = TRUE)
+
+# 4. What is the average number of birds seen at a site?
+print("2d")
+mean(number_of_birds, na.rm = TRUE)
+
+# 5. What is the total number of trees counted across all of the sites?
+print("2e")
+sum(number_of_trees, na.rm = TRUE)
+
+# 6. What is the smallest number of trees counted?
+print("2f")
+min(number_of_trees, na.rm = TRUE)
+
+# 7. Produce a vector with the number of birds counted on sites with at least 10 trees.
+print("2g")
+number_of_birds[number_of_trees >= 10]
+
+# 8. Produce a vector with the number of trees counted on sites with at least 10 trees.
+print("2h")
+number_of_trees[number_of_trees >= 10]
+
+# 9. Combine the `number_of_birds` and `number_of_trees` vectors into a dataframe.
+print("2i")
+data.frame(year = 2012, site = 1:61, number_of_birds, number_of_trees)
+```
+
+### 3. Portal Data Review (20 points)
+
+Load them into R using `read_csv()`.
+
+-   [`surveys.csv`](https://ndownloader.figshare.com/files/2292172)
+-   [`species.csv`](https://ndownloader.figshare.com/files/3299483)
+-   [`plots.csv`](https://ndownloader.figshare.com/files/3299474)
+
+a.  Create a data frame with only data for the `species_id` `DO`, with the columns `year`, `month`, `day`, `species_id`, and `weight`.
+b.  Create a data frame with only data for species IDs `PP` and `PB` and for years starting in 1995, with the columns `year`, `species_id`, and `hindfoot_length`, with no null values for `hindfoot_length`.
+c.  Create a data frame with the average `hindfoot_length` for each `species_id` in each `year` with no null values.
+d.  Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the `genus` is `"Dipodomys"`.
+e.  Make a scatter plot with `weight` on the x-axis and `hindfoot_length` on the y-axis. Use a `log10` scale on the x-axis. Color the points by `species_id`. Include good axis labels.
+f.  Make a histogram of weights with a separate subplot for each `species_id`. Do not include species with no weights. Set the `scales` argument to `"free_y"` so that the y-axes can vary. Include good axis labels.
+g.  (Challenge) Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, colored by `species_id`, with a different facet (i.e., subplot) for each of three `plot_type`'s `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`. Include good axis labels and a title for the plot. Export the plot to a `png` file.
+
+```{r}
+surveys <- read_csv('data/surveys.csv')
+species <- read_csv('data/species.csv')
+plots <- read_csv('data/plots.csv')
+
+# a. Create a data frame with only data for the `species_id` `DO`, with the columns `year`, `month`, `day`, `species_id`, and `weight`.
+print("3a")
+surveys %>%
+  filter(species_id == "DO") %>%
+  select(year, month, day, species_id, weight)
+
+# b. Create a data frame with only data for species IDs `PP` and `PB` and for years starting in 1995, with the columns `year`, `species_id`, and `hindfoot_length`, with no null values for `hindfoot_length`.
+prints("3b")
+surveys %>%
+  filter(species_id == "PP" | species_id == "PB") %>%
+  filter(year >= 1995) %>%
+  select(year, species_id, hindfoot_length,) %>%
+  filter(!is.na(hindfoot_length))
+
+# c. Create a data frame with the average `hindfoot_length` for each `species_id` in each `year` with no null values.
+print("3c")
+surveys %>%
+  filter(!is.na(hindfoot_length)) %>%
+  group_by(species_id, year) %>%
+  summarize(mean_hf = mean(hindfoot_length))
+
+# d. Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the `genus` is `"Dipodomys"`.
+print("3d")
+surveys %>%
+  inner_join(species, by = "species_id") %>%
+  inner_join(plots, by = "plot_id") %>%
+  select(year, genus, species, weight, plot_type) %>%
+  filter(genus == "Dipodomys")
+
+# e. Make a scatter plot with `hindfoot_length` on the x-axis and `weight` on the y-axis. Color the points by `species_id`. Include good axis labels.
+print("3e")
+ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length, color = species_id)) +
+  geom_point() +
+  scale_x_log10() +
+  labs(x = "Weight (g)", y = "Hindfoot Length (mm)")
+
+# f. Make a histogram of weights with a separate subplot for each `species_id`.
+# Do not include species with no weights.
+# Set the `scales` argument to `"free_y"` so that the y-axes can vary.
+# Include good axis labels.
+print("3f")
+surveys_with_weights <- filter(surveys, !is.na(weight))
+surveys_with_weights
+
+ggplot(data = surveys_with_weights, mapping = aes(x = weight)) +
+  geom_histogram() +
+  facet_wrap(~species_id, scales = "free_y") +
+  labs(x = "Weight (g)", y = "Number of Individuals")
+
+# g. (Challenge) Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, with a different facet (i.e., subplot) for each of three `plot_type`'s `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`.  
+print("3g")
+plot_data <- surveys %>%
+  inner_join(plots) %>%
+  filter(species_id == "PP" | species_id == "PB" | species_id == "DM") %>%
+  filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure" | plot_type == "Short-term Krat Exclosure")
+plot_data
+
+ggplot(data = plot_data, aes(x = weight, fill = species_id)) +
+  geom_histogram() +
+  facet_wrap(~plot_type) +
+  labs(x = "Weight (g)", y = "Number of Individuals", title = "Size distribution comparison across treatments")
+```
+
+### 4. Megafaunal Extinction (30 points)
+
+There were a relatively large number of extinctions of mammalian species roughly
+10,000 years ago. To help understand why these extinctions happened scientists
+are interested in understanding if there were differences in the size of the
+species that went extinct and those that did not. You are going to reproduce the
+three main figures from one of the major papers on this topic [Lyons et al.
+2004](http://www.evolutionary-ecology.com/issues/v06n03/ddar1499.pdf).
+
+You will do this using a 
+[large dataset of mammalian body sizes]({{ site.baseurl }}/data/mammal-size-data-clean.tsv)
+that has data on the mass of recently extinct mammals as well as extant mammals
+(i.e., those that are still alive today).
+
+a. Import the data into R. As with most real world data there are a some things
+   about the dataset that you'll need to identify and address during the import
+   process. Print out the structure of the resulting data frame.
+b. Create a plot showing histograms of masses for mammal species that are still
+   present and those that went extinct during the pleistocene (`extant` and
+   `extinct` in the `status` column). There should be one sub-plot for each
+   continent and that sub-plot should show the histograms for both groups as a
+   stacked histogram. To match the original analysis don't include islands
+   (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA`
+   (because `EA` had no species that went extinct in the pleistocene). Scale the x-axis
+   logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
+c. The 2nd figure in the original paper looks in more detail at two orders,
+   *Xenarthra* and *Carnivora*, which showed extinctions in North and South
+   America. Create a figure similar to the one in Part 2, but that shows 4
+   sub-plots, one for each order on each of the two continents. Still scale the x-axis
+   logarithmically, but use 19 bins to roughly match the original figure.
+d. The 3rd figure in the original paper explores Australia as a case study.
+   Australia is interesting because there is good data on both Pleistocene
+   extinctions (`extinct` in the `status` column) and more modern extinctions
+   occurring over the last 300 years (`historical` in the `status` column). Make
+   single stacked histogram that compares the sizes of `extinct`, `extant`, and
+   `historical` statuses. Scale the x-axis logarithmically and use 25 bins to
+   roughly match the original figure. Use good axis labels.
+e. (optional) Instead of excluding continent `EA` by name in your analysis (in
+   part 2), modify your code to determine from the data which continents had
+   species that went extinct in the pleistocene and only include those continents.
+   
+   
+```{r}
+print("4a")
+mammal_sizes <- read_csv("../semester-biology/data/mammal-size-data-clean.tsv", sep = "\t", na.strings = c("-999"))
+str(mammal_sizes)
+
+# Figure 1
+print("4b")
+mammal_sizes_cleaned <- mammal_sizes %>% 
+  filter(continent != "Insular", continent != "Oceanic", continent != "EA") %>% 
+  filter(status %in% c("extant", "extinct"))
+
+ggplot(mammal_sizes_cleaned, aes(x = mass, fill = status)) +
+  geom_histogram(bins = 25) +
+  scale_x_log10() +
+  facet_wrap(~continent) +
+  labs(x = "Mass (g)", y = "Number of Species")
+
+# Figure 2
+print("4c")
+fig_2_data <- mammal_sizes %>% 
+  filter(continent %in% c("NA", "SA"), order %in% c("Xenarthra", "Carnivora"),
+         status %in% c("extinct", "extant"))
+
+ggplot(fig_2_data, aes(x = mass, fill = status)) +
+  geom_histogram(bins = 19) +
+  scale_x_log10() +
+  facet_wrap(~order+continent) +
+  labs(x = "Mass (g)", y = "Number of Species")
+
+# Figure 3
+print("4d")
+fig_3_data <- mammal_sizes %>%
+  filter(continent == "AUS", status %in% c("extinct", "extant", "historical"))
+
+ggplot(fig_3_data, aes(x = mass, fill = status)) +
+  geom_histogram(bins = 25) +
+  scale_x_log10() +
+  labs(x = "Mass (g)", y = "Number of Species")
+
+# Optional
+
+# This is a fancy way to dynamically eliminate sites with no extinct species
+# But EA can also just be eliminated manually by adding it to the continent
+# filtering step below.
+print("4e")
+extinct_rich_by_continent <- mammal_sizes %>% 
+  filter(status == "extinct") %>% 
+  distinct(continent)
+extinct_rich_by_continent
+
+mammal_sizes_cleaned <- mammal_sizes %>% 
+  inner_join(extinct_rich_by_continent) %>% 
+  filter(continent != "Insular", continent != "Oceanic") %>% 
+  filter(status %in% c("extant", "extinct"))
+mammal_sizes_cleaned
+```
+
+### 5. Palmer Penguins (30 points)
+
+Take a look at the raw version and the cleaned version. 
+
+Problem breakdown
+a. general language
+b. predications about functions
+
+Breakdown:
+a. combine datasets
+b. select columns
+c. rename columns
+d. replace . with NA
+e. lowercase
+f. extract first word
+g. year vis lubridate
+h. don't worry about matching up data types exactly (chr/factor, num/dbl)
+
+If setdiff() between the two dfs returns 0, you've been successful!
+
+```{r}
+# Adelie penguin data from: https://doi.org/10.6073/pasta/abc50eed9138b75f54eaada0841b9b86
+url_adelie <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.219.3&entityid=002f3893385f710df69eeebe893144ff"
+adelie <- read_csv(url_adelie)
+
+# Gentoo penguin data from: https://doi.org/10.6073/pasta/2b1cff60f81640f182433d23e68541ce
+url_gentoo <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.220.3&entityid=e03b43c924f226486f2f0ab6709d2381"
+gentoo <- read_csv(url_gentoo)
+
+# Chinstrap penguin data from: https://doi.org/10.6073/pasta/409c808f8fc9899d02401bdb04580af7
+url_chinstrap <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.221.2&entityid=fe853aa8f7a59aa84cdd3197619ef462"
+chinstrap <- read_csv(url_chinstrap)
+
+# Combining the URIs
+penguins_raw <- bind_rows(adelie, gentoo, chinstrap)
+penguins_raw
+
+penguins_clean <- penguins_raw %>% 
+  select(species = Species, island = Island, bill_length_mm = `Culmen Length (mm)`, bill_depth_mm = `Culmen Depth (mm)`, flipper_length_mm = `Flipper Length (mm)`, body_mass_g = `Body Mass (g)`, sex = Sex, year = `Date Egg`) %>% 
+  mutate(sex = na_if(sex, "."),
+         species = str_extract(species, '\\w*'),
+         sex = tolower(sex),
+         year = lubridate::year(year)) 
+penguins_clean
+
+setdiff(penguins_clean, penguins)
+```
+
