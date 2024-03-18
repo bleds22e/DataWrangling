@@ -1,0 +1,149 @@
+---
+title: 'Week 9: Reproducibility in RStudio'
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Reproducibility in RStudio
+
+In this week's lesson, we will be talking broadly about how to make our data analyses reproducible.
+
+We will do this through 2 different approaches.
+1) Reproducibility in RStudio
+2) Using git/GitHub for version control
+
+## Reproducibility in RStudio
+
+## General Tips 
+
+> Make sure that `Tools` -> `Global Options` -> `General` ->
+> `Save workspace to ~/.RData on exit` is set to the default `Ask`
+
+### Introduction to Reproducibility
+
+* Goal - rerun full analysis with a single click (or command)
+* First step - Make sure your code runs anytime and anywhere
+  * next day (who has gotten code working & had it not work the next day?)
+	* desktop vs. laptop
+	* collaborators
+	* advisor
+
+1. Make sure things you did before don't matter
+
+* Computers store the results of each command run in sequence
+* Change something
+* Looks like it still works
+* Only works because of something you did earlier in the same session
+
+2. Clearing environments and restarting R
+
+* Clear R environment using the broom icon on the `Environment` tab.
+  * Doesn't unload packages
+  * Useful when developing code
+* Restart R to get a clean environment
+  * Works locally (not in Posit Cloud; `Session` -> `Restart R` always reloads environment)
+  * Does unload packages
+  * Useful for making sure everything works
+  * As long is it doesn't secretly reload things
+* Run entire file using `Source` button or `Ctrl-Shift-S`
+* Makes sure that the code runs fully and produces desired result
+
+3. Stop saving the current state of the environment
+
+* Stop R from storing the state of the environment
+* When you close RStudio it will often ask if you want to save your workspace
+* *Start to close RStudio*
+* *Show Save dialog*
+* Or on Posit Cloud it will just do this automatically
+* If you do this is will get reloaded when you start R, even when you restart it
+  as described above
+* Stop this by `Tools` -> `Global Options` -> `General` ->
+  `Save workspace to ~/.RData on exit` -> `Never`
+* Unclick `Restore .RData into workspace at startup` 
+
+4. Make sure code works on other computers
+
+* Don't use `setwd()`
+    * Use projects and relative paths
+    * `data/mydata.csv` not `C:\Users\Batman\DataCarp\data\mydata.csv`
+* Write code that works on all operating systems
+    * Filenames in code should match actual names exactly, including capitalization
+    * Use `/` instead of `\` or `\\` in paths
+ 
+ 5. Clean up extra code
+
+* Remove experiments from your code
+* Or at least comment them out
+* Remove `install.packages()` lines from your code
+* Avoid reinstalling packages repeatedly
+
+### Project Structure
+
+
+### Introduction
+
+* Learn how to organize a computational project
+* Many benefits to good organization & documentation
+    * Understand all project components
+    * Work more efficiently
+    * Easier for collaboration
+    * Including with your future self
+* Save a lot of time & frustration in long run, even if it’s time-consuming and frustrating to do it right initially
+
+* Good file structure
+    * All project files in one main folder
+    * Subfolders (data, R, etc.)
+* Main folder is R project
+    * Self-contained project
+    * Use relative instead of absolute paths
+* Good folder & file names
+    * Descriptive but not too long
+    * No spaces
+    * Consistent format
+* README
+    * Everything someone needs to know to understand project
+* Raw data
+    * In separate folder from cleaned data
+    * Never change!
+    * Each file should have metadata
+* Scripts with code
+    * Relative file paths to read in and create files
+    * Lots of comments
+    * Order: libraries, data, user-created functions, everything else
+    * Good variable & column names
+* Two methods to deal with different versions of same file
+    * Good = consistent naming scheme
+        * Each copy has date or version number
+        * Don’t call anything final, cause no file ever is! 
+    * Better = version control, only have one copy of each file
+* Running all scripts
+    * Good = description of order to run each script in README
+    * Better = script to run all scripts
+    * Best = Make
+* Combine code output and text in single document, e.g., knitr
+
+### Goal of good project structure
+
+* Reproducibility = ability to get same results from set of data & code
+* Give entire project folder to someone else (or your future self!), they can understand all parts and recreate your results, figures, documents, etc. 
+* Improving reproducibility makes YOUR life easier! 
+
+
+### R Projects
+
+The best way to work in RStudio is through R Projects (.Rproj files).
+
+### Example project walk-through
+Download [example project]({{ site.baseurl }}/data/example_project.zip). 
+
+
+### File Paths
+
+Why do I believe so strongly in working in RProjects? There are a few reasons. In part, it is because R Projects work so well with the version control that we will be learning in the next lesson. The other reason is file paths!
+
+

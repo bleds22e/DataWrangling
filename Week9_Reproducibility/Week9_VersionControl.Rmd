@@ -1,0 +1,19 @@
+---
+title: 'Week 9: Version Control'
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Reproducibility
+
+## Version Control
+
+### git and GitHub
+
+### Using git and GitHub in RStudio
+
