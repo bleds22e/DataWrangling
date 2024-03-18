@@ -3,9 +3,6 @@ title: 'Week 8: Solving Bigger Problems'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
