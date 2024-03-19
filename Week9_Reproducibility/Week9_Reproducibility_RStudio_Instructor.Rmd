@@ -213,7 +213,7 @@ Ideally, we want to have the working directory set automatically, regardless of 
 
 The simplest way to ensure that we are always using relative paths is to use RStudio Projects (or R Projects, same thing).
 
-In fact, we've already been using them! Every time you click on an assignment or click `New Project` in Posit Cloud, this was actually creating a new R Project. Now we need to learn how to do this on our own computers.
+In fact we've already been using them! Every time you click on an assignment or click `New Project` in Posit Cloud, this was actually creating a new R Project. Now we need to learn how to do this on our own computers.
 
 Each project is a self-contained unit of work in a specific folder/directory. It treats all locations as relative to that specific directory.
 
@@ -221,11 +221,7 @@ Let's set up an R Project on our own computers.
 
 > `File` -\> `New Project` -\> `New Directory` -\> `New Project` -\> [insert_name_here]
 
-![](images/rstudio-project-1.png){width="50%"} 
-
-![](images/rstudio-project-2.png){width="50%"}
-
-![](images/rstudio-project-3.png){width="50%"}
+![](images/rstudio-project-1.png){width="50%"} ![](images/rstudio-project-2.png){width="50%"} ![](images/rstudio-project-3.png){width="50%"}
 
 If you prefer, you can use the `Existing Directory` option to choose a folder that already exists that you want to turn into an R Project.
 
