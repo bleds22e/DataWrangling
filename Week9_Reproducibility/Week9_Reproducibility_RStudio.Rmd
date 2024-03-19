@@ -59,8 +59,6 @@ We can check that our code runs without having to knit, though. We have a few op
     -   Doesn't unload packages
     -   Useful when developing code
 
-![](images/ClearEnvironment.png){width=50%}
-
 -   Restart R to get a clean environment
 
     -   Does unload packages
@@ -79,12 +77,9 @@ If you choose to save the workspace, everything in the environment will get relo
 
 While that might sound convenient, it can actually cause a lot of problems (see #1 above). To reduce the risk of having code that doesn't fully run on one click, we want to stop R from storing the state of the environment when we close RStudio.
 
-To set the default in RStudio to not save the workspace, we want to do the following: 
-> `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
+To set the default in RStudio to not save the workspace, we want to do the following: \> `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
 
 Unclick `Restore .RData into workspace at startup`
-
-![](images/rstudio-workspace.png)
 
 **4. Make sure code works on other computers**
 
@@ -220,12 +215,6 @@ Let's set up an R Project on our own computers.
 
 > `File` -\> `New Project` -\> `New Directory` -\> `New Project` -\> [insert_name_here]
 
-![](images/rstudio-project-1.png){width="50%"} 
-
-![](images/rstudio-project-2.png){width="50%"}
-
-![](images/rstudio-project-3.png){width="50%"}
-
 If you prefer, you can use the `Existing Directory` option to choose a folder that already exists that you want to turn into an R Project.
 
 Once we create our new project, RStudio will create a `.Rproj` file in that directory. This file is not the project itself, but it does contain information about the project. We do not manually change this file.
@@ -282,8 +271,6 @@ There are a lot of potential benefits to creating a good organizational structur
 Setting up a good structure will save you a lot of frustration in long run, even if it might be a bit time-consuming and frustrating to do it right initially.
 
 ### File Structure
-
-![](images/project-based-directory-organization.jpg){width="50%"}
 
 If possible, we want to have all file associated with the project in one main folder. This main folder should be the RProject folder.
 
