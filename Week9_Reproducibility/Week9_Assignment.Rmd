@@ -1,0 +1,194 @@
+---
+title: "Assignment 9"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Details
+
+### Purpose
+
+The goal of this assignment is to practice problem decomposition and some best practices in reproducibility .
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+March 25 at midnight MST
+
+# Assignment Exercises
+
+For many of the exercises in this week's assignment, we will actually be using a lot of the code that you have already written for Assignment 8. This time, however, all of your file paths will be different...
+
+### 1. Set-Up (5 pts)
+
+Now that we are working outside of Posit Cloud, we will need to first *install* our packages onto your computer before we can load them with the `library()` function.
+
+We use the `install.packages()` function to download the package from the internet and create a local copy. Unlike with the `library()` function, the package name needs to be inside quotation marks.
+
+Insert a code chunk and (a) install and (b) load both the `tidyverse` and `palmerpenguins`. 
+
+### 2. Portal Data Review (25 points)
+
+For this question, we are using the Portal data to review many of the `dplyr`, `tidyr`, and `ggplot2` functions we have learned so far.
+
+Load the 3 dataframes below into R using `read_csv()`.
+
+-   [`surveys.csv`](https://ndownloader.figshare.com/files/2292172)
+-   [`species.csv`](https://ndownloader.figshare.com/files/3299483)
+-   [`plots.csv`](https://ndownloader.figshare.com/files/3299474)
+
+a.  Create a data frame with only data for the `species_id` `DO`, with the columns `year`, `month`, `day`, `species_id`, and `weight`.
+b.  Create a data frame with only data for species IDs `PP` and `PB` and for years starting in 1995, with the columns `year`, `species_id`, and `hindfoot_length`, with no null values for `hindfoot_length`.
+c.  Create a data frame with the average `hindfoot_length` for each `species_id` in each `year` with no null values.
+d.  Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the `genus` is `"Dipodomys"`.
+e.  Make a scatter plot with `weight` on the x-axis and `hindfoot_length` on the y-axis. Use a `log10` scale on the x-axis. Color the points by `species_id`. Include good axis labels.
+f.  Make a histogram of weights with a separate subplot for each `species_id`. Do not include species with no weights. Set the `scales` argument in the `facet_wrap()` function to `"free_y"` so that the y-axes can vary. Include good axis labels.
+
+```{r}
+surveys <- read_csv('data/surveys.csv')
+species <- read_csv('data/species.csv')
+plots <- read_csv('data/plots.csv')
+
+# a. Create a data frame with only data for the `species_id` `DO`, with the columns `year`, `month`, `day`, `species_id`, and `weight`.
+print("3a")
+surveys %>%
+  filter(species_id == "DO") %>%
+  select(year, month, day, species_id, weight)
+
+# b. Create a data frame with only data for species IDs `PP` and `PB` and for years starting in 1995, with the columns `year`, `species_id`, and `hindfoot_length`, with no null values for `hindfoot_length`.
+prints("3b")
+surveys %>%
+  filter(species_id == "PP" | species_id == "PB") %>%
+  filter(year >= 1995) %>%
+  select(year, species_id, hindfoot_length,) %>%
+  filter(!is.na(hindfoot_length))
+
+# c. Create a data frame with the average `hindfoot_length` for each `species_id` in each `year` with no null values.
+print("3c")
+surveys %>%
+  filter(!is.na(hindfoot_length)) %>%
+  group_by(species_id, year) %>%
+  summarize(mean_hf = mean(hindfoot_length))
+
+# d. Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the `genus` is `"Dipodomys"`.
+print("3d")
+surveys %>%
+  inner_join(species, by = "species_id") %>%
+  inner_join(plots, by = "plot_id") %>%
+  select(year, genus, species, weight, plot_type) %>%
+  filter(genus == "Dipodomys")
+
+# e. Make a scatter plot with `hindfoot_length` on the x-axis and `weight` on the y-axis. Color the points by `species_id`. Include good axis labels.
+print("3e")
+ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length, color = species_id)) +
+  geom_point() +
+  scale_x_log10() +
+  labs(x = "Weight (g)", y = "Hindfoot Length (mm)")
+
+# f. Make a histogram of weights with a separate subplot for each `species_id`.
+# Do not include species with no weights.
+# Set the `scales` argument to `"free_y"` so that the y-axes can vary.
+# Include good axis labels.
+print("3f")
+surveys_with_weights <- filter(surveys, !is.na(weight))
+surveys_with_weights
+
+ggplot(data = surveys_with_weights, mapping = aes(x = weight)) +
+  geom_histogram() +
+  facet_wrap(~species_id, scales = "free_y") +
+  labs(x = "Weight (g)", y = "Number of Individuals")
+```
+
+### 3. Megafaunal Extinction (35 points)
+
+There were a relatively large number of extinctions of mammalian species roughly 10,000 years ago. To help understand why these extinctions happened scientists are interested in understanding if there were differences in the size of the species that went extinct and those that did not. You are going to reproduce the three main figures from one of the major papers on this topic [Lyons et al. 2004](http://www.evolutionary-ecology.com/issues/v06n03/ddar1499.pdf).
+
+You will do this using a large dataset of mammalian body sizes (`mammal-size-data-clean.txt`) that has data on the mass of recently extinct mammals as well as extant mammals (i.e., those that are still alive today).
+
+a.  Import the data into R. As with most real world data there are a some things about the dataset that you'll need to identify and address during the import process. Print out the structure of the resulting data frame.
+b.  Create a plot showing histograms of masses for mammal species that are still present and those that went extinct during the Pleistocene (`extant` and `extinct` in the `status` column). There should be one sub-plot for each continent and that sub-plot should show the histograms for both groups as a stacked histogram. To match the original analysis don't include islands (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA` (because `EA` had no species that went extinct in the Pleistocene). Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
+c.  The 2nd figure in the original paper looks in more detail at two orders, *Xenarthra* and *Carnivora*, which showed extinctions in North and South America. Create a figure similar to the one in Part 2, but that shows 4 sub-plots, one for each order on each of the two continents. Still scale the x-axis logarithmically, but use 19 bins to roughly match the original figure.
+d.  The 3rd figure in the original paper explores Australia as a case study. Australia is interesting because there is good data on both Pleistocene extinctions (`extinct` in the `status` column) and more modern extinctions occurring over the last 300 years (`historical` in the `status` column). Make single stacked histogram that compares the sizes of `extinct`, `extant`, and `historical` statuses. Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
+e.  (Challenge, optional) Instead of excluding continent `EA` by name in your analysis (in part 2), modify your code to determine from the data which continents had species that went extinct in the Pleistocene and only include those continents.
+
+### 4. Palmer Penguins (35 points)
+
+In this question, we are going to take some raw data and recreate a clean dataset. This is from the `palmerpenguins` R package, which has body size measurements from 3 species of Antarctic penguins from 2007-2009. First, we need to load in the package and take a look at the clean version of the data that we are trying to recreate.
+
+```{r}
+library(palmerpenguins)
+
+# because the data is from a package, it doesnt automatically show up in our environment unless with use the assignment arrow to place it there
+penguins <- penguins
+head(penguins)
+```
+
+Now, let's bring in the original 3 datasets that were used to create this cleaned version (`penguins`)
+
+```{r}
+# Adelie penguin data from: https://doi.org/10.6073/pasta/abc50eed9138b75f54eaada0841b9b86
+url_adelie <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.219.3&entityid=002f3893385f710df69eeebe893144ff"
+adelie <- read_csv(url_adelie)
+
+# Gentoo penguin data from: https://doi.org/10.6073/pasta/2b1cff60f81640f182433d23e68541ce
+url_gentoo <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.220.3&entityid=e03b43c924f226486f2f0ab6709d2381"
+gentoo <- read_csv(url_gentoo)
+
+# Chinstrap penguin data from: https://doi.org/10.6073/pasta/409c808f8fc9899d02401bdb04580af7
+url_chinstrap <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.221.2&entityid=fe853aa8f7a59aa84cdd3197619ef462"
+chinstrap <- read_csv(url_chinstrap)
+```
+
+#### Problem breakdown
+
+(both a and b are graded for completion, not accuracy)
+
+a.  Start by breaking down the problem into plain language. This stage shouldn't include any specific functions but is allowing you to talk through the steps conceptually.
+
+b.  Make some predictions about the order in which you will want to accomplish this task, including which functions you will likely be using.
+
+#### Coding
+
+c.  Recreate the clean dataset (`penguins`). Below are some tips (in no particular order) that will likely be helpful along the way
+
+    -   There is one instance in the sex column of one of the species where an unknown sex is marked with a `.` instead of `NA`
+    -   You do not need to match up data types exactly (character and factors are mostly interchangeable; same with integer, numeric, and double)
+    -   The year column is derived from the `Date Egg` column in the original 3 dataframes
+    -   Culmen is basically a fancy word for a bird's bill
+    -   I've taught you multiple ways to pull out a specific part of a character string, and you can choose whichever you prefer. Additional helpful hints are that the regex for extracting the first word in a string is `'\\w*'`; there is also a function called `word()` that is part of the `stringr` package.
+
+You will know that you have successfully completed the task at hand if you run the code `setdiff(your_clean_df, penguins)`, and the result has 0 rows.
+
+The `setdiff()` function takes 2 dataframes and looks for any differences. The output is a dataframe with rows that do not match up. If you have 0 rows that don't match, that means all rows do match!
+
+### 6. Add Version Control
+
+Add version control to this RProject that you are working in. We will do this together in class.
+
+Commit all of the current files to GitHub
+
+### 7. Create a separate repository for your Final Project
+
+Download the file from D2L and place it in the documents folder of your RProject
+
+Complete the questions in that document. Save the changes, commit the changes, and push the changes to GitHub
