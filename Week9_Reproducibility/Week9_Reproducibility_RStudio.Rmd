@@ -244,6 +244,21 @@ Now, in order to successfully read in the shrub data file, we need to point R in
 data <- read_csv('data_raw/shrub-dimensions-labeled.csv')
 ```
 
+### Writing Data
+
+We we have made some kind of change to our dataset and want to save that resulting dataset, we can use a function called `write_csv()` to do so.
+
+Let's pretend we've made some type of change to our shrub dataset and want to save it.
+
+The arguments for `write_csv()` are:
+
+-   the name of the object with the data you want to save
+-   the file path for where you want the new file to end up. This should include the name of the file you want to create, also with the file extension (.csv, in this case)
+
+```{r}
+write_csv(data, "data/shrubs_modified.csv")
+```
+
 ### Changing Projects
 
 -   Can switch between projects using `File` -\> `Recent Projects` or `Open Project`
