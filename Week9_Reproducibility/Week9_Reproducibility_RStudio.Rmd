@@ -13,10 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In this week's lesson, we will be talking broadly about how to make our data analyses reproducible.
 
-We will do this through 2 different approaches. 
+We will do this through 2 different approaches.
 
-1.    Reproducibility in RStudio 
-2.    Using git/GitHub for version control
+1.  Reproducibility in RStudio
+2.  Using git/GitHub for version control
 
 For today's lesson, we will focus on how we can increase reproducibility within RStudio.
 
@@ -279,8 +279,8 @@ If possible, we want to have all file associated with the project in one main fo
 From there, we can (and should...) have subfolders. What exactly those subfolders are is up to you. A good starting place is to have something like this:
 
 -   data_raw
-    - keeping the raw data in a separate folder helps ensure that the original copy always exists
-    - metadata about the included files can go in this folder as well
+    -   keeping the raw data in a separate folder helps ensure that the original copy always exists
+    -   metadata about the included files can go in this folder as well
 -   data_clean
 -   docs
 -   outputs

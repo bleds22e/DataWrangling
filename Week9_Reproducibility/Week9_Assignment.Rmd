@@ -61,10 +61,10 @@ Then, move those three files from your Downloads folder into your equivalent of 
 
 Now, let's begin to code!
 
-a.    Load the 3 dataframes (surveys, species, plots) into R using `read_csv()`. Make sure your paths are _relative_.
-b.    Copy the answers from Week 8 Assignment, Questions 2d-f, into the code chunk below.
-c.    Save the output of the code from 2d as a new dataframe. Then, save that resulting dataframe as a csv file in the clean data subdirectory using the `write_csv()` function.
-d.    Save the ggplots from 2e and 2f into the outputs folder using the `ggsave()` function.
+a.  Load the 3 dataframes (surveys, species, plots) into R using `read_csv()`. Make sure your paths are *relative*.
+b.  Copy the answers from Week 8 Assignment, Questions 2d-f, into the code chunk below.
+c.  Save the output of the code from 2d as a new dataframe. Then, save that resulting dataframe as a csv file in the clean data subdirectory using the `write_csv()` function.
+d.  Save the ggplots from 2e and 2f into the outputs folder using the `ggsave()` function.
 
 ```{r}
 # 2a
@@ -103,25 +103,25 @@ ggplot(data = surveys_with_weights, mapping = aes(x = weight)) +
 
 Like in Question 2 above, we will be recreating Question 4 from Week 8's assignment but within our own R Project. As a reminder, this is the question that used the `palmerpenguins` data.
 
-a.    The code chunk below uses the `download.file()` function to go to a specific URL and then download the data at that URL. The location where the file is downloaded to is set by the `destfile` argument. Modify the path in the `destfile` argument for all three species datasets so that they are downloaded directly into your raw data folder.
+a.  The code chunk below uses the `download.file()` function to go to a specific URL and then download the data at that URL. The location where the file is downloaded to is set by the `destfile` argument. Modify the path in the `destfile` argument for all three species datasets so that they are downloaded directly into your raw data folder.
 
 ```{r}
-# Adelie penguin data from: https://doi.org/10.6073/pasta/abc50eed9138b75f54eaada0841b9b86
+# Adelie penguin data
 download.file(url = "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.219.3&entityid=002f3893385f710df69eeebe893144ff",
               destfile = "adelie.csv")
 
-# Gentoo penguin data from: https://doi.org/10.6073/pasta/2b1cff60f81640f182433d23e68541ce
+# Gentoo penguin data
 download.file(url = "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.220.3&entityid=e03b43c924f226486f2f0ab6709d2381",
               destfile = "gentoo.csv")
 
-# Chinstrap penguin data from: https://doi.org/10.6073/pasta/409c808f8fc9899d02401bdb04580af7
+# Chinstrap penguin data 
 download.file(url = "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.221.2&entityid=fe853aa8f7a59aa84cdd3197619ef462",
               destfile = "chinstrap.csv")
 ```
 
-b.    Copy and then run the code that you wrote to combine the three above datasets and have the output match the `penguins` dataframe from the `palmerpenguins` dataframe.
-c.    Run the `setdiff()` function to make sure that your code worked (it shouldn't have any issues, but it is good to check!)
-d.    Save your version of the cleaned penguins data into your clean data folder.
+b.  Copy and then run the code that you wrote to combine the three above datasets and have the output match the `penguins` dataframe from the `palmerpenguins` dataframe.
+c.  Run the `setdiff()` function to make sure that your code worked (it shouldn't have any issues, but it is good to check!)
+d.  Save your version of the cleaned penguins data into your clean data folder.
 
 ### 4. Add Version Control
 
@@ -139,4 +139,4 @@ Complete the questions in that document. Save the changes, commit the changes, a
 
 The way that you will be turning in assignments from now on is going to change now that we are no longer working in Posit Cloud.
 
-Instead of turning in a PDF of your assignment, you will now be giving me a link to your GitHub repository. 
+Instead of turning in a PDF of your assignment, you will now be giving me a link to your GitHub repository.
