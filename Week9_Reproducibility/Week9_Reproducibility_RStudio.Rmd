@@ -96,83 +96,6 @@ We will talk a lot more in-depth about this in a few minutes, but generally spea
 -   If you don't want to remove them, comment them out by putting a `#` in front of the line of code.
     - A shortcut for this is `Ctrl + Shift + C` or `Cmd + Shift + C`
 
-## Project Structure
-
-### Introduction
-
--   Learn how to organize a computational project
-
--   Many benefits to good organization & documentation
-
-    -   Understand all project components
-    -   Work more efficiently
-    -   Easier for collaboration
-    -   Including with your future self
-
--   Save a lot of time & frustration in long run, even if it’s time-consuming and frustrating to do it right initially
-
--   Good file structure
-
-    -   All project files in one main folder
-    -   Subfolders (data, R, etc.)
-
--   Main folder is R project
-
-    -   Self-contained project
-    -   Use relative instead of absolute paths
-
--   Good folder & file names
-
-    -   Descriptive but not too long
-    -   No spaces
-    -   Consistent format
-
--   README
-
-    -   Everything someone needs to know to understand project
-
--   Raw data
-
-    -   In separate folder from cleaned data
-    -   Never change!
-    -   Each file should have metadata
-
--   Scripts with code
-
-    -   Relative file paths to read in and create files
-    -   Lots of comments
-    -   Order: libraries, data, user-created functions, everything else
-    -   Good variable & column names
-
--   Two methods to deal with different versions of same file
-
-    -   Good = consistent naming scheme
-        -   Each copy has date or version number
-        -   Don’t call anything final, cause no file ever is!
-    -   Better = version control, only have one copy of each file
-
--   Running all scripts
-
-    -   Good = description of order to run each script in README
-    -   Better = script to run all scripts
-    -   Best = Make
-
--   Combine code output and text in single document, such as with RMarkdown files (which we are already doing!)
-
-### Goal of good project structure
-
--   Reproducibility = ability to get same results from set of data & code
--   Give entire project folder to someone else (or your future self!), they can understand all parts and recreate your results, figures, documents, etc.
--   Improving reproducibility makes YOUR life easier!
-
-### R Projects
-
-The best way to work in RStudio is through R Projects (.Rproj files).
-
-### Example project walk-through
-
-Download [example project](%7B%7B%20site.baseurl%20%7D%7D/data/example_project.zip).
-
 ### File Paths
 
 Why do I believe so strongly in working in RProjects? There are a few reasons. In part, it is because R Projects work so well with the version control that we will be learning in the next lesson. The other reason is file paths!
@@ -354,3 +277,73 @@ For reasons I haven't quite been able to nail down, file paths work a little bit
 -   This idea of projects as folders is also important for how we share code
 -   Version control, which we'll have the opportunity to learn about later, works with the projects as folder structure
 -   We can also zip a the project folder and send it to someone else and they can work with it
+
+## Project Structure
+
+Next in our journey of reproducibility is project structure. 
+
+There are a lot of potential benefits to creating a good organizational structure from the beginning, including helpful documentation. This can help us understand all of the project components, work more efficiently, and make collaboration easier (including with our future selves!).
+
+Setting up a good structure will save you a lot of frustration in long run, even if it might be a bit  time-consuming and frustrating to do it right initially.
+
+-   Good file structure
+
+    -   All project files in one main folder
+    -   Subfolders (data, R, etc.)
+
+-   Main folder is R project
+
+    -   Self-contained project
+    -   Use relative instead of absolute paths
+
+-   Good folder & file names
+
+    -   Descriptive but not too long
+    -   No spaces
+    -   Consistent format
+
+-   README
+
+    -   Everything someone needs to know to understand project
+
+-   Raw data
+
+    -   In separate folder from cleaned data
+    -   Never change!
+    -   Each file should have metadata
+
+-   Scripts with code
+
+    -   Relative file paths to read in and create files
+    -   Lots of comments
+    -   Order: libraries, data, user-created functions, everything else
+    -   Good variable & column names
+
+-   Two methods to deal with different versions of same file
+
+    -   Good = consistent naming scheme
+        -   Each copy has date or version number
+        -   Don’t call anything final, cause no file ever is!
+    -   Better = version control, only have one copy of each file
+
+-   Running all scripts
+
+    -   Good = description of order to run each script in README
+    -   Better = script to run all scripts
+    -   Best = Make
+
+-   Combine code output and text in single document, such as with RMarkdown files (which we are already doing!)
+
+### Goal of good project structure
+
+-   Reproducibility = ability to get same results from set of data & code
+-   Give entire project folder to someone else (or your future self!), they can understand all parts and recreate your results, figures, documents, etc.
+-   Improving reproducibility makes YOUR life easier!
+
+### R Projects
+
+The best way to work in RStudio is through R Projects (.Rproj files).
+
+### Example project walk-through
+
+Download [example project](%7B%7B%20site.baseurl%20%7D%7D/data/example_project.zip).
