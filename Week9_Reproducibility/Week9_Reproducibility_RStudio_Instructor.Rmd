@@ -5,8 +5,8 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, eval = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
 # Reproducibility in RStudio
@@ -32,7 +32,7 @@ Instead, in order to code in R and work with the R software, we will want to ope
 
 ## Introduction to Reproducibility
 
-Throughout the course, we have talked about many of our topics in the context of "reproducbility," but what *exactly* does that mean?
+Throughout the course, we have talked about many of our topics in the context of "reproducibility," but what *exactly* does that mean?
 
 When something is *reproducible*, it means we have the ability to recreate the same results (including cleaned data, tables, figures, and quantitative findings), using the same input data, computational methods, and conditions of analysis.
 
@@ -59,7 +59,7 @@ We can check that our code runs without having to knit, though. We have a few op
     -   Doesn't unload packages
     -   Useful when developing code
 
-![](images/ClearEnvironment.png)
+![](images/ClearEnvironment.png){width=50%}
 
 -   Restart R to get a clean environment
 
@@ -79,7 +79,8 @@ If you choose to save the workspace, everything in the environment will get relo
 
 While that might sound convenient, it can actually cause a lot of problems (see #1 above). To reduce the risk of having code that doesn't fully run on one click, we want to stop R from storing the state of the environment when we close RStudio.
 
-To set the default in RStudio to not save the workspace, we want to do the following: `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
+To set the default in RStudio to not save the workspace, we want to do the following: 
+> `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
 
 Unclick `Restore .RData into workspace at startup`
 
@@ -105,7 +106,7 @@ We will talk a lot more in-depth about this in a few minutes, but generally spea
 For example, now that we are using our own computers, we need to ensure that we have the correct packages *installed* on our local computers before we will be able to load them.
 
 ```{r}
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
 ```
 
@@ -139,7 +140,7 @@ File paths can be either *absolute* or *relative*. Spoiler alert: we prefer rela
 
 Absolute file paths describe exactly where something is on the computer.
 
-The data file that we downloaded is now being stored in the `Downloads` sub-directory of our `Home` directory. The `Home` directory will vary a little bit by operating system.
+The data file that we downloaded is now being stored in the `Downloads` sub-directory of our `Home` directory on our computer. The `Home` directory will vary a little bit by operating system.
 
 For example, on a Mac or Linux computer, the `Home` directory is `/home/username`. Within the `username` directory is the `Downloads` directory (or folder).
 
@@ -150,14 +151,14 @@ data <- read_csv('/home/ellenbledsoe/Downloads/shrub-dimensions-labeled.csv')
 
 On a Windows machine, change `home` to `Users`.
 
-```{r}
+```{r eval = FALSE}
 # Windows
 data <- read_csv('/Users/ebledsoe/Downloads/shrub-dimensions-labeled.csv')
 ```
 
-Folders (another name for directories) are separate by `/`. We then have the file name at the end.
+Folders (another name for directories) are separated by `/`, a forward slash. We then have the file name at the end.
 
-As an important note, Windows shows `\` or `\\` as the separator between folders. However, this does not work universally. Because `/` works on all operating systems, we want to use it to promote reproducibility across operating systems.
+As an important note, Windows shows `\` or `\\` (backslashes) as the separator between folders. However, this does not work universally. Because `/` works on all operating systems, we want to use it to promote reproducibility across operating systems.
 
 As we've done in the past, we always need to include the file extension (the part after the `.`) when reading in a file.
 
@@ -165,11 +166,11 @@ As we've done in the past, we always need to include the file extension (the par
 
 Relative paths don't specify exactly where on a computer the file is located. Instead, they point to the location of the file of interest in *relation* to what we call the "current working directory", meaning the directory that we are currently in.
 
-```{r}
+```{r eval = FALSE}
 'Downloads/shrub-dimensions-labeled.csv'
 ```
 
-The relative file path above is saying "From where I am currently, the shrub-dimensions file is in the `Downloads` subdirectory."
+The relative file path above is saying "From where I am currently, the shrub-dimensions file is in the `Downloads` sub-directory."
 
 If my current location is in `home/ebledsoe`, then the absolute and relative paths here are the same.
 
@@ -177,7 +178,7 @@ If my current location is in `home/ebledsoe`, then the absolute and relative pat
 
 So how do we find out which directory R thinks that we are in? We can use a function called `getwd()`
 
-```{r}
+```{r eval=FALSE}
 getwd()
 ```
 
@@ -187,7 +188,7 @@ This function stands for "get working directory". The "working directory" is whe
 
 If we have data that is in our current working directly, we can use the file name alone to read in the data.
 
-```{r}
+```{r eval = FALSE}
 shrub_data <- read_csv('shrub-dimensions-labeled.csv')
 ```
 
@@ -197,24 +198,22 @@ One way to ensure that a file is in the working directory is to download it usin
 
 When we have data that is not in the working directory, we have two options:
 
-```         
--   tell R where it is 
+-   tell R where it is
 -   change the working directory to where it is
-```
 
 Changing the working directory is a common approach. To do so, people use the `setwd()` function, which sets the working directory to a specific location.
 
 This, however, can cause a number of issues. If you are working with someone else's files or on another computer, the directory that you want to be working from is likely different from the file path that has been put in the `setwd()` function.
 
-In general, using `setwd` means that your code will only work on a single computer. This breaks a core tenet of reproducibility, so we want to avoid doing this.
+In general, using `setwd()` means that your code will only work on a single computer. This breaks a core tenet of reproducibility, so we want to avoid doing this.
 
 Ideally, we want to have the working directory set automatically, regardless of what computer we are using, and we use relative paths.
 
 ## R Projects
 
-The simplest way to ensure that we are always using relative paths is to use R Projects.
+The simplest way to ensure that we are always using relative paths is to use RStudio Projects (or R Projects, same thing).
 
-In fact we've already been using them! Every time you click on an assignment or click `New Project` in Posit Cloud, this was actually creating a new R Project. Now we need to learn how to do this on our own computers.
+In fact, we've already been using them! Every time you click on an assignment or click `New Project` in Posit Cloud, this was actually creating a new R Project. Now we need to learn how to do this on our own computers.
 
 Each project is a self-contained unit of work in a specific folder/directory. It treats all locations as relative to that specific directory.
 
@@ -222,7 +221,11 @@ Let's set up an R Project on our own computers.
 
 > `File` -\> `New Project` -\> `New Directory` -\> `New Project` -\> [insert_name_here]
 
-![](images/rstudio-project-1.png){width="50%"} ![](images/rstudio-project-2.png){width="50%"} ![](images/rstudio-project-3.png){width="50%"}
+![](images/rstudio-project-1.png){width="50%"} 
+
+![](images/rstudio-project-2.png){width="50%"}
+
+![](images/rstudio-project-3.png){width="50%"}
 
 If you prefer, you can use the `Existing Directory` option to choose a folder that already exists that you want to turn into an R Project.
 
@@ -236,9 +239,9 @@ Now when we try to run the line of code that we are familiar with when reading i
 data <- read_csv('shrub-dimensions-labeled.csv')
 ```
 
-#### Subdirectories
+#### Sub-directories
 
-As we will discuss shortly, it is common to store data in a subdirectory, such as a `data` folder. Let's create a new folder in our project.
+As we will discuss shortly, it is common to store data in a sub-directory, such as a `data` folder. Let's create a new folder in our project.
 
 Create the new folder: \> `New Folder` -\> `data_raw` -\> `OK`
 
@@ -261,7 +264,7 @@ The arguments for `write_csv()` are:
 -   the name of the object with the data you want to save
 -   the file path for where you want the new file to end up. This should include the name of the file you want to create, also with the file extension (.csv, in this case)
 
-```{r}
+```{r eval = FALSE}
 write_csv(data, "data_clean/shrubs_modified.csv")
 ```
 
@@ -320,7 +323,7 @@ What this means is that if your .Rmd file is in a sub-directory, that sub-direct
 
 To move "up" in your folder structure (or back to the larger folder), we use `..`.
 
-```{r}
+```{r eval = FALSE}
 data <- read_csv("../data_raw/shrub-dimensions-labeled.csv")
 ```
 
