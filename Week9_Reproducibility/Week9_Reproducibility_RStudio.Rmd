@@ -59,6 +59,8 @@ We can check that our code runs without having to knit, though. We have a few op
     -   Doesn't unload packages
     -   Useful when developing code
 
+![](images/ClearEnvironment.png)
+
 -   Restart R to get a clean environment
 
     -   Does unload packages
@@ -80,6 +82,8 @@ While that might sound convenient, it can actually cause a lot of problems (see 
 To set the default in RStudio to not save the workspace, we want to do the following: `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
 
 Unclick `Restore .RData into workspace at startup`
+
+![](images/rstudio-workspace.png)
 
 **4. Make sure code works on other computers**
 
@@ -218,6 +222,8 @@ Let's set up an R Project on our own computers.
 
 > `File` -\> `New Project` -\> `New Directory` -\> `New Project` -\> [insert_name_here]
 
+![](images/rstudio-project-1.png){width="50%"} ![](images/rstudio-project-2.png){width="50%"} ![](images/rstudio-project-3.png){width="50%"}
+
 If you prefer, you can use the `Existing Directory` option to choose a folder that already exists that you want to turn into an R Project.
 
 Once we create our new project, RStudio will create a `.Rproj` file in that directory. This file is not the project itself, but it does contain information about the project. We do not manually change this file.
@@ -256,13 +262,15 @@ The arguments for `write_csv()` are:
 -   the file path for where you want the new file to end up. This should include the name of the file you want to create, also with the file extension (.csv, in this case)
 
 ```{r}
-write_csv(data, "data/shrubs_modified.csv")
+write_csv(data, "data_clean/shrubs_modified.csv")
 ```
 
 ### Changing Projects
 
--   Can switch between projects using `File` -\> `Recent Projects` or `Open Project`
--   Keeps track the state of RStudio when you last worked with that project
+If you want to switch between projects, you can do so:
+> `File` -\> `Recent Projects` or `Open Project`
+
+Alternatively, you can click on the arrow next to the name of the project in the upper right-hand corner, which will provide the same options.
 
 ## Project Structure
 
@@ -274,9 +282,11 @@ Setting up a good structure will save you a lot of frustration in long run, even
 
 ### File Structure
 
+![](images/project-based-directory-organization.jpg){width="50%"}
+
 If possible, we want to have all file associated with the project in one main folder. This main folder should be the RProject folder.
 
-From there, we can (and should...) have subfolders. What exactly those subfolders are is up to you. A good starting place is to have something like this:
+From there, we can (and should...) have subfolders. What exactly those subfolders are is up to you. A good starting place is to have something like this (or like the image above):
 
 -   data_raw
     -   keeping the raw data in a separate folder helps ensure that the original copy always exists
@@ -301,9 +311,19 @@ Using documents that combine code output and text in single document, such as wi
 
 There is an odd quirk that comes with using file paths in .Rmd files, however.
 
-For reasons I haven't quite been able to nail down, file paths work a little bit different in R scripts and RMarkdown files in RProjects.
+For reasons I haven't quite been able to nail down, file paths work a little bit different in R scripts (.R file that only understand the R language) and RMarkdown files (.Rmd files, like we use) in RProjects.
 
-If you ever need to go back/up a level, use `..`
+-   For scripts, the R Project folder is the working directory, which is standard.
+
+-   For RMarkdown files, the folder that contains the file is the home folder.
+
+What this means is that if your .Rmd file is in a sub-directory, that sub-directory is that file's reference point. To read in data from another sub-directory, we have to tell R that we want to go up one level in directory structure (to the project folder) and then into the other sub-directory.
+
+To move "up" in your folder structure (or back to the larger folder), we use `..`.
+
+```{r}
+data <- read_csv("../data_raw/shrub-dimensions-labeled.csv")
+```
 
 ### Goal of Good Project Structure
 
@@ -317,6 +337,12 @@ When we start talking about version control using git and GitHub, they are nicel
 
 Ultimately, reproducibility is meant to make our lives easier, for ourselves and our collaborators.
 
-### Example project walk-through
+## Helpful Resources
 
-Download [example project](%7B%7B%20site.baseurl%20%7D%7D/data/example_project.zip).
+Below I'm including some resources that you might find helpful while you're starting out understanding file paths and R Projects.
+
+-   R for Epidemiologists: [File Paths](https://www.r4epi.com/file-paths) (and R Projects)
+-   Reproducible Data Science for Ecologists: [Project Organization](https://ecorepsci.github.io/reproducible-science/project-organization.html#project-organization)
+-   [RStudio Projects and Working Directories: A Beginner's Guide](https://martinctc.github.io/blog/rstudio-projects-and-working-directories-a-beginner%27s-guide/)
+-   Posit: [RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects)
+-   R 4 Data Science: [Workflow: Projects](https://r4ds.had.co.nz/workflow-projects.html)
