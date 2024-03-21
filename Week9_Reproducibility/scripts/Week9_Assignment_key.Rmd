@@ -51,6 +51,12 @@ Once you've installed `palmerpenguins`, comment out that line of code.
 
 If you haven't already, make sure you are working in an R Project. Your project should have subdirectories for raw data, clean data, output, docs, and scripts. The naming convention for these folders is up to you.
 
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
 ### 2. Portal Data Paths Review (25 points)
 
 For this question, we are going to be using some of the code you've already written for Assignment 8, Question 2.
@@ -86,6 +92,8 @@ ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length, color = sp
   scale_x_log10() +
   labs(x = "Weight (g)", y = "Hindfoot Length (mm)")
 
+ggsave("../figures/plot_2e.png")
+
 # f. Make a histogram of weights with a separate subplot for each `species_id`.
 # Do not include species with no weights.
 # Set the `scales` argument to `"free_y"` so that the y-axes can vary.
@@ -97,6 +105,7 @@ ggplot(data = surveys_with_weights, mapping = aes(x = weight)) +
   geom_histogram() +
   facet_wrap(~species_id, scales = "free_y") +
   labs(x = "Weight (g)", y = "Number of Individuals")
+ggsave("../figures/plot_2f.png")
 ```
 
 ### 3. Palmer Penguins and Path Files (15 points)
@@ -108,20 +117,38 @@ a.  The code chunk below uses the `download.file()` function to go to a specific
 ```{r}
 # Adelie penguin data
 download.file(url = "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.219.3&entityid=002f3893385f710df69eeebe893144ff",
-              destfile = "adelie.csv")
+              destfile = "../data_raw/adelie.csv")
 
 # Gentoo penguin data
 download.file(url = "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.220.3&entityid=e03b43c924f226486f2f0ab6709d2381",
-              destfile = "gentoo.csv")
+              destfile = "../data_raw/gentoo.csv")
 
 # Chinstrap penguin data 
 download.file(url = "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.221.2&entityid=fe853aa8f7a59aa84cdd3197619ef462",
-              destfile = "chinstrap.csv")
+              destfile = "../data_raw/chinstrap.csv")
 ```
 
 b.  Copy and then run the code that you wrote to combine the three above datasets and have the output match the `penguins` dataframe from the `palmerpenguins` dataframe.
 c.  Run the `setdiff()` function to make sure that your code worked (it shouldn't have any issues, but it is good to check!)
 d.  Save your version of the cleaned penguins data into your clean data folder.
+
+```{r}
+adelie <- read_csv("../data_raw/adelie.csv")
+gentoo <- read_csv("../data_raw/gentoo.csv")
+chinstrap <- read_csv("../data_raw/chinstrap.csv")
+
+penguins_raw <- bind_rows(adelie, gentoo, chinstrap)
+
+penguins_clean <- penguins_raw %>% 
+  select(species = Species, island = Island, bill_length_mm = `Culmen Length (mm)`, bill_depth_mm = `Culmen Depth (mm)`, flipper_length_mm = `Flipper Length (mm)`, body_mass_g = `Body Mass (g)`, sex = Sex, year = `Date Egg`) %>% 
+  mutate(sex = na_if(sex, "."),
+         species = str_extract(species, '\\w*'),
+         sex = tolower(sex),
+         year = lubridate::year(year)) 
+
+write_csv(penguins_clean, "../data_raw/penguins_clean.csv")
+```
+
 
 ### 4. Add Version Control: Together in Class (15 points)
 
