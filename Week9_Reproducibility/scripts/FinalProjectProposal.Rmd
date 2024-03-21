@@ -67,6 +67,19 @@ Note: Your data set does not need to be ecological in nature if you have another
 
 4.  One of the requirements of the final project is to make some type of plot using `ggplot2` with the data. What do you plan to plot from your data?
 
+# Reflection
+
+This reflection is worth 25 points, separate from your Week 9 assignment. Reflections are graded for completion only.
+
+Write about 5 sentences addressing *at least* one of the following questions.
+
+-   What has worked well for you in this course for you so far?
+-   What has been particularly challenging for you so far?
+-   Is there anything that I can do to help your learning in the course?
+-   Other reflections about the content of the module that you would like to share.
+
+*Answer*:
+
 ## Submitting this File
 
 1.  Create a new repository in the class GitHub organization for your final project. Use the naming convention "LastName_FinalProject"
