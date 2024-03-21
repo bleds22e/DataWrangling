@@ -57,6 +57,8 @@ The following answers are not binding! You can change your final project as much
 
 Answering these questions is meant to get you thinking about what data you would like to use and what tasks you might perform with the data.
 
+Note: Your data set does not need to be ecological in nature if you have another interest. It should also not be a dataset that we have used in class (see me if you have questions).
+
 1.  What data are you planning to use for the final project? Describe the data: its contents, its format(s), one or more dataframes, etc. If you have a link to the dataset, please include it. If you have a file that you can upload, please add it to the assignment submission.
 
 2.  Does this data need to be cleaned in any way to make it tidy? If so, what needs to occur?
