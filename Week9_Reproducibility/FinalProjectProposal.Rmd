@@ -15,7 +15,7 @@ Answering the questions in this document are worth 20 points for Question 5 in W
 
 ## Where to Find Data
 
-If you have your own data from a research project, use it!
+**If you have your own data from a research project, use it!**
 
 If you don't have your own data, here are some suggestions for where to find data:
 
@@ -53,9 +53,11 @@ The final project for this course is worth 300 points (WFSC 496B) or 500 points 
 
 ## Questions
 
-The following answers are not binding! You can change your final project as much as you'd like. Answering these questions is meant to get you thinking about what data you would like to use and what tasks you might before with the data.
+The following answers are not binding! You can change your final project as much as you'd like from what you propose here.
 
-1.  What data are you planning to use for the final project? Describe the data: its contents, its format(s), one or more dataframes, etc.
+Answering these questions is meant to get you thinking about what data you would like to use and what tasks you might perform with the data.
+
+1.  What data are you planning to use for the final project? Describe the data: its contents, its format(s), one or more dataframes, etc. If you have a link to the dataset, please include it. If you have a file that you can upload, please add it to the assignment submission.
 
 2.  Does this data need to be cleaned in any way to make it tidy? If so, what needs to occur?
 
@@ -67,6 +69,6 @@ The following answers are not binding! You can change your final project as much
 
 1.  Create a new repository in the class GitHub organization for your final project. Use the naming convention "LastName_FinalProject"
 2.  Connect the repository to an RStudio project
-3.  Create a series of appropriate subdirectories, including a `documents` folder.
+3.  Create a series of appropriate sub-directories in your RStudio Project, including a `documents` folder.
 4.  Move this file to the documents folder.
-5.  Stage, commit, and push this document (and subdirectory) to GitHub with a descriptive commit message.
+5.  Stage, commit, and push this document (and sub-directory) to GitHub with a descriptive commit message.
