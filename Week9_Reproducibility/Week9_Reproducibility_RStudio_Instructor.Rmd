@@ -59,7 +59,7 @@ We can check that our code runs without having to knit, though. We have a few op
     -   Doesn't unload packages
     -   Useful when developing code
 
-![](images/ClearEnvironment.png){width=50%}
+![](images/ClearEnvironment.png){width="50%"}
 
 -   Restart R to get a clean environment
 
@@ -79,8 +79,7 @@ If you choose to save the workspace, everything in the environment will get relo
 
 While that might sound convenient, it can actually cause a lot of problems (see #1 above). To reduce the risk of having code that doesn't fully run on one click, we want to stop R from storing the state of the environment when we close RStudio.
 
-To set the default in RStudio to not save the workspace, we want to do the following: 
-> `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
+To set the default in RStudio to not save the workspace, we want to do the following: \> `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
 
 Unclick `Restore .RData into workspace at startup`
 
