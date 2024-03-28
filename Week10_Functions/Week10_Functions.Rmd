@@ -11,36 +11,34 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Writing Our Own Functions
 
-### Understandable and reusable code
+### Understandable and Reusable code
 
-* Write code in understandable chunks.
-* Write reusable code.
-* Who has copy-pasted code a bunch of times to do different versions of the same thing?
-* Who forgot to change something in one of them?
-* Who had to make the same change to all of the copies?
-* Functions are a chunk of code written to be reusable while changing the details
+Writing our own functions can help us to write code in understandable chunks and also make more reusable code.
 
-### Function basics
+We often run into instances where we want to do something many times but slightly differently. 
 
-```{r}
-function_name <- function(inputs) {
-  output_value <- do_something(inputs)
-  return(output_value)
-}
-```
+If you find yourself needing to run the same calculations or make the same plot repeatedly, writing a function to accomplish that task can save you from copying and pasting the same code over and over again.
 
-* The braces indicate that the lines of code are a group that gets run together
+Doing this can reduce errors in your code as well as condense the code into more understandable bits.
+
+## Function Structure
+
+Below, I've written out the general structure of a function.
 
 ```{r}
-{a = 2
-b = 3
-a + b}
+# function_name <- function(inputs) {
+#   output <- do_something(inputs)
+#   return(output)
+# }
 ```
 
-* Pressing run anywhere in this group runs all the lines in that group
-* A function runs all of the lines of code in the braces
-* Using the arguments provided
-* And then returns the output
+The braces indicate that the lines of code are a group that gets run together.
+
+A function will run all of the lines of code in the braces using the arguments provided.
+
+We then need to return the output using the `return()` function.
+
+Let's write out our first function. We want to calculate shrub volumes.
 
 ```{r}
 calc_shrub_vol <- function(length, width, height) {
@@ -50,52 +48,41 @@ calc_shrub_vol <- function(length, width, height) {
 }
 ```
 
-* Creating a function doesn't run it.
-* Call the function with some arguments.
+It is important to note that writing the function does not create the function.
+
+We have to remember to run the code to create the function and add it to our environment. When we run this code chunk above, we can see that the function gets added to our enviornment in a new section called "functions."
+
+Let's use our new function.
 
 ```{r}
 calc_shrub_vol(0.8, 1.6, 2.0)
 ```
 
-* Store the output to use it later in the program
+As with other functions, we can store the output as an object to use later.
 
 ```{r}
 shrub_vol <- calc_shrub_vol(0.8, 1.6, 2.0)
 ```
 
-> Do [Writing Functions]({{ site.baseurl }}/exercises/Functions-writing-functions-R)
+> Work on Question 1 in the Assignment.
 
-* Treat functions like a black box
-  * *Draw a box on board showing inputs->function->outputs*
-  * The only things the function knows about are the inputs we pass it
-  * The only thing the program knows about the function is the output it
-    produces
+### Black Box
 
-* Walk through function execution 
-	* Assign 0.8 to length, 1.6 to width, and 2.0 to height inside function
-	* Calculate the area and assign it to `area`
-	* Calculate volume and assign it to `volume`
-	* Send `volume` back as output
-	* Store it in `shrub_vol`
+It is important to remember a few things about functions. In many ways, we need to treat functions as a black box.
 
-* Treat functions like a black box.
-    * Can't access a variable that was created in a function
-        * `> volume`
-        * `Error: object 'width' not found`
-    * Or an argument by name
-        * `> width`
-        * `Error: object 'width' not found`
-    * 'Global' variables can influence function, but should not.
-        * Very confusing and error prone to use a variable that isn't passed in
-          as an argument
+What we mean by this is that the only thing that the function knows about are the inputs we give it.
 
-> Do [Use and Modify]({{ site.baseurl }}/exercises/Functions-use-and-modify-R).
+Similarly, the only thing our environment know about the function is the output that we ask the function to return to us.
+
+So, in the function above, we can't "access" variables that are created within the function. The function exists within it's own environment, so to speak.
+
+> Work on Question 2 in the Assignment.
 
 ### Default arguments
 
-* Defaults can be set for common inputs.
-* For example, many of our shrubs are the same height so for those shrubs we only measure the `length` and `width`.
-* So we want a default value for the `height` for cases where we don't measure it
+As with many of the functions that we have already used in this class, we can set defaults for the arguments in the functions that we create.
+
+For example, if many of our shrubs are the same height, we could specify that the default height should be 1.
 
 ```{r}
 calc_shrub_vol <- function(length, width, height = 1) {
@@ -109,22 +96,9 @@ calc_shrub_vol(0.8, 1.6, 2.0)
 calc_shrub_vol(length = 0.8, width = 1.6, height = 2.0)
 ```
 
-> Do [Default Arguments]({{ site.baseurl }}/exercises/Functions-default-arguments-R).
-
-### Named vs unnamed arguments
-
-* When to use or not use argument names
-
-```r
-calc_shrub_vol(length = 0.8, width = 1.6, height = 2.0)
-```
-
 ### Combining Functions
 
-* Each function should be single conceptual chunk of code
-* Functions can be combined to do larger tasks in two ways
-
-* Calling multiple functions in a row
+Again, as with other functions, we can combine functions of our own creation together.
 
 ```{r}
 est_shrub_mass <- function(volume){
@@ -135,42 +109,29 @@ shrub_volume <- calc_shrub_vol(0.8, 1.6, 2.0)
 shrub_mass <- est_shrub_mass(shrub_volume)
 ```
 
-* We can also use pipes with our own functions
-* The output from the first function becomes the first argument for the second function
+We can also use pipes with our own functions. The output from the first function becomes the first argument for the second function.
 
 ```{r}
 library(dplyr)
-shrub_mass <- calc_shrub_vol(0.8, 1.6, 2.0) |>
+shrub_mass <- calc_shrub_vol(0.8, 1.6, 2.0) %>% 
   est_shrub_mass()
 ```
 
-> Do [Combining Functions]({{ site.baseurl }}/exercises/Functions-combining-functions-R).
+### Using the `tidyverse` in Functions
 
-* Can also call functions from inside other functions
-* Allows organizing function calls into logical groups
+One of the really nice things about the `tidyverse` is that we usually don't need to put columns in quotes.
 
-```{r}
-est_shrub_mass_dim <- function(length, width, height){
-  volume = calc_shrub_vol(length, width, height)
-  mass <- est_shrub_mass(volume)
-  return(mass)
-}
+This is because they use "tidy evaluation," a special type of non-standard evaluation. Basically, they do fancy things under the surface to make them easier to work with.
 
-est_shrub_mass_dim(0.8, 1.6, 2.0)
-```
+This is useful for utilizing functions from the `tidyverse`, but it means that we need to add an extra step when we use `tidyverse` functions within our own functions that we are writing.
 
-* We ***don't*** need to pass the function name into the function
-* That's the one violation of the black box rule
+If we try to use `tidyverse` functions the way we normally would within our functions, they won't work.
 
-### Using dplyr & ggplot in functions
-
-* There is an extra step we need to take when working with functions from dplyr and ggplot that work with "data variables", i.e., names of columns that are not in quotes
-* These functions use tidy evaluation, a special type of non-standard evaluation
-* This basically means they do fancy things under the surface to make them easier to work with
-* But it means they don't work if we just pass things to functions in the most natural way
-
-```{r}
+```{r eval = FALSE}
 library(ggplot2)
+library(palmerpenguins)
+
+penguins <- penguins
 
 make_plot <- function(df, column, label) {
   ggplot(data = df, mapping = aes(x = column)) +
@@ -178,35 +139,35 @@ make_plot <- function(df, column, label) {
     xlab(label)
 }
 
-surveys <- read.csv("surveys.csv")
-make_plot(surveys, hindfoot_length, "Hindfoot Length [mm]")
+make_plot(penguins, body_mass_g, "Body Mass (g)")
 ```
 
-* To fix this we have to tell our code which inputs/arguments are this special type of data variable
-* We do this by "embracing" them in double braces
+To fix this issue, we have to tell our code which inputs/arguments are this special type of data variable.
+
+We can do this by "embracing" them in double braces. This tells the function to treat them in the "tidy evaluation" method.
 
 ```{r}
-library(ggplot2)
-
 make_plot <- function(df, column, label) {
     ggplot(data = df, mapping = aes(x = {{ column }})) +
     geom_histogram() +
     xlab(label)
 }
 
-surveys <- read.csv("surveys.csv")
-make_plot(surveys, hindfoot_length, "Hindfoot Length [mm]")
-make_plot(surveys, weight, "Weight [g]")
+make_plot(penguins, body_mass_g, "Body Mass (g)")
+make_plot(penguins, bill_length_mm, "Bill Length (mm)")
 ```
 
-### Code design with functions
+### Code Design with Functions
 
-* Functions let us break code up into logical chunks that can be understood in isolation
-* Write functions at the top of your code then call them at the bottom
-* The functions hold the details
-* The function calls show you the outline of the code execution
+Functions let us break code up into logical chunks that can be understood in isolation.
 
-```{r}
+When you write functions, place them at the top of your code then call them below.
+
+The functions hold the details. You can heavily comment the code of your functions, as well.
+
+The function calls will show you the outline of the code execution.
+
+```{r eval = FALSE}
 clean_data <- function(data){
   do_stuff(data)
 }
