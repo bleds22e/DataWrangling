@@ -11,142 +11,75 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Making Choices
 
-> Environment Setup:
-> Just Base R
+## Conditionals
 
+When we want to make choices in R, we are most often using some type of conditional statement. 
 
-> INSTRUCTOR NOTE: Code examples should generally build up by modifying the
-> existing code example rather than by retyping the full example.
+We talked about conditional statements early in the class when we talked about conditional sub-setting, and we've continued to use them frequently throughout the course in our `filter` functions! 
 
-### Conditionals
-
-* Conditional statements are when we check to see if some condition is true or not
-* We used these for filtering data in `dplyr`
+Here are some examples below.
 
 ```{r}
 weight > 50
 species == "DM"
 ```
 
-* These statements generate a value is of type `"logical"`
-* The value is `TRUE` if the condition is satisfied 
-* The value is `FALSE` if the condition is not satisfied
-* These aren't the strings "TRUE" and "FALSE"
-* They are a special type of value known as "boolean"
-  
-* Conditional statements are made with a range of operators
-* We've seen
+When we run these lines of code, these statements produce an output that is a generate a `"logical"` data type.
+
+* `TRUE` if the condition is satisfied 
+* `FALSE` if the condition is not satisfied
+
+As a reminder, these are not the same as strings "TRUE" and "FALSE." These are a special type of value called "boolean." 
+
+In some ways, they are similar to `NA` values. True `NA` values do not go in quotation marks because they are a special data type; the same is true for `TRUE` (or `T`) and `FALSE` (`F`).
+
+### Conditional Operators
+
+As we've seen in previous classes, conditional statements can be created with a number of different operators.
+
+We have the "traditional" operators:
+
   * `==` for equals
   * `!=` for not equals
-  * `<`, `>` for less than and greater than
-  * `<=`, `>=` for less than or equal to and greater than or equal to
+  * `<` and `>` for less than or greater than
+  * `<=`, `>=` for less than or equal to or greater than or equal to
+
+For example:
 
 ```{r}
 10 >= 5
 ```
-* There are others, including `%in%`, which checks to see if a value is present in a vector of possible values
+
+There are other operators that we have not yet used, such as `%in%`. This is a very handy little operator!
+
+It checks to see if a value is present in a vector of possible values.
 
 ```{r}
 "DM" %in% c("DM", "DO", "DS")
 "PP" %in% c("DM", "DO", "DS")
 ```
 
-* There are also functions that return these boolean
-* `is.na()` for is this value null
+There are also a number of functions that return these boolean data types.
+
+For example, the `is.na()` function returns `TRUE` or `FALSE` depending on whether a value is null or not.
 
 ```{r}
 is.na(NA)
 is.na(5)
 ```
 
-### Reversing conditions
+### Reversing Conditions
 
-* Sometimes we want to the opposite of a condition
-* We do this using `!` which stands for "not"
-* For normal conditional statements we also need `()`
+When we want the opposite of a certain condition, we can use the `!` operator to negate the condition.
+
+In doing so, it reverses the boolean values that are returned (`TRUE` becomes `FALSE` and `FALSE` becomes `TRUE`).
 
 ```{r}
 !(10 >= 5)
+!is.na(c(4, NA, 76))
 ```
 
-* This reverses the returned boolean value
-* So it changes `TRUE` to `FALSE` and `FALSE` to `TRUE`
-* If we want to ask if "PP" is not in a given species list
-
-```{r}
-!("PP" %in% c("DM", "DO", "DS")
-```
-
-* So it is true that "PP" is not in the list
-* Because if it is not in the list then the part inside `()` returns `FALSE`
-* And the `!` reverses this to `TRUE`
-
-### Combining conditional statements
-
-* We can combine conditions using "and" and "or"
-* We use the `&` for "and"
-* Which means if both conditions are `TRUE` return `TRUE`
-* If either or both of the conditions is `FALSE` then return `FALSE`
-
-```{r}
-5 > 2 & 6 >=10
-```
-
-* We use the `|` for "or"
-* Which means if either or both of the conditions are `TRUE` return `TRUE`
-
-```{r}
-5 > 2 | 6 >=10
-```
-
-### Conditional statements work on vectors
-
-* Vectors of values compared to a single value return one logical per value
-
-```{r}
-c(1, 1, 2, 3, 1) == 1
-```
-
-* Checks each value to see if equal to 1
-* This is what subsetting approaches use to subset
-* They keep the values where the value in this condition vector is equal to `TRUE`
-* Let's look at an example where we have a vector of counts and a vector the the states they occur in
-
-```{r}
-states <- c('FL', 'FL', 'GA', 'SC')
-counts <- c(9, 16, NA, 10)
-```
-
-* A conditional statement checking if the state is `'FL'` returns a vector of `TRUE`'s and `FALSE`s
-
-```{r}
-states == 'FL'
-```
-
-* So when we filter the `counts` vector to only return values where the `states` is equal to `'FL'`
-
-```{r}
-counts[states == 'FL']
-```
-
-* It is the same as pass a vector of `TRUE` and `FALSE` values inside the square brackets
-
-```{r}
-counts[c(TRUE, TRUE, FALSE, FALSE)]
-```
-
-* This keeps the first and second values in `counts` because the values in the vector are `TRUE`
-* This is how `dplyr::filter()` and other methods for subsetting data work
-
-* This is why we can use `!is.na()` to filter out null values
-
-```{r}
-is.na(count)
-!is.na(count)
-count[!is.na(count)]
-```
-
-> Do [Choice Operators]({{ site.baseurl }}/exercises/Making-choices-choice-operators-R).
+> Work on Question 1: Choice Operators
 
 ### `if` statements
 
@@ -341,3 +274,18 @@ est_mass(1.6, "shrub", age = 6)
 * But nesting can be difficult to follow so try to minimize it
 
 > Assign the rest of the exercises.
+
+## Making Choices in the `tidyverse`
+
+```{r}
+install.packages("lterdatasampler")
+library(lterdatasampler)
+```
+
+`if_else`
+
+`case_when`
+
+With `mutate`
+
+Add 1 question in assignment using if_else, case_when, and if {} else if to do the same task

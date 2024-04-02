@@ -33,12 +33,11 @@ a. `w` is greater than 10
 b. `"green"` is in `colors`
 c. `x` is greater than `y`
 d. Each value in `masses` is greater than 40.
-e. 2 * `x` + 0.2 is equal to `y`
-f. `dna1` is the same as `dna2`
-g. `dna1` is not the same as `dna2`
-h. `w` is greater than `x`, or `y` is greater than `z`
-i. `x` times `w` is between 13.2 and 13.5
-j. Each mass in `masses` is between 30 and 50.
+e. `dna1` is the same as `dna2`
+f. `dna1` is not the same as `dna2`
+g. `w` is greater than `x`, or `y` is greater than `z`
+h. `x` times `w` is between 13.2 and 13.5
+i. Each mass in `masses` is between 30 and 50.
 
 ```{r}
 ### Code solution for Choice Operators
@@ -60,26 +59,22 @@ print("1d")
 masses > 40
 
 print("1e")
-# e.   2 * `x` + 0.2 is equal to `y`
-2 * x + 0.2 == y
-
-print("1f")
 # f.  `dna1` is the same as `dna2`
 dna1 == dna2
 
-print("1g")
+print("1f")
 # g.  `dna1` is not the same as `dna2`
 dna1 != dna2
 
-print("1h")
+print("1g")
 # h. `w` is greater than `x`, or `y` is greater than `z`
 w > x | y > z
 
-print("1i")
+print("1h")
 # i.  `x` times `w` is between 13.2 and 13.5
 13.2 < x * w & x * w < 13.5  # | (a pipe) will return TRUE for all values.
 
-print("1j")
+print("1i")
 # j. Each mass in `masses` is between 30 and 50.
 masses > 30 & masses < 50
 ```
