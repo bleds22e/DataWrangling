@@ -11,6 +11,32 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Assignment
 
+### Purpose
+
+The goal of this assignment is to practice writing and using conditional statements and `if`-`else` statements.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+April 8 at midnight MST
+
+# Assignment Exercises
+
 ### 1. Choice Operators (20 pts)
 
 Create the following variables.
@@ -38,51 +64,11 @@ g.  `w` is greater than `x`, or `y` is greater than `z`
 h.  `x` times `w` is between 13.2 and 13.5
 i.  Each mass in `masses` is between 30 and 50.
 
-```{r}
-### Code solution for Choice Operators
-
-print("1a")
-# a.  `w` is greater than 10
-w > 10
-
-print("1b")
-# b.  `w` + `x` is less than 15
-w + x < 15
-
-print("1c")
-# c.  `x` is greater than `y`
-x > y
-
-print("1d")
-# d. Each value in `masses` is greater than 50.
-masses > 40
-
-print("1e")
-# f.  `dna1` is the same as `dna2`
-dna1 == dna2
-
-print("1f")
-# g.  `dna1` is not the same as `dna2`
-dna1 != dna2
-
-print("1g")
-# h. `w` is greater than `x`, or `y` is greater than `z`
-w > x | y > z
-
-print("1h")
-# i.  `x` times `w` is between 13.2 and 13.5
-13.2 < x * w & x * w < 13.5  # | (a pipe) will return TRUE for all values.
-
-print("1i")
-# j. Each mass in `masses` is between 30 and 50.
-masses > 30 & masses < 50
-```
-
 ### 2. If Statements (20 points)
 
 a.  Complete the following `if` statement so that if `age_class` is equal to "sapling" it sets `y <- 10`.
 
-```{r eval=FALSE}
+```{r}
 age_class = "sapling"
 if (){
   
@@ -92,7 +78,7 @@ y
 
 b.  Complete the following `if` statement so that if `age_class` is equal to "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it sets `y <- 5`.
 
-```{r eval=FALSE}
+```{r}
 age_class = "seedling"
 if (){
   
@@ -102,7 +88,7 @@ y
 
 c.  Complete the following `if` statement so that if `age_class` is equal to "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it sets `y <- 5` and if `age_class` is something else then it sets the value of `y <- 0`.
 
-```{r eval = FALSE}
+```{r}
 age_class = "adult"
 if (){
   
@@ -112,71 +98,6 @@ y
 
 d.  Convert your conditional statement from (c) into a function that takes `age_class` as an argument and returns `y`. Call this function 5 times, once with each of the following values for `age_class`: "sapling", "seedling", "adult", "mature", "established".
 
-```{r}
-print("2a")
-# a. Complete (i.e., copy into your code and them modify) the following `if`
-#   statement so that if `age_class` is equal to "sapling" it sets `y <- 10`.
-
-age_class = "sapling"
-if (age_class == "sapling"){
-  y <-10
-}
-y
-
-print("2b")
-# b. Complete the following `if` statement so that if `age_class` is equal to
-#   "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it
-#   sets `y <- 5`.
-
-age_class = "seedling"
-if (age_class == "sapling"){
-  y <-10
-} else if (age_class == "seedling"){
-  y <- 5
-}
-y
-
-
-print("2c")
-# c. Complete the following `if` statement so that if `age_class` is equal to
-#   "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it
-#   sets `y <- 5` and if `age_class` is something else then it sets the value of
-#   `y <- 0`.
-
-age_class = "adult"
-if (age_class == "sapling"){
-  y <-10
-} else if (age_class == "seedling") {
-  y <- 5
-} else {
-  y <- 0
-}
-y
-
-print("2d")
-# d. Convert your conditional statement from (c) into a function that takes
-#   `age_class` as an argument and returns `y`. Call this function 5 times, once
-#   with each of the following values for `age_class`: "sapling", "seedling",
-#   "adult", "mature", "established".
-
-get_y_from_age_class <- function(age_class){
-  if (age_class == "sapling"){
-    y <-10
-  } else if (age_class == "seedling") {
-    y <- 5
-  } else {
-    y <- 0
-  }
-  return(y)
-}
-
-get_y_from_age_class("sapling")
-get_y_from_age_class("seedling")
-get_y_from_age_class("adult")
-get_y_from_age_class("mature")
-get_y_from_age_class("established")
-```
-
 ### 3. If Statements in Functions (20 points)
 
 a.  Write a function named `double_if_small` that takes a number as input and returns the number multiplied by 2 if the input is less than 26 and returns just the number (not multiplied by two) if the input is greater than or equal to 26. Call the function with `10` as the input.
@@ -184,49 +105,6 @@ b.  Call the function from (a) with `30` as the input.
 c.  Write a function called `prediction` that takes a single argument `x`. If `x` is both greater than 0 and less than 15 then return `y = 6 + 0.8 * x`. If `x` is both greater than 15 and less than 30 then return `y = 5 + 0.75 * x`. In all other cases return `y = NA`. Call the function with `5` as the input.
 d.  Call the function from (c) with `26` as the input.
 e.  Call the function from (c) with `-2` as the input.
-
-```{r}
-# Solution to If Statements in Functions exercise
-
-print("3a")
-double_if_small <- function(number){
-  if (number < 26){
-    output = number * 2
-  } else {
-    output = number
-  }
-  return(output)
-}
-
-double_if_small(10)
-
-print("3b")
-
-double_if_small(30)
-
-print("3c")
-
-prediction <- function(x){
-  if (x > 0 & x < 15){
-      y = 6 + 0.8 * x
-  } else if (x > 15 & x < 30) {
-      y = 5 + 0.75 * x
-  } else {
-      y = NA
-  }
-  return (y)
-}
-
-prediction(5)
-
-print("3d")
-
-prediction(26)
-
-print("3e")
-
-prediction(-2)
-```
 
 ### 4. Size Estimates by Name (20 points)
 
@@ -248,54 +126,13 @@ If the name is not any of these values the function should return `NA`.
 
 Run the function for: a. A *Stegosauria* that is 10 meters long. b. A *Theropoda* that is 8 meters long. c. A *Sauropoda* that is 12 meters long. d. A *Ankylosauria* that is 13 meters long.
 
-```{r}
-get_mass_from_length <- function(a, b, length){
-  mass = a * length ** b
-  return (mass)
-}
-
-get_mass_from_length_by_name <- function(length, name){
-  if (name == "Stegosauria"){
-    if (length > 8){
-      a = 10.95
-      b = 2.64
-    } else {
-      a = 8.5
-      b = 2.8
-    }
-  }
-  else if (name == "Theropoda"){
-    a = 0.73
-    b = 3.63
-  }
-  else if (name == "Sauropoda"){
-    a = 214.44
-    b = 1.46
-  }
-  else {
-    return(NA)
-  }
-  get_mass_from_length(a, b, length)
-}
-
-get_mass_from_length_by_name(10, "Stegosauria")
-get_mass_from_length_by_name(8, "Theropoda")
-get_mass_from_length_by_name(12, "Sauropoda")
-get_mass_from_length_by_name(13, 'Ankylosauria')
-```
-
 ### 5. Using `dplyr` Choice Functions (20 points)
 
 For this question, we will be using functions from `dplyr` and data from the `lterdatasampler` package, so make sure you load both of those packages with the `library()` function.
 
-```{r}
-library(dplyr)
-library(lterdatasampler)
-```
+First, create an object called `crab_size` and assign the value 17 to it.
 
-a.  First, create an object called `crab_size` and assign the value 17 to it.
-
-    Write an `if` statement using the `if_else` function from `dplyr` that says that a crab that is larger than or equal to 20 is "large" and a crab that is smaller than 20 is "small."
+a.  Write an `if` statement using the `if_else` function from `dplyr` that says that a crab that is larger than or equal to 20 is "large" and a crab that is smaller than 20 is "small."
 
 b.  Make sure that your `crab_size` object is set to 17 (if you overwrote it in (a)).
 
@@ -310,34 +147,3 @@ d.  Take a look at the `pie_crab` dataset from the `lterdatasampler` package by 
 e.  Now use the `case_when` function inside a `mutate` function to create a new column called `size_category3` in the `pie_crab` dataframe that meets the same conditions as (b) and (c).
 
     I've placed my new column next to the size column for the sake of the answer key; you don't need to do this.
-
-```{r}
-print("5a")
-
-crab_size <- 17
-
-if_else(crab_size >= 20, "large", "small")
-
-print("5b")
-
-if_else(crab_size > 20, "large",
-        if_else(crab_size > 10, "medium", "small"))
-
-print("5c")
-
-case_when(crab_size > 20 ~ "large",
-          crab_size > 10 ~ "medium",
-          TRUE ~ "small")
-
-print("5d")
-
-pie_crab %>% 
-  mutate(size_category = if_else(size > 20, "large", "small"), .after = size)
-
-print("5e")
-
-pie_crab %>% 
-  mutate(size_category3 = case_when(size > 20 ~ "large",
-                          size > 10 ~ "medium",
-                          TRUE ~ "small"), .after = size)
-```
