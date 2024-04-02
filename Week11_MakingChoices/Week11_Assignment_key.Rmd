@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Assignment
 
 
-### 1. Choice Operators (25 pts)
+### 1. Choice Operators (20 pts)
 
 Create the following variables.
 
@@ -80,7 +80,7 @@ masses > 30 & masses < 50
 ```
 
 
-### 2. If Statements (25 points)
+### 2. If Statements (20 points)
 
 a. Complete the following `if` statement so that if `age_class` is equal to "sapling" it sets `y <- 10`.
 
@@ -188,7 +188,7 @@ get_y_from_age_class("established")
 ```
 
 
-### 3. If Statements in Functions (25 points)
+### 3. If Statements in Functions (20 points)
 
 a. Write a function named `double_if_small` that takes a number as input and returns the number multiplied by 2 if the input is less than 26 and returns just the number (not multiplied by two) if the input is greater than or equal to 26. Call the function with `10` as the input.
 b. Call the function from (a) with `30` as the input.
@@ -240,7 +240,7 @@ prediction(-2)
 ```
 
 
-### 4. Size Estimates by Name (25 points)
+### 4. Size Estimates by Name (20 points)
 
 This is a follow up to "Use and Modify" from Assignment 10.
 
@@ -307,3 +307,10 @@ get_mass_from_length_by_name(12, "Sauropoda")
 get_mass_from_length_by_name(13, 'Ankylosauria')
 ```
 
+### 5. Using `dplyr` Choice Functions (20 points)
+
+a. do soemthing with `if`-`else if`
+b. do something with `if_else`
+c. nested `if_else`
+d. case_when
+e. pie_crabs and mutate
