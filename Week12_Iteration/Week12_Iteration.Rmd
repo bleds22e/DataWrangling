@@ -21,16 +21,16 @@ While our lesson today will focus mainly on one way to iterate in R, there are a
 
 1.  **vectorize**
 
--   we can write functions that take either a single value or a vector of values, do element-wise calculations, and return a vector of results
--   this isn't as tricky as it might sound. Many functions automatically work with either a single value or a vector of values
--   each function we wrote in our functions lesson in Week 10 can work with vectors
--   an important exception it when we use `if`-`else` statements inside our functions; these do not work with vectors
+-   We can write functions that take either a single value or a vector of values, do element-wise calculations, and return a vector of results
+-   This isn't as tricky as it might sound. Many functions automatically work with either a single value or a vector of values
+-   Each function we wrote in our functions lesson in Week 10 can work with vectors
+-   An important exception it when we use `if`-`else` statements inside our functions; these do not work with vectors
 
 2.  **`apply` or `map`**
 
--   both of these family of functions take a function and apply that function to each item in a list of items
--   the `apply` functions (e.g., `apply`, `lapply`, `sapply`) are base R
--   the `map` functions come from the `purrr` package, part of the `tidyverse`
+-   Both of these family of functions take a function and apply that function to each item in a list of items
+-   The `apply` functions (e.g., `apply`, `lapply`, `sapply`) are base R
+-   The `map` functions come from the `purrr` package, part of the `tidyverse`
 
 3.  **using `dplyr`**
 
@@ -76,7 +76,7 @@ Everything between the curly brackets is executed each time through the loop.
 
 The loop takes the first value from `volumes` and assigns it to the object `volume`. It performs the code inside the curly brackets, calculating the mass and then printing the resulting mass.
 
-Once the code hits the end of of what is enclosed inside the curly brackets, it starts the code all over again from the beginning using the next item in the list (or the `volumes` vector, in this case). The code starts it takes the second value from `volumes` and assigns it to `volume` and does the calculation and prints it.
+Once the code hits the end of of what is enclosed inside the curly brackets, it starts the code all over again from the beginning using the next item in the list (or the `volumes` vector, in this case). The code takes the second value from `volumes` and assigns it to `volume` and does the calculation and prints it.
 
 It continues to repeat this process--running the code with one value, then starting the whole process over again with the next value--until it has run through every element in the list.
 
@@ -98,9 +98,9 @@ print(mass)
 
 ## Looping with an Index
 
-Loops are iterating over a series of elements in a vector or other list-like object. When we use that value directly this is called looping by value.
+Loops are iterating over a series of elements in a vector or other list-like object. When we use that value directly, this is called looping by value.
 
-There is another way to loop: looping by index.
+There is another way to loop: *looping by index*.
 
 You might remember way back at the beginning of the course that we talked about two different ways to subset data: by index or by condition. Sub-setting based on index meant sub-setting *based on the position* of the item(s) we are interested in.
 
@@ -117,7 +117,7 @@ for (i ...)
 
 2.  We then create a vector of position values starting at 1 (for the first value) and ending with the length of the object we are looping over.
 
-```{r}
+```{r eval = FALSE}
 volumes <- c(1.6, 3, 8)
 for (i in 1:3)
 ```
@@ -127,7 +127,7 @@ for (i in 1:3)
 Fortunately, we don't have to know the length of the vector. We can add flexibility by using a function to count the number of elements that we will want to loop over.
 
 -   For a vector, the `length()` function is useful for this.
--   For a dataframe, the `nrow()` function is often used.
+-   For a data frame, the `nrow()` function is often used.
 
 Because we are currently working with a vector, let's use the `length()` function.
 
@@ -157,7 +157,7 @@ The advantage to looping by index is that it lets us do more complicated things,
 
 One of the most common things we use for loops with indices for is storing the results we calculated in the loop. We typically want the results to be in the same order (position) as what we used to calculate them.
 
-To store results, we start by creating an empty object (vector, column, dataframe, etc.) before the loop starts. This object should be the same length as the results will be, which is typically the same as the object we are looping over.
+To store results, we start by creating an empty object (vector, column, data frame, etc.) before the loop starts. This object should be the same length as the results will be, which is typically the same as the object we are looping over.
 
 To store results in a vector, we can use the function `vector` to create an empty vector of the correct length. For the `vector` function:
 
@@ -194,7 +194,7 @@ bs <- c(0.9, 1.1, 1.2)
 volumes = c(1.6, 3, 8)
 
 # empty vector for results
-masses <- vector(mode="numeric", length=length(volumes))
+masses <- vector(mode = "numeric", length = length(volumes))
 
 # for loop
 for (i in 1:length(volumes)){
@@ -230,7 +230,7 @@ First, we'll create an empty vector to store the results. Then we will loop by i
 
 ```{r}
 # empty vector to store results
-masses <- vector(mode="numeric", length=length(volumes))
+masses <- vector(mode  ="numeric", length = length(volumes))
 
 # for loop using the `est_mass_max` function
 for (i in 1:length(volumes)){
@@ -242,7 +242,7 @@ for (i in 1:length(volumes)){
 If we hadn't written the `if`-`else` statement as a function (`est_mass_max`), we could still include it! It would look like this:
 
 ```{r}
-masses <- vector(mode="numeric", length=length(volumes))
+masses <- vector(mode = "numeric", length = length(volumes))
 
 for (i in 1:length(volumes)){
   if (volumes[i] < 5) {
@@ -277,16 +277,27 @@ for (i in 1:nrow(data)) {
 }
 ```
 
-If we want to use a specific column, we need to specify the column via subsetting, as well.
+If we want to use a specific column, we need to specify the column via sub-setting, as well. We can do that 2 different ways.
 
 ```{r}
-masses <- vector(mode="numeric", length=length(volumes))
+masses <- vector(mode = "numeric", length = length(volumes))
 
+# Option 1: subset both row and column with []
 for (i in 1:nrow(data)) {
   mass <- est_mass_max(data[i, "volume"], data[i, "a"], data[i, "b"])
   masses[i] <- mass
 }
+
+# Option 2: name specific columns with $ then subset by index
+for (i in 1:nrow(data)) {
+  mass <- est_mass_max(data$volume[i], data$a[i], data$b[i])
+  masses[i] <- mass
+}
 ```
+
+An alternative structure (without the created function) might look like this.
+
+We can create a new, empty column in the data frame. We can also place the `if`-`else` statement directly into the for loop and reference specific columns with `$` operator and subset by index, as we did above.
 
 ```{r}
 data$mass <- NA
@@ -302,7 +313,7 @@ for (i in 1:nrow(data)){
 
 ```
 
-> Work on Question 2.
+> Work on Question 2 in the Assignment.
 
 ### Looping over Files
 
@@ -310,7 +321,7 @@ While we often want to repeat things within our data, either in vectors or data 
 
 For example, if we have many similar files, we might want to repeat the same tasks for all of those files.
 
-To demonstrate, let's download some simulated satellite collar data. Make sure you change the file paths accordingly to match the subdirectories in your RStudio Project, as needed.
+To demonstrate, let's download some simulated satellite collar data. Make sure you change the file paths accordingly to match the sub-directories in your RStudio Project, as needed.
 
 ```{r}
 download.file("http://www.datacarpentry.org/semester-biology/data/locations.zip",
@@ -364,9 +375,11 @@ results
 
 ## Storing Loop Results in a Data Frame
 
-Often, we want to calculate multiple pieces of information in a loop. When we do this, it is particularly useful to store these results in something other than individual vectors. Instead, we might want to store them in a data frmae.
+Often, we want to calculate multiple pieces of information in a loop. When we do this, it is particularly useful to store these results in something other than individual vectors. Instead, we might want to store them in a data frame.
 
-We can do so by creating an empty data frame then storing the results from the `for` loop in the `i`th row of the appropriate column.
+We've actually done a version of this above in the "Looping Over Data Frames" section, where we added an empty column to a data frame.
+
+We can also do so by creating an empty data frame then storing the results from the `for` loop in the `i`th row of the appropriate column.
 
 For example, let's say we want to associate the file name with the observation count and also get the minimum latitude value for each file.
 
@@ -382,9 +395,9 @@ results <- data.frame(file_name = vector(mode = "character", length = num_files)
 
 Let's modify our previous loop.
 
-Instead of storing `count` in `results[i]`, we will need to first specify which column (`count`) in the `results` dataframe the value should go in. We can do this with the `$` operator: `results$count[i]`
+Instead of storing `count` in `results[i]`, we will need to first specify which column (`count`) in the `results` data frame the value should go in. We can do this with the `$` operator: `results$count[i]`
 
-We also want to store the filename and the minimum latitude in a similar fashion.
+We also want to store the file name and the minimum latitude in a similar fashion.
 
 ```{r}
 for (i in 1:n_files){

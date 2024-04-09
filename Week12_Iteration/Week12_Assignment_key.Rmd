@@ -211,19 +211,16 @@ The data is posted daily to a URL that contains one csv file for each individual
 
 Start your solution by:
 
-* If `individual_collar_data.zip` is not already in your working directory, download it from the link above and place the zip file in the correct directory.
-* Unzip it using `unzip()`
+* Download the zip file from the link above. Place the zip file in the appropriate sub-directory, if you have them.
+* Unzip it using the `unzip()` function
 * Obtain a list of all of the files with file names matching the pattern `"collar-data-.*.txt"` (using `list.files()`)
 
 a. Use a loop to load each of these files into R and make a line plot (using `geom_path()`) for each file with `long` on the `x` axis and `lat` on the `y` axis.
 
-Graphs, like other types of output, won't display inside a loop unless you explicitly display them, so you need put your `ggplot()` command inside a `print()` statement.
+Graphs, like other types of output, won't display inside a loop unless you explicitly display them, so you need put your `ggplot()` command inside a `print()` statement. Do this by saving the output of the ggplot function as an object and then printing that object.
 
-Include the name of the file in the graph as the graph title using the `ggtitle()`.
+Include the name of the file in the graph as the graph title using the `labs` function (`labs(title = ...)`).
 
-b. Add code to the loop to calculate the minimum and maximum latitude in the file, and store these values, along with the name of the file, in a data frame.
-
-Show the data frame as output.
 
 ```{r}
 library(ggplot2)
@@ -251,8 +248,10 @@ for (i in 1:length(collar_data_files)){
 
 ```
 
+b. Add code to the loop to calculate the minimum and maximum latitude in the file, and store these values, along with the name of the file, in a data frame.
+
+Show the data frame as output.
 ```{r}
-print("3b")
 
 for (i in 1:length(collar_data_files)){
   data = read.csv(collar_data_files[i])
