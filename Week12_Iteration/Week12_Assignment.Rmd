@@ -133,3 +133,16 @@ Include the name of the file in the graph as the graph title using the `ggtitle(
 b. Add code to the loop to calculate the minimum and maximum latitude in the file, and store these values, along with the name of the file, in a data frame.
 
 Show the data frame as output.
+
+# Reflection
+
+This reflection is worth 25 points, separate from your Week 12 assignment. Reflections are graded for completion only.
+
+Write about 5 sentences addressing *at least* one of the following questions.
+
+-   What has worked well for you in this course for you so far?
+-   What has been particularly challenging for you so far?
+-   Is there anything that I can do to help your learning in the course?
+-   Other reflections about the content of the course that you would like to share.
+
+*Answer*:
