@@ -11,36 +11,76 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Iteration
 
-In this week's lesson, we will be talking about how to repeat tasks.
+In this week's lesson, we will be talking about how to do repetitive tasks.
 
-### Basic `for` loop
+As it turns out, computers are really good at repeating tasks. We call this repetition of the same task "iteration."
 
-* Loops are the fundamental structure for repetition in programming
-* `for` loops perform the same action for each item in a list of things
+### Overview of Iteration in R
+
+While our lesson today will focus mainly on one way to iterate in R, there are actually many ways to do so:
+
+1.  **vectorize**
+
+-   we can write functions that take either a single value or a vector of values, do element-wise calculations, and return a vector of results
+-   this isn't as tricky as it might sound. Many functions automatically work with either a single value or a vector of values
+-   each function we wrote in our functions lesson in Week 10 can work with vectors
+-   an important exception it when we use `if`-`else` statements inside our functions; these do not work with vectors
+
+2.  **`apply` or `map`**
+
+-   both of these family of functions take a function and apply that function to each item in a list of items
+-   the `apply` functions (e.g., `apply`, `lapply`, `sapply`) are base R
+-   the `map` functions come from the `purrr` package, part of the `tidyverse`
+
+3.  **using `dplyr`**
+
+-   We've actually already been iterating quite a bit--specifically in data frames--by using function from `dplyr`; we can also combine our own functions with `dplyr`
+-   For example, when we use a `filter` function, we are asking R to check the value in a column in the first row, then determine whether that condition is met (and, therefore, whether to retain the row), then to do the same thing for the next row and the next...
+
+4.  **loops**
+
+-   Loops provide us with complete control to perform of any kind of repetition we want (rather than just one function at a time, for example)
+
+This week's lesson is going to focus primarily on using loops, specifically `for` loops.
+
+## The `for` Loop
+
+Loops are the fundamental structure for repetition in programming.
+
+In particular, `for` loops perform the same action for each item in a list of things.
+
+The general structure of a `for` loop is below:
 
 ```{r}
-for (item in list_of_items) {
-  do_something(item)
+# for (item in list_of_items) {
+#   do_something(item)
+# }
+```
+
+To see an example of this, let's calculate masses from volumes using a loop. If we want to see the results of the loop, we need to print them out. In this loop, we are going to use a `print()` function to display our results for each mass.
+
+```{r}
+# vector of volumes
+volumes <- c(1.6, 3, 8)
+
+# for each volume value in a vector of volumes
+for (volume in volumes){        # perform some task inside the {}
+  mass <- 2.65 * volume ^ 0.9   # calculate a mass
+  print(mass)                   # print out the mass
 }
 ```
 
-* To see an example of this let's calculate masses from volumes using a loop
-* Need `print()` to display values inside a loop or function
+The code that is inside of the curly brackets will run once for each value in `volumes`.
 
-```{r}
-volumes = c(1.6, 3, 8)
-for (volume in volumes){
-  mass <- 2.65 * volume ^ 0.9
-  print(mass)
-}
-```
+Everything between the curly brackets is executed each time through the loop.
 
-* Code in the loop will run once for each value in volumes
-* Everything between the curly brackets is executed each time through the loop
-* Code takes the first value from `volumes` and assigns it to `volume` and does the calculation and prints it
-* Then it takes the second value from `volumes` and assigns it to `volume` and does the calculation and prints it
-* And so on
-* So, this loop does the same exact thing as
+The loop takes the first value from `volumes` and assigns it to the object `volume`. It performs the code inside the curly brackets, calculating the mass and then printing the resulting mass.
+
+Once the code hits the end of of what is enclosed inside the curly brackets, it starts the code all over again from the beginning using the next item in the list (or the `volumes` vector, in this case). The code starts it takes the second value from `volumes` and assigns it to `volume` and does the calculation and prints it.
+
+It continues to repeat this process--running the code with one value, then starting the whole process over again with the next value--until it has run through every element in the list.
+
+Ultimately, the loop above is doing the exact same thing as the code below, but in a more condensed and more flexible way.
 
 ```{r}
 volume <- volumes[1]
@@ -54,41 +94,52 @@ mass <- 2.65 * volume ^ 0.9
 print(mass)
 ```
 
-> Do Tasks 1 & 2 in [Basic For Loops]({{ site.baseurl }}/exercises/Loops-basic-for-loops-R/).
+> Work on Questions 1a and 1b in the Assignment.
 
-### Looping with an index & storing results
+## Looping with an Index
 
-* R loops iterate over a series of values in a vector or other list like object
-* When we use that value directly this is called looping by value
-* But there is another way to loop, which is called looping by index
-* Looping by index loops over a list of integer index values, typically starting at 1
-* These integers are then used to access values in one or more vectors at the position inicated by the index
-* If we modified our previous loop to use an index it would look like this
-* We often use `i` to stand for "index" as the variable we update with each step through the loop
+Loops are iterating over a series of elements in a vector or other list-like object. When we use that value directly this is called looping by value.
 
-```{r}
-volumes = c(1.6, 3, 8)
+There is another way to loop: looping by index.
+
+You might remember way back at the beginning of the course that we talked about two different ways to subset data: by index or by condition. Sub-setting based on index meant sub-setting *based on the position* of the item(s) we are interested in.
+
+Looping by index does something similar. It loops through a list of integer index values, typically starting at 1. These integers are then used to access values in one or more vectors *based on the position* indicated by the index.
+
+Let's take our previous loop and modify it to use an index.
+
+1.  We often use `i` to stand for "index" as the variable we update with each step through the loop.
+
+```{r eval = FALSE}
+volumes <-  c(1.6, 3, 8)
 for (i ...)
 ```
 
-* We then create a vector of position values starting at 1 (for the first value) and ending with the length of the object we are looping over
+2.  We then create a vector of position values starting at 1 (for the first value) and ending with the length of the object we are looping over.
 
 ```{r}
-volumes = c(1.6, 3, 8)
+volumes <- c(1.6, 3, 8)
 for (i in 1:3)
 ```
 
-* We don't want to have to know the length of the vector and it might change in the future, so we'll look it up using the `length()` function
+3.  What if the length of the object we are looping over is variable or might change in the future? We don't want to be stuck with a certain length.
+
+Fortunately, we don't have to know the length of the vector. We can add flexibility by using a function to count the number of elements that we will want to loop over.
+
+-   For a vector, the `length()` function is useful for this.
+-   For a dataframe, the `nrow()` function is often used.
+
+Because we are currently working with a vector, let's use the `length()` function.
 
 ```{r}
-volumes = c(1.6, 3, 8)
+volumes <-  c(1.6, 3, 8)
+
 for (i in 1:length(volumes)){
 
 }
 ```
 
-* Then inside the loop instead of doing the calculation on the index (which is just a number between 1 and 3 in our case)
-* We use square brackets and the index to get the appropriate value out of our vector
+4.  Then, inside the loop, instead of doing the calculation on the index value (which a number between 1 and 3 in our case), we use square brackets and the index as a placeholder. Now, the loop will run through the code, replacing the `i` placeholder with the appropriate value from our vector.
 
 ```{r}
 volumes = c(1.6, 3, 8)
@@ -98,23 +149,29 @@ for (i in 1:length(volumes)){
 }
 ```
 
-* This gives us the same result, but it's more complicated to understand
-* So why would we loop by index?
-* The advantage to looping by index is that it lets us do more complicated things
+This new version of the loop gives us the same result as our original loop, but it's more complicated to understand. So why would we want to loop by index?
 
-* One of the most common things we use this for are storing the results we calculated in the loop
-* To do this we start by creating an empty object the same length as the results will be before the loop starts
-* To store results in a vector we use the function `vector` to create an empty vector of the right length
-* `mode` is the type of data we are going to store
-* `length` is the length of the vector
+The advantage to looping by index is that it lets us do more complicated things, as we will see below.
+
+### Storing Results
+
+One of the most common things we use for loops with indices for is storing the results we calculated in the loop. We typically want the results to be in the same order (position) as what we used to calculate them.
+
+To store results, we start by creating an empty object (vector, column, dataframe, etc.) before the loop starts. This object should be the same length as the results will be, which is typically the same as the object we are looping over.
+
+To store results in a vector, we can use the function `vector` to create an empty vector of the correct length. For the `vector` function:
+
+-   `mode` is the type of data we are going to store
+-   `length` is the length of the vector
 
 ```{r}
 masses <- vector(mode = "numeric", length = length(volumes))
 masses
 ```
 
-* Then add each result in the right position in this vector
-* For each trip through the loop put the output into the empty vector at the `i`th position
+Now that we have a place to store the results, we need to tell the loop to place the results in the correct position in the empty vector. We can use the index to do this.
+
+For each trip through the loop, we want to put the output into the empty vector at the `i`th position.
 
 ```{r}
 for (i in 1:length(volumes)){
@@ -124,34 +181,35 @@ for (i in 1:length(volumes)){
 masses
 ```
 
-* Walk through iteration in debugger
+> Work on Questions 1c and 1d in the Assignment.
 
-> Do Tasks 3-4 in [Basic For Loops]({{ site.baseurl }}/exercises/Loops-basic-for-loops-R/).
+## Looping over Multiple Values
 
-> End of 1 hour class
-
-### Looping over multiple values
-
-* Looping with an index also allows us to access values from multiple vectors
-
+So far, we've talked about looping through one group of values (in a vector). Looping with an index also allows us to access values from multiple vectors.
 
 ```{r}
+# vectors
 as <- c(2.65, 1.28, 3.29)
 bs <- c(0.9, 1.1, 1.2)
 volumes = c(1.6, 3, 8)
+
+# empty vector for results
 masses <- vector(mode="numeric", length=length(volumes))
+
+# for loop
 for (i in 1:length(volumes)){
    mass <- as[i] * volumes[i] ^ bs[i]
    masses[i] <- mass
 }
 ```
 
-> Do Task 5 in [Basic For Loops]({{ site.baseurl }}/exercises/Loops-basic-for-loops-R/).
+> Work on Question 1e in the Assignment.
 
-### Looping with functions
+## Looping with Functions
 
-* It is common to combine loops with functions by calling one or more functions as a step in our loop
-* For example, let's take the non-vectorized version of our `est_mass` function that returns an estimated mass if the `volume > 5` and `NA` if it's not.
+Another common thing to do is combine loops with functions by calling one or more functions as a step in our loop.
+
+For example, let's take the non-vectorized version of our `est_mass` function that returns an estimated mass if the `volume > 5` and `NA` if it's not.
 
 ```{r}
 est_mass_max <- function(volume, a, b){
@@ -164,37 +222,54 @@ est_mass_max <- function(volume, a, b){
 }
 ```
 
-* We can't pass the vector to the function and get back a vector of results because of the `if` statements
-* So let's loop over the values
-* First we'll create an empty vector to store the results
-* And them loop by index, calling the function for each value of `volumes`
+We can't pass the vector to the function and get back a vector of results because of the `if` statements because `if` statements are not vectorized.
+
+Instead, we can loop over the values.
+
+First, we'll create an empty vector to store the results. Then we will loop by index, calling the function for each value of `volumes`.
 
 ```{r}
+# empty vector to store results
 masses <- vector(mode="numeric", length=length(volumes))
+
+# for loop using the `est_mass_max` function
 for (i in 1:length(volumes)){
    mass <- est_mass_max(volumes[i], as[i], bs[i])
    masses[i] <- mass
 }
 ```
 
-* This is the for loop equivalent of an `mapply` statement
+If we hadn't written the `if`-`else` statement as a function (`est_mass_max`), we could still include it! It would look like this:
 
 ```{r}
-masses_apply <- mapply(est_mass_max, volumes, as, bs)
+masses <- vector(mode="numeric", length=length(volumes))
+
+for (i in 1:length(volumes)){
+  if (volumes[i] < 5) {
+    mass <- as[i] * volumes[i] ^ bs[i]
+  } else {
+    mass <- NA
+  }
+  masses[i] <- mass
+}
+
 ```
 
-### Looping over data frames
+Realistically, I find myself putting `if`-`else` statements inside `for` loops, like the structure above, rather frequently.
 
-* By default when R loops over a data frame it loops over the columns
+## Looping over Data Frames
+
+By default, when R loops over a data frame, it loops over the columns. Remember, R is oriented to work in vectors, and data frames are organized by converting multiple vectors into the columns.
 
 ```{r}
 data <- data.frame(a = as, b = bs, volume = volumes)
+
 for (i in data) {
   print(i)
 }
 ```
 
-* To loop over rows, loop by index and subset
+To loop over rows, we need to do some extra work. We can loop by index and subset each row.
 
 ```{r}
 for (i in 1:nrow(data)) {
@@ -202,53 +277,77 @@ for (i in 1:nrow(data)) {
 }
 ```
 
-* If we want to use a specific column
+If we want to use a specific column, we need to specify the column via subsetting, as well.
 
 ```{r}
 masses <- vector(mode="numeric", length=length(volumes))
+
 for (i in 1:nrow(data)) {
   mass <- est_mass_max(data[i, "volume"], data[i, "a"], data[i, "b"])
   masses[i] <- mass
 }
 ```
 
-> Do [Size Estimates By Name Loop]({{ site.baseurl }}/exercises/Loops-size-estimates-by-name-loop-R/).
+```{r}
+data$mass <- NA
 
-### Looping over files
+for (i in 1:nrow(data)){
+  if (data$volume[i] < 5) {
+    mass <- data$a[i] * data$volume[i] ^ data$b[i]
+  } else {
+    mass <- NA
+  }
+  data$mass[i] <- mass
+}
 
-* Repeat same actions on many similar files
-* Let's download some simulated satellite collar data
+```
+
+> Work on Question 2.
+
+### Looping over Files
+
+While we often want to repeat things within our data, either in vectors or data frames, there are other instances when we might want to repeat the same task.
+
+For example, if we have many similar files, we might want to repeat the same tasks for all of those files.
+
+To demonstrate, let's download some simulated satellite collar data. Make sure you change the file paths accordingly to match the subdirectories in your RStudio Project, as needed.
 
 ```{r}
 download.file("http://www.datacarpentry.org/semester-biology/data/locations.zip",
               "locations.zip")
+
 unzip("locations.zip")
 ```
 
-* Now we need to get the names of each of the files we want to loop over
-* We do this using `list.files()`
-* If we run it without arguments it will give us the names of all files in the directory
+Before we can loop through these files, we need to get the names of all of these files.
+
+We can do so by using the `list.files()` function.
+
+If we run it without arguments, it will give us the names of all files in the directory.
 
 ```{r}
 list.files()
 ```
 
-* But we just want the data files so we'll add the optional `pattern` argument to only get the files that start with `"locations-"`
-
+We, however, just want the data files we downloaded, so we'll add the optional `pattern` argument to only get the files that start with `"locations-"`. Notice that adding the `-` at the end of the pattern excludes the `location.zip` file name.
 
 ```{r}
-data_files = list.files(pattern = "locations-")
+data_files <- list.files(pattern = "locations-")
+data_files
 ```
 
-* Once we have this list we can loop over it count the number of observations in each file
-* First create an empty vector to store those counts
+Now that we have our list of file names, we can loop over it.
+
+Perhaps we want to count the number of observations in each file.
+
+First, we create an empty vector to store those counts.
 
 ```{r}
-num_files = length(data_files)
+num_files <- length(data_files)
 results <- vector(mode = "integer", length = num_files)
 ```
 
-* Then write our loop
+Now that we have created our empty vector of the appropriate length, we can write our loop to perform the task we want--counting the number of observations (rows) in each file.
 
 ```{r}
 for (i in 1:num_files){
@@ -257,21 +356,23 @@ for (i in 1:num_files){
   count <- nrow(data)
   results[i] <- count
 }
+
+results
 ```
 
-> Do Task 1 of [Multiple-file Analysis]({{ site.baseurl }}/exercises/Loops-multi-file-analysis-R/).
-> **Exercise uses different collar data**
+> Start with Question 3a. Note that that question uses different simulated collar data.
 
-### Storing loop results in a data frame
+## Storing Loop Results in a Data Frame
 
-* We often want to calculate multiple pieces of information in a loop making it useful to store results in things other than vectors
-* We can store them in a data frame instead by creating an empty data frame and storing the results in the `i`th row of the appropriate column
-* Associate the file name with the count
-* Also store the minimum latitude
-* Start by creating an empty data frame
-* Use the `data.frame` function
-* Provide one argument for each column
-* "Column Name" = "an empty vector of the correct type"
+Often, we want to calculate multiple pieces of information in a loop. When we do this, it is particularly useful to store these results in something other than individual vectors. Instead, we might want to store them in a data frmae.
+
+We can do so by creating an empty data frame then storing the results from the `for` loop in the `i`th row of the appropriate column.
+
+For example, let's say we want to associate the file name with the observation count and also get the minimum latitude value for each file.
+
+We would start by creating an empty data frame that we will then populate with the results of our loop. We can use the `data.frame` function. Each argument is for one column.
+
+-   "Column Name" = "an empty vector of the correct type and length"
 
 ```{r}
 results <- data.frame(file_name = vector(mode = "character", length = num_files),
@@ -279,117 +380,25 @@ results <- data.frame(file_name = vector(mode = "character", length = num_files)
                       min_lat = vector(mode = "numeric", length = num_files))
 ```
 
-* Now let's modify our loop from last time
-* Instead of storing `count` in `results[i]` we need to first specify the `count` column using the `$`: `results$count[i]`
-* We also want to store the filename, which is `data_files[i]`
+Let's modify our previous loop.
+
+Instead of storing `count` in `results[i]`, we will need to first specify which column (`count`) in the `results` dataframe the value should go in. We can do this with the `$` operator: `results$count[i]`
+
+We also want to store the filename and the minimum latitude in a similar fashion.
 
 ```{r}
 for (i in 1:n_files){
+  
+  # read in the data file
   filename <- data_files[i]
   data <- read.csv(filename)
-  count <- nrow(data)
-  min_lat = min(data$lat)
-  results[i, "file_name"] <- filename
-  results[i, "count"] <- count
-  results[i, "min_lat"] <- min_lat
+  
+  # add information about the data file into the data frame
+  results$file_name[i] <- filename
+  results$count[i] <- nrow(data)
+  results$min_lat[i] <- min(data$lat)
+  
 }
 ```
 
-> Do Task 2 [Multiple-file Analysis]({{ site.baseurl }}/exercises/Loops-multi-file-analysis-R/).
-> **Exercise uses different collar data**
-
-### Subsetting Data (optional)
-
-* Loops can subset in ways that are difficult with things like `group_by`
-* Look at some data on trees from the National Ecological Observatory Network
-
-```{r}
-library(ggplot2)
-library(dplyr)
-
-neon_trees <- read.csv('data/HARV_034subplt.csv')
-ggplot(neon_trees, aes(x = easting, y = northing)) +
-  geom_point()
-```
-
-* Look at a north-south gradient in number of trees
-* Need to know number of trees in each band of y values
-* Start by defining the size of the window we want to use
-  * Use the grid lines which are 2.5 m
-
-```{r}
-window_size <- 2.5
-```
-
-* Then figure out the edges for each window
-
-```{r}
-south_edges <- seq(4713095, 4713117.5, by = window_size)
-north_edges <- south_edges + window_size
-```
-
-* But we don't want to go all the way to the far edge
-
-```{r}
-south_edges <- seq(4713095, 4713117.5 - window_size, by = window_size)
-north_edges <- south_edges + window_size
-```
-
-* Set up an empty data frame to store the output
-
-```{r}
-counts <- vector(mode = "numeric", length = length(left_edges))
-```
-
-* Look over the left edges and subset the data occuring within each window
-
-```{r}
-for (i in 1:length(south_edges)) {
-  data_in_window <- filter(neon_trees, northing >= south_edges[i], northing < north_edges[i])
-  counts[i] <- nrow(data_in_window)
-}
-counts
-```
-
-### Nested Loops (optional)
-
-* Sometimes need to loop over multiple things in a coordinate fashion
-* Pass a window over some spatial data
-* Look at full spatial pattern not just east-west gradient
-
-* Basic nested loops work by putting one loop inside another one
-
-```{r}
-for (i in 1:10) {
-  for (j in 1:5) {
-    print(paste("i = " , i, "; j = ", j))
-  }
-}
-```
-
-* Loop over x and y coordinates to create boxes
-* Need top and bottom edges
-
-```{r}
-east_edges <- seq(731752.5, 731772.5 - window_size, by = window_size)
-west_edges <- east_edges + window_size
-
-```
-
-* Redefine out storage
-
-```{r}
-output <- matrix(nrow = length(south_edges), ncol = length(east_edges))
-```
-
-```{r}
-for (i in 1:length(south_edges)) {
-  for (j in 1:length(east_edges)) {
-    data_in_window <- filter(neon_trees,
-                            northing >= south_edges[i], northing < north_edges[i],
-                            easting >= left_edges[j], easting < right_edges[j],)
-    output[i, j] <- nrow(data_in_window)
-  }
-}
-output
-```
+> Work on the rest of the assignment.
