@@ -60,7 +60,14 @@ The general structure of a `for` loop is below:
 To see an example of this, let's calculate masses from volumes using a loop. If we want to see the results of the loop, we need to print them out. In this loop, we are going to use a `print()` function to display our results for each mass.
 
 ```{r}
+# vector of volumes
+volumes <- c(1.6, 3, 8)
 
+# for each volume value in a vector of volumes
+for (volume in volumes){        # perform some task inside the {}
+  mass <- 2.65 * volume ^ 0.9   # calculate a mass
+  print(mass)                   # print out the mass
+}
 ```
 
 The code that is inside of the curly brackets will run once for each value in `volumes`.
@@ -79,11 +86,9 @@ Ultimately, the loop above is doing the exact same thing as the code below, but 
 volume <- volumes[1]
 mass <- 2.65 * volume ^ 0.9
 print(mass)
-
 volume <- volumes[2]
 mass <- 2.65 * volume ^ 0.9
 print(mass)
-
 volume <- volumes[3]
 mass <- 2.65 * volume ^ 0.9
 print(mass)
@@ -106,13 +111,15 @@ Let's take our previous loop and modify it to use an index.
 1.  We often use `i` to stand for "index" as the variable we update with each step through the loop.
 
 ```{r eval = FALSE}
-
+volumes <-  c(1.6, 3, 8)
+for (i ...)
 ```
 
 2.  We then create a vector of position values starting at 1 (for the first value) and ending with the length of the object we are looping over.
 
 ```{r eval = FALSE}
-
+volumes <- c(1.6, 3, 8)
+for (i in 1:3)
 ```
 
 3.  What if the length of the object we are looping over is variable or might change in the future? We don't want to be stuck with a certain length.
@@ -125,13 +132,21 @@ Fortunately, we don't have to know the length of the vector. We can add flexibil
 Because we are currently working with a vector, let's use the `length()` function.
 
 ```{r}
-v
+volumes <-  c(1.6, 3, 8)
+
+for (i in 1:length(volumes)){
+
+}
 ```
 
 4.  Then, inside the loop, instead of doing the calculation on the index value (which a number between 1 and 3 in our case), we use square brackets and the index as a placeholder. Now, the loop will run through the code, replacing the `i` placeholder with the appropriate value from our vector.
 
 ```{r}
-
+volumes = c(1.6, 3, 8)
+for (i in 1:length(volumes)){
+   mass <- 2.65 * volumes[i] ^ 0.9
+   print(mass)
+}
 ```
 
 This new version of the loop gives us the same result as our original loop, but it's more complicated to understand. So why would we want to loop by index?
@@ -150,7 +165,8 @@ To store results in a vector, we can use the function `vector` to create an empt
 -   `length` is the length of the vector
 
 ```{r}
-
+masses <- vector(mode = "numeric", length = length(volumes))
+masses
 ```
 
 Now that we have a place to store the results, we need to tell the loop to place the results in the correct position in the empty vector. We can use the index to do this.
@@ -158,7 +174,11 @@ Now that we have a place to store the results, we need to tell the loop to place
 For each trip through the loop, we want to put the output into the empty vector at the `i`th position.
 
 ```{r}
-
+for (i in 1:length(volumes)){
+   mass <- 2.65 * volumes[i] ^ 0.9
+   masses[i] <- mass
+}
+masses
 ```
 
 > Work on Questions 1c and 1d in the Assignment.
@@ -168,7 +188,19 @@ For each trip through the loop, we want to put the output into the empty vector 
 So far, we've talked about looping through one group of values (in a vector). Looping with an index also allows us to access values from multiple vectors.
 
 ```{r}
+# vectors
+as <- c(2.65, 1.28, 3.29)
+bs <- c(0.9, 1.1, 1.2)
+volumes = c(1.6, 3, 8)
 
+# empty vector for results
+masses <- vector(mode = "numeric", length = length(volumes))
+
+# for loop
+for (i in 1:length(volumes)){
+   mass <- as[i] * volumes[i] ^ bs[i]
+   masses[i] <- mass
+}
 ```
 
 > Work on Question 1e in the Assignment.
@@ -180,7 +212,14 @@ Another common thing to do is combine loops with functions by calling one or mor
 For example, let's take the non-vectorized version of our `est_mass` function that returns an estimated mass if the `volume > 5` and `NA` if it's not.
 
 ```{r}
-
+est_mass_max <- function(volume, a, b){
+  if (volume < 5) {
+    mass <- a * volume ^ b
+  } else {
+    mass <- NA
+  }
+  return(mass)
+}
 ```
 
 We can't pass the vector to the function and get back a vector of results because of the `if` statements because `if` statements are not vectorized.
@@ -190,12 +229,29 @@ Instead, we can loop over the values.
 First, we'll create an empty vector to store the results. Then we will loop by index, calling the function for each value of `volumes`.
 
 ```{r}
+# empty vector to store results
+masses <- vector(mode  ="numeric", length = length(volumes))
 
+# for loop using the `est_mass_max` function
+for (i in 1:length(volumes)){
+   mass <- est_mass_max(volumes[i], as[i], bs[i])
+   masses[i] <- mass
+}
 ```
 
 If we hadn't written the `if`-`else` statement as a function (`est_mass_max`), we could still include it! It would look like this:
 
 ```{r}
+masses <- vector(mode = "numeric", length = length(volumes))
+
+for (i in 1:length(volumes)){
+  if (volumes[i] < 5) {
+    mass <- as[i] * volumes[i] ^ bs[i]
+  } else {
+    mass <- NA
+  }
+  masses[i] <- mass
+}
 
 ```
 
@@ -206,19 +262,37 @@ Realistically, I find myself putting `if`-`else` statements inside `for` loops, 
 By default, when R loops over a data frame, it loops over the columns. Remember, R is oriented to work in vectors, and data frames are organized by converting multiple vectors into the columns.
 
 ```{r}
+data <- data.frame(a = as, b = bs, volume = volumes)
 
+for (i in data) {
+  print(i)
+}
 ```
 
 To loop over rows, we need to do some extra work. We can loop by index and subset each row.
 
 ```{r}
-
+for (i in 1:nrow(data)) {
+  print(data[i, ])
+}
 ```
 
 If we want to use a specific column, we need to specify the column via sub-setting, as well. We can do that 2 different ways.
 
 ```{r}
+masses <- vector(mode = "numeric", length = length(volumes))
 
+# Option 1: subset both row and column with []
+for (i in 1:nrow(data)) {
+  mass <- est_mass_max(data[i, "volume"], data[i, "a"], data[i, "b"])
+  masses[i] <- mass
+}
+
+# Option 2: name specific columns with $ then subset by index
+for (i in 1:nrow(data)) {
+  mass <- est_mass_max(data$volume[i], data$a[i], data$b[i])
+  masses[i] <- mass
+}
 ```
 
 An alternative structure (without the created function) might look like this.
@@ -226,6 +300,16 @@ An alternative structure (without the created function) might look like this.
 We can create a new, empty column in the data frame. We can also place the `if`-`else` statement directly into the for loop and reference specific columns with `$` operator and subset by index, as we did above.
 
 ```{r}
+data$mass <- NA
+
+for (i in 1:nrow(data)){
+  if (data$volume[i] < 5) {
+    mass <- data$a[i] * data$volume[i] ^ data$b[i]
+  } else {
+    mass <- NA
+  }
+  data$mass[i] <- mass
+}
 
 ```
 
@@ -253,13 +337,14 @@ We can do so by using the `list.files()` function.
 If we run it without arguments, it will give us the names of all files in the directory.
 
 ```{r}
-
+list.files()
 ```
 
 We, however, just want the data files we downloaded, so we'll add the optional `pattern` argument to only get the files that start with `"locations-"`. Notice that adding the `-` at the end of the pattern excludes the `location.zip` file name.
 
 ```{r}
-
+data_files <- list.files(pattern = "locations-")
+data_files
 ```
 
 Now that we have our list of file names, we can loop over it.
@@ -269,13 +354,21 @@ Perhaps we want to count the number of observations in each file.
 First, we create an empty vector to store those counts.
 
 ```{r}
-
+num_files <- length(data_files)
+results <- vector(mode = "integer", length = num_files)
 ```
 
 Now that we have created our empty vector of the appropriate length, we can write our loop to perform the task we want--counting the number of observations (rows) in each file.
 
 ```{r}
+for (i in 1:num_files){
+  filename <- data_files[i]
+  data <- read.csv(filename)
+  count <- nrow(data)
+  results[i] <- count
+}
 
+results
 ```
 
 > Start with Question 3a. Note that that question uses different simulated collar data.
@@ -295,7 +388,9 @@ We would start by creating an empty data frame that we will then populate with t
 -   "Column Name" = "an empty vector of the correct type and length"
 
 ```{r}
-
+results <- data.frame(file_name = vector(mode = "character", length = num_files),
+                      count = vector(mode = "integer", length = num_files),
+                      min_lat = vector(mode = "numeric", length = num_files))
 ```
 
 Let's modify our previous loop.
@@ -305,7 +400,18 @@ Instead of storing `count` in `results[i]`, we will need to first specify which 
 We also want to store the file name and the minimum latitude in a similar fashion.
 
 ```{r}
-
+for (i in 1:n_files){
+  
+  # read in the data file
+  filename <- data_files[i]
+  data <- read.csv(filename)
+  
+  # add information about the data file into the data frame
+  results$file_name[i] <- filename
+  results$count[i] <- nrow(data)
+  results$min_lat[i] <- min(data$lat)
+  
+}
 ```
 
 > Work on the rest of the assignment.
