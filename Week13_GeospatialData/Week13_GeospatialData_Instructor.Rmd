@@ -69,40 +69,117 @@ highlighting those areas that are desert biomes.
 
 ### Reading and Visualizing Data
 
-+ Read in the data (temperature)
+**TODO**: Add accompanying text for read in the data (temperature)
 
 ```{r read-temperature-data}
 temp <- rast("global_temperature.tif")
 temp
 ```
 
-(Explain console output)
+**TODO**: Explain console output
 
-+ Look at the data (console)
-+ Plot the data
+```{r plot-global-temperature-data}
+plot(temp)
+```
 
-### Aside: The world is not flat, so why is my map?
-
-+ Reproject the data
+**TODO**: Explain plot output (legend)
 
 ### Modifying data
 
 + Do data transformation (like converting C to F)?
 
+Figure out how many values there are. As how you would go about changing them 
+all?
+
+```{r temp-conversion}
+# (C * 9/5) + 32 = F
+temp_f <- (temp * 9/5) + 32
+plot(temp_f)
+```
+
 ### Cropping data
 
 + Why do we need to do this?
-+ Defining an extent
-+ Crop to southwest & recolor (YlOrBr is good for temperature)
-> plot(temp_son, col = rev(hcl.colors(50, palette = "YlOrBr")))
 
++ Defining an extent
+
+```{r define-southwest}
+# Lower right: 21.48409688629825, -97.5236750092854
+# Upper left: 45.65875210983935, -125.64463895656584
+southwest_ext <- ext(c(-126, -98, 21, 46))
+southwest_ext
+```
+
++ Crop to southwest 
+
+```{r crop-temperature-data}
+temp_sw <- crop(temp, southwest_ext)
+```
+
++ Compare original (temp) to cropped (temp_sw)
+
+```{r compare-rasters}
+temp
+temp_sw
+```
+
++ Plot cropped raster
+
+```{r plot-cropped-temp}
+plot(temp_sw)
+```
+
+
+### Aside: The world is not flat, so why is my map?
+
++ Reproject the data
+
+```{r reproject-temp}
+temp_sw_albers <- project(temp_sw, "epsg:5070")
+plot(temp_sw_albers)
+```
+
+### Colors on maps
+
++ recolor (YlOrBr is good for temperature)
+
+```{r color-documentation, eval = FALSE}
+# Brings up R documentation for some color palettes
+?rainbow
+```
+
+**TODO** Look at ColorBrewer https://colorbrewer2.org
+
+```{r pick-colors}
+plot(temp_sw, col = hcl.colors(50, palette = "YlOrBr"))
+```
+
+```{r reverse-colors}
+temp_cols <- rev(hcl.colors(50, palette = "YlOrBr"))
+plot(temp_sw, col = temp_cols)
+```
 ## Geospatial Vector Data
+
+**TODO**: Remind about vector data: coordinates, alone (points) or connected 
+(lines, polygons)
 
 ### Adding Points
 
-Hermosillo: 29.016, -110.926
-Phoenix: 33.453, -111.947
-Tucson: 32.233, -110.953
+```{r city-data-frame}
+cities <- data.frame(city = c("Tucson", "Hermosillo", "Carson City"),
+                     lat = c(32.23, 29.02, 39.18),
+                     lon = c(-110.95, -110.93, -119.77))
+cities
+```
+
+**TODO**: Break this up into at least 3 chunks (SpatVect, add points, add names)
+```{r add-cities}
+cities_vect <- vect(cities, crs = crs(temp_sw))
+
+plot(temp_sw, col = temp_cols)
+plot(cities_vect, add = TRUE)
+text(cities_vect, labels = "city", pos = 4)
+```
 
 ### Adding Areas (aka Polygons)
 
@@ -110,10 +187,45 @@ Categorize areas as desert with prec_raster < 250 (general definition),
 turn 0 values to NA, and then convert to polygons with terra::as.polygons
 Add this to plot to outline desert areas
 
+```{r read-precipitation-data}
+prec <- rast("global_precipitation.tif")
+prec
+```
+
+```{r crop-precipitaton-data}
+prec_sw <- crop(prec, southwest_ext)
+prec_sw
+```
+
+```{r plot-precipitation-data}
+plot(prec_sw)
+```
+
+```{r define-desert}
+desert_max <- 250
+prec_desert <- prec_sw <= 250
+plot(prec_desert)
+# plot(prec_desert, grid = TRUE, pax = list(col = "gray"))
+```
+
+```{r desert-to-polygon}
+# Change all FALSE values to missing data
+prec_desert[!prec_desert] <- NA
+# Convert remaining non-missing values to a polygon (vector data)
+desert_poly <- as.polygons(prec_desert)
+# Plot polygons (reality check)
+plot(desert_poly)
+```
+
+```{r add-desert}
+plot(temp_sw, col = temp_cols)
+polys(x = desert_poly)
+```
+
 ### Other Resources
 
 + sf package
 + rspatial (terra et al.)
 + osmdata for OpenStreetMaps access
-+ ggplot2 for geospatial?
++ ggplot2 for geospatial? => tidyterra
 + Data Carpentry

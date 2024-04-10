@@ -1,0 +1,65 @@
+---
+title: 'Assignment 13'
+author: "Jeff Oliver"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Details
+
+### Purpose
+
+The goal of this assignment is to practice working with geospatial raster and 
+vector data.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+**TODO**: Update as appropriate
+April 8 at midnight MST
+
+# Assignment Exercises
+
+### 1. EXERCISE 1 (20 pts)
+
+Roughly five-parts to the exercise, try to make them independent; reading in 
+a raster file and answering questions about it
+
+Load terra package. What version does it say you are using?
+
+### 2. EXERCISE 2 (20 points)
+
+Making a plot, changing colors (see ggplot week) 4 parts?
+
+### 3. EXERCISE 3 (20 points)
+
+Making a line between three cities?
+
+### 4. EXERCISE 4 (20 points)
+
+Plotting montane regions in Himalayas
+
+Ideally get some elevation data, change the scale (ft <-> m as appropriate)
+
+### 5. EXERCISE 5 (20 points)
+
+...?
