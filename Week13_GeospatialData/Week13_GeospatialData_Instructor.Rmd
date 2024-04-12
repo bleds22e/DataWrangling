@@ -13,11 +13,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
+Geospatial data are data that have some connection to specific places or areas 
+on Earth. 
+
+**TODO**: More here
+
 ### Setup
 
-Geospatial data are data that have some connection to specific places or areas 
-on Earth. To work with geospatial data in R, we usually need to install one or
-more additional packages. The two most popular packages for geospatial data are 
+To work with geospatial data in R, we usually need to install one or more 
+additional packages. The two most popular packages for geospatial data are 
 terra and sf. In this lesson, we will only be working with terra, and you can 
 find links for more information on terra and on sf at the bottom of the lesson. 
 In order to use the terra package, we must first install the package with 
@@ -54,6 +58,7 @@ take the form of points (a single pair of coordinates), lines (two or more
 coordinate pairs connected in a sequence), or polygons (three or more 
 coordinate pairs connected in a closed sequence).
 
+**TODO**: 
 + Show zooming effect on both
 
 ### Today's Destination
@@ -63,107 +68,274 @@ some exploratory visualization, and modifying the data. Ultimately, we are
 going to create a map of temperature data of southwestern North America, 
 highlighting those areas that are desert biomes.
 
+**TODO**: 
 + Add final image
 
 ## Geospatial Raster Data
 
-### Reading and Visualizing Data
+### Reading and Visualizing Raster Data
 
-**TODO**: Add accompanying text for read in the data (temperature)
+To read raster data into R, we use the `rast()` function from the terra 
+library; if you see an error that says something like 
+`Error in rast("global_temperature.tif") : could not find function "rast"`, it 
+probably means you need to load the terra library with `library(terra)`.
 
 ```{r read-temperature-data}
 temp <- rast("global_temperature.tif")
+```
+
+With raster data, they will all (ideally) contain metadata - we can see those 
+metadata by running a line of code with the name of the variable that that we 
+read the raster into:
+
+```{r print-temperature-data}
 temp
 ```
 
-**TODO**: Explain console output
+**TODO**: 
++ Explain console output
+
+But come on! We are here for maps. Let us see a map! We can plot the actual 
+data stored in the raster with the `plot()` command.
 
 ```{r plot-global-temperature-data}
 plot(temp)
 ```
 
-**TODO**: Explain plot output (legend)
-
-### Modifying data
-
-+ Do data transformation (like converting C to F)?
-
-Figure out how many values there are. As how you would go about changing them 
-all?
-
-```{r temp-conversion}
-# (C * 9/5) + 32 = F
-temp_f <- (temp * 9/5) + 32
-plot(temp_f)
-```
+**TODO**:
++ _Aside_: `plot()` actually means a lot of different things.
++ Explain plot output (legend)
 
 ### Cropping data
 
-+ Why do we need to do this?
+Rarely do we need a map of the entire globe. Rather, we often want to focus on 
+parts of the globe. In this lesson we are going to focus on southwestern North 
+America, so we need to crop our raster data to that region. In order to do this 
+we first define what is called a geographic extent. This is basically a fancy 
+way of drawing a line around the area we are interested in. In our case, we 
+need to define the geographic limits of what we are calling the southwest; i.e.
+the easternmost, westernmost, southernmost, and northernmost points. 
 
-+ Defining an extent
+> Question: how would you find the latitude and longitude values to define this 
+extent?
+
+For this lesson, we can get away with using whole degree values; we will use 
+decimal degrees later in the lesson. When defining an area with four values 
+(easternmost, westernmost, etc.), we need to be sure to get them in the right 
+order. Often (but _not_ always), they are in the following order:
+
+1. xmin = westernmost
+2. xmax = easternmost
+3. ymin = southernmost
+4. ymax = northernmost
 
 ```{r define-southwest}
-# Lower right: 21.48409688629825, -97.5236750092854
-# Upper left: 45.65875210983935, -125.64463895656584
+# Lower right: 21, -97
+# Upper left: 45, -125
 southwest_ext <- ext(c(-126, -98, 21, 46))
+```
+
+You will also note that we used negative values for those western hemisphere 
+longitudes (-126, -98). The same goes for values in the southern hemisphere.
+
+> Question: Why would we use negative values instead of the letters W and S for 
+western longitudes and southern latitudes, respectively?
+
+We can do a reality check and print out the value by running the name of the 
+extent.
+
+```{r print-extent}
 southwest_ext
 ```
 
-+ Crop to southwest 
+Finally, we can make a new map, with only those values in the area we defined 
+by our geographic extent with the `crop()` function from terra.
 
 ```{r crop-temperature-data}
 temp_sw <- crop(temp, southwest_ext)
 ```
 
-+ Compare original (temp) to cropped (temp_sw)
+We can then compare the objects of our original raster:
 
-```{r compare-rasters}
+```{r uncropped-temp}
 temp
+```
+
+to the cropped raster:
+
+```{r cropped-temp}
 temp_sw
 ```
 
-+ Plot cropped raster
+Just about all the data changed, with the exception of the value in the 
+`coord. ref.` field. We will talk more about that field later.
+
+Let us look at the map of our cropped data, again with the `plot()` function.
 
 ```{r plot-cropped-temp}
 plot(temp_sw)
 ```
 
+### Modifying data
+
+The _really_ nice thing about modern geospatial package in R is that we can do 
+operations on every cell of the data. For example maybe we want to convert our 
+temperature values from Celsius to Fahrenheit.
+
+> Question: For our cropped data, how many calculations would this conversion 
+require?
+
+**TODO**: 
+Do we need this progress suppression on the cropped map?
+
+```{r suppress-progress-bar, echo = FALSE}
+# Store current progress value
+terra_progress <- terraOptions(print = FALSE)$progress
+# Set to zero for temperature conversion so it doesn't end up in output
+terraOptions(progress = 0)
+```
+
+A reminder of the formula for converting Celsius to Fahrenheit:
+
+$$
+F = (C \times \frac{9}{5}) + 32
+$$
+
+```{r temp-conversion}
+# (C * 9/5) + 32 = F
+temp_sw_f <- (temp_sw * 9/5) + 32
+```
+
+And plotting the data, the image looks the pretty much the same, but note the 
+scale is different:
+
+```{r plot-fahrenheit}
+plot(temp_sw_f)
+```
+
+```{r ressurect-progress-bar, echo = FALSE}
+# Reset progress to prior value
+terraOptions(progress = terra_progress, print = FALSE)
+```
 
 ### Aside: The world is not flat, so why is my map?
 
-+ Reproject the data
+> Question: What are some differences between the map we see on our screen and 
+reality?
+
+The process of taking the three-dimensional shape of the Earth and presenting 
+it in a two-dimensional format (i.e. a map) is called projection and there are 
+several ways of doing this. And when I say several, I actually mean infinite. 
+From the [Wikipedia page on map projections](https://en.wikipedia.org/wiki/List_of_map_projections): 
+"Because there is no limit to the number of possible map projections, there can 
+be no comprehensive list." However, there are common ones that you should 
+probably stick to.
+
+When working in R, the coordinate reference system describes how the three-
+dimensional data are transformed into two-dimensional space.
+
+Let us look once more at our cropped temperature raster metadata.
+
+```{r show-wgs84}
+temp_sw
+```
+
+Specifically, we see the value in the coord. ref. field is 
+
+`lon/lat WGS 84 (EPSG:4326)`
+
+Without going into too much detail, this tells us it uses the World Geodetic 
+System 84 reference system with latitude and longitude. This is a pretty good
+one to use as long as your maps aren't super close to the poles. _All_ 
+projections from three-dimensional space to two-dimensional space result in 
+some distortions, and this one really stretches out area near the poles. You 
+can see this in action by plotting your original map:
+
+```{r show-pole-distortion}
+plot(temp)
+```
+
+Look at Antarctica! It's huge!
+
+We can change the way our map looks by re-projecting the raster. That is, we 
+make a new object in R that uses a different coordinate reference system. You 
+might have noticed in the coord. ref. field that there was the extra bit of 
+text in parentheses: "(EPSG:4326)". Thankfully there is a set of unique 
+identifiers for all the different coordinate reference systems and we can use 
+those identifiers to re-project our data. These identifiers all start with the 
+letters "epsg" and end with a series of four to five numbers.
+
+As an example, we can re-project our southwest temperature data to a 
+projection that does not distort the area quite as much. We do this with the 
+terra function `project()` and then plot the result:
 
 ```{r reproject-temp}
 temp_sw_albers <- project(temp_sw, "epsg:5070")
 plot(temp_sw_albers)
 ```
 
+> Question: What is the name of the coordinate system that EPSG 5070 refers to?
+
 ### Colors on maps
 
-+ recolor (YlOrBr is good for temperature)
+So, we have a map, but these colors make me think of elevation, not 
+temperature, so how can we change this? Let's start by looking at the 
+documentation one of the functions for creating color palettes, called 
+`rainbow()`:
 
 ```{r color-documentation, eval = FALSE}
 # Brings up R documentation for some color palettes
 ?rainbow
 ```
 
-**TODO** Look at ColorBrewer https://colorbrewer2.org
+This actually brings up documentation for a bunch of palettes, but looking at 
+the entry in the **Usage** section for `rainbow()`, we see that we need to give
+it a value for the number of colors, `n`. Let us try passing the rainbow 
+palette to the plot function, giving it fifty colors:
+
+```{r rainbow-colors}
+plot(temp_sw, col = rainbow(n = 50))
+```
+
+Well, the colors changed, but I would not say for the better. In fact, when I 
+go about making decisions about colors, my go-to resource is ColorBrewer at 
+[https://colorbrewer2.org](https://colorbrewer2.org).
+
+You can click through the options and it will display the different palettes. 
+For our purposes, the Yellow-Orange-Brown palette ("YlOrBr") should work well. 
+To see the name of the palette, look just to the left of the "EXPORT" tab:
+
+![Example of palette name in ColorBrewer, YlOrBr](colorbrewer-palette-name.png)
+
+To use these palettes, we replace the `rainbow()` function with the 
+`hcl.colors()` function, and indicate which palette we want through the 
+`palette` argument:
 
 ```{r pick-colors}
-plot(temp_sw, col = hcl.colors(50, palette = "YlOrBr"))
+plot(temp_sw, col = hcl.colors(n = 50, palette = "YlOrBr"))
 ```
+
+This is close, but I'd rather reverse the scale, so darker colors indicate 
+hotter temperatures. I am going to create a variable that stores these colors
+so I do not have to keep writing out the `hcl.colors()` specification.
 
 ```{r reverse-colors}
-temp_cols <- rev(hcl.colors(50, palette = "YlOrBr"))
+temp_cols <- rev(hcl.colors(n = 50, palette = "YlOrBr"))
 plot(temp_sw, col = temp_cols)
 ```
+
+> Question: What are the values stored in the `temp_cols` variable?
+
 ## Geospatial Vector Data
 
-**TODO**: Remind about vector data: coordinates, alone (points) or connected 
+**TODO**
++ Remind about vector data: coordinates, alone (points) or connected 
 (lines, polygons)
 
 ### Adding Points
+
+Let us create a data frame with some city coordinates that we can add to the 
+map.
 
 ```{r city-data-frame}
 cities <- data.frame(city = c("Tucson", "Hermosillo", "Carson City"),
@@ -172,10 +344,34 @@ cities <- data.frame(city = c("Tucson", "Hermosillo", "Carson City"),
 cities
 ```
 
-**TODO**: Break this up into at least 3 chunks (SpatVect, add points, add names)
-```{r add-cities}
-cities_vect <- vect(cities, crs = crs(temp_sw))
+To make these data easier to work with our raster object, we are going to 
+transform it to a spatial vector, or SpatVector in terra-speak. While we are at 
+it, we will tell it to use the same coordinate reference system as the 
+temperature data we already loaded in.
 
+```{r cities-vector}
+cities_vect <- vect(cities, crs = crs(temp_sw))
+```
+
+Looking at the SpatVector object, it doesn't really look very different.
+
+```{r print-cities-vector}
+cities_vect
+```
+
+Now we can make our map and add those points to the map. Make sure to use 
+`add = TRUE` in our second call to `plot()` so it adds the points to the 
+already existing map.
+
+```{r add-cities-points}
+plot(temp_sw, col = temp_cols)
+plot(cities_vect, add = TRUE)
+```
+
+Finally, because we stored the names of the cities in our data frame, we can 
+also add those.
+
+```{r add-cities-names}
 plot(temp_sw, col = temp_cols)
 plot(cities_vect, add = TRUE)
 text(cities_vect, labels = "city", pos = 4)
@@ -183,27 +379,44 @@ text(cities_vect, labels = "city", pos = 4)
 
 ### Adding Areas (aka Polygons)
 
-Categorize areas as desert with prec_raster < 250 (general definition), 
-turn 0 values to NA, and then convert to polygons with terra::as.polygons
-Add this to plot to outline desert areas
+What if we want to add areas, not just points, to our map? Here is where we get 
+into the realm of polygons. We can do things like add polygons from shapefiles 
+that we download or export from a program like ArcGIS. For this lesson, though, 
+we are going to make a polygon on the fly and add that to our map.
+
+Going back to our original goal of a map highlighting desert biomes, we will 
+define a desert as an area that receives less than 250 millimeters of 
+precipitation per year (_Aside_: this definition only goes so far; for example, 
+the city of Tucson does not, technically, get counted as being a desert because 
+it receives an average of 300 mm of precipitation per year. You can read more 
+about [defining deserts on Wikipedia](https://en.wikipedia.org/wiki/Desert#Defining_characteristics)).
+
+So we start by loading in a file with global precipitation data:
 
 ```{r read-precipitation-data}
 prec <- rast("global_precipitation.tif")
 prec
 ```
 
+Then cropping those data to the North American southwest (that we defined 
+above).
+
 ```{r crop-precipitaton-data}
 prec_sw <- crop(prec, southwest_ext)
 prec_sw
 ```
 
+And it is usually good to do a reality check and plot the data, too:
+
 ```{r plot-precipitation-data}
 plot(prec_sw)
 ```
 
+
+
 ```{r define-desert}
 desert_max <- 250
-prec_desert <- prec_sw <= 250
+prec_desert <- prec_sw < desert_max
 plot(prec_desert)
 # plot(prec_desert, grid = TRUE, pax = list(col = "gray"))
 ```
@@ -219,6 +432,11 @@ plot(desert_poly)
 
 ```{r add-desert}
 plot(temp_sw, col = temp_cols)
+polys(x = desert_poly)
+```
+
+```{r add-title}
+plot(temp_sw, col = temp_cols, main = "Mean Annual Temperature (\u00B0C)")
 polys(x = desert_poly)
 ```
 
