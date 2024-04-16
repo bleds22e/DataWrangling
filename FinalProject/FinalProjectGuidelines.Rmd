@@ -30,3 +30,69 @@ Create a fully computationally reproducible project that uses the skills we have
 May 7 at midnight MST
 
 # Final Project Guidelines
+
+For your final project in Data Wrangling in R, you will be synthesizing the concepts we have learned throughout the semester and applying them to a dataset of your choosing.
+
+In many ways, the content of the final project is up to you. However, there are a few guidelines that need to be met for your project to be considered complete. The guidelines differ based on whether you are in WFSC 496B or 596B, so be sure you are looking at the correct section.
+
+Week 1: Spreadsheets\
+Week 2: Intro to R\
+Week 3: Data Tables\
+Week 4: Groups and Joins\
+Week 5: Data Visualization\
+Week 6: Tidy Data\
+Week 7: Dates and Strings\
+Week 8: Problem Decomposition\
+Week 9: Reproducibility\
+Week 10: Functions\
+Week 11: Making Choices\
+Week 12: Iteration\
+Week 13: Spatial Data\
+Week 14: Miscellaneous
+
+## General Requirements for the Project
+
+Based on what I am asking for your project to be, your project will cover content from a number of weeks by default.
+
+1.  **Week 2**: Your project should be written in the R language, meaning you will be using functions and the assignment operator (`<-`).
+
+2.  **Week 8**: Your project should accomplish a larger task with your dataset. In your project RMarkdown file, you should include text:
+
+    -   At the beginning of the document to introduce your dataset and the general tasks that you will be completing in the following code chunks (problem decomposition).
+    -   Text between the code chunks outlining he tasks that each code chunk is performing.
+
+3.  **Week 9:** Your completed project should be in a GitHub repo.
+
+    -   This repo should contain an RStudio Project
+    -   The RStudio Project should have sub-directories (at a minimum, `data_raw`, `data_clean`, and `figures` or `outputs` folders).
+    -   All file paths in your project should be relative file paths (not absolute).
+
+*Note regarding Week 1:* *If you choose to include content from `Week 1: Spreadsheets`, it should be in the context of (a) creating your own spreadsheet for future data entry that includes data validation or (b) discussion of why you have chosen to save your cleaned data in multiple different "tidy" tables. Reading a spreadsheet file into R does not count. If you have questions, feel free to ask!*
+
+### WFSC 496B Requirements
+
+Your final project is worth a total of 300 points and should contain content from at least 6 weeks. Each week of content included is worth 50 points.
+
+In addition to including content from Weeks 2, 8, and 9, as stated above, your final project should include content we learned in at least 3 other weeks, with the following guidelines.
+
+1.  You must include some type of data visualization in your project (Week 5)
+2.  You must include content from at least one of the following weeks:
+    -   Week 10: Functions (writing your own)
+
+    -   Week 11: Making Choices (if/else statements)
+
+    -   Week 12: Iteration (for loops)
+
+### WFSC 596B Requirements
+
+Your final project is worth a total of 500 points and should contain content from 10 different weeks throughout the semester. Each week of content included is worth 50 points.
+
+In addition to including content from Weeks 2, 8, and 9, as stated above, your final project should include content we learned in at least 7 other weeks, with the following guidelines.
+
+1.  You must include some type of data visualization in your project (Week 5)
+2.  You must include content from at least one of the following weeks:
+    -   Week 10: Functions (writing your own)
+
+    -   Week 11: Making Choices (if/else statements)
+
+    -   Week 12: Iteration (for loops)
