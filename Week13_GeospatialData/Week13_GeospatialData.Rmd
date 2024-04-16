@@ -28,18 +28,14 @@ more information on terra and on sf at the bottom of the lesson. In order to
 use the terra package, we must first install the package with 
 `install.packages()`:
 
-```{r terra-install, eval = FALSE}
-install.packages("terra")
+```{r terra-install}
+
 ```
 
 And we load it into memory with the `library()` command:
 
-```{r terra-load, echo = FALSE}
-suppressPackageStartupMessages(library(terra))
-```
+```{r terra-load-print}
 
-```{r terra-load-print, eval = FALSE}
-library(terra)
 ```
 
 ### Some Terms
@@ -87,7 +83,7 @@ library; if you see an error that says something like
 probably means you need to load the terra library with `library(terra)`.
 
 ```{r read-temperature-data}
-temp <- rast("global_temperature.tif")
+
 ```
 
 With raster data, they will all (ideally) contain metadata - we can see those 
@@ -95,7 +91,7 @@ metadata by running a line of code with the name of the variable that that we
 read the raster into:
 
 ```{r print-temperature-data}
-temp
+
 ```
 
 So there is a lot packed into the output. For our reality check, we will just 
@@ -107,7 +103,7 @@ But come on! We are here for maps. Let us see a map! We can plot the actual
 data stored in the raster with the `plot()` command.
 
 ```{r plot-global-temperature-data}
-plot(temp)
+
 ```
 
 ### Aside: `plot()` actually means a lot of different things.
@@ -144,7 +140,7 @@ order. Often (but _not_ always), they are in the following order:
 ```{r define-southwest}
 # Lower right: 21, -98
 # Upper left: 46, -126
-southwest_ext <- ext(c(-126, -98, 21, 46))
+
 ```
 
 You will also note that we used negative values for those western hemisphere 
@@ -157,26 +153,26 @@ We can do a reality check and print out the value by running the name of the
 extent.
 
 ```{r print-extent}
-southwest_ext
+
 ```
 
 Finally, we can make a new map, with only those values in the area we defined 
 by our geographic extent with the `crop()` function from terra.
 
 ```{r crop-temperature-data}
-temp_sw <- crop(temp, southwest_ext)
+
 ```
 
 We can then compare the objects of our original raster:
 
 ```{r uncropped-temp}
-temp
+
 ```
 
 to the cropped raster:
 
 ```{r cropped-temp}
-temp_sw
+
 ```
 
 Just about all the data changed, with the exception of the value in the 
@@ -185,7 +181,7 @@ Just about all the data changed, with the exception of the value in the
 Let us look at the map of our cropped data, again with the `plot()` function.
 
 ```{r plot-cropped-temp}
-plot(temp_sw)
+
 ```
 
 ### Modifying data
@@ -212,7 +208,7 @@ And plotting the data, the image looks the pretty much the same, but note the
 scale is different:
 
 ```{r plot-fahrenheit}
-plot(temp_sw_f)
+
 ```
 
 ### Aside: The world is not flat, so why is my map?
@@ -234,7 +230,7 @@ dimensional data are transformed into two-dimensional space.
 Let us look once more at our cropped temperature raster metadata.
 
 ```{r show-wgs84}
-temp_sw
+
 ```
 
 Specifically, we see the value in the coord. ref. field is 
@@ -249,7 +245,7 @@ some distortions, and this one really stretches out area near the poles. You
 can see this in action by plotting your original map:
 
 ```{r show-pole-distortion}
-plot(temp)
+
 ```
 
 Look at Antarctica! It's huge!
@@ -267,8 +263,8 @@ projection that does not distort the area quite as much. We do this with the
 terra function `project()` and then plot the result:
 
 ```{r reproject-temp}
-temp_sw_reproject <- project(temp_sw, "epsg:5070")
-plot(temp_sw_reproject)
+
+
 ```
 
 > Question: What is the name of the coordinate system that EPSG 5070 refers to?
@@ -282,7 +278,7 @@ documentation one of the functions for creating color palettes, called
 
 ```{r color-documentation, eval = FALSE}
 # Brings up R documentation for some color palettes
-?rainbow
+
 ```
 
 This actually brings up documentation for a bunch of palettes, but looking at 
@@ -291,7 +287,7 @@ it a value for the number of colors, `n`. Let us try passing the rainbow
 palette to the plot function, giving it fifty colors:
 
 ```{r rainbow-colors}
-plot(temp_sw, col = rainbow(n = 50))
+
 ```
 
 Well, the colors changed, but I would not say for the better. In fact, when I 
@@ -309,7 +305,7 @@ To use these palettes, we replace the `rainbow()` function with the
 `palette` argument:
 
 ```{r pick-colors}
-plot(temp_sw, col = hcl.colors(n = 50, palette = "YlOrBr"))
+
 ```
 
 This is close, but I'd rather reverse the scale, so darker colors indicate 
@@ -317,8 +313,8 @@ hotter temperatures. I am going to create a variable that stores these colors
 so I do not have to keep writing out the `hcl.colors()` specification.
 
 ```{r reverse-colors}
-temp_cols <- rev(hcl.colors(n = 50, palette = "YlOrBr"))
-plot(temp_sw, col = temp_cols)
+
+
 ```
 
 > Question: What are the values stored in the `temp_cols` variable?
@@ -336,10 +332,7 @@ Let us create a data frame with some city coordinates that we can add to the
 map.
 
 ```{r city-data-frame}
-cities <- data.frame(city = c("Tucson", "Hermosillo", "Carson City"),
-                     lat = c(32.23, 29.02, 39.18),
-                     lon = c(-110.95, -110.93, -119.77))
-cities
+
 ```
 
 To make these data easier to work with our raster object, we are going to 
@@ -348,13 +341,13 @@ it, we will tell it to use the same coordinate reference system as the
 temperature data we already loaded in.
 
 ```{r cities-vector}
-cities_vect <- vect(cities, crs = crs(temp_sw))
+
 ```
 
 Looking at the SpatVector object, it doesn't really look very different.
 
 ```{r print-cities-vector}
-cities_vect
+
 ```
 
 Now we can make our map and add those points to the map. Make sure to use 
@@ -362,17 +355,17 @@ Now we can make our map and add those points to the map. Make sure to use
 already existing map.
 
 ```{r add-cities-points}
-plot(temp_sw, col = temp_cols)
-plot(cities_vect, add = TRUE)
+
+
 ```
 
 Finally, because we stored the names of the cities in our data frame, we can 
 also add those.
 
 ```{r add-cities-names}
-plot(temp_sw, col = temp_cols)
-plot(cities_vect, add = TRUE)
-text(cities_vect, labels = "city", pos = 4)
+
+
+
 ```
 
 ### Adding Areas (aka Polygons)
@@ -392,22 +385,22 @@ about [defining deserts on Wikipedia](https://en.wikipedia.org/wiki/Desert#Defin
 So we start by loading in a file with global precipitation data:
 
 ```{r read-precipitation-data}
-prec <- rast("global_precipitation.tif")
-prec
+
+
 ```
 
 Then cropping those data to the North American southwest (that we defined 
 above).
 
 ```{r crop-precipitaton-data}
-prec_sw <- crop(prec, southwest_ext)
-prec_sw
+
+
 ```
 
 And it is usually good to do a reality check and plot the data, too:
 
 ```{r plot-precipitation-data}
-plot(prec_sw)
+
 ```
 
 Cool. Map looks good and the ranges of precipitation seem reasonable, too. Now 
@@ -419,9 +412,9 @@ precipitation is categorized as a desert. We start by defining our cutoff and
 then creating a new raster based on values in the precipitation raster.
 
 ```{r define-desert}
-desert_max <- 250
-prec_desert <- prec_sw < desert_max
-prec_desert
+
+
+
 ```
 
 Looking at the raster metadata, we see the big difference is the min and max 
@@ -433,7 +426,7 @@ answer is either `TRUE` or `FALSE`, so that is what is stored in the resulting
 output raster, `prec_desert`. We can also see this when we plot the output:
 
 ```{r plot-desert-logical}
-plot(prec_desert)
+
 ```
 
 The areas that are lighting up in green are those "desert" biomes. For now, we 
@@ -450,11 +443,11 @@ transformation and plot the polygon alone as a reality check.
 
 ```{r desert-to-polygon}
 # Change all FALSE values to missing data
-prec_desert[!prec_desert] <- NA
+
 # Convert remaining non-missing values to a polygon (vector data)
-desert_poly <- as.polygons(prec_desert)
+
 # Plot polygons (reality check)
-plot(desert_poly)
+
 ```
 
 Looking good! Now we can plot our temperature map again and add the polygon to 
@@ -464,9 +457,9 @@ transparency of the desert polygon (hint: look at the documentation for the
 
 ```{r add-desert}
 # Plot base temperature map
-plot(temp_sw, col = temp_cols)
+
 # Add desert polygon
-polys(x = desert_poly)
+
 ```
 
 Finally, because we are being pedantic, let us make the plot again, this time 
@@ -474,21 +467,21 @@ adding a title explaining what the colors mean ("00B0" is Unicode for the
 degree symbol).
 
 ```{r add-title}
-plot(temp_sw, col = temp_cols, 
-     main = "Mean Annual Temperature (\u00B0C)")
-polys(x = desert_poly)
+
+
+
 ```
 
 And if you are inclined, you can output this map by wrapping all the plotting 
 commands within a call to one of the graphics device functions (e.g. `png()`, 
 `pdf()`) and then turning off this graphical redirect with `dev.off()`.
 
-```{r save-plot, eval = FALSE}
-png(filename = "sw-desert-heat.png")
+```{r save-plot}
+
 plot(temp_sw, col = temp_cols, 
      main = "Mean Annual Temperature (\u00B0C)")
 polys(x = desert_poly)
-dev.off()
+
 ```
 
 ## Glossary
