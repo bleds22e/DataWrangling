@@ -69,6 +69,16 @@ Based on what I am asking for your project to be, your project will cover conten
 
 *Note regarding Week 1:* *If you choose to include content from `Week 1: Spreadsheets`, it should be in the context of (a) creating your own spreadsheet for future data entry that includes data validation or (b) discussion of why you have chosen to save your cleaned data in multiple different "tidy" tables. Reading a spreadsheet file into R does not count. If you have questions, feel free to ask!*
 
+### Demonstrating You've Met the Requirements
+
+To make both of our lives easier, it will really help if you explicitly note somewhere in the final project where content from your required number of weeks is present in your project.
+
+This could take a few forms:
+
+-   a README file (could be the repo's README file) that outlines the weeks covered and where to find each week's material in your RMarkdown file (hint: the source code has line numbers)
+-   within your RMarkdown file and the text accompanying your code, explicitly stating the weeks included in the following code chunk
+-   another way that makes the most sense for you!
+
 ### WFSC 496B Requirements
 
 Your final project is worth a total of 300 points and should contain content from at least 6 weeks. Each week of content included is worth 50 points.
