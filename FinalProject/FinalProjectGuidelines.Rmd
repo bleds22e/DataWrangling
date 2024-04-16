@@ -59,7 +59,7 @@ Based on what I am asking for your project to be, your project will cover conten
 2.  **Week 8**: Your project should accomplish a larger task with your dataset. In your project RMarkdown file, you should include text:
 
     -   At the beginning of the document to introduce your dataset and the general tasks that you will be completing in the following code chunks (problem decomposition).
-    -   Text between the code chunks outlining he tasks that each code chunk is performing.
+    -   Text between the code chunks outlining the tasks that each code chunk is performing.
 
 3.  **Week 9:** Your completed project should be in a GitHub repo.
 
@@ -106,3 +106,18 @@ In addition to including content from Weeks 2, 8, and 9, as stated above, your f
     -   Week 11: Making Choices (if/else statements)
 
     -   Week 12: Iteration (for loops)
+
+## Making a New RMarkdown File
+
+For this project, you'll likely need to create a new RMarkdown file.
+
+You're welcome to copy one of the existing .Rmd files for the course, delete the contents, and start your own file, but I'm including instructions below if you'd like to make your own.
+
+1.  Go to File \> New File \> RMarkdown
+2.  From the option list on the left-hand side, make sure Document is selected.
+3.  Add a title and put your name in the "Author" section. You can either leave the date as is or check the box that will automatically fill in the current date.
+4.  Choose the output you would like the file to create when you Knit the file (I usually choose PDF).
+5.  Click "OK" (for reasons I won't go into, do NOT choose "Create Empty Document"
+6.  You should now have a .Rmd file with some stuff in it. The stuff is giving you a brief rundown on how .Rmd files work. You can delete everything from line 11 (`## R Markdown`) and below. You need to leave the YAML (the stuff between the `---` lines) and I recommend leaving the very first code chunk.
+
+You should be good to go!
