@@ -1,0 +1,32 @@
+---
+title: "Final Project"
+output: pdf_document
+date: '`r Sys.Date()`'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Final Project
+
+### Purpose
+
+The purpose of the final project is to synthesize material across the semester.
+
+### Task
+
+Create a fully computationally reproducible project that uses the skills we have learned in the class. Apply them to a dataset of your choosing.
+
+### Criteria for Success
+
+-   Project is in a GitHub repository.
+-   Project is fully computationally reproducible, meaning your instructor can clone your GitHub repo, open the RStudio Project, and successfully recreate your project without having to make any changes to the code.
+-   Project contains code or material from the appropriate number of weeks, as described below.
+-   RMarkdown file contains written descriptions of the tasks being performed.
+
+### Due Date
+
+May 7 at midnight MST
+
+# Final Project Guidelines
