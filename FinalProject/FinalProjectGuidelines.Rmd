@@ -61,7 +61,7 @@ Based on what I am asking for your project to be, your project will cover conten
     -   At the beginning of the document to introduce your dataset and the general tasks that you will be completing in the following code chunks (problem decomposition).
     -   Text between the code chunks outlining the tasks that each code chunk is performing.
 
-3.  **Week 9:** Your completed project should be in a GitHub repo.
+3.  **Week 9:** Your completed project should be in a GitHub repo. You will submit the link to this repo as your submission for the final project.
 
     -   This repo should contain an RStudio Project
     -   The RStudio Project should have sub-directories (at a minimum, `data_raw`, `data_clean`, and `figures` or `outputs` folders).
