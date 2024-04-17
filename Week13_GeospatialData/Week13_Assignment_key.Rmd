@@ -1,0 +1,154 @@
+---
+title: 'Assignment 13'
+author: "Jeff Oliver"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Details
+
+### Purpose
+
+The goal of this assignment is to practice working with geospatial raster and 
+vector data.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+**TODO**: Update as appropriate
+April 8 at midnight MST
+
+# Assignment Exercises
+
+### 1. Working with raster data in terra (20 pts)
+
+**TODO**
++ Update the text
+
+Roughly five-parts to the exercise, try to make them independent; reading in 
+a raster file and answering questions about it (just use precipitation data)
+
+a. Load terra package. What version does it say you are using?
+b. Load in data, what is the EPSG used in these data?
+c. Define a geographic extent object for the Himalayas
+d. Crop data to extent; what are resulting dimensions?
+
+```{r answers-1}
+# 1a
+# When loading terra library, will print version number to console
+library(terra)
+
+# 1b
+# Read in data with rast
+prec <- rast("global_precipitation.tif")
+# Print prec raster to see EPSG (4326)
+prec
+
+# 1c
+# Geographic extent of Himalayas, roughly, is (lat, lon)
+# Top left: 40.37, 69.33
+# Bottom right: 26.93, 97.15
+# ext takes arguments in this order: xmin, xmax, ymin, ymax
+# or, in human: left, right, bottom, top
+hima_ext <- ext(c(69.33, 97.15, 26.93, 40.37))
+
+# 1d 
+# Crop precipitation to Himalayan extent
+prec_hima <- crop(prec, hima_ext)
+# Print new raster to see extent
+prec_hima
+```
+
+### 2. Printing maps (20 points)
+
+a. Plot the cropped precipitation data
+b. Add a title to the plot.
+c. Change the palette to topo.colors
+d. Change the palette to one from [ColorBrewer](https://colorbrewer2.org) for 
+sequential (continuous) data.
+
+```{r answers-2}
+# 2a
+plot(prec_hima)
+
+# 2b
+plot(prec_hima, main = "Mean annual precipitation (mm)")
+
+# 2c
+# Define the palette first
+prec_cols <- topo.colors(n = 50)
+# Plot the map with those new colors
+plot(prec_hima, col = prec_cols)
+
+# 2d
+# Define palette with hcl.colors, several options from Color Brewer, example 
+# below uses Yellow-Green-Blue palette
+prec_cols <- hcl.colors(n = 50, palette = "YlGnBu")
+plot(prec_hima, col = prec_cols)
+```
+### 3. Working with vector data in terra (20 points)
+
+Making a line between three cities?
+a. Create a data frame of three peaks (lat, lon)
+K2: 35.93, 76.50
+Annapurna: 28.53, 83.81
+Mount Everest: 28.05, 86.91
+b. Create SpatVector of lines
+c. Use as.lines to convert to lines
+d. Add these lines to precipitation plot
+
+```{r answer-3}
+# 3a
+peaks <- data.frame(peak = c("K2", "Annapurna", "Mount Everest"),
+                    lat = c(35.93, 28.53, 28.05),
+                    lon = c(76.50, 83.81, 86.91))
+
+# 3b
+# Convert data frame to SpatVector object
+peaks_vect <- vect(peaks)
+
+# 3c
+# Convert from points to lines
+peaks_line <- as.lines(peaks_vect)
+
+# 3d
+# Draw base precipitation plot
+plot(prec_hima, col = prec_cols)
+# Add lines with lines function
+lines(peaks_line)
+```
+
+
+### 4. EXERCISE 4 (20 points)
+
+a. Read in elevation data
+b. Change EPSG to same as precip data
+c. Change scale ft <-> m
+
+### 5. EXERCISE 5 (20 points)
+
+a. Define high-elevation
+b. Create new logical raster with above/below high-elevation
+c. Change raster to TRUE/NA
+d. Convert raster to polygon
+e. Add polygon to map
+...?
