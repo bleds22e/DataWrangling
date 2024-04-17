@@ -324,10 +324,12 @@ For example, if we have many similar files, we might want to repeat the same tas
 To demonstrate, let's download some simulated satellite collar data. Make sure you change the file paths accordingly to match the sub-directories in your RStudio Project, as needed.
 
 ```{r}
-download.file("http://www.datacarpentry.org/semester-biology/data/locations.zip",
-              "locations.zip")
+download.file(url = "http://www.datacarpentry.org/semester-biology/data/locations.zip",
+              destfile = "../data_raw/locations.zip") # where to put the zip file
 
-unzip("locations.zip")
+# unzip function to open the zip file
+# zipfile argument is the location of the file to be 
+unzip(zipfile = "../data_raw/locations.zip", exdir = "../data_raw/")
 ```
 
 Before we can loop through these files, we need to get the names of all of these files.
@@ -338,12 +340,14 @@ If we run it without arguments, it will give us the names of all files in the di
 
 ```{r}
 list.files()
+
+list.files(path = "../data_raw/")
 ```
 
 We, however, just want the data files we downloaded, so we'll add the optional `pattern` argument to only get the files that start with `"locations-"`. Notice that adding the `-` at the end of the pattern excludes the `location.zip` file name.
 
 ```{r}
-data_files <- list.files(pattern = "locations-")
+data_files <- list.files(path = "../data_raw/", pattern = "locations-")
 data_files
 ```
 
@@ -362,9 +366,13 @@ Now that we have created our empty vector of the appropriate length, we can writ
 
 ```{r}
 for (i in 1:num_files){
+  # specify which file
   filename <- data_files[i]
-  data <- read.csv(filename)
+  # read in the file
+  data <- read.csv(paste0("../data_raw/", filename))
+  # save the number of rows as an object called `count`
   count <- nrow(data)
+  # save the count value in the correct position in the `results` vector
   results[i] <- count
 }
 
@@ -404,7 +412,7 @@ for (i in 1:num_files){
   
   # read in the data file
   filename <- data_files[i]
-  data <- read.csv(filename)
+  data <- read.csv(paste0("../data_raw/", filename))
   
   # add information about the data file into the data frame
   results$file_name[i] <- filename
