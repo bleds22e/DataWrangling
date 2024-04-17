@@ -240,10 +240,8 @@ For example, if we have many similar files, we might want to repeat the same tas
 To demonstrate, let's download some simulated satellite collar data. Make sure you change the file paths accordingly to match the sub-directories in your RStudio Project, as needed.
 
 ```{r}
-download.file("http://www.datacarpentry.org/semester-biology/data/locations.zip",
-              "locations.zip")
-
-unzip("locations.zip")
+download.file(url = "http://www.datacarpentry.org/semester-biology/data/locations.zip",
+              destfile = "../data_raw/locations.zip")
 ```
 
 Before we can loop through these files, we need to get the names of all of these files.
