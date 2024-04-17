@@ -66,7 +66,6 @@ probably have similar roots.
 
 ![Vector data do not lose resolution when magnifying](zoom-vector.png)
 
-
 ### Today's Destination
 
 Today we will work with both raster and vector data, loading it into R, doing
@@ -89,6 +88,9 @@ probably means you need to load the terra library with `library(terra)`.
 ```{r read-temperature-data}
 temp <- rast("global_temperature.tif")
 ```
+
+_Note_: All the data we will use in this lesson come from the 
+[WorldClim](https://www.worldclim.org/data/worldclim21.html) site.
 
 With raster data, they will all (ideally) contain metadata - we can see those 
 metadata by running a line of code with the name of the variable that that we 

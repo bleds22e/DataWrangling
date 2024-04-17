@@ -39,41 +39,62 @@ April 8 at midnight MST
 
 # Assignment Exercises
 
-### 1. EXERCISE 1 (20 pts)
+### 1. Working with raster data in terra (20 pts)
 
-Roughly five-parts to the exercise, try to make them independent; reading in 
-a raster file and answering questions about it (just use precipitation data)
+In this exercise, you will work with the same precipitation data as in class, 
+but this time focus in on the Himalayan region of Asia.
 
-a. Load terra package. What version does it say you are using?
-b. Load in data, what is the EPSG used in these data?
-c. Define geographic extent (Himalayas)
-d. Crop data to extent; what are resulting dimensions?
+a. Load in the terra package. What version does it say you are using?
 
-### 2. EXERCISE 2 (20 points)
+b. Load in the precipitation data ("global_precipitation.tif"), what is the 
+EPSG used in these data?
 
-a. Add a title to the plot.
-b. Change the palette to topo.colors
-c. Change the palette to one from [ColorBrewer](https://colorbrewer2.org) for 
+c. Define a geographic extent object for the Himalayan region.
+
+d. Crop the precipitation data to the Himalayan extent; what are resulting 
+dimensions?
+
+### 2. Printing maps (20 points)
+
+Still working with the precipitation data, this exercise focuses on visualizing
+the data.
+
+a. Plot the precipitation data for the Himalayan region.
+
+b. Add a title to the plot.
+
+c. Change the palette to that of `topo.colors` (use `?topo.colors` for 
+details) and print the resultant plot.
+
+d. Change the palette to one from [ColorBrewer](https://colorbrewer2.org) for 
 sequential (continuous) data.
 
-### 3. EXERCISE 3 (20 points)
+### 3. Working with vector data in terra (20 points)
 
-Making a line between three cities?
-a. Create a data frame of three cities
-b. Create SpatVector of lines (requires vect first, then )
-c. Use as.lines to convert to lines
+a. Create a data frame of three peaks in the Himalayan region: (lat, lon)
+  + K2: 35.93, 76.50
+  + Annapurna: 28.53, 83.81
+  + Mount Everest: 28.05, 86.91
 
-### 4. EXERCISE 4 (20 points)
+b. Create a SpatVector object from the data frame with peak data.
 
-a. Read in elevation data
-b. Change EPSG to same as precip data
-c. Change scale ft <-> m
+c. Convert the points SpatVector object to a lines object.
 
-### 5. EXERCISE 5 (20 points)
+d. Add the lines object to the precipitation plot of the Himalayan region.
 
-a. Define high-elevation
-b. Create new logical raster with above/below high-elevation
-c. Change raster to TRUE/NA
-d. Convert raster to polygon
-e. Add polygon to map
-...?
+### 4. Modifying raster values (20 points)
+
+a. Load in the elevation data ("global_elevation.tif"), what are the units for 
+these data? 
+
+b. Convert the units of the raster to feet.
+
+c. Crop the elevation data to the same geographic extent as precipitation data.
+
+d. Plot the Himalayan elevation data.
+
+### 5. Converting raster objects to spatial vector objects (20 points)
+
+For this last exercise, create a plot that shows precipitation for the 
+Himalayan region, using a color palette from ColorBrewer AND add a layer that 
+is partially (50%) transparent to shade out regions below 13,000 feet.
