@@ -1,0 +1,139 @@
+---
+title: "Assignment 13"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+### 1. Working with raster data in terra (20 pts)
+
+
+```{r answers-1}
+# 1a
+# When loading terra library, will print version number to console
+library(terra)
+
+# 1b
+# Read in data with rast
+prec <- rast("global_precipitation.tif")
+# Print prec raster to see EPSG (4326)
+prec
+
+# 1c
+# Geographic extent of Himalayas, roughly, is (lat, lon)
+# Top left: 40.37, 69.33
+# Bottom right: 26.93, 97.15
+# ext takes arguments in this order: xmin, xmax, ymin, ymax
+# or, in human: left, right, bottom, top
+hima_ext <- ext(c(69.33, 97.15, 26.93, 40.37))
+
+# 1d 
+# Crop precipitation to Himalayan extent
+prec_hima <- crop(prec, hima_ext)
+# Print new raster to see extent
+prec_hima
+```
+
+### 2. Printing maps (20 points)
+
+
+```{r answers-2}
+# 2a
+# Plot the cropped precipitation data
+plot(prec_hima)
+
+# 2b
+# Plot the same data, this time adding a title
+plot(prec_hima, main = "Mean annual precipitation (mm)")
+
+# 2c
+# Define the palette first, using the topo.colors function
+prec_cols <- topo.colors(n = 50)
+# Plot the map with those new colors
+plot(prec_hima, col = prec_cols)
+
+# 2d
+# Define palette with hcl.colors, several options from Color Brewer, example 
+# below uses Yellow-Green-Blue palette, reversed so blue is highest
+prec_cols <- rev(hcl.colors(n = 50, palette = "YlGnBu"))
+plot(prec_hima, col = prec_cols)
+```
+
+### 3. Working with vector data in terra (20 points)
+
+
+```{r answer-3}
+# 3a
+# Create data frame for three peaks
+peaks <- data.frame(peak = c("K2", "Annapurna", "Mount Everest"),
+                    lat = c(35.93, 28.53, 28.05),
+                    lon = c(76.50, 83.81, 86.91))
+
+# 3b
+# Convert data frame to SpatVector object
+peaks_vect <- vect(peaks)
+
+# 3c
+# Convert from points to lines
+peaks_line <- as.lines(peaks_vect)
+
+# 3d
+# Draw base precipitation plot
+plot(prec_hima, col = prec_cols)
+# Add lines with lines function
+lines(peaks_line)
+```
+
+### 4. Modifying raster values (20 points)
+
+
+```{r answer-4}
+# 4a
+# Load the data
+elev <- rast("global_elevation.tif")
+# Print the object to see range of elevations, safe to infer units are meters
+elev
+
+# 4b
+# 1 foot = 3.28084 meters
+elev <- elev * 3.28084
+
+# 4c
+# Crop to same geographic extent as for precipitation data
+elev_hima <- crop(elev, hima_ext)
+
+# 4d
+plot(elev_hima)
+```
+
+### 5. Converting raster objects to spatial vector objects (20 points)
+
+```{r answer-5}
+# 5a
+# Define elevation threshold
+alpine_min <- 13000
+
+# 5b
+# Create logical raster of high elevation (TRUE/FALSE)
+elev_alpine <- elev_hima >= alpine_min
+
+# 5c
+# Convert all TRUE values to NA (want the polygon to shade out areas of low 
+# elevation, which are FALSE in this case)
+elev_alpine[elev_alpine] <- NA
+
+# 5d
+# Convert the raster with FALSE values only at places below 13,000 feet
+low_elev_poly <- as.polygons(elev_alpine)
+
+# 5e
+# Plot the precipitation map
+plot(prec_hima, col = prec_cols)
+# Add black polygon with 50% transparency to shade out low-elevation sites
+polys(x = low_elev_poly, col = "black", border = NA, alpha = 0.5)
+```
+

@@ -34,8 +34,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-**TODO**: Update as appropriate
-April 8 at midnight MST
+April 22 at midnight MST
 
 # Assignment Exercises
 
