@@ -1,0 +1,41 @@
+---
+title: 'Week 14: Parallel Computing'
+author: "Ellen Bledsoe"
+output: pdf_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Parallel Computing
+
+## Introduction
+
+In our final week of class this semester, we are going to talk about how you can utilize the power that your computer (likely) has to your benefit when performing computationally complex tasks.
+
+### Setup
+
+We will be using a handful of new packages while learning about parallelization in R, and it is good practice to install and load those packages at the top of the script, so let's go ahead and do so.
+```{r install-pkgs, eval = FALSE}
+install.packages("doParallel")
+install.packages("foreach")
+```
+
+And we load them into our working environment with the `library()` command.
+
+```{r terra-load, echo = FALSE}
+library(foreach)
+library(doParallel)
+```
+
+
+## Resources
+
+Parallel computing is still something I am learning myself! This lesson was heavily informed by the following sources which you might also find helpful:
+
+* [Beyond Single-Core R](https://ljdursi.github.io/beyond-single-core-R/#/) slidedeck 
+* [Quick Intro to Parallel Computing in R](https://nceas.github.io/oss-lessons/parallel-computing-in-r/parallel-computing-in-r.html) by Matt Jones at NCEAS
+* [Parallelizing Code in R](https://wiki.weecology.org/docs/computers-and-programming/parallelization-r/) blog from the Weecology Lab
+* [`doParallel` vignette](https://cran.r-project.org/web/packages/doParallel/vignettes/gettingstartedParallel.pdf)
