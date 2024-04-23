@@ -15,6 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In our final week of class this semester, we are going to talk about how you can utilize the power that your computer (likely) has to your benefit when performing computationally complex tasks.
 
+![](https://github.com/ljdursi/beyond-single-core-R/blob/master/images/sockets-cores.png?raw=true)
+
 ### Setup
 
 We will be using a handful of new packages while learning about parallelization in R, and it is good practice to install and load those packages at the top of the script, so let's go ahead and do so.
@@ -34,6 +36,7 @@ library(portalr)
 ```
 
 Read in an R script that has a function that we want to use.
+
 ```{r}
 source("capt_hist_fxn.R")
 ```
@@ -41,6 +44,7 @@ source("capt_hist_fxn.R")
 ## WIP
 
 Load the data
+
 ```{r}
 ratdat <- portalr::summarize_individual_rodents() 
 ratdat <- ratdat %>% 
@@ -48,11 +52,13 @@ ratdat <- ratdat %>%
 ```
 
 Create a smaller dataframe for us to work with for now
+
 ```{r}
 ratdat_small <- ratdat[1:1000, ]
 ```
 
 Introduce function
+
 ```{r}
 # creating a capture history
 # requires a dataframe of individual captures and a single tag
@@ -63,9 +69,11 @@ test_tag <- tags[123]
 ```
 
 Test the function
+
 ```{r}
-create_capture_hist(ratdat_small, test_tag)
+create_capture_hist(tag = test_tag, data = ratdat_small)
 ```
+
 Try with a for loop. We want to iterate through all of the values in the `tags` vector.
 
 ```{r}
@@ -73,9 +81,11 @@ Try with a for loop. We want to iterate through all of the values in the `tags` 
 capt_histories <- data.frame()
 
 for (i in 1:length(tags)) {
-  output <- create_capture_hist(ratdat_small, tags[i])
+  output <- create_capture_hist(tags[i], ratdat_small)
   capt_histories <- bind_rows(capt_histories, output)
 }
+
+head(capt_histories)
 ```
 
 The for loop worked pretty well! But that was only with 1000 rows, and we have over 63,000 rows to iterate through. What if we try 10,000 rows?
@@ -88,19 +98,107 @@ tags <- unique(ratdat_med$tag)
 capt_histories <- data.frame()
 
 for (i in 1:length(tags)) {
-  output <- create_capture_hist(ratdat_small, tags[i])
+  output <- create_capture_hist(tags[i], ratdat_med)
   capt_histories <- bind_rows(capt_histories, output)
 }
 ```
 
+It is starting to take a bit longer to run this code...
 
+What are other ways we could run the same thing?
 
-```{}
+## The `apply` Family
+
+One thing that people suggest is the `apply` suite of functions. Functions in the `apply` family are from base R. They allow us to iterate over many types of data structures (data frames, lists, etc.) and perform the same task on each section. People prefer them to `for` loops because they can be significantly faster when datasets get large.
+
+There are a number of functions in the `apply` family. Some examples:
+
+-   `apply` iterates over a data structure with rows and columns
+-   `vapply` iterates over a vector
+-   `lapply` iterates over a list
+
+Lists are by far the most flexible data structure in R. They can be seen as a collection of elements without any restriction on the class, length or structure of each element.
+
+We aren't going to delve into these functions too much this lesson, but we will practice with `lapply` specific to serve our purposes of expanding to parallel computing.
+
+The `apply` functions vary a bit in structure, but the `lapply` function has the following structure:
+
+-   data object to iterate over
+-   name of the function to apply to the data object
+-   any arguments (in addition to the data object) that need to be passed to the function
+
+```{r}
+results <- lapply(tags, create_capture_hist, data = ratdat_med)
+
+# covert the results list to a data frame
+results <- do.call(rbind, results)
+```
+
+This is still taking a while to run. Why don't we harness more of the power of our computer to help this run?
+
+## Parallelization
+
+There are a number of ways that we can leverage the power of parallelization in R. We are going to cover 2 of the many ways in this lesson.
+
+### 1. `mclappy` from the `parallel` package
+
+```{r}
+nCores <- detectCores() / 2
+
+results <- mclapply(tags, create_capture_hist, dat = ratdat, mc.cores = nCores)
+results <- do.call(rbind, results)
+```
+
+### 2. the `foreach` package
+
+Before we can utilize the parallel computing power of the `foreach` package and it's modifiers, we need to learn how to structure a `foreach` function.
+
+The `foreach` function is basically a `for` loop that has been turned into a function.
+
+```{r}
 output <- foreach(i = 1:length(tags), .combine = rbind) %do% {
-  create_capture_hist(test, tags[i])
+  create_capture_hist(tags[i], ratdat_med)
 }
 ```
 
+We can modify the `foreach` function that we have written above to run on multiple cores by initiating the number of cores and changing the `%do%` operator to the `%dopar%` operator.
+
+```{r}
+# set number of cores
+# nCores <- detectCores() / 2
+
+doParallel::registerDoParallel(nCores)
+
+output <- foreach(i = 1:length(tags), .combine = rbind) %dopar% {
+  create_capture_hist(tags[i], ratdat_med)
+}
+
+doParallel::stopImplicitCluster()
+```
+
+We can use the `foreach` function and `%dopar%` operator to run our function for the entire dataset.
+
+```{r}
+tags <- unique(ratdat$tag)
+
+doParallel::registerDoParallel(nCores)
+
+output <- foreach(i = 1:length(tags), .combine = rbind) %dopar% {
+  create_capture_hist(tags[i], ratdat)
+}
+
+doParallel::stopImplicitCluster()
+```
+
+## High Performance Computing at UA
+
+If you are working with data that would benefit from parallelization (and especially parallelization on a large scale), consider learning about the High Performance Computing that UA offers.
+
+HPC access is available to anyone affiliated with UA, with a certain number of computing hours offered for free each month. You will likely need to be linked to a research group (AKA your PI's account).
+
+Starting to work with the HPC system can be daunting, but UA has some really nice [documentation](https://uarizona.atlassian.net/wiki/spaces/UAHPC/pages/75990696/User+Guide) available.
+
+They also have an RStudio interface to access!
 
 ## Resources
 
@@ -110,3 +208,4 @@ Parallel computing is still something I am learning myself! This lesson was heav
 -   [Quick Intro to Parallel Computing in R](https://nceas.github.io/oss-lessons/parallel-computing-in-r/parallel-computing-in-r.html) by Matt Jones at NCEAS
 -   [Parallelizing Code in R](https://wiki.weecology.org/docs/computers-and-programming/parallelization-r/) blog from the Weecology Lab
 -   [`doParallel` vignette](https://cran.r-project.org/web/packages/doParallel/vignettes/gettingstartedParallel.pdf)
+-   [Software Carpentry lesson](https://resbaz.github.io/r-intermediate-gapminder/19-foreach.html) on parallel computing
