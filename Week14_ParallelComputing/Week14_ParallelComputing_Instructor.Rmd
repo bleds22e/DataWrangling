@@ -32,6 +32,8 @@ Within the CPU, we can have cores. Each core is capable of retrieving data and p
 
 By default, R is actually only running on a single core in a single CPU. But many computers have more than that! My laptop, for example, has 16 cores that I can access.
 
+If we have (relatively) independent tasks that need to be accomplished, we can image a scenario where we can ask multiple cores to perform a different iteration of the same task at the same time rather than waiting for one core to perform the same task over and over again.
+
 This lesson will demonstrate 2 different ways to harness the power of our computers more intentionally when the need arises:
 
 1.  through the `mclapply` function in the `parallel` package
@@ -52,7 +54,7 @@ We will also be using the `tidyverse` and `portalr`, so install those onto your 
 
 And we load them into our working environment with the `library()` command.
 
-```{r terra-load, echo = FALSE}
+```{r library-load, echo = FALSE}
 library(foreach)
 library(doParallel)
 library(tidyverse)
@@ -141,7 +143,7 @@ The for loop worked pretty well!
 
 But that was only with 1000 rows (and 343 tags), and we have over 63,000 rows to iterate through. What if we try 10,000 rows?
 
-```{r}
+```{r eval = FALSE}
 ratdat_med <- ratdat[1:10000, ]
 tags <- unique(ratdat_med$tag)
 
@@ -178,13 +180,13 @@ The `apply` functions vary a bit in structure, but the `lapply` function has the
 -   name of the function to apply to the data object
 -   any arguments (in addition to the data object) that need to be passed to the function
 
-```{r}
+```{r eval = FALSE}
 results <- lapply(tags, create_capture_hist, data = ratdat_med)
 ```
 
 To convert the results into a dataframe, we can use the `do.call` function to treat each list as a row and bind them together.
 
-```{r}
+```{r eval = FALSE}
 # covert the results list to a data frame
 results <- do.call(rbind, results)
 ```
@@ -208,13 +210,35 @@ nCores <- detectCores() / 2
 We can now use the `mclapply` function just as we did with `lapply` but with the added `mc.cores` argument.
 
 ```{r eval=FALSE}
-results <- mclapply(tags, create_capture_hist, dat = ratdat, mc.cores = nCores)
+results <- mclapply(tags, create_capture_hist, data = ratdat_medium, mc.cores = nCores)
 results <- do.call(rbind, results)
 ```
 
-### 2. the `foreach` package
+#### Using `parLapply`: System Agnostic!
 
-Not everyone loves the `apply` family structure (...such as me), so let's introduce an alternative.
+As we saw in class on Tuesday, `mclapply` didn't work on a Windows machine the way we were expecting it to.
+
+There are some complicated reasons for this, but let's leave it at the fact that Windows machines are build differently than Mac (and Linux) machines, which makes parallel computing on them a little more difficult in the backaground.
+
+Fortunately for us, there are some work-arounds that we can actually use on *any* system.
+
+Instead of `mclapply`, we can use the system-agnostic `parLapply`, which is actually also part of the `parallel` package.
+
+To use `parLapply`, we follow a very similar logic as `lapply` and `mclapply`, but we need to "make a cluster" first. This cluster then becomes the first argument in the `parLapply` function. Everything else is basically the same!
+
+```{r eval = FALSE}
+# group our cores together
+clust <- makeCluster(nCores)
+
+# specify our cluster as the first argument
+results <- parLapply(clust, tags, create_capture_hist, data = ratdat_med)
+```
+
+You might notice that `parLapply` ran faster than `mclapply`, so I'll probably stick to teaching the `parLapply` method in the future!
+
+### 2. The `foreach` and `doParallel` Packages
+
+Not everyone loves the `apply` family structure (...such as me), so let's introduce an alternative. I've confirmed that this route is also system agnostic.
 
 Before we can utilize the parallel computing power of the `foreach` package and it's modifiers, we need to learn how to structure a `foreach` function.
 
@@ -235,7 +259,7 @@ output <- foreach(i = 1:length(tags), .combine = rbind) %do% {
 }
 ```
 
-#### Parallelization using `foreach`
+#### Parallelization with `foreach`
 
 We can modify the `foreach` function that we have written above to run on multiple cores by initiating the number of cores and changing the `%do%` operator to the `%dopar%` operator.
 
