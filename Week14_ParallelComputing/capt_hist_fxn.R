@@ -1,16 +1,15 @@
 
-
-create_capture_hist = function(dat, tag) {
+create_capture_hist = function(tag, data) {
   
-  prd <- seq(min(dat$period), max(dat$period))
+  prd <- seq(min(data$period), max(data$period))
   
   capture_history = "" # create empty string
     
   for (p in 1:length(prd)) {
       
-    tmp <- which(dat$tag == tag & dat$period == prd[p])
+    tmp <- which(data$tag == tag & data$period == prd[p])
       
-    if (nrow(dat[tmp, ]) == 0) {
+    if (nrow(data[tmp, ]) == 0) {
       state = "0"
       capture_history = paste(capture_history, state, sep = "")
     } else {
