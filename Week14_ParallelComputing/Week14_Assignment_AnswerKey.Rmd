@@ -1,0 +1,138 @@
+---
+title: "Week 14 Assignment"
+output: pdf_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+library(foreach)
+library(doParallel)
+```
+
+### 2. Use `apply` functions (30 points)
+
+
+```{r}
+seq_list <- as.list(seq(1, 500, by = 5))
+```
+
+
+(2a)
+
+```{r}
+output <- lapply(seq_list, sqrt)
+output <- do.call(rbind, output)
+head(output)
+```
+
+(2b)
+
+```{r}
+nCores <- detectCores() /2 
+
+output2 <- mclapply(seq_list, sqrt, mc.cores = nCores)
+output2 <- do.call(rbind, output2)
+head(output)
+```
+
+### 3. Use `foreach` (30 points)
+
+
+
+```{r}
+source("dino_allometry_fxn.R")
+
+dino_data <- read_csv("../Week12_Iteration/data_raw/dinosaur_lengths.csv")
+```
+
+(3a) 
+
+```{r}
+lengths <- dino_data$lengths
+species <- dino_data$species
+masses <- vector(length = length(lengths))
+for (i in 1:length(lengths)){
+    masses[i] <- mass_from_length(lengths[i], species[i])
+}
+head(masses)
+```
+
+(3b) 
+
+```{r}
+results2 <- foreach::foreach(i = 1:nrow(dino_data), .combine = c) %do% {
+  mass_from_length(dino_data$lengths[i],
+                   dino_data$species[i])
+}
+head(results2)
+```
+
+(3c) 
+
+```{r}
+nCores <- parallel::detectCores() / 2
+
+doParallel::registerDoParallel()
+
+results3 <- foreach::foreach(i = 1:nrow(dino_data), .combine = c) %dopar% {
+  mass_from_length(dino_data$lengths[i],
+                   dino_data$species[i])
+}
+
+doParallel::stopImplicitCluster()
+
+head(results3)
+```
+
+
+### 4. Forest Change through Time (30 points)
+
+
+```{r}
+forest <- read_csv("forest_per_country.csv", 
+                   skip = 4, col_names = TRUE) %>% 
+  select(-`2022`)
+```
+
+(4a) 
+
+```{r}
+change_in_forest <- vector(mode = "numeric", length = nrow(forest))
+
+for (i in 1:nrow(forest)) {
+  change_in_forest[i] <- forest$`2021`[i] - forest$`1990`[i]
+}
+
+head(change_in_forest)
+```
+
+(4b) 
+
+```{r}
+change_in_forest2 <- foreach(i = 1:nrow(forest), .combine = c) %do% {
+  area <- forest$`2021`[i] - forest$`1990`[i]
+}
+
+head(change_in_forest2)
+```
+
+(4c) 
+
+```{r}
+registerDoParallel(nCores)
+
+change_in_forest3 <- foreach(i = 1:nrow(forest), .combine = c) %dopar% {
+  area <- forest$`2021`[i] - forest$`1990`[i]
+}
+
+stopImplicitCluster()
+
+head(change_in_forest3)
+```
+
