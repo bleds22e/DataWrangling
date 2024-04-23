@@ -28,11 +28,11 @@ The processor below is a CPU (central processing unit) that retrieves data and r
 
 Within the CPU, we can have cores. Each core is capable of retrieving data and performing tasks.
 
-![](https://github.com/ljdursi/beyond-single-core-R/blob/master/images/sockets-cores.png?raw=true)
+<!-- ![](https://github.com/ljdursi/beyond-single-core-R/blob/master/images/sockets-cores.png?raw=true) -->
 
 By default, R is actually only running on a single core in a single CPU. But many computers have more than that! My laptop, for example, has 16 cores that I can access.
 
-This lesson will demonstrate 2 different ways to harness the power of our compters more intentionally when the need arises:
+This lesson will demonstrate 2 different ways to harness the power of our computers more intentionally when the need arises:
 
 1.  through the `mclapply` function in the `parallel` package
 2.  through combined use of `foreach` from the `foreach` package and the `%dopar%` operator in the `doParallel` package
@@ -183,6 +183,7 @@ results <- lapply(tags, create_capture_hist, data = ratdat_med)
 ```
 
 To convert the results into a dataframe, we can use the `do.call` function to treat each list as a row and bind them together.
+
 ```{r}
 # covert the results list to a data frame
 results <- do.call(rbind, results)
