@@ -1,0 +1,136 @@
+---
+title: "Week 14 Assignment"
+output: pdf_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment
+
+### Purpose
+
+The goal of this assignment is to practice using parallelization.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+April 29 at midnight MST
+
+# Assignment Exercises
+
+### 1. Set Up (10 points)
+
+We will use a number of packages to complete this week's assignments. Load in the following packages: `tidyverse`, `foreach`, and `doParallel`.
+
+### 2. Use `apply` functions (30 points)
+
+```{r}
+seq_list <- as.list(seq(1, 500, by = 5))
+```
+
+Use the `head` function to look at the `seq_list` object. You will notice that the output looks different from the vectors and dataframes that we are used to looking at. That is because it is a list, a collection of data objects. But don't worry! The code for `lapply` and `mclapply` is the same as in the lesson.
+
+```{r}
+output <- lapply(seq_list, sqrt)
+output <- do.call(rbind, output)
+```
+
+
+```{r}
+output2 <- mclapply(seq_list, sqrt, mc.cores = nCores)
+output2 <- do.call(rbind, output2)
+```
+
+
+### 3. Use `foreach` (30 points)
+
+```{r}
+source("dino_allometry_fxn.R")
+
+dino_data <- read_csv("../Week12_Iteration/data_raw/dinosaur_lengths.csv")
+```
+
+
+Use `.combine = c` in place of the `.combine = rbind`.
+
+```{r}
+results2 <- foreach::foreach(i = 1:nrow(dino_data), .combine = c) %do% {
+  mass_from_length(dino_data$lengths[i],
+                   dino_data$species[i])
+}
+```
+
+Use parallel processing
+```{r}
+nCores <- parallel::detectCores() / 2
+
+doParallel::registerDoParallel()
+
+results3 <- foreach::foreach(i = 1:nrow(dino_data), .combine = c) %dopar% {
+  mass_from_length(dino_data$lengths[i],
+                   dino_data$species[i])
+}
+
+doParallel::stopImplicitCluster()
+```
+
+d. Go back through all of your code for question 3 and explicitly call all of the functions that you use. The ones you've written yourself do not need to be explicilty called.
+
+### 4. Forest Change through Time (30 points)
+
+```{r}
+forest <- read_csv("https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week06_TidyData/forest_per_country.csv?token=GHSAT0AAAAAACRA45BL2D5ZS76ZJKYVOCDSZRHXYXA", 
+                   skip = 4, col_names = TRUE) %>% 
+  select(-`2022`)
+```
+(a) Write a for loop that calculates the change in forest per country from 1990 to 2021 by subtracting the 1990 value from the 2021 value. 
+
+The output should be stored in a vector called `change_in_forest`.
+
+```{r}
+change_in_forest <- vector(mode = "numeric", length = nrow(forest))
+
+for (i in 1:nrow(forest)) {
+  change_in_forest[i] <- forest$`2021`[i] - forest$`1990`[i]
+}
+```
+
+(b) Perform the same task as in (a) using the `foreach` function and the `%do%` operator. Use the `.combine = rbind` argument to save the output as a dataframe.
+
+```{r}
+change_in_forest2 <- foreach(i = 1:nrow(forest), .combine = c) %do% {
+  area <- forest$`2021`[i] - forest$`1990`[i]
+}
+
+```
+
+(c) Do the same as in (b) but use parallel processing and the `%dopar%` operator.
+
+```{r}
+registerDoParallel(nCores)
+
+change_in_forest3 <- foreach(i = 1:nrow(forest), .combine = c) %dopar% {
+  area <- forest$`2021`[i] - forest$`1990`[i]
+}
+
+stopImplicitCluster()
+```
+
