@@ -50,6 +50,7 @@ We will also be using the `tidyverse` and `portalr`, so install those onto your 
 ```{r install-pkgs, eval = FALSE}
 # install.packages("doParallel")
 # install.packages("foreach")
+# install.packages("portalr")
 ```
 
 And we load them into our working environment with the `library()` command.
