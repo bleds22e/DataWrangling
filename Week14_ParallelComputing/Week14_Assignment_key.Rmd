@@ -131,7 +131,7 @@ forest <- read_csv("forest_per_country.csv",
 
 The `forest` data is not a fully cleaned dataset, especially when we look at the column names. You can either use the `rename()` function to rename them or encompass the names with back ticks in your `for` loops.
 
-(a) Write a for loop that calculates the change in forest per country from 1990 to 2021 by subtracting the 1990 value from the 2021 value. 
+(a) Write a for loop that calculates the change in forest per country from 1990 to 2021 by subtracting the 1990 value from the 2021 value.
 
 The output should be stored in a vector called `change_in_forest`. Print the head of `change_in_forest`.
 
@@ -168,4 +168,3 @@ stopImplicitCluster()
 
 head(change_in_forest3)
 ```
-
