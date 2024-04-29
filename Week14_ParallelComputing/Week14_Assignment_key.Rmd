@@ -145,7 +145,7 @@ for (i in 1:nrow(forest)) {
 head(change_in_forest)
 ```
 
-(b) Perform the same task as in (a) using the `foreach` function and the `%do%` operator. Use the `.combine = rbind` argument to save the output as a dataframe.
+(b) Perform the same task as in (a) using the `foreach` function and the `%do%` operator. Use the `.combine = c` argument to save the output as a dataframe.
 
 ```{r}
 change_in_forest2 <- foreach(i = 1:nrow(forest), .combine = c) %do% {
