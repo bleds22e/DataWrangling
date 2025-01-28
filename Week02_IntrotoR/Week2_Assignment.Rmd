@@ -33,7 +33,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-Jan 29 at midnight MST
+Feb 4 at 3:30 MST
 
 # Exercises
 

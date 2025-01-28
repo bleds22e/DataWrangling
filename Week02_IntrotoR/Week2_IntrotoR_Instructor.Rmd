@@ -85,26 +85,24 @@ In fact, you will be submitting most of your remaining assignments as PDF files.
 
 ## Intro to Coding in R
 
-### Basic expressions
-
-(AKA using R as a calculator)
+### Basic Expressions (R as a Calculator)
 
 Let's start by typing an expression in the console (below).
 
 Try multiplying 5 and 3 in the Console (hint: \* means multiply). Hit `Enter` to run that line of code.
 
-### Rmarkdown and Code Chunks
+### RMarkdown and Code Chunks
 
-Rmarkdown (.Rmd) is a file format that lets us incorporate text and code into one document seamlessly. In fact, it is the file format for this document!
+RMarkdown (.Rmd) is a file format that lets us incorporate text and code into one document seamlessly. In fact, it is the file format for this document!
 
 -   For writing text, you can type as you normally would.
 -   Code chunks are a bit different:
     -   Near the top right of your screen you can toggle between viewing this document as under Source or Visual.
-    -   If you view this document under `Source` mode, you will see that all code chunks are sandwiched between " `{r} " and "` ".
-    -   But under `Visual` mode, you can type R code in the lines under `{r}`.
+    -   If you view this document under `Source` mode, you will see that all code chunks are sandwiched between an opening line of code with 3 backticks and `{r}` and a closing line of code with 3 more backticks.
+    -   In `Visual` mode, however, you can type R code in the lines under `{r}`.
     -   To include text in chunks, you will need to put a `#` in front. R will not read anything in the line after `#` as code.
     -   Commenting your code is considered best practice. Not only does it help other people understand what your code is doing, but it will help *you* remember what your code is doing and why!
-
+    
 Code chunks look like this:
 
 ```{r}
@@ -127,9 +125,7 @@ Let's work with an example code chunk.
 50 / 1000 * 2.2
 ```
 
-## Assigning Objects
-
-(AKA Creating Variables)
+## Assigning Objects (Creating Variables)
 
 Assignments are really key to almost everything we do in R. This is how we create permanence in R. Anything can be saved to an object, and we do this with the assignment operator, `<-`.
 
