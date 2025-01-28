@@ -56,7 +56,6 @@ library(tidyverse)
 library(palmerpenguins)
 ```
 
-
 ### 2. Portal Data Paths Review (25 points)
 
 For this question, we are going to be using some of the code you've already written for Assignment 8, Question 2.
@@ -149,7 +148,6 @@ penguins_clean <- penguins_raw %>%
 write_csv(penguins_clean, "../data_raw/penguins_clean.csv")
 ```
 
-
 ### 4. Add Version Control: Together in Class (15 points)
 
 Add version control to this RProject that you are working in. We will do this together in class.
@@ -158,7 +156,7 @@ To get full points for this question, you will need to commit all of the current
 
 ### 5. Create a Final Project Repository and RProject (20 points)
 
-Follow the directions to create a new repository on GitHub in our class organization. This will be the repository that you will use for Final Project in the course. 
+Follow the directions to create a new repository on GitHub in our class organization. This will be the repository that you will use for Final Project in the course.
 
 Connect this GitHub repo with an RStudio Project, as we demonstrated in class. Once you have the R Project set up, add your subdirectories.
 
