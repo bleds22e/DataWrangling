@@ -11,33 +11,77 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction to R/RStudio
 
-## R vs. RStudio vs. Posit Cloud
+## Why Computer Programming?
 
-### R
+As scientists, our goal should not only be to contribute to knowledge but also to share our findings transparently to facilitate thorough peer review and ensure that others can build upon our work.
 
--   Programming language
+Computer programming can help us achieve these goals effectively by facilitating **computational reproducibility** and contributing to **Open Science**.
+
+**Computational reproducibility** means that all of data processing, analysis, and visualization can be entirely and independently recreated, yielding the exact same outputs. This is particularly important for ensuring the reliability of research, making it easier to verify findings.
+
+![](images/phd_comics_scratch.png)
+
+Having a clear record of every step taken to process, analyze, and visualize data is necessary for computational reproducibility. Using computer programming instead of "point-and-click" software helps ensure that every step can be recreated.
+
+Computational reproducibility is a large component of **Open Science**, a movement to make research practices, data, methods, and results accessible to everyone. It promotes transparency and collaboration by sharing not just conclusions but the entire process that led to them.
+
+![<https://open-access.network/en/information/open-access-primers/what-does-open-access-mean>](images/PrinciplesofOpenScience.png)
+
+Open Science has numerous components, as you can see in the figure above. In this class, we are focusing primarily on open data, open methodology, and open source software.
+
+-   Using interoperable file types (e.g., CSV files) is an important part of making data openly available.
+-   Using open-source software for analyses instead of expensive statistical programs (which are often point-and-click) is an important part of making science transparent and accessible.
+
+## What's What: R vs. RStudio vs. Posit Cloud
+
+### What is R?
+
+-   Programming language and software
 -   Started as a statistics and data analysis environment, but it can also build websites, run simulations, and many other things
 -   R is what runs all of the code we will write this semester
+-   R is **open source**, meaning it is free, non-proprietary (not owned by a company), and reproducible. This also means that anyone can contribute to it!
 -   Separate from RStudio
 
-### RStudio
+### What is RStudio?
 
 -   IDE - Integrated Development Environment
 -   Makes developing code in R easier by including a number of tools in one place
+-   Created by a company that is now called Posit
 
-### Posit Cloud
+### What is Posit Cloud?
 
 -   An online version of RStudio that runs in your browser
 -   We're using it because it:
     1.  Avoids installation difficulties
     2.  Makes sharing code with instructors for debugging easier
-    3.  Let's us leave some of the complexities of working with R until after we've learned the basics
+    3.  Leaves some of the complexities of working with R until after we've learned the basics
 -   We will switch to using RStudio on our own computers in the second half of the semester.
 
-### Rstudio Mini-tour
+## Rstudio Mini-Tour
 
-1.  What do the different panels do?
-2.  Console versus a script/Rmarkdown file
+### What do all of these panels do?
+
+Let's explore each of the panels in RStudio. They are all useful in their own way!
+
+1.  *Source* (upper left): This is where documents which have data or code in them are opened. You can save all the code you type here for future (re)use, which is a big reason coding in R is reproducible.
+
+2.  *Console* (bottom left): This is where code from the source is "run" and you see the outputs. You can also execute lines of code which you type into the console, but they will not be saved. You can think of this section as where RStudio really interfaces with R--it is where R actually evaluates code within RStudio.
+
+3.  *Environment* (upper right): This panel becomes more helpful as you get familiar with R and RStudio. It keeps track of data objects and other items you have created and gives a bit of information about them.
+
+4.  *Files/Help/etc.* (bottom right): This panel is (clearly) very multifaceted. The Files tab lets you see all the files in your current workspace. For us, the Help tab is probably what we will use the most. This is where we can search the R documentation for information about functions we use.
+
+### File Types with R Code
+
+Through your experiences using R, you will likely encounter a number of different types of files that contain R code. The two most common are *R scripts* and *RMarkdown files*.
+
+An **R script** is a plain text file where you write and run R code line by line. R scripts are purely code-based and don’t include formatted documentation for sharing or presenting results. These documents end with `.R`.
+
+In this class, we will be using **RMarkdown** files (they end with `.Rmd`). RMarkdown combines R code with formatted text, allowing you to create dynamic, reproducible documents. This is called "literate programming." 
+
+RMarkdown is a great option for everyday coding but also for creating reports, presentations, or even academic papers. You can integrate explanations, equations, and visualizations alongside your code, and then export the output to formats like HTML, PDF, or Word.
+
+In fact, you will be submitting most of your remaining assignments as PDF files.
 
 ## Intro to Coding in R
 
