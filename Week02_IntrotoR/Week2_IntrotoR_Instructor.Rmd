@@ -77,7 +77,7 @@ Through your experiences using R, you will likely encounter a number of differen
 
 An **R script** is a plain text file where you write and run R code line by line. R scripts are purely code-based and don’t include formatted documentation for sharing or presenting results. These documents end with `.R`.
 
-In this class, we will be using **RMarkdown** files (they end with `.Rmd`). RMarkdown combines R code with formatted text, allowing you to create dynamic, reproducible documents. This is called "literate programming." 
+In this class, we will be using **RMarkdown** files (they end with `.Rmd`). RMarkdown combines R code with formatted text, allowing you to create dynamic, reproducible documents. This is called "literate programming."
 
 RMarkdown is a great option for everyday coding but also for creating reports, presentations, or even academic papers. You can integrate explanations, equations, and visualizations alongside your code, and then export the output to formats like HTML, PDF, or Word.
 
@@ -102,7 +102,7 @@ RMarkdown (.Rmd) is a file format that lets us incorporate text and code into on
     -   In `Visual` mode, however, you can type R code in the lines under `{r}`.
     -   To include text in chunks, you will need to put a `#` in front. R will not read anything in the line after `#` as code.
     -   Commenting your code is considered best practice. Not only does it help other people understand what your code is doing, but it will help *you* remember what your code is doing and why!
-    
+
 Code chunks look like this:
 
 ```{r}
