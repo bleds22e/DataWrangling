@@ -184,6 +184,53 @@ surveys %>%
   arrange(species_id, desc(weight))
 ```
 
+### 6. Using base R (*optional*)
+
+Try using base R (no `dplyr` functions) to perform the same tasks as Question 1. We didn't explicitly cover some of these skills using base R (though we covered all of the individual components needed), so this will likely be a bit of a challenge!
+
+a.  Select the data from the length column.
+b.  Select the data from the site and experiment columns.
+c.  Add a new column named `area` containing the area of the shrub, which is the length times the width.
+d.  Sort the data by length. *Hint: you will use a function called `order()`*
+e.  Filter the data to include only plants with heights greater than 5.
+f.  Filter the data to include only plants with heights greater than 4 and widths greater than 2 (using `&` to include two conditions).
+g.  Filter the data to include only plants from Experiment 1 or Experiment 3 (using '\|' for “or”).
+h.  Filter the data to remove rows with null values in the height column (using `!is.na`)
+i.  Create a new data frame called `shrub_volumes2` that includes all of the original data and a new column containing the volumes (length \* width \* height). 
+
+```{r}
+#6a
+shrubs$length
+#shrubs[ , 3]
+
+#6b
+shrubs[ , 1:2]
+
+#c
+shrubs$area <- shrubs$length * shrubs$width
+
+#d
+shrubs[order(shrubs$length), ]
+
+#e
+shrubs[shrubs$height > 5 & !is.na(shrubs$height), ]
+
+#f
+shrubs[shrubs$height > 5 & !is.na(shrubs$height) & shrubs$width > 2 & !is.na(shrubs$width), ]
+
+#g
+shrubs[shrubs$experiment == 1 | shrubs$experiment == 3, ]
+
+#h
+shrubs[!is.na(shrubs$height), ]
+
+#i
+shrubs$volume <- shrubs$length * shrubs$width * shrubs$height
+shrub_volumes2 <- shrubs
+shrub_volumes2
+```
+
+
 # Turning in Your Assignment
 
 Follow these steps to successfully turn in your assignment on D2L.

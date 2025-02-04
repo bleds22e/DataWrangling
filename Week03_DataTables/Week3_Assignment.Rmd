@@ -33,19 +33,21 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-Feb 5 at midnight MST
+Feb 11 at 3:30 pm
 
 # Exercises
 
-### Set-up (5 pts)
+### 0. Set-up (5 pts)
 
-To complete these exercises, we will need functions from the `dplyr` package and the `readr` package (`read_csv()`). Add a code chunk below and load these 2 packages into the workspace before beginning.
+To complete these exercises, we will need functions from the `dplyr` package and the `readr` package (`read_csv()`).
+
+Add a code chunk below and load these 2 packages into the workspace before beginning.
 
 ### 1. Shrub Volume Data Basics (20 pts)
 
 Dr. Morales is interested in studying the factors controlling the size and carbon storage of shrubs. She has conducted an experiment looking at the effect of three different treatments on shrub volume at four different locations.
 
-Get familiar with the data by importing it using `read_csv()` and use `dplyr` functions to complete the following tasks. Remember to add a code chunk!
+Get familiar with the shrub data by importing `shrub-volume-data.csv` using `read_csv()` and use `dplyr` functions to complete the following tasks. Remember to add a code chunk!
 
 a.  Select the data from the length column.
 b.  Select the data from the site and experiment columns.
@@ -81,7 +83,9 @@ ppt_data <- read.csv("tucson_precip.csv", header = FALSE)
 
 Load the `surveys.csv` file into R using `read_csv()`.
 
-*Note: Do not use pipes for this exercise.*
+Even if you already have `surveys` in your environment, you still need to add a line of code here to read in the file. When you "knit" to PDF, R ignores everything in your environment and runs each line of code in order. If you don't include a line of code that saves the survey data as an object, your assignment won't knit. The same goes for loading packages.
+
+*Note: Do NOT use pipes for this exercise.*
 
 a.  Use `select()` to create a new data frame with just the year, month, day, and species_id columns in that order.
 b.  Use `mutate()`, `select()`, and `filter()` with `!is.na()` to create a new data frame with the year, species_id, and weight in kilograms of each individual, with no null weights. The weight in the table is given in grams so you will need to create a new column for weight in kilograms by dividing the weight column by 1000.
@@ -96,12 +100,26 @@ b.  Use the `filter()` and `select()` to get the year, month, day, and species_i
 
 ### 5. Portal Data Challenge (20 pts)
 
-Develop a data manipulation pipeline for the Portal surveys table that produces a table of data for only the three Dipodomys species (DM, DO, DS).
+Develop a data manipulation pipeline for the Portal surveys table that produces a table of data for only the three *Dipodomys* species (DM, DO, DS).
 
 -   The species IDs should be presented as lower case, not upper case.
 -   The table should contain information on the date, the species ID, the weight and hindfoot length.
 -   The data should not include null values for either weight or hindfoot length.
 -   The table should be sorted first by the species (so that each species is grouped together) and then by weight, with the largest weights at the top.
+
+### 6. Using base R (*optional*)
+
+Try using base R (no `dplyr` functions) to perform the same tasks as Question 1. We didn't explicitly cover some of these skills using base R (though we covered all of the individual components needed), so this will likely be a bit of a challenge!
+
+a.  Select the data from the length column.
+b.  Select the data from the site and experiment columns.
+c.  Add a new column named `area` containing the area of the shrub, which is the length times the width.
+d.  Sort the data by length. *Hint: you will use a function called `order()`*
+e.  Filter the data to include only plants with heights greater than 5.
+f.  Filter the data to include only plants with heights greater than 4 and widths greater than 2 (using `&` to include two conditions).
+g.  Filter the data to include only plants from Experiment 1 or Experiment 3 (using '\|' for “or”).
+h.  Filter the data to remove rows with null values in the height column (using `!is.na`)
+i.  Create a new data frame called `shrub_volumes2` that includes all of the original data and a new column containing the volumes (length \* width \* height).
 
 # Turning in Your Assignment
 

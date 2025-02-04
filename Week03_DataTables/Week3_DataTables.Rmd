@@ -6,20 +6,24 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width = "50%")
 ```
 
 # 2-dimensional Data and the `tidyverse`
 
 ## The `tidyverse`: What is it?
 
-Different programming languages have different syntax (language structure). The `tidyverse` is a package (more accurately, a set of packages) offered in R that all have similar goals and a unified syntax designed to work particularly well with 2-dimensional data (data with rows and column). We call these dataframes in R.
+Different programming languages have different syntax (language structure). The `tidyverse` is a package (more accurately, a set of packages) offered in R that all have similar goals and a unified syntax designed to work particularly well with 2-dimensional data (data with rows and column). We call these 2-dimension data structures "data frames" in R.
 
 Until now, all of the coding we have done is in the original R language, which is often called "base R." The syntax in the `tidyverse` is often pretty different from base R. Both are useful, and many people often combine them, which is why we start with base R.
 
 ### Wait, what is a package??
 
-Packages are one of the neatest things of working in an open-source environment like R! They contains bits of code (often in the form of functions) that can be reused, making them a core component of reproducible data science. Anyone can develop a package, and there are thousands of them doing all sorts of things.
+Packages are one of the neatest things about working in an open-source environment like R! They contains bits of code (often in the form of functions) that can be reused, making them a core component of reproducible data science. Anyone can develop a package, and there are thousands of them doing all sorts of things.
+
+```{r}
+knitr::include_graphics("images/tidyverse-icons.png")
+```
 
 ### Explore the `tidyverse`
 
@@ -41,7 +45,7 @@ In most scenarios, you will need to download a package from the internet onto yo
 
 For future reference, though:
 
--   you usually only need to go through this process once until you update R
+-   when using RStudio on your own computer (not on Posit Cloud), you usually only need to go through this process once until you update R
 -   we use the function `install.packages()` to download the package
 
 ```{r install_tidyverse, message = FALSE}
@@ -75,7 +79,7 @@ download.file("http://www.datacarpentry.org/semester-biology/data/shrub-volume-d
 
 We've already talked about some of the benefits of CSV file. They work very nicely in R.
 
-Click on `species.csv` and select View File. If we look at one of these files we can see that it is plain text, so any program can read it. This makes it *interoperable*, which is an important tenant of reproducibility.
+Click on `species.csv` and select View File. If we look at one of these files, we can see that it is plain text, so any program can read it. This makes it *interoperable*, which is an important tenant of reproducibility.
 
 The first row is the header row, with different column headers separated by commas. All of the other rows are the data, again with different columns separated by commas. Hence the name “comma separated values."
 
@@ -108,6 +112,28 @@ We can explore the data frames in the Environment tab or through some functions.
 
 ```
 
+## Subsetting in base R
+
+Before we jump into using the `tidyverse`, let's briefly explore how we would subset 2D data using base R. As you might recall, we use `[]` in base R to specify that we want a smaller part of the data.
+
+With data frames, we need to specify 2-dimensions of the data (row then column).
+
+```{r}
+
+```
+
+If you want to retain *all* rows or *all* columns, you can leave that space blank.
+
+```{r}
+
+```
+
+There is a special way to pull out a single column from a data frame and have it be treated as a vector (1-dimensional data). We use a special operator, `$`.
+
+```{r}
+
+```
+
 ## Intro to `dplyr`
 
 `dplyr` (pronounced D-ply-R) is a modern data manipulation library for R that uses the syntax of the `tidyverse`. It tends to be a bit more intuitive than using base R, especially ask tasks become more complicated.
@@ -126,9 +152,13 @@ It is important to remember that the computer interprets everything literally. W
 
 ### Let's Practice!
 
-Get started with your Assignment. After the set-up, work on Shrub Volume Data Basics a-b.
+Get started with your Assignment. After the set-up, work on Question 1a-b.
 
 ## Creating new columns with `mutate()`
+
+```{r}
+knitr::include_graphics("images/mutate.png")
+```
 
 Sometimes our data doesn't have our data in exactly the format we want. For example, we might want our hindfoot data in cm instead of mm.
 
@@ -176,6 +206,10 @@ Work on Shrub Volume Data Basics c-d.
 
 ## `filter()`ing rows
 
+```{r}
+knitr::include_graphics("images/filter.png")
+```
+
 The `filter()` function allows you filter rows by certain conditions.
 
 We start with the data frame, then we set a condition that has to be met. Let's say we want only rows for the species ID "DS."
@@ -196,9 +230,9 @@ Like with vectors, we can have a condition that is “not equal to” using “!
 
 We can also filter on multiple conditions at once.
 
-In computing we combine conditions in two ways: “and” & “or”
+In computing, we combine conditions in two ways: “and” & “or”
 
-Using “and” means that all of the conditions must be true. Do this in `dplyr`, we can add arguments separated by commas or use the `&`
+Using “and” means that all of the conditions must be true. Do this in `dplyr`, we can add arguments separated by commas or use the `&` symbol.
 
 To get the data on species “DS” for the year 1995:
 
@@ -216,7 +250,7 @@ When we want rows for which one or more of the conditions are met, we use “or�
 
 ### Let's Practice
 
-Do Shrub Volume Data Basics e-g.
+Work on Question 1e-g.
 
 ## `filter()`ing null values
 
@@ -232,13 +266,13 @@ Why didn’t that work? Null values like `NA` are special. Instead, we use a spe
 
 ```
 
-To remove null values we combine this with `!` for “not”
+To remove null values, we combine this with `!` for “not”
 
 ```{r}
 
 ```
 
-It is common to combine a null filter with other conditions using “and” For example we might want all of the data on a species that contains weights.
+It is common to combine a null filter with other conditions using “and.” For example we might want all of the data on a species that contains weights.
 
 ```{r}
 
@@ -246,4 +280,4 @@ It is common to combine a null filter with other conditions using “and” For 
 
 ### Let's Practice
 
-Work on the last of Exercise 1, Shrub Volume.
+Work on the last of Question 1, Shrub Volume.
