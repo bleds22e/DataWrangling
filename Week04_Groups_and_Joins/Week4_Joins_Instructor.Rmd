@@ -71,8 +71,9 @@ Let's work with an example.
 
 The `surveys` data only goes through 2002, but we have a lot more data
 from the site! Let's pull down all of the rodent data since 2002 from
-the `portalr` package, a package we made to make working with the
-(actual) Portal data a bit easier. Run the following code chunk.
+the [`portalr` package](https://weecology.github.io/portalr/), a package
+the Weecology lab made to make working with the (actual) Portal data a
+bit easier. Run the following code chunk.
 
 ```{r}
 # load our packages

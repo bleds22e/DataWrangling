@@ -99,7 +99,7 @@ surveys %>%
 
 Start working on Question 1 and Question 2a-b.
 
-## Some Reminders
+## Some Additional Points 
 
 We can perform multiple calculations within the summarize function.
 
