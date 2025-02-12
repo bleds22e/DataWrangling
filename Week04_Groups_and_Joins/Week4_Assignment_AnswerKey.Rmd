@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
 
@@ -21,23 +21,25 @@ species <- read_csv("species.csv")
 plots <- read_csv("plots.csv")
 ```
 
-### 2. Portal Data Aggregation (10 pts)
+### 2. Portal Data Aggregation (15 pts)
 
 ```{r}
-# 1. Use the group_by() and summarize() functions to get a count of the number of individuals in each species ID.
 
+# 1. Use the group_by() and summarize() functions to get a count of the number of individuals in each species ID.
+print("2a")
 surveys %>% 
   group_by(species_id) %>% 
   summarize(count = n())
 
-# 2. Use the group_by() and summarize() functions to get a count of the number of individuals in each species ID in each year.
 
+# 2. Use the group_by() and summarize() functions to get a count of the number of individuals in each species ID in each year.
+print("2b")
 surveys %>% 
   group_by(species_id, year) %>% 
   summarize(count = n())
 
 # 3. Use the filter(), group_by(), and summarize() functions to get the mean mass of species DO in each year.
- 
+ print("2c")
  surveys %>%
   filter(species_id == "DO") %>%
   group_by(year) %>%
@@ -45,7 +47,7 @@ surveys %>%
 
 ```
 
-### 3. Shrub Volume Aggregation (10 pts)
+### 3. Shrub Volume Aggregation (15 pts)
 
 
 ```{r message=FALSE}
@@ -56,27 +58,29 @@ shrub_dims %>%
             max_height = max(height, na.rm = TRUE))
 ```
 
-### 4. Portal Data Joins (15 pts)
+### 4. Portal Data Joins (25 pts)
 
 ```{r}
 # 1.
-
+print("4a")
 inner_join(surveys, species, by = "species_id")
 
 # 2.
+print("4b")
 inner_join(surveys, species, by = "species_id") %>% 
 inner_join(., plots, by = "plot_id")
 
 # 3.
-
+print("4c")
 surveys %>% 
   inner_join(plots, by = "plot_id") %>% 
   filter(plot_type == "Control")
 ```
 
-### 5. Portal Data `dplyr` Review (20 pts)
+### 5. Portal Data `dplyr` Review (25 pts)
 
 ```{r}
+print("5a")
 surveys %>% 
   inner_join(species, by = "species_id") %>% 
   inner_join(plots, by = "plot_id") %>% 
@@ -84,10 +88,23 @@ surveys %>%
   filter(taxa == "Rodent") %>% 
   select('year', 'genus', 'species', 'weight', 'plot_type') %>% 
   filter(!is.na(weight))
+
+print("5b")
+surveys %>% 
+  inner_join(species, by = "species_id") %>% 
+  inner_join(plots, by = "plot_id") %>% 
+  filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure",
+         taxa == "Rodent", 
+         !is.na(weight)) %>% 
+  select('year', 'genus', 'species', 'weight', 'plot_type') %>% 
+  group_by(year, plot_type) |> 
+  summarize(min_weight = min(weight),
+            max_weight = max(weight),
+            mean_weight = mean(weight))
 ```
 
 
-### 6. Shrub Volumn Bind (10 pts)
+### 6. Shrub Volume Bind (10 pts)
 
 
 ```{r}
@@ -100,8 +117,7 @@ new_data <- data.frame(respiratory_rate = c(2.2, 4.0, 6.1, 2.3, 4.1, 6.2, 1.8, 3
 bind_cols(shrub_dims, new_data)
 ```
 
-### 7. Shrub Volume Join (10 pts)
-
+### 7. Shrub Volume Join (15 pts)
 
 ```{r message=FALSE}
 experiments <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-volume-experiments.csv")
@@ -112,42 +128,15 @@ sites <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-volume-
 ```{r}
 
 # 1. Import the experiments data and then use `inner_join` to combine
+print("7a")
 inner_join(shrub_dims, experiments, by = "experiment")
 
 # 2. Import the sites data and the combine it with both the data on shrub
 # dimensions and the data on experiments to produce a single data frame
 # that contains all of the data.
-
+print("7b")
 shrub_dims_experiments <- inner_join(shrub_dims, experiments, by = "experiment")
 shrub_data <- inner_join(shrub_dims_experiments, sites, by = "site")
 shrub_data
-```
-
-### 8. Extracting vectors from data frames (10 pts)
-
-```{r}
-# 1. Use `$` to extract the `weight` column into a vector
-
-shrub_data$latitude
-
-# 2. Use `[]` to extract the `month` column into a vector
-
-shrub_data[["manipulation"]]
-
-#3. Extract the `hindfoot_length` column into a vector and calculate the average value using `mean`. 
-
-mean(shrub_data$width, na.rm = TRUE)
-```
-
-### 9. Building data frames from vectors (10 pts)
-
-```{r}
-length <- c(2.2, 2.1, 2.7, 3.0, 3.1, 2.5, 1.9, 1.1, 3.5, 2.9)
-width <- c(1.3, 2.2, 1.5, 4.5, 3.1, NA, 1.8, 0.5, 2.0, 2.7)
-height <- c(9.6, 7.6, 2.2, 1.5, 4.0, 3.0, 4.5, 2.3, 7.5, 3.2)
-```
-
-```{r}
-data.frame(genus = "Cercidium", species = "microphyllum", length, width, height)
 ```
 

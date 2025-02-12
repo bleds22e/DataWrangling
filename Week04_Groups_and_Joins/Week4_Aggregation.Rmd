@@ -9,7 +9,9 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Aggregation
+# Data Aggregation
+
+When we have data, a common need is to condense many data points into fewer, useful pieces of information, such as descriptive statistics. We call this process data aggregation.
 
 ## Setup
 
@@ -25,15 +27,19 @@ Next, we read in our surveys data using the `read_csv()` function.
 
 ```
 
-## Split, Apply, Combine with `group_by()`
+## Split, Apply, Combine
 
-One common way we analyze data is through something we call the "split, apply, combine" approach. This means that we:
+One common way we analyze (and aggregate) data is through something we call the "split, apply, combine" approach. This means that we:
 
 -   *split* data up into groups via some type of categorization
 -   *apply* some type of analysis to each group independently and
 -   *combine* the data back together
 
-The `group_by()` function lets us do this. It is most often used in combination with `mutate()` or `summarize()`.
+![](images/split-apply-combine.png)
+
+### Splitting by Group
+
+In `dplyr`, we use a function called `group_by()` to perform the "split" task in "split, apply, combine."
 
 For example, we can use this method to calculate values for every year from the surveys data frame. In this case, we would group by the year column.
 
@@ -44,6 +50,8 @@ Let's see what happens to the `surveys` dataframe when we group by the year colu
 ```
 
 The `group_by()` function doesn't seem to change the data frame visually in any way. However, you will notice that next to the information about the tibble (number of rows and columns), there is now an additional bit of information that tells us that this is now a grouped dataframe: grouped by the year column, and there are 26 groups.
+
+In order to complete the "apply" and "combine" tasks, `group_by()` is most often paired with `mutate()` or `summarize()` functions.
 
 ## Combining `group_by()` and `summarize()`
 
@@ -57,7 +65,7 @@ Similar to `mutate()`, what is on the left of the `=` is the name of the new col
 
 ```
 
-After grouping a data frame, we can pipe it into a `summarize()` function to calculate values for *each group*.
+After grouping a data frame, we can pipe it into a `summarize()` function to calculate values for *each group*. It will apply the function to each group and combine the results.
 
 ```{r}
 
@@ -127,7 +135,7 @@ Try working on Question 2c.
 
 While we most commonly will use grouping before the summarize function, there are some occasions where using groups with the `mutate()` function can be particularly helpful.
 
-I won't be asking you to do something like this in your assignment, but I at least want you to know that it is possible!
+You won't need to do this in your assignment, but you should know that it is possible!
 
 Let's say we want to calculate the relative abundance of each species per year. As a reminder, the relative abundance is the total number of individuals of a species caught divided by the total number of rodents caught that year.
 

@@ -12,6 +12,15 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+# TO DO
+# - add link to "tidyexplain" for joins (maybe include gifs?)
+# - use a different dataset for joins either here or in homework
+# - better explanation of binds vs joins
+# - add info about in-class exercise with combining data (hands on)
+```
+
+
 # Binds and Joins
 
 In today's lesson, we will be talking about how to bring multiple data
@@ -53,7 +62,7 @@ plots <- read_csv("plots.csv")
 We have 2 main methods of combining datasets: binds and joins. They work
 in different ways.
 
-### Binds
+## Binds
 
 One way we can combine data sets in through binds. Binds act similarly
 to gluing datasets together instead of sorting rows to match up.
@@ -139,7 +148,7 @@ This way, if a species name changes (for example), we only need to
 change it in the species table rather than tens of thousands of times.
 
 When we need to combine the datasets together to use data from multiple
-data frames, we use a join function.
+data frames, we use a `join()` function.
 
 ### How Joins Work
 
@@ -170,6 +179,8 @@ In the case of the Portal data, there is one column that links the
 There is also one column that links the `surveys` and `plots` tables:
 `plot_id`
 
+#### Inner Joins
+
 Let’s join the surveys and the species tables together using an “inner
 join.”
 
@@ -192,8 +203,8 @@ values on `genus`, `species`, and `taxa`.
 
 One way to think about this join is that it adds the relevant
 information in the species table to the surveys table. Often for
-scientific data we can think about there being one main table, the
-surveys table in our case, and multiple supplementary tables that
+scientific data, we can think about there being one main table---the
+surveys table in our case---and multiple supplementary tables that
 provide additional details.
 
 Inner joins keep information from both tables when both tables have a
@@ -214,6 +225,8 @@ IDs. If you look in the `combined` table, you'll notice that
 The other join functions might have handled this differently, based on
 how they work.
 
+#### Left Joins
+
 For example, left joins keep all rows in the first, or left, table. If
 we wanted to keep rows with missing species IDs in the `surveys` data
 frame, we could use `left_join()`.
@@ -226,9 +239,9 @@ There are also right joins, which keep all rows in the second (or right)
 table, and full joins, which keep all rows from both tables, even there
 isn't a matching row.
 
-For our exercises, we’ll focus on using inner joins.
+Note: for our assignment, we’ll focus on using inner joins.
 
-## Multi-table Joins
+### Multi-table Joins
 
 Sometimes, we need to combine more than two tables.
 

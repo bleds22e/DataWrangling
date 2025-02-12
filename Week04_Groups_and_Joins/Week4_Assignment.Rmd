@@ -33,7 +33,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-Feb 12 at midnight MST
+Feb 18 at 3:30 pm
 
 # Assignment Exercises
 
@@ -47,7 +47,7 @@ Read in the following data sets using `read_csv()`. Even if they already exist i
 -   `species.csv`
 -   `plots.csv`
 
-### 2. Portal Data Aggregation (10 pts)
+### 2. Portal Data Aggregation (15 pts)
 
 Using the `surveys` data frame, complete the following:
 
@@ -55,13 +55,11 @@ a.  Use the `group_by()` and `summarize()` functions to get a count of the numbe
 b.  Use the `group_by()` and `summarize()` functions to get a count of the number of individuals in each species ID in each year.
 c.  Use the `filter()`, `group_by()`, and `summarize()` functions to get the mean mass of species `DO` in each year.
 
-### 3. Shrub Volume Aggregation (10 pts)
+### 3. Shrub Volume Aggregation (15 pts)
 
 This is a follow-up to Shrub Volume Data Basics (from a previous assignment).
 
-Dr. Morales wants some summary data of the plants at her sites and for her experiments. If the file shrub-volume-data.csv is not already in your work space download it.
-
-This code calculates the average height of a plant at each site:
+Dr. Morales wants some summary data of the plants at her sites and for her experiments. The following code calculates the average height of a plant at each site:
 
 ```{r}
 shrub_dims <- read_csv('shrub-volume-data.csv')
@@ -84,59 +82,41 @@ a.  Use `inner_join()` to create a table that contains the information from both
 b.  Use `inner_join()` twice to create a table that contains the information from all three tables.
 c.  Use `inner_join()` and `filter()` to get a data frame with the information from the surveys and plots tables where the plot_type is Control.
 
-### 5. Portal Data `dplyr` Review (20 pts)
+### 5. Portal Data `dplyr` Review (25 pts)
 
 We want to do an analysis comparing the size of individuals on the Control plots to the Long-term Krat Exclosures.
 
-Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the plot type is either Control or Long-term Krat Exclosure. Only include cases where Taxa is Rodent. Remove any records where the weight is missing.
+a. Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the plot type is either "Control" or "Long-term Krat Exclosure." Only include cases where Taxa is "Rodent." Remove any records where the weight is missing.
+b. Now, use the "split, apply, combine" approach to calculate the minimum, maximum, and average weight per plot type per year.
 
-### 6. Shrub Volumn Bind (10 pts)
+### 6. Shrub Volume Bind (10 pts)
 
-First, run the following code chunk to produce a data frame with additional data related to the shrub volumn data (`shrub_dims`).
+First, run the following code chunk to produce a data frame with additional data related to the shrub volume data (`shrub_dims`) from Question 3.
+
 ```{r}
 new_data <- data.frame(respiratory_rate = c(2.2, 4.0, 6.1, 2.3, 4.1, 6.2, 1.8, 3.5, 5.7, 1.9, 3.5, 5.8, 2.0, 4.7, 6.2),
                        average_temp_C = c(15.1, 20.2, 24.7, 15.2, 22.0, 25.1, 14.2, 19.0, 23.6, 14.9, 20.3, 24.1, 19.2, 22.7, 25.0))
 
 ```
 
-Take a look at the new dataframe that has just been produced. Should this data be bound to the shrub volumn data by bind_rows() or bind_cols()? How do you know?
+Take a look at the new data frame that has just been produced. Should this data be bound to the shrub volume data by `bind_rows()` or `bind_cols()`? In your own words, explain how you know.
 
-_Answer:_
+*Answer:*
 
 Based on your answer above, bind the `shrub_dims` and `new_data` data frames together.
 
-### 7. Shrub Volume Join (10 pts)
+### 7. Shrub Volume Join (15 pts)
 
-This is a follow-up to Shrub Volume Aggregation.
+This is a follow-up to Question 3, Shrub Volume Aggregation.
 
-In addition to the main data table on shrub dimensions (`shrub_dims` from Q3), Dr. Morales has two additional data tables. The first describes the manipulation for each experiment. The second provides information about the different sites. Run the following code chunk to bring them into your environment.
+In addition to the main data table on shrub dimensions (`shrub_dims`), Dr. Morales has two additional data tables. The first describes the manipulation for each experiment. The second provides information about the different sites. Run the following code chunk to bring them into your environment.
 
 ```{r}
 experiments <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-volume-experiments.csv")
 sites <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-volume-sites.csv")
 ```
 
-Use `inner_join()` to combine `experiments` with the shrub dimensions data to add a manipulation column to the shrub data.
+a. Combine the `experiments` data frame with the shrub dimensions data to add a manipulation column to the shrub data.
 
-Next, combine the `sites` data frame with both the data on shrub dimensions and the data on experiments to produce a single data frame that contains all of the data.
+b. Next, combine the `sites` data frame with both the data on shrub dimensions and the data on experiments to produce a single data frame that contains all of the data. Save this data frame as `shrub_data`.
 
-### 8. Extracting vectors from data frames (10 pts)
-
-Using the `shrub_data` data frame you just created in Question 7:
-
-a.  Use `$` to extract the latitude column into a vector
-b.  Use `[]` to extract the manipulation column into a vector
-c.  Extract the `width` column into a vector and calculate the mean width, removing null values.
-
-
-### 9. Building data frames from vectors (10 pts)
-
-You have data on the length, width, and height of 10 individuals of the Foothills Palo Verde tree (*Cercidium microphyllum*) stored in the following vectors:
-
-```{r}
-length <- c(2.2, 2.1, 2.7, 3.0, 3.1, 2.5, 1.9, 1.1, 3.5, 2.9)
-width <- c(1.3, 2.2, 1.5, 4.5, 3.1, NA, 1.8, 0.5, 2.0, 2.7)
-height <- c(9.6, 7.6, 2.2, 1.5, 4.0, 3.0, 4.5, 2.3, 7.5, 3.2)
-```
-
-Make a data frame that contains these three vectors as columns along with a genus column containing the name "Cercidium" on all rows and a species column containing the word "microphyllum" on all rows.
