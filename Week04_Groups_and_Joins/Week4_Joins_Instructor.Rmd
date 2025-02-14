@@ -21,6 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+
 # Binds and Joins
 
 In today's lesson, we will be talking about how to bring multiple data
@@ -70,7 +71,7 @@ to gluing datasets together instead of sorting rows to match up.
 They don't match up data based on unique identifiers; instead they match
 up data by column name (`bind_rows`) or row position (`bind_cols`).
 
-![](binds.png){width="50%"}
+![](images/binds.png){width="50%"}
 
 These can be very useful, but you need to be careful using them,
 especially `bind_cols`, as the function will automatically assume that
@@ -85,15 +86,18 @@ the Weecology lab made to make working with the (actual) Portal data a
 bit easier. Run the following code chunk.
 
 ```{r}
-# load our packages
+# load our package
 library(portalr)
 
 # load the new rodent data and do a little cleaning
-# don't worry if you don't know what every bit of this code is doing, though some of it should look familiar :)
+# don't worry if you don't know what every bit of this code is doing, 
+# though some of it should look familiar :)
 new_rodents <- summarize_individual_rodents() %>% 
-  select(month, day, year, plot_id = plot, species_id = species, sex, hindfoot_length = hfl, weight = wgt) %>% 
+  select(month, day, year, plot_id = plot, species_id = species, 
+         sex, hindfoot_length = hfl, weight = wgt) %>% 
   filter(year > 2002) %>% 
-  mutate(record_id = seq(nrow(surveys) + 1, nrow(surveys) + nrow(.))) %>% 
+  mutate(record_id = seq(nrow(surveys) + 1, 
+                         nrow(surveys) + nrow(.))) %>% 
   as_tibble()
 new_rodents
 ```
@@ -168,7 +172,7 @@ the `x1` column.
 This can happen a couple ways, depending on which data frame is the
 reference and how much data you want to retain.
 
-![](joins.png){width="50%"}
+![](images/joins.png){width="50%"}
 
 To enable us to make these connections, the tables need one (or more)
 columns that link them together.
