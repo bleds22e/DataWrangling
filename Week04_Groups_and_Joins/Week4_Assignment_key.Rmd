@@ -92,21 +92,41 @@ surveys %>%
 
 This is a follow-up to Shrub Volume Data Basics (from a previous assignment).
 
-Dr. Morales wants some summary data of the plants at her sites and for her experiments. The following code calculates the average height of a plant at each site:
+Dr. Morales wants some summary data of the plants at her sites and for her experiments. The following code calculates the average height of all of the plants:
 
 ```{r}
 shrub_dims <- read_csv('shrub-volume-data.csv')
 shrub_dims %>% 
+  summarize(avg_height = mean(height))
+```
+
+*Note: to answer the following questions, I recommend copying the code above and pasting it into a new code chunk, leaving the original code in the code chunk above.*
+
+a.  Modify the code to calculate and the average height of a plant in *each experiment*.
+
+b.  Modify the code you wrote for (a) to calculate the maximum plant height in each experiment in addition to the average height.
+
+c.  Modify the code you wrote for (b) to calculate the minimum, maximum, and average plant height at *each site*.
+
+```{r}
+print("3a")
+shrub_dims %>% 
+  group_by(experiment) %>% 
+  summarize(avg_height = mean(height, na.rm = TRUE))
+
+print("3b")
+shrub_dims %>% 
   group_by(experiment) %>% 
   summarize(avg_height = mean(height, na.rm = TRUE),
             max_height = max(height, na.rm = TRUE))
+
+print("3c")
+shrub_dims %>% 
+  group_by(site) %>% 
+  summarize(avg_height = mean(height, na.rm = TRUE),
+            max_height = max(height, na.rm = TRUE),
+            min_height = min(height, na.rm = TRUE))
 ```
-
-Modify the code to calculate and print the average height of a plant in *each experiment*.
-
-Add a line of code to use `max()` to determine the maximum height of a plant at each experiment.
-
-Also, remember to modify the code so that there are no NAs produced in the final output.
 
 ### 4. Portal Data Joins (15 pts)
 
@@ -136,8 +156,8 @@ surveys %>%
 
 We want to do an analysis comparing the size of individuals on the Control plots to the Long-term Krat Exclosures.
 
-a. Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the plot type is either "Control" or "Long-term Krat Exclosure." Only include cases where Taxa is "Rodent." Remove any records where the weight is missing.
-b. Now, use the "split, apply, combine" approach to calculate the minimum, maximum, and average weight per plot type per year.
+a.  Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the plot type is either "Control" or "Long-term Krat Exclosure." Only include cases where Taxa is "Rodent." Remove any records where the weight is missing.
+b.  Now, use the "split, apply, combine" approach to calculate the minimum, maximum, and average weight per plot type per year.
 
 ```{r}
 print("5a")
@@ -195,9 +215,9 @@ experiments <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-v
 sites <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-volume-sites.csv")
 ```
 
-a. Combine the `experiments` data frame with the shrub dimensions data to add a manipulation column to the shrub data.
+a.  Combine the `experiments` data frame with the shrub dimensions data to add a manipulation column to the shrub data.
 
-b. Next, combine the `sites` data frame with both the data on shrub dimensions and the data on experiments to produce a single data frame that contains all of the data. Save this data frame as `shrub_data`.
+b.  Next, combine the `sites` data frame with both the data on shrub dimensions and the data on experiments to produce a single data frame that contains all of the data. Save this data frame as `shrub_data`.
 
 ```{r}
 # grading note; if someone saved over the `shrubs_dim` dataframe in question 3, then they might have a different answer
@@ -214,4 +234,3 @@ shrub_dims_experiments <- inner_join(shrub_dims, experiments, by = "experiment")
 shrub_data <- inner_join(shrub_dims_experiments, sites, by = "site")
 shrub_data
 ```
-
