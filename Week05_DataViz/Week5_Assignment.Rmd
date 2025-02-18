@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Load the packages we will need. You can either load all of them individually (`readr`, `dplyr`, `ggplot2`) or load the `tidyverse` package.
 
 ```{r}
-library(tidyverse)
+
 ```
 
 ### 1. Acacia and Ants (20 pts)
@@ -40,6 +40,7 @@ e.  The same plot as (d) but add a simple model of the data by adding `geom_smoo
 The relationship between the body size of an organism and its metabolic rate is one of the most well studied and still most controversial areas of organismal physiology. We want to graph this relationship in the [Artiodactyla](http://en.wikipedia.org/wiki/Even-toed_ungulate) using a subset of data from a large compilation of body size data ([Savage et al. 2004](https://doi.org/10.1111/j.0269-8463.2004.00856.x)). Run this code chunk to get started.
 
 ```{r}
+# create a data frame with 3 columns: body_mass, metabolic_rate, and family
 size_mr_data <- data.frame(
   body_mass = c(32000, 37800, 347000, 4200, 196500, 100000,
     4290, 32000, 65000, 69125, 9600, 133300, 150000, 407000,
@@ -70,7 +71,8 @@ In this exercise, we will be making a number of different histograms with the `a
 
 a.  Make a bar plot of the number of acacia with each mutualist ant species (using the `ANT` column).
 b.  Make a histogram of the height of acacia (using the `HEIGHT` column). Label the x axis "Height (m)" and the y axis "Number of Acacia".
-c.  Make a plot that shows histograms of both `AXIS1` and `AXIS2`. Due to the way the data is structured, you’ll need to add a 2nd geom_histogram() layer that specifies a new aesthetic. To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument `alpha = 0.3`. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x axis "Canopy Diameter (m)" and the y axis "Number of Acacia".
+c.  Make a plot that shows histograms of both `AXIS1` and `AXIS2`. Due to the way the data are structured, you’ll need to add a 2nd geom_histogram() layer that specifies a new aesthetic. \
+    To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument `alpha = 0.3`. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x axis "Canopy Diameter (m)" and the y axis "Number of Acacia".
 d.  Use `facet_wrap()` to make the same plot as (c) but with one subplot for each treatment. Set the number of bins in the histogram to 10.
 
 ### 4. Acacia and Ants Data Manipulation (20 pts)
@@ -95,16 +97,23 @@ e.  Using the data frame generated in (d), make a line plot with points (by usin
 
 ### 5. Adult vs. Newborn Size (20 pts)
 
-Larger organisms have larger offspring. We want to explore the form of this relationship in mammals. First, read in the data frame. This code uses a handy function called `rename` from the `tidyverse` to rename columns.
+Larger organisms have larger offspring. We want to explore the form of this relationship in mammals.
+
+First, read in the data frame with the code below and take a look at the dataframe. Do you see any issues that need to be addressed?
 
 ```{r}
 # download the file
 download.file("https://esapubs.org/archive/ecol/E084/093/Mammal_lifehistories_v2.txt",
               "Mammal_lifehistories_v2.txt")
 # read the file
+read_tsv("Mammal_lifehistories_v2.txt")
+```
+
+The code below will read in the dataset and save it as the object `mammal_histories`. You should recognize the `na` argument in the `read_tsv()` function; this will handle our -999 values and convert them to NAs. This code also uses a handy function called `rename` from the `tidyverse` to rename columns, removing any special characters.
+
+```{r}
 mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt", 
                              na = c("-999", "-999.00")) %>% 
-  # rename columns names for easier use
   rename(mass_g = `mass(g)`, 
          gestation_mo = `gestation(mo)`,
          newborn_g = `newborn(g)`,
@@ -114,6 +123,8 @@ mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt",
          max_life_mo = `max. life(mo)`,
          litter_size = `litter size`,
          litters_per_year = `litters/year`)
+
+mammal_histories
 ```
 
 a.  Graph adult mass vs. newborn mass. Label the axes with clearer labels than the column names.
@@ -122,15 +133,4 @@ c.  This looks like a pretty regular pattern, so you wonder if it varies among d
 d.  Coloring the points was useful, but there are a lot of points and it's kind of hard to see what's going on with all of the orders. Use `facet_wrap` to create a subplot for each order.
 e.  Now let's visualize the relationships between the variables using a simple linear model. Create a new graph like your faceted plot, but using `geom_smooth` to fit a linear model to each order. You can do this using the optional argument `method = "lm"` in `geom_smooth`.
 
-### 6. Reflection (25 pts)
-
-Reflections are graded for completion only.
-
-Write about 5 sentences addressing *at least* one of the following questions.
-
--   What has worked well for you in this course for you so far?
--   What has been particularly challenging for you so far?
--   Is there anything that I can do to help your learning in the course?
--   Other reflections about the content of the module that you would like to share.
-
-*Answer*:
+### 

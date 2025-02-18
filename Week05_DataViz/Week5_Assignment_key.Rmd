@@ -37,14 +37,14 @@ e.  The same plot as (d) but add a simple model of the data by adding `geom_smoo
 
 ```{r}
 # 1a
-
+print("1a")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter")
 #ggsave("Graphing-acacia-ants-R-1.jpeg")
 
 # 1b
-
+print("1b")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   scale_x_log10() +
@@ -53,14 +53,14 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
 #ggsave("Graphing-acacia-ants-R-2.jpeg")
 
 # 1c
-
+print("1c")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1, color = ANT)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter")
 #ggsave("Graphing-acacia-ants-R-3.jpeg")
 
 # 1d
-
+print("1d")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter") +
@@ -68,7 +68,7 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
 #ggsave("Graphing-acacia-ants-R-4.jpeg")
 
 # 1e
-
+print("1e")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter") +
@@ -82,6 +82,7 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
 The relationship between the body size of an organism and its metabolic rate is one of the most well studied and still most controversial areas of organismal physiology. We want to graph this relationship in the [Artiodactyla](http://en.wikipedia.org/wiki/Even-toed_ungulate) using a subset of data from a large compilation of body size data ([Savage et al. 2004](https://doi.org/10.1111/j.0269-8463.2004.00856.x)). Run this code chunk to get started.
 
 ```{r}
+# create a data frame with 3 columns: body_mass, metabolic_rate, and family
 size_mr_data <- data.frame(
   body_mass = c(32000, 37800, 347000, 4200, 196500, 100000,
     4290, 32000, 65000, 69125, 9600, 133300, 150000, 407000,
@@ -107,24 +108,28 @@ c.  The same plot as (b), but with the different families indicated using color.
 d.  The same plot as (b), but with the different families each in their own subplot.
 
 ```{r}
-# 1.  A graph of body mass vs. metabolic rate
+# 2a.  A graph of body mass vs. metabolic rate
+print("2a")
 ggplot(size_mr_data, aes(body_mass, metabolic_rate)) + geom_point() +
   labs(x = "Body Mass", y = "Metabolic Rate")
 
-# 2.  A graph of body mass vs. metabolic rate, log scaled, with pt size 5.
+# 2b.  A graph of body mass vs. metabolic rate, log scaled, with pt size 5.
+print("2b")
 ggplot(data = size_mr_data, mapping = aes(x = body_mass, y = metabolic_rate)) +
   geom_point(size=3) +
   labs(x = "Body Mass", y = "Metabolic Rate") +
   scale_x_log10() + scale_y_log10()
 
-# 3. The same plot as (2), but with the different families indicated using color.
+# c. The same plot as (2), but with the different families indicated using color.
+print("2c")
 ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate, color = family)) +
   geom_point(size = 3) +
   scale_x_log10() +
   scale_y_log10() +
   labs(x = "Body Mass", y = "Metabolic Rate")
 
-# 4. The same plot as (2), but with the different families each in their own subplot.
+# d. The same plot as (2), but with the different families each in their own subplot.
+print("2d")
 ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate)) +
   geom_point(size = 3) +
   scale_x_log10() +
@@ -139,33 +144,33 @@ In this exercise, we will be making a number of different histograms with the `a
 
 a.  Make a bar plot of the number of acacia with each mutualist ant species (using the `ANT` column).
 b.  Make a histogram of the height of acacia (using the `HEIGHT` column). Label the x axis "Height (m)" and the y axis "Number of Acacia".
-c.  Make a plot that shows histograms of both `AXIS1` and `AXIS2`. Due to the way the data is structured, you’ll need to add a 2nd geom_histogram() layer that specifies a new aesthetic. To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument `alpha = 0.3`. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x axis "Canopy Diameter (m)" and the y axis "Number of Acacia".
+c.  Make a plot that shows histograms of both `AXIS1` and `AXIS2`. Due to the way the data are structured, you’ll need to add a 2nd geom_histogram() layer that specifies a new aesthetic. To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument `alpha = 0.3`. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x axis "Canopy Diameter (m)" and the y axis "Number of Acacia".
 d.  Use `facet_wrap()` to make the same plot as (c) but with one subplot for each treatment. Set the number of bins in the histogram to 10.
 
 ```{r}
-# 1
-
+# 3a
+print("3a")
 ggplot(data = acacia, mapping = aes(x = ANT)) +
   geom_bar()
 #ggsave("Graphing-acacia-ants-histograms-R-1.jpeg")
 
-# 2
-
+# 3b
+print("3b")
 ggplot(data = acacia, mapping = aes(x = HEIGHT)) +
   geom_histogram() +
   labs(x = "Height(m)", y = "Number of Acacia")
 #ggsave("Graphing-acacia-ants-histograms-R-2.jpeg")
 
-# 3
-
+# 3c
+print("3c")
 ggplot(data = acacia) +
   geom_histogram(mapping = aes(x = AXIS1), fill = 'red', alpha = 0.3) +
   geom_histogram(mapping = aes(x = AXIS2), fill = 'black', alpha = 0.3) +
   labs(x = "Canopy Diameter", y = "Number of Acacia")
 #ggsave("Graphing-acacia-ants-histograms-R-3.jpeg")
 
-# 4
-
+# 3d
+print("3d")
 ggplot(data = acacia) +
   geom_histogram(mapping = aes(x = AXIS1), fill = 'red', alpha = 0.3, bins = 10) +
   geom_histogram(mapping = aes(x = AXIS2), fill = 'black', alpha = 0.3, bins = 10) +
@@ -194,21 +199,21 @@ e.  Using the data frame generated in (d), make a line plot with points (by usin
 
 ```{r}
 
-# 1
-
+# 4a
+print("4a")
 trees <- mutate(trees, canopy_area = AXIS_1 * AXIS_2)
 select(trees, SURVEY, YEAR, SITE, SPECIES, canopy_area)
 
-# 2
-
+# 4b
+print("4b")
 ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMENT)) + 
   geom_point(size = 2) +
   labs(x = "Canopy Area (m)", y = "Height (m)") +
   facet_wrap(~SPECIES)
 #ggsave("Graphing-acacia-ants-data-manip-R-2.jpeg")
 
-# 3
-
+# 4c
+print("4c")
 trees <- filter(trees, AXIS_1 < 20, AXIS_2 < 20)
 ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMENT)) + 
   geom_point(size = 2) +
@@ -216,15 +221,15 @@ ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMEN
   facet_wrap(~SPECIES)
 #ggsave("Graphing-acacia-ants-data-manip-R-3.jpeg")
 
-# 4
-
+# 4d
+print("4d")
 abundance_time <- trees %>%
   group_by(YEAR, SPECIES) %>%
   summarize(abundance = n())
 abundance_time
 
-# 5
-
+# 4e
+print("4e")
 ggplot(data = abundance_time, mapping = aes(x = YEAR, y = abundance)) +
   geom_point() +
   geom_line() +
@@ -235,7 +240,15 @@ ggplot(data = abundance_time, mapping = aes(x = YEAR, y = abundance)) +
 
 ### 5. Adult vs. Newborn Size (20 pts)
 
-Larger organisms have larger offspring. We want to explore the form of this relationship in mammals. First, read in the data frame. This code uses a handy function called `rename` from the `tidyverse` to rename columns.
+Larger organisms have larger offspring. We want to explore the form of this relationship in mammals.
+
+First, read in the data frame with the code below and take a look at the dataframe. Do you see any issues that need to be addressed?
+
+```{r}
+read_tsv("Mammal_lifehistories_v2.txt")
+```
+
+The code below will read in the dataset and save it as the object `mammal_histories`. You should recognize the `na` argument in the `read_tsv()` function; this will handle our -999 values and convert them to NAs. This code also uses a handy function called `rename` from the `tidyverse` to rename columns, removing any special characters.
 
 ```{r}
 mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt", 
@@ -249,6 +262,8 @@ mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt",
          max_life_mo = `max. life(mo)`,
          litter_size = `litter size`,
          litters_per_year = `litters/year`)
+
+mammal_histories
 ```
 
 a.  Graph adult mass vs. newborn mass. Label the axes with clearer labels than the column names.
@@ -258,13 +273,14 @@ d.  Coloring the points was useful, but there are a lot of points and it's kind 
 e.  Now let's visualize the relationships between the variables using a simple linear model. Create a new graph like your faceted plot, but using `geom_smooth` to fit a linear model to each order. You can do this using the optional argument `method = "lm"` in `geom_smooth`.
 
 ```{r}
-
 # a. Graph adult mass vs. newborn mass.
+print("5a")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point() + 
   labs(x = "Adult Mass", y = "Newborn Mass")
 
 # b. Graph adult mass vs. newborn mass, with both axes scaled logarithmically.
+print("5b")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point() + 
   scale_x_log10() + 
@@ -272,6 +288,7 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 
 # c. Graph adult mass vs. newborn mass, log-scaled, with data colored by order.
+print("5c")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point(aes(color=order)) + 
   scale_x_log10() + 
@@ -279,6 +296,7 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 
 # d. Use `facet_wrap` to create subplot for each order.
+print("5d")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point() + 
   scale_x_log10() + 
@@ -287,6 +305,7 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 
 # e. use `geom_smooth` to fit a linear model to each order.
+print("5e")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point() + 
   geom_smooth(method = "lm") + 
@@ -298,25 +317,23 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
 
 ### 6. Check That Your Code Runs
 
-Sometimes you think you’re code runs, but it only actually works because of something else you did previously. 
+Sometimes you think you’re code runs, but it only actually works because of something else you did previously.
 
 To make sure it actually runs, you should save your work and then run it in a clean (read: empty) environment.
 
-I have actually be forcing the issue by having you "knit" your file before submitting it. To successfully knit, every RMarkdown file must be "self-contained," meaning every line of code that is necessary to run anything in the .Rmd file must be written in the .Rmd file. The file doesn't recognize things already in the environment. 
+I have actually be forcing the issue by having you "knit" your file before submitting it. To successfully knit, every RMarkdown file must be "self-contained," meaning every line of code that is necessary to run anything in the .Rmd file must be written in the .Rmd file. The file doesn't recognize things already in the environment.
 
 For example, if you use a function from the `readr` package (e.g., `read_csv`) anywhere in your .Rmd file, you will need to have `library(readr)` in a code chunk in your .Rmd file before any line with `read_csv`.
 
-Similarly, if you have a line of code referencing an object (like a data frame), you need to have a line of code beforehand in your .Rmd file that creates the object. 
+Similarly, if you have a line of code referencing an object (like a data frame), you need to have a line of code beforehand in your .Rmd file that creates the object.
 
 While attempting to knit a document is one way to learn if your code actually runs the way you think it should, there are other (and maybe better) ways to test this out before you ever try to knit a document.
 
 Follow these steps in RStudio to make sure your code really runs:
 
-1. Restart R (see above) by clicking Session in the menu bar and selecting Restart R:
+1.  Restart R (see above) by clicking Session in the menu bar and selecting Restart R:
 
-
-
-### 7. Graphing Data from Multiple Tables (_Optional_)
+### 7. Graphing Data from Multiple Tables (*Optional*)
 
 An experiment in Kenya has been exploring the influence of large herbivores on plants.
 
@@ -330,10 +347,10 @@ trees <- read_tsv("TREE_SURVEYS.txt",
                                    AXIS_2 = col_double()))
 ```
 
-We want to compare the circumference to height relationship in acacia on different treatments in the context of the same relationship for trees in the region. 
+We want to compare the circumference to height relationship in acacia on different treatments in the context of the same relationship for trees in the region.
 
-These data are stored in the two tables above. 
+These data are stored in the two tables above.
 
-Make a graph with the relationship between `CIRC` and `HEIGHT` for the trees as gray points in the background and the same relationship for acacia as red points plotted on top of the tree points. 
+Make a graph with the relationship between `CIRC` and `HEIGHT` for the trees as gray points in the background and the same relationship for acacia as red points plotted on top of the tree points.
 
 There should be one subplot for each treatment. Scale the both axes logarithmically. Include linear models for both sets of data. Provide clear labels for the axes.
