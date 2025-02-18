@@ -296,15 +296,44 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 ```
 
-### 6. Reflection (25 pts)
+### 6. Check That Your Code Runs
 
-Reflections are graded for completion only.
+Sometimes you think you’re code runs, but it only actually works because of something else you did previously. 
 
-Write about 5 sentences addressing *at least* one of the following questions.
+To make sure it actually runs, you should save your work and then run it in a clean (read: empty) environment.
 
--   What has worked well for you in this course for you so far?
--   What has been particularly challenging for you so far?
--   Is there anything that I can do to help your learning in the course?
--   Other reflections about the content of the module that you would like to share.
+I have actually be forcing the issue by having you "knit" your file before submitting it. To successfully knit, every RMarkdown file must be "self-contained," meaning every line of code that is necessary to run anything in the .Rmd file must be written in the .Rmd file. The file doesn't recognize things already in the environment. 
 
-*Answer*:
+For example, if you use a function from the `readr` package (e.g., `read_csv`) anywhere in your .Rmd file, you will need to have `library(readr)` in a code chunk in your .Rmd file before any line with `read_csv`.
+
+Similarly, if you have a line of code referencing an object (like a data frame), you need to have a line of code beforehand in your .Rmd file that creates the object. 
+
+While attempting to knit a document is one way to learn if your code actually runs the way you think it should, there are other (and maybe better) ways to test this out before you ever try to knit a document.
+
+Follow these steps in RStudio to make sure your code really runs:
+
+1. Restart R (see above) by clicking Session in the menu bar and selecting Restart R:
+
+
+
+### 7. Graphing Data from Multiple Tables (_Optional_)
+
+An experiment in Kenya has been exploring the influence of large herbivores on plants.
+
+Run the following code chunk to bring in the `acacia` and `trees` data frames.
+
+```{r}
+acacia <- read_tsv("ACACIA_DREPANOLOBIUM_SURVEY.txt",
+                   na = c("dead"))
+trees <- read_tsv("TREE_SURVEYS.txt",
+                  col_types = list(HEIGHT = col_double(),
+                                   AXIS_2 = col_double()))
+```
+
+We want to compare the circumference to height relationship in acacia on different treatments in the context of the same relationship for trees in the region. 
+
+These data are stored in the two tables above. 
+
+Make a graph with the relationship between `CIRC` and `HEIGHT` for the trees as gray points in the background and the same relationship for acacia as red points plotted on top of the tree points. 
+
+There should be one subplot for each treatment. Scale the both axes logarithmically. Include linear models for both sets of data. Provide clear labels for the axes.
