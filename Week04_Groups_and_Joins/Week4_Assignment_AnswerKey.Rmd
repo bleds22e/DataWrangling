@@ -52,10 +52,23 @@ surveys %>%
 
 ```{r message=FALSE}
 shrub_dims <- read_csv('shrub-volume-data.csv')
+print("3a")
+shrub_dims %>% 
+  group_by(experiment) %>% 
+  summarize(avg_height = mean(height, na.rm = TRUE))
+
+print("3b")
 shrub_dims %>% 
   group_by(experiment) %>% 
   summarize(avg_height = mean(height, na.rm = TRUE),
             max_height = max(height, na.rm = TRUE))
+
+print("3c")
+shrub_dims %>% 
+  group_by(site) %>% 
+  summarize(avg_height = mean(height, na.rm = TRUE),
+            max_height = max(height, na.rm = TRUE),
+            min_height = min(height, na.rm = TRUE))
 ```
 
 ### 4. Portal Data Joins (25 pts)
