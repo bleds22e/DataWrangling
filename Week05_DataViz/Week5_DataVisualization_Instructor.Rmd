@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.width = 4, fig.height = 4, fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Data Visualization
@@ -43,12 +43,12 @@ The message also gives us some information about functions from `dplyr` that hav
 
 ### Data
 
-For the this week's lesson and assignment, we'll be working with data on acacia size from an [experimental site in Kenya](https://mpala.org/science/savannah-ecology/ungulate-herbivory-under-rainfall-uncertainty/). The experiment is designed to understand the influence of herbivores on vegetation by excluding herbivores of different sizes.
+For the this week's lesson and assignment, we'll be working with data on acacia size from an [experimental site in Kenya](https://mpala.org/science/savannah-ecology/ungulate-herbivory-under-rainfall-uncertainty/). The experiment is designed to understand the influence of herbivores on vegetation by excluding herbivores of different sizes (also across a rainfall gradient).
 
-There are 3 different treatments:
+There are 3 different treatments and 1 control:
 
--   The top-left image shows *Megaherbivore exclosures*, which use wires 2m high to keep out animals like elephants and giraffes.
--   The top-right image shows *Mesoherbivore exclosures*, which use fences starting 1/3m off the ground to exclude things like impala.
+-   The top-left image shows *megaherbivore exclosures*, which use wires 2m high to keep out animals like elephants and giraffes.
+-   The top-right image shows *mesoherbivore exclosures*, which use fences starting 1/3m off the ground to exclude things like impala.
 -   The bottom-left image shows *full exclosures*, which use fences all the way to the ground to keep out all mammalian herbivores.
 -   The bottom-right image shows *control plots*
 
@@ -94,7 +94,7 @@ Looking at the data frame, we can see that it includes information on:
 
 -   the time and location of the sampling
 -   the experimental treatment
--   the size of each *Acacia* including a height, the canopy diameter measured in the direction (or axis) or the largest diameter and the diameter of the axis perpendicular to that, and the circumference of the shrub
+-   the size of each acacia including a height, the canopy diameter measured in the direction (or axis) or the largest diameter and the diameter of the axis perpendicular to that, and the circumference of the shrub
 -   information on the number of flowers, buds, and fruits
 -   information on the species of ant associated with the shrub
 
@@ -113,7 +113,7 @@ Here are some resources you might find helpful now or in the future:
 -   [R for Data Science Data Visualization chapter](https://r4ds.hadley.nz/data-visualize.html)
 -   [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/index.html)
 
-The `gg` in `ggplot2` stands for "Grammar of Graphics." The "grammar" part is based on an idea that all statistical plots have the same fundamental features: data and mapping (and specific components of mapping).
+The `gg` in `ggplot2` stands for "[Grammar of Graphics](https://info5940.infosci.cornell.edu/notes/dataviz/grammar-of-graphics/)." The "grammar" part is based on an idea that all statistical plots have the same fundamental features: data and mapping (and specific components of mapping).
 
 The design is that you work iteratively, building up layer upon layer until you have your final plot.
 
@@ -152,11 +152,13 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT))
 
 This still doesn't create a figure; it's a blank canvas and some additional information on default values for data and mapping columns to pieces of the plot.
 
-### Adding a `geom` Layer
+### Adding a `geom` Layer (with `+`)
 
 We can add data to the plot using layers. We connect layers with a `+`. It works similarly to the pipe. It is considered best practice to hit `Enter` after the plus so that each layer shows up on its own line.
 
-We then add something called a `geom`, which stands for `geometry`. In this case, we want to make a scatter plot. The `geom` for a scatter plot is `geom_point`.
+We then add a `geom`, which is short for geometry. Geoms designate what type of plot to make.
+
+In this case, we want to make a scatter plot. The `geom` for a scatter plot is `geom_point`.
 
 ```{r}
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
@@ -169,9 +171,9 @@ If we want to make any changes to the layer, we can pass additional arguments to
 
 For example, we can change:
 
--   the `size` of the points (we'll set it to `3`)
--   the `color` of the points (we'll set it to `"blue"`)
--   the transparency of the points, which is called `alpha` (we'll set it to 0.5)
+-   the `size` of the points
+-   the `color` of the points
+-   the transparency of the points, which is called `alpha`
 
 ```{r}
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
@@ -229,9 +231,9 @@ There are a few different ways to do this.
 
 ### Grouping by Column in a Single Plot
 
-The first way is to show the different groups on the same plot by having one aspect of the plot (e.g., color, shape, size) vary by group. To specify this, we add the column name with the groups we are interested into the `aes()` function.
+We can show different groups on the same plot by having one aspect of the plot (e.g., color, shape, size) vary by group. To specify this, we add the column name with the groups we are interested into the `aes()` function.
 
-*Any time we want a feature of the plot to vary by one of the columns in the dataframe we are using to plot, we need to put that argument inside the `aes()` function.*
+|*Any time we want a feature of the plot to vary by one of the columns in the dataframe we are using to plot, we need to put that argument inside the `aes()` function.*
 
 For example, let's say we want to look at the influence of experimental treatment on acacia size.
 
@@ -242,7 +244,7 @@ ggplot(acacia, aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
 
 ### Multiple Plots by Column with Facets
 
-The other way to see the data from different groups is with a `facet`. Rather than changing an aspect of the plot, faceting creates multiple smaller plots within the larger plot.
+The other way to see data from different groups is with a `facet`. Rather than changing an aspect of the plot, faceting creates multiple smaller plots within the larger plot based on a column.
 
 There are a few different ways to facet, but we will stick with `facet_wrap` for this lesson. The argument for `facet_wrap` is a tilde (`~`) followed by the name of the column with your groups. This can be read as "creating a facet as a function of the treatment group."
 
@@ -268,7 +270,7 @@ So far, we've seen that `ggplot2` makes graphs by combining information on
 -   mapping parts of the data to aspects of the plot (`aes()`)
 -   a geometric object to represent the data (`geom`)
 
-Up until now, we have only used one `geom`, `geom_point()`. There are *many* other `geoms` that we can use, though!
+Up until now, we have only used one `geom`, `geom_point()`. There are *many* other `geoms` that we can use, though! You can find a list [here](https://ggplot2.tidyverse.org/reference/).
 
 Each `geom` includes one or more statistical transformations.
 
@@ -278,7 +280,7 @@ Other transformations exist to make plots like histograms, bar plots, etc., and 
 
 For example, let's say we want to take a look at the number of acacia in each treatment using a bar plot. To do so, we would use [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html).
 
-The default statistical transformation for `geom_bar` is`stat_count()`. It will automatically count up the number of rows for each treatment and put that on the y-axis. Therefore, we only need to specify which column should be on the x-axis.
+The default statistical transformation for `geom_bar` is `stat_count()`. It will automatically count up the number of rows for each treatment and put that on the y-axis. Therefore, we only need to specify which column should be on the x-axis.
 
 ```{r}
 ggplot(acacia, aes(x = TREATMENT)) +
@@ -294,7 +296,7 @@ ggplot(acacia, aes(x = CIRC)) +
 
 `geom_histogram` uses `stat_bin()` for data transformation. This splits the circumference values into bins and then counts rows in each bin.
 
-We can change the defaults by setting either the number of bins to be created (`bins = `) or how big ("wide") the bins should be (`binwidth = `.
+We can change the defaults by setting either the number of bins to be created (`bins`) or how big ("wide") the bins should be (`binwidth`).
 
 ```{r}
 ggplot(acacia, aes(x = CIRC)) +
@@ -333,7 +335,7 @@ ggplot(acacia, aes(x = CIRC, color = TREATMENT)) +
   geom_histogram(binwidth = 5, position = "identity")
 ```
 
-Close, but not quite there! To see all of the treatments, we need to make the columns partially transparent with the `alpha` argument, which runs from 0 (completely transparent) to 1 (completely opaque).
+Close, but not quite there! To see all of the treatments, we need to make the columns partially transparent with the `alpha` argument.
 
 ```{r fig.width=6}
 # to change the color of the inside of the colors, set the `fill` argument

@@ -43,7 +43,7 @@ The message also gives us some information about functions from `dplyr` that hav
 
 ### Data
 
-For the this week's lesson and assignment, we'll be working with data on acacia size from an [experimental site in Kenya](https://mpala.org/science/savannah-ecology/ungulate-herbivory-under-rainfall-uncertainty/). The experiment is designed to understand the influence of herbivores on vegetation by excluding herbivores of different sizes.
+For the this week's lesson and assignment, we'll be working with data on acacia size from an [experimental site in Kenya](https://mpala.org/science/savannah-ecology/ungulate-herbivory-under-rainfall-uncertainty/). The experiment is designed to understand the influence of herbivores on vegetation by excluding herbivores of different sizes (also across a rainfall gradient).
 
 There are 3 different treatments and 1 control:
 
@@ -94,7 +94,7 @@ Looking at the data frame, we can see that it includes information on:
 
 -   the time and location of the sampling
 -   the experimental treatment
--   the size of each *Acacia* including a height, the canopy diameter measured in the direction (or axis) or the largest diameter and the diameter of the axis perpendicular to that, and the circumference of the shrub
+-   the size of each acacia including a height, the canopy diameter measured in the direction (or axis) or the largest diameter and the diameter of the axis perpendicular to that, and the circumference of the shrub
 -   information on the number of flowers, buds, and fruits
 -   information on the species of ant associated with the shrub
 
@@ -113,7 +113,7 @@ Here are some resources you might find helpful now or in the future:
 -   [R for Data Science Data Visualization chapter](https://r4ds.hadley.nz/data-visualize.html)
 -   [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/index.html)
 
-The `gg` in `ggplot2` stands for "Grammar of Graphics." The "grammar" part is based on an idea that all statistical plots have the same fundamental features: data and mapping (and specific components of mapping).
+The `gg` in `ggplot2` stands for "[Grammar of Graphics](https://info5940.infosci.cornell.edu/notes/dataviz/grammar-of-graphics/)." The "grammar" part is based on an idea that all statistical plots have the same fundamental features: data and mapping (and specific components of mapping).
 
 The design is that you work iteratively, building up layer upon layer until you have your final plot.
 
@@ -152,13 +152,13 @@ Let's plot the relationship between the circumference of an acacia and its heigh
 
 This still doesn't create a figure; it's a blank canvas and some additional information on default values for data and mapping columns to pieces of the plot.
 
-### Adding a `geom` Layer (`+`)
+### Adding a `geom` Layer (with `+`)
 
-We can add data to the plot using layers. We connect layers with a `+`. It works similarly to the pipe.
+We can add data to the plot using layers. We connect layers with a `+`. It works similarly to the pipe. It is considered best practice to hit `Enter` after the plus so that each layer shows up on its own line.
 
-It is considered best practice to hit `Enter` after the plus so that each layer shows up on its own line.
+We then add a `geom`, which is short for geometry. Geoms designate what type of plot to make.
 
-We then add something called a `geom`, which stands for `geometry`. In this case, we want to make a scatter plot. The `geom` for a scatter plot is `geom_point`.
+In this case, we want to make a scatter plot. The `geom` for a scatter plot is `geom_point`.
 
 ```{r}
 
@@ -170,9 +170,9 @@ If we want to make any changes to the layer, we can pass additional arguments to
 
 For example, we can change:
 
--   the `size` of the points (we'll set it to `3`)
--   the `color` of the points (we'll set it to `"blue"`)
--   the transparency of the points, which is called `alpha` (we'll set it to 0.5)
+-   the `size` of the points
+-   the `color` of the points
+-   the transparency of the points, which is called `alpha`
 
 ```{r}
 
@@ -216,11 +216,11 @@ There are a few different ways to do this.
 
 ### Grouping by Column in a Single Plot
 
-The first way is to show the different groups on the same plot by having one aspect of the plot (e.g., color, shape, size) vary by group. To specify this, we add the column name with the groups we are interested into the `aes()` function.
+We can show different groups on the same plot by having one aspect of the plot (e.g., color, shape, size) vary by group. To specify this, we add the column name with the groups we are interested into the `aes()` function.
 
 | *Any time we want a feature of the plot to vary by one of the columns in the data frame we are using to plot, we need to put that argument inside the `aes()` function.*
 
-For example, let's say we want to look at the influence of experimental treatment on the *Acacia* size.
+For example, let's say we want to look at the influence of experimental treatment on acacia size.
 
 ```{r}
 
@@ -228,7 +228,7 @@ For example, let's say we want to look at the influence of experimental treatmen
 
 ### Multiple Plots by Column with Facets
 
-The other way to see the data from different groups is with a `facet`. Rather than changing an aspect of the plot, faceting creates multiple smaller plots within the larger plot.
+The other way to see data from different groups is with a `facet`. Rather than changing an aspect of the plot, faceting creates multiple smaller plots within the larger plot based on a column.
 
 There are a few different facet functions, but we will stick with `facet_wrap()` for this lesson. The argument for `facet_wrap()` is a tilde (`~`) followed by the name of the column with your groups. This can be read as "creating a facet as a function of the treatment group."
 
@@ -248,19 +248,17 @@ If you finish those, you should now have all the skills to work on Question 2 (w
 
 So far, we've seen that `ggplot2` makes graphs by combining information on
 
--   Data
--   Mapping of parts of that data to aspects of the plot (`aes()`)
--   A geometric object to represent the data (`geom`)
+-   data
+-   mapping parts of the data to aspects of the plot (`aes()`)
+-   a geometric object to represent the data (`geom`)
 
-Up until now, we have only used one `geom`, `geom_point()`. There are *many* other `geoms` that we can use, though!
+Up until now, we have only used one `geom`, `geom_point()`. There are *many* other `geoms` that we can use, though! You can find a list [here](https://ggplot2.tidyverse.org/reference/).
 
 Each `geom` includes one or more statistical transformations.
 
 `geom_point` uses something called `identity`: the raw form of the data or no transformation
 
-Other transformations exist to make plots like histograms, bar plots, etc., and can occur as defaults in associated `geoms`.
-
-For example, let's say we want to take a look at the number of acacia in each treatment using a bar plot. To do so, we would use [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html).
+Other transformations exist to make plots like histograms, bar plots, etc., and can occur as defaults in associated `geoms`. For example, let's say we want to take a look at the number of acacia in each treatment using a bar plot. To do so, we would use [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html).
 
 The default statistical transformation for `geom_bar` is `stat_count()`. It will automatically count up the number of rows for each treatment on the y-axis. Therefore, in the `aes()` function, we only need to specify which column should be on the x-axis.
 
@@ -276,7 +274,7 @@ When creating a histogram, [`geom_histogram()`](https://ggplot2.tidyverse.org/re
 
 `geom_histogram` uses the `stat_bins()` for data transformation. This splits the circumference circumferences values into bins and then counts rows in each bin.
 
-We can change the defaults by setting either the number of bins to be created (`bins =`) or how big ("wide") the bins should be (`binwidth =`).
+We can change the defaults by setting either the number of bins to be created (`bins`) or how big ("wide") the bins should be (`binwidth`).
 
 ```{r}
 
@@ -308,7 +306,7 @@ If we want separate overlapping histograms, then we need to change the position 
 
 ```
 
-Close, but not quite there! To see all of the treatments, we need to make the columns partially transparent with the `alpha` argument, which runs from 0 (completely transparent) to 1 (completely opaque).
+Close, but not quite there! To see all of the treatments, we need to make the columns partially transparent with the `alpha` argument.
 
 ```{r}
 
