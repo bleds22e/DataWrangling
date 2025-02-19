@@ -9,8 +9,6 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
-# Week 5 Assignment
-
 ```{r}
 library(tidyverse)
 ```
@@ -149,7 +147,7 @@ ggplot(data = acacia) +
 ```{r}
 trees <- read_tsv("TREE.txt",
                   col_types = list(HEIGHT = col_double(),
-                                   AXIS_2 = col_double()))
+                                   AXIS_2 = col_double())) |> drop_na(TREATMENT)
 ```
 
 ```{r}
@@ -245,4 +243,20 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   scale_y_log10() + 
   facet_wrap(~ order) +
   labs(x = "Adult Mass", y = "Newborn Mass")
+```
+
+### 7. Graphing Data from Multiple Tables (*Optional*) 
+
+```{r, message=FALSE, warning=FALSE}
+ggplot() +
+  geom_point(data = trees, aes(x = CIRC, y = HEIGHT), color = "gray") +
+  geom_smooth(data = trees, aes(x = CIRC, y = HEIGHT), color = "black", method = "lm") +
+  geom_point(data = acacia, aes(x = CIRC, y = HEIGHT), color = "red") +
+  geom_smooth(data = acacia, aes(x = CIRC, y = HEIGHT), color = "red", method = "lm") +
+  facet_wrap(~ TREATMENT) +
+  labs(x = "Circumfrence (cm)",
+       y = "Height (m)") +
+  scale_x_log10() +
+  scale_y_log10() +
+  theme_light()
 ```
