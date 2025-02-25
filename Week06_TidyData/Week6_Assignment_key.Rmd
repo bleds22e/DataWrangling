@@ -47,7 +47,11 @@ library(tidyverse)
 
 ### 1. Forest Area per Country (15 pts)
 
-These data are downloaded from the WHO and contain the amount of forest (sq. km) per country. The first 3 rows of the file are metadata or empty, which we do not want. I've added the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with this.
+The data in `forest_per_country.csv` are downloaded from the WHO and contain the amount of forest (sq. km) per country. 
+
+First, click on the .csv file in the "Files" tab and select "View File." You might notice that the top of the document looks a bit odd.
+
+The first 3 rows of the file are metadata or empty, which we do not want. I've added the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with this.
 
 ```{r}
 forest <- read_csv("forest_per_country.csv", skip = 4, col_names = TRUE)
@@ -85,26 +89,38 @@ ggplot(forest, aes(Year, ForestArea_sqkm)) +
 
 ### 2. OECD Data (10 pts)
 
-We have some data from the Organisation for Economic Co-operation and Development (OECD) about various global fishing economies and sustainability. This dataset has the area of protected marine reserves.
+The `oecd_annual_data.csv` contains data from the Organisation for Economic Co-operation and Development (OECD) about various global fishing economies and sustainability. This dataset has the area of protected marine reserves.
 
-Run this line of code to read in the file. Like the forest data, this data has a few rows of metadata at the top of the document that we need to skip.
+a. Like the forest data from Question 1, this data has a few rows of metadata at the top of the document that we need to skip. Use the same arguments as we did in Question 1 (same values, as well) when reading in the file.
 
 ```{r}
 oecd <- read_csv("oecd_annual_data.csv", skip = 4, col_names = TRUE)
 head(oecd)
 ```
 
-a.  Use the `fill()` function to fill in the values in the first column.
-b.  Use `pivot_longer()` to put the data in a tidy format. You'll need to use the same trick with the year column names as you did in 1a.
+b.  Use the `fill()` function to fill in the missing values in the first column. Save the output as an object to be used in (c).
+
+c.  Using the data frame you created in (b), put the data in a tidy format. You'll need to use the same trick with the year column names as you did in 1a. Save the output as an object.
+
+d.  Using the data frame you created in (c), only keep the rows for non-OECD members. Then, wrangle the data so that it is back in wide format. This time, however, each row should represent a year and each country will have its own column. Your final data frame should only have a year column and each country's column.
+
 
 ```{r}
-#a
-oecd <- oecd %>% 
-  fill(OECD_member)
-
 #b
 oecd <- oecd %>% 
+  fill(OECD_member)
+oecd
+
+#c
+oecd <- oecd %>% 
   pivot_longer(`2000`:`2022`, names_to = "Year", values_to = "MarineProtectedArea_sqkm")
+oecd
+
+#d
+oecd |> 
+  filter(OECD_member == "Non-OECD Economies") |> 
+  pivot_wider(names_from = Country, values_from = MarineProtectedArea_sqkm) |> 
+  select(-OECD_member)
 ```
 
 ### 3. Santa Cruz Rodents Data Cleaning (20 pts)
@@ -117,7 +133,9 @@ rodents <- read_csv("capture_data.csv")
 
 Take a look at the data. You'll likely notice immediately that there are some issues to be fixed.
 
-a.  Rename any column that needs to be renamed and save the output. This is the data frame we will use for the remainder of the questions.
+For this question, there isn't really a good way for me to show you the output in the answer key; you'll want to take a look at the data frame in R and/or make good use of the filter function to make sure the issue got fixed.
+
+a.  Rename any column that needs to be renamed and save the output. This is the data frame we will use for the remainder of the questions, and you'll want to continue overwriting the output to use in each subsequent step.
 
 b.  Next we need to fill in the missing values in the `Site` column.
 
@@ -127,7 +145,9 @@ c.  In the `Species` column, there are 2 different species that have question ma
 
 d.  If we look at the data classes for the columns, we can see that the column for tail length is character when it should be numeric. This usually indicates that there is a special character or letter somewhere in the column. As it turns out, in the last row, the value is `~15.5` instead of `15.5`. Use the `replace` function inside of `mutate` to convert that value to `15.5`.
 
-e.  In both the Hair Sample and Position columns, there is a `?`. Use the `na_if` function inside a `mutate` function to convert those `?` to `NA` values.
+e.  In both the "Hair Sample" and "Position" columns, there is a `?`. Use the `na_if` function inside a `mutate` function to convert those `?` to `NA` values.
+
+f.  Let's practice plotting again! Create a series of histograms (subplots within one larger plot) of the rodents' total weights, one histogram per species. Have the color of the histograms be determined by the site. Each histogram should be partially transparent, overlapping (not stacked), and the width of the bins should be 10. Finally, edit the axes labels and apply a theme.
 
 ```{r}
 #a
@@ -155,6 +175,12 @@ rodents <- rodents %>%
   mutate(HairSample = na_if(HairSample, "?"),
          Position = na_if(Position, "?"))
 
+#f
+ggplot(rodents, aes(TotalWeight, fill = Site)) +
+  geom_histogram(alpha = 0.5, position = "identity", binwidth = 10) +
+  facet_wrap(~ Species) +
+  labs(x = "Weight (g)", y = "Frequency") +
+  theme_classic()
 ```
 
 ### 4. Remembering Joins (15 pts)
@@ -179,22 +205,26 @@ veg <- veg %>%
 inner_join(rodents, veg)
 ```
 
-a.  Rename the columns that should be renamed. Use a consistent structure (and make the Site and Trap Location column names match those from the rodents data frame).
-b.  Select the Site, Trap Location and Grouped Veg columns and save those as a new dataframe
-c.  Use an `inner_join()` to join the microsite data frame with the cleaned capture data from Question 3.
-d.  In your own words (\~2-3 sentences), explain how the inner join in (c) worked.
+a.  Rename the columns that should be renamed. Use a consistent structure (and make the Site and Trap Location column names match those from the rodents data frame in Question 3). Save the output.
+
+b.  Using the output from (a), select the Site, Trap Location and Grouped Veg columns and save those as a new data frame. Save the output.
+
+c.  Using the output from (b) and the final rodent data frame from Question 3, use an `inner_join()` to join those two data frames.
+
+d.  In your own words (~2-3 sentences), explain how the inner join in (c) worked.
 
 ### 5. Santa Cruz Rodents Wrangling (20 pts)
 
-Let's practice splitting and combining columns as well as pivoting the Santa Cruz rodent data.
+Let's practice splitting and combining columns as well as pivoting the Santa Cruz rodent data (from Question 3).
 
-a.  Use the `separate()` function to split the date column into 3 separate columns.
+a.  Use the `separate()` function to split the date column into three separate columns. Save your output.
 
-b.  Use `unite()` to bring them back together into 1 Date column
+b.  Using the output from (a), rejoin the three date columns back together into one column.
 
 c.  Summarize the data so that we have a count of each species per site. Save this output as a new data frame (do not overwrite the rodents data frame)
 
 d.  Convert the data from (c) from long format to wide format. Use an argument in the `pivot_wider` function to have all blank cells filled with 0 instead of `NA`.
+
 
 ```{r}
 #a
@@ -222,7 +252,7 @@ sp_by_site %>%
 
 ### 6. Mammals (20 pts)
 
-The code chunk below has some made-up mammal data. Run the code chunk below to complete question 5.
+The code chunk below has some made-up mammal data. Run the code chunk below to complete Question 6.
 
 ```{r}
 mammals <- data.frame(site = c(1,1,2,3,3,3), 
@@ -230,13 +260,19 @@ mammals <- data.frame(site = c(1,1,2,3,3,3),
                                 'Myotis nigricans', 'Notiosorex crawfordi', 
                                 'Suncus etruscus', 'Myotis nigricans'),
                       density = c(6.2, 5.2, 11.0, 1.2, 9.4, 9.6),
-                      mass = c(4.2, 5, 9.1, 8.6, 4.1, 8.7))
+                      avg_mass = c(4.2, 5, 9.1, 8.6, 4.1, 8.7))
 ```
 
-a.  Use the `separte()` function to create columns for the genus and species (from the taxon column)
-b.  Use `pivot_longer` so that `density` and `mass` end up in one column and the values end up in another column
+Like with many of the questions before, save your output from each task to use in the next task. You can overwrite the `mammals` object each time if you would like to.
+
+a.  Use the `separte()` function to create columns for the genus and species (from the taxon column).
+
+b.  Use `pivot_longer` so that `density` and `mass` end up in one column and the values end up in another column.
+
 c.  Even though the data from (b) is longer, it isn't tidier. Explain why not.
+
 d.  Use the `unite()` function to bring the genus and species column back together as one column with whatever separator you choose.
+
 e.  Use `pivot_wider()` to bring the data frame back to it's original state.
 
 ```{r}
@@ -244,7 +280,7 @@ mammals <- mammals %>%
   separate(taxon, c("genus", "species"), sep = " ")
 
 mammals <- mammals %>% 
-  pivot_longer(density:mass, names_to = "measurement", values_to = "value")
+  pivot_longer(density:avg_mass, names_to = "measurement", values_to = "value")
 
 mammals <- mammals %>% 
   unite("taxon", genus, species, sep = " ")

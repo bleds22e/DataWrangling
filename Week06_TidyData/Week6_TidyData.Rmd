@@ -125,6 +125,10 @@ Often, we might want to remove these rows altogether. To remove rows that have `
 
 ```
 
+### Let's Practice!
+
+In the assignment, work on Question 1a and 1b.
+
 ### `extract()` Values from a Column
 
 There are a number of ways that we can work with character strings, and we will cover many of those more in depth in another lesson. For now, we will stick to one helpful function called `extract()`.
@@ -186,6 +190,10 @@ Let's demonstrate with an example calculating the number of stems per species. F
 ```
 
 To get the site by species matrix, we need to make the dataset wider. Since the species ID will end up as column names, we need to bring the columns back together.
+
+### Let's Practice!
+
+Work on Question 2 in the assignment.
 
 ### `unite` Columns into One
 
