@@ -35,7 +35,7 @@ Write R code to successfully answer each question below.
 
 Feb 25 at 3:30 pm
 
-# Assignment Exercises# Assignment Exercises
+# Assignment Exercises
 
 ### Set-up
 
