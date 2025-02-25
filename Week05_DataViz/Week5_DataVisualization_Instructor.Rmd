@@ -233,7 +233,7 @@ There are a few different ways to do this.
 
 We can show different groups on the same plot by having one aspect of the plot (e.g., color, shape, size) vary by group. To specify this, we add the column name with the groups we are interested into the `aes()` function.
 
-|*Any time we want a feature of the plot to vary by one of the columns in the dataframe we are using to plot, we need to put that argument inside the `aes()` function.*
+| Any time we want a feature of the plot to vary by one of the columns in the data frame we are using to plot, we need to put that argument inside the `aes()` function.
 
 For example, let's say we want to look at the influence of experimental treatment on acacia size.
 
