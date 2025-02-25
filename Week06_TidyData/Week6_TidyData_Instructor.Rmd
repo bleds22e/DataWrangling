@@ -11,19 +11,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Making Untidy Data Tidy
 
-This week's lessons are about how to take untidy data tidy.
+One major task of working with data (especially other people's data!) is to tidy up the dataset so that we can successfully calculate our descriptive statistics with `group_by` and `summarize`, make our data visualizations with `ggplot2`, and eventually conduct our statistical analyses.
 
-First, let's remind ourselves what out "tidy" data means.
+This week's lessons are all about ways to make untidy data tidy. First, let's remind ourselves what out "tidy" data means.
 
-![](tidy_data.jpeg)
+![](images/tidy_data.jpeg){width="75%" fig-align="center"}
 
 Unfortunately, a lot of existing data doesn't follow these rules. The way in which datasets are untidy are always unique.
-
-![](messy_data.jpeg)
 
 However, to analyze the data, we typically need data to be in a tidy format. We can use a number of functions from the `tidyr` package in the `tidyverse` to help make the data tidy.
 
 ## Set-up
+
+### Packages
 
 First, let's load the `tidyverse`.
 
@@ -31,12 +31,24 @@ First, let's load the `tidyverse`.
 library(tidyverse)
 ```
 
+### Data
+
 Now, let's read in our data for this lesson.
+
+Note: In the past, we have either had our data files already in the "Files" folder or we downloaded them from a URL (using the `download.file()` function) into our "Files" folder and then used a function to read it into our environment.
+
+Another way to do this is to read in the data directly from the URL, which is what we do below. This works well if you know the URL is stable.
+
+Of these options, which is the more reproducible option? Why?
 
 ```{r}
 macroplots <- read_tsv("http://datacarpentry.org/semester-biology/data/Macroplot_data_Rev.txt")
-head(macroplots)
+
+# view the dataframe
+macroplots
 ```
+
+### Data Structure
 
 Let's take a look. These data are tree girths from the Western Ghats, a mountainous region on the western edge of the Indian peninsula. This area is considered one of the top biodiversity hotspots in the world.
 
@@ -44,35 +56,46 @@ Any time that a tree had more than one stem (trunk), the diameter of each stem g
 
 Is this good data structure?
 
-Before we get started, let's add a `treeid` column to our data frame using the `mutate` function from `dplyr`. We want one `treeid` for each row because there is one tree for each row
+Before we get started, let's add a `treeid` column to our data frame using the `mutate` function from `dplyr`. We want one `treeid` for each row because there is one tree for each row. We can use the `.before` argument to determine where the new column in located in the data frame.
 
 ```{r}
 macroplots <- macroplots %>%
   mutate(TreeID = 1:n(), .before = PlotID) 
   # the .before argument determines where the new column will be placed
 
-head(macroplots)
+macroplots
+tail(macroplots)
 ```
 
 ## Wide Data vs. Long Data
 
-One of the key ways that we need to wrangle data is between "wide" format and "long format."
+Data are often structured in a way that doesn't allow us to (easily) perform calculations or plot the data. We, therefore, need to wrangle data between "wide" format and "long format" to get the data in a structure that better serves our purposes.
+
+One format isn't necessary better than the other in terms of "tidy" data, although you would often hear people use tidy data and long format data interchangeably. There are some instances where the "longest" form of the data is not actually considered tidy data.
+
+Here, we are going to focus on converting between the types using two functions from the `tidyr` package (part of the `tidyverse`, of course!): `pivot_longer()` and `pivot_wider()`.
+
+Like with the `join` functions, visualizing how these functions work takes a bit of practice. For GIFs demonstrating them, head over to the trusty [tidyexplain](https://www.garrickadenbuie.com/project/tidyexplain/#tidy-data) site.
 
 **Wide Data**
 
-![](wide_data.png){width="50%"}
+In this example of wide data, the data table has one row per tree species with columns for each site.
+
+![](images/wide_data.png){width="50%" fig-align="center"}
 
 **Long Data**
 
-![](long_data.png){width="50%"}
+In this example of long data, the data table has one row per tree species per site, and columns represent unique variables. In this example, the long format is considered tidy data.
+
+![](images/long_data.png){width="50%" fig-align="center"}
 
 One common issue with wide data is that data is spread over multiple columns that should be in one. For example, in the tables above, the "Sites" as column names are violating the rule of not having data in column names. Instead, that data should be in one column, like in the long data.
 
-To get the data in this form, we can use a function from `tidyr` called `pivot_longer`.
+As with
 
 ## Pivot Longer
 
-The `pivot_longer()` function takes the following arguments (as we as many other optional arguments).
+The `pivot_longer()` function takes the following arguments (as well as many other optional arguments). This function was previously called `spread()`, which you might still see in other people's code sometimes.
 
 -   the data frame
 -   columns to include (or not include)
@@ -87,7 +110,7 @@ macro_long <- macroplots %>%
                names_to = "Stem", 
                values_to = "Girth")
 
-head(macro_long)
+macro_long
 ```
 
 As a reminder, the colon specifies all columns starting at `TreeGirth1` and ending at `TreeGirth5`
@@ -131,7 +154,7 @@ The arguments for `extract` are:
 -   the data frame
 -   the name of the column from which we want to extract something
 -   the name(s) of the new column(s)
--   the regular expression specifying what to extract
+-   the regular expression specifying what to extract (we will talk more about regular expressions later)
 
 ```{r}
 macro_long %>%
@@ -142,7 +165,7 @@ head(macro_long)
 
 Here, `TreeGirth.` means the phrase "TreeGirth" followed by a single value. The `()` indicate what part of this string to extract, so just the number at the end of the string.
 
-This gives us the result we want, with just the stem number in the `Stem` column.
+This gives us the result we want, with only the stem number in the `Stem` column.
 
 You may notice that this number is on the left side of the column, not the right. That's because the number is still stored as a character, because it was extracted from a character string.
 
@@ -166,13 +189,13 @@ We can do so using the `separate()` function, which takes the following argument
 -   the data frame
 -   the name of the column to separate
 -   new column names
--   the separator value, character, or position
+-   the separator value, character, or position (if character, it must be in quotation marks, e.g., "-")
 
 ```{r}
 macro_long <- macro_long %>%
   separate(SpCode, c("Genus", "Species"), sep = 4)
 
-head(macro_long)
+macro_long
 # if separated by a - or a space, put in quotation marks (e.g., "-")
 ```
 
@@ -187,16 +210,17 @@ Let's demonstrate with an example calculating the number of stems per species. F
 ```{r}
 stem_counts <- macro_long %>% 
   group_by(PlotID, Genus, Species) %>% 
-  summarize(Count = n())
+  summarize(Count = n()) |> 
+  ungroup()
 
 head(stem_counts)
 ```
 
-To get the site x species matrix, we need to make the dataset wider. Since the species ID will end up as column names, we need to bring the columns back together.
+To get the site by species matrix, we need to make the dataset wider. Since the species ID will end up as column names, we need to bring the columns back together.
 
 ### `unite` Columns into One
 
-To bring multiple columns together into one column, we use a function that does the opposite of `separate()`: \`unite().
+To bring multiple columns together into one column, we use a function that does the opposite of `separate()`: `unite()`.
 
 We specify the data, the name of the new column, and the columns to combine.
 
@@ -303,6 +327,6 @@ While function, this get gets annoying after a while. Thankfully, the `tidyverse
 The argument in `rename()` is the new name of the column equal to the old name.
 
 ```{r}
-rodents <- rodents %>% 
+rodents %>% 
   rename(TrapID = `Trap ID`)
 ```
