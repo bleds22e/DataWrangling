@@ -140,6 +140,7 @@ macro_long <- macro_long %>%
 
 head(macro_long)
 ```
+
 ### Let's Practice!
 
 In the assignment, work on Question 1a and 1b.
