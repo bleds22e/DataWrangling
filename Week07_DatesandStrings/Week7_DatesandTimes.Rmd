@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This week, we are going to learn a bit about how to work with some of the more troublesome data types in R: dates and character strings.
 
-I've divided the lessons and the assignment into 2 parts this week. Today, we will work with the `lubridate` package to learn about working with dates and times. Part 1 of the Assignment will do the same.
+In the first lesson, we are going to work with dates.
 
 ## Set-Up
 
