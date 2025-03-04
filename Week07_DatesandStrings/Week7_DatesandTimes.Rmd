@@ -25,10 +25,6 @@ As is becoming standard for us now, let's start by loading in the `tidyverse`.
 
 We are going to use some stream data from the Santa Cruz River here in Tucson. The data are recorded every 15 minutes; these data are from 2023.
 
-```{r}
-download.file("https://nwis.waterservices.usgs.gov/nwis/iv/?sites=09482495&parameterCd=00060&startDT=2023-01-01T00:00:00.000-07:00&endDT=2023-12-31T23:59:59.999-07:00&siteStatus=all&format=rdb", "santa_cruz.txt")
-```
-
 When we take a look at the data, we can see a number of rows that we need to skip when we read in the data...27 to be exact.
 
 ```{r}
@@ -37,7 +33,7 @@ When we take a look at the data, we can see a number of rows that we need to ski
 
 Ok, we are close but not quite there. The first row of data is metadata rather than data.
 
-To remove that, we are going to use a new function called `slice()`, from the `dplyr` package. It allows us to select (or remove, in our case) rows from a dataframe based on position. We want to remove the first row.
+To remove that, we are going to use a new function called `slice()`, from the `dplyr` package. It allows us to select (or remove, in our case) rows from a data frame based on position. We want to remove the first row.
 
 ```{r}
 
@@ -67,7 +63,7 @@ Dates and times can be particularly challenging to work with, but thankfully the
 
 ### Referencing the Current Date and Time
 
-First, let's start with functions that return the current date and/or time. These are helpful if you want to "stamp" with the date/time something happens (e.g., when exactly did you knit that PDF file).
+First, let's start with functions that return the current date and/or time. These are helpful if you want to "stamp" with the date/time something happens (e.g., when exactly did you knit that PDF file?).
 
 ```{r}
 
@@ -85,15 +81,9 @@ We need to specify the following arguments:
 -   the format of the datetime data
 -   optionally, we can specify the time zone
 
-The way we specify the format of the datetime is a bit unusual. We use "conversion specifications," which are introduced by a `%` and are typically represented by a letter. There are lots of options, but the ones we will use are below:
+The way we specify the format of the datetime is a bit unusual. We use "conversion specifications," which are introduced by a `%` and are typically represented by a letter. There are lots of options, many of which are in the image below:
 
--   `%Y`: 4 digit year
--   `%y`: 2 digit year
--   `%m`: month in numeric form
--   `%d`: day of month in numeric form
--   `%H`: hours in 24-hour format
--   `%M`: minutes
--   `%S`: seconds
+![Table from: <https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html>](common_r_date_formats.png){width="85%" fig-align="center"}
 
 The characters that are used to separate the date and time data are interpreted literally. What does that mean? If the date is separated by `-`, the conversion specifications should be separated by `-`, too.
 
@@ -107,11 +97,15 @@ Let's convert our datetime column to a datetime data class.
 
 We can now see that the `datetime` column is something new, called `POSIXct`.
 
-You don't need to know too much about what that means beyond that this is a common way datetimes are stored in R. Behind the scenes, the date/time is being stored as the number of seconds since Jan 1, 1970 at 00:00:00 UTC, allowing R to perform mathematical calculations with dates and times, which I'll demonstrate latter in the lesson.
+You don't need to know too much about what that means beyond that this is a common way datetimes are stored in R.
+
+Behind the scenes, the date/time is being stored as the number of seconds since Jan 1, 1970 at 00:00:00 UTC, allowing R to perform mathematical calculations with dates and times, which I'll demonstrate later in the lesson.
+
+If you'd like to learn a bit more about working with `POSIXct` (or other variants), I think [this lesson](https://www.neonscience.org/resources/learning-hub/tutorials/dc-convert-date-time-posix-r) from NEON does a pretty nice job.
 
 ### Functions Specifying Date/Time Structure
 
-Any time I try to remember the conversion specifications, I draw a blank. Are they uppercase or lowercase? Some letters don't match the first letter of the data it represents.
+Personally, any time I try to remember the conversion specifications, I draw a blank. Are they uppercase or lowercase? Does the letter match the first letter of the data it represents? (Spoiler alert: not always...)
 
 `lubridate` provides functions with nearly every iteration and combination of year, month, day, hour, minutes, and seconds.
 
