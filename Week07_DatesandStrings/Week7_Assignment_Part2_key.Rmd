@@ -65,10 +65,9 @@ lyrics <- c("This ain't Texas (woo),",
 ```
 
 a.  Use `str_length` to determine how many characters are in each string in the vector.
-b.  Use `str_count` to count the number of times the word "down" occurs in each string.
-c.  Use `str_detect` to find the strings which have the word "Texas" in them.
-d.  Use `str_subset` to select the string that have words in parentheses. Use the following regex as the pattern to match: `\\((.*?)\\)`. Remember that regex patterns need to go inside quotation marks.
-e.  Use `str_extract` to pull out the parentheticals themselves. Use the same regex as in (d)
+b.  Use `str_detect` to find the strings which have the word "Texas" in them.
+c.  Use `str_count` to count the number of times the word "down" occurs in each string. `str_count` is a function that we didn't explicitly cover in the lesson, but the structure of the arguments is comparable to `str_detect`. You can also use the help files to get more information.
+d.  Use `str_extract` to pull out the parentheticals themselves. Use the following regex as the pattern to match: `\\((.*?)\\)`. Remember that regex patterns need to go inside quotation marks.
 
 ```{r}
 #a
@@ -81,9 +80,6 @@ str_count(lyrics, "down")
 str_detect(lyrics, "Texas")
 
 #d
-str_subset(lyrics, "\\((.*?)\\)")
-
-#e
 str_extract(lyrics, "\\((.*?)\\)")
 ```
 
@@ -147,7 +143,7 @@ rodents <- rodents %>%
 
 print("4a:")
 rodents %>% 
-  filter(str_count(Species) != 4)
+  filter(str_length(Species) != 4)
 
 print("4b:")
 rodents %>% 

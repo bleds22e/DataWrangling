@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r}
+```{r message = FALSE}
 library(tidyverse)
 ```
 
@@ -27,15 +27,12 @@ print("2a:")
 str_length(lyrics)
 
 print("2b:")
-str_count(lyrics, "down")
-
-print("2c:")
 str_detect(lyrics, "Texas")
 
-print("2d:")
-str_subset(lyrics, "\\((.*?)\\)")
+print("2c:")
+str_count(lyrics, "down")
 
-print("2e:")
+print("2d:")
 str_extract(lyrics, "\\((.*?)\\)")
 ```
 
@@ -78,7 +75,7 @@ rodents <- rodents %>%
 
 print("4a:")
 rodents %>% 
-  filter(str_count(Species) != 4)
+  filter(str_length(Species) != 4)
 
 print("4b:")
 rodents %>% 

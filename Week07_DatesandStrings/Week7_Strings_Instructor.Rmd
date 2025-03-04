@@ -20,9 +20,7 @@ All functions in the `stringr` package start with `str_`. There are *many* helpf
 We’ll cover a number of helpful `stringr` functions in this lesson:
 
 -   `str_length()` - count the number of characters in the string
--   `str_count()` - count the number of times a pattern matches within a string
 -   `str_detect()` - determine if pattern is found within string
--   `str_subset()` - return subset of strings that match the pattern
 -   `str_extract()` - return portion of each string that matches the pattern
 -   `str_remove()` - remove portion of the string that matches the pattern
 -   `str_replace()` - replace portion of string that matches the pattern with something else
@@ -35,7 +33,7 @@ library(tidyverse)
 
 We will use some real data from my postdoc lab that I was tasked with cleaning.
 
-It's a long story, but I ended up in an aquatic biogeochemistry lab for my postdoc. The lab had 4+ years of data from dugouts, which are small, human-made water resevoirs that are common across the prairie states and provinces.
+It's a long story, but I ended up in an aquatic biogeochemistry lab for my postdoc. The lab had 4+ years of data from dugouts, which are small, human-made water reservoirs that are common across the prairie states and provinces.
 
 Unfortunately, the data were collected by many different people without a standard data entry protocol, so there was extensive data cleaning that needed to happen to bring all of the datasets together across the years.
 
@@ -67,22 +65,10 @@ Let's practice with each of our functions.
 str_length(sampleID)
 ```
 
-`str_count(string, pattern)`: count the number of times a pattern matches within a string
-
-```{r}
-str_count(sampleID, "DEEP")
-```
-
 `str_detect(string, pattern)`: determine if pattern is found within string
 
 ```{r}
 str_detect(sampleID, "DEEP")
-```
-
-`str_subset(string, pattern)`: return subset of strings that match the pattern
-
-```{r}
-str_subset(sampleID, "DEEP")
 ```
 
 `str_extract()`: return portion of each string that matches the pattern
@@ -119,11 +105,11 @@ carbon %>%
   filter(str_detect(SampleID, "AUG"))
 ```
 
-Perhaps we want to filter for sample names over a certain length (for some reason). We can do that as well, though we need to structure our condition a little differently this time, because the output of `str_count` is not a logical vector.
+Perhaps we want to filter for sample names over a certain length (for some reason). We can do that as well, though we need to structure our condition a little differently this time, because the output of `str_length` is not a logical vector.
 
 ```{r}
 carbon %>% 
-  filter(str_count(SampleID) > 13)
+  filter(str_length(SampleID) > 13)
 ```
 
 Alternatively, perhaps we want to create a column with the month the sample was collected. We can use the `str_extract` and `str_replace` columns in a mutate function.
@@ -132,13 +118,6 @@ Alternatively, perhaps we want to create a column with the month the sample was 
 carbon %>% 
   mutate(Month = str_extract(SampleID, "/(...)"),
          Month = str_remove(Month, "/"))
-```
-
-Alternatively, we could create a column for whether or not the sample was taken from below the surface ("DEEP").
-
-```{r}
-carbon %>% 
-  mutate(Deep = str_extract(SampleID, "DEEP"))
 ```
 
 ## Regular Expressions

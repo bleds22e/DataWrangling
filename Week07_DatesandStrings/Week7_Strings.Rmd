@@ -20,9 +20,7 @@ All functions in the `stringr` package start with `str_`. There are *many* helpf
 We’ll cover a number of helpful `stringr` functions in this lesson:
 
 -   `str_length()` - count the number of characters in the string
--   `str_count()` - count the number of times a pattern matches within a string
 -   `str_detect()` - determine if pattern is found within string
--   `str_subset()` - return subset of strings that match the pattern
 -   `str_extract()` - return portion of each string that matches the pattern
 -   `str_remove()` - remove portion of the string that matches the pattern
 -   `str_replace()` - replace portion of string that matches the pattern with something else
@@ -63,37 +61,25 @@ Let's practice with each of our functions.
 
 ```
 
-`str_count(string, pattern)`: count the number of times a pattern matches within a string
-
-```{r}
-
-```
-
 `str_detect(string, pattern)`: determine if pattern is found within string
 
 ```{r}
 
 ```
 
-`str_subset(string, pattern)`: return subset of strings that match the pattern
+`str_extract(string, pattern)`: return portion of each string that matches the pattern
 
 ```{r}
 
 ```
 
-`str_extract()`: return portion of each string that matches the pattern
+`str_remove(string, pattern)` - remove portion of the string that matches the pattern
 
 ```{r}
 
 ```
 
-`str_remove()` - remove portion of the string that matches the pattern
-
-```{r}
-
-```
-
-`str_replace()`: replace portion of string that matches the pattern with something else
+`str_replace(string, pattern, replacement)`: replace portion of string that matches the pattern with something else
 
 ```{r}
 
@@ -111,7 +97,7 @@ Perhaps we want only samples that were collected in August. We can use the `str_
 
 ```
 
-Perhaps we want to filter for sample names over a certain length (for some reason). We can do that as well, though we need to structure our condition a little differently this time, because the output of `str_count` is not a logical vector.
+Perhaps we want to filter for sample names over a certain length (for some reason). We can do that as well, though we need to structure our condition a little differently this time, because the output of `str_length` is not a logical vector.
 
 ```{r}
 
