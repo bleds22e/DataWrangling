@@ -11,18 +11,15 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 # Reproducibility in RStudio
 
-In this week's lesson, we will be talking broadly about how to make our data analyses reproducible.
-
-We will do this through 2 different approaches.
-
-1.  Reproducibility in RStudio
-2.  Using git/GitHub for version control
+In this week's lesson, we will be talking broadly about how to make our data analyses reproducible and how to start tackling larger projects.
 
 For today's lesson, we will focus on how we can increase reproducibility within RStudio.
 
 ## R vs. RStudio
 
 Before we begin, it is worth reminding ourselves of the difference between R and RStudio.
+
+![](../images/01-01-rstudio-and-r.png){width="75%" fig-align="center"}
 
 We are making the shift from working in Posit Cloud to using R and RStudio on your own device, meaning you should have both R and RStudio downloaded on your computer.
 
@@ -42,7 +39,7 @@ Our first step is to make sure our code runs anytime and anywhere. That includes
 
 Below are some guidelines for making this happen:
 
-**1. Make sure things you did before don't matter (if they shouldn't)**
+### 1. Make sure things you did before don't matter (if they shouldn't)
 
 Computers store the results of each command that we run in sequence. Occasionally, we will make a change to the code (perhaps we are testing a complicated piece of code) and the code will look like it still runs.
 
@@ -50,7 +47,7 @@ Sometimes, that line of code only works because of something we did earlier in t
 
 We have actually been dealing with this scenario already. When we "knit" a .Rmd file--into a PDF, in our case--the document runs from scratch. If there is something in the code that is out of order or an object that isn't created in the code, the RMarkdown file won't create the PDF.
 
-**2. Clearing environments and restarting R**
+### 2. Clearing environments and restarting R
 
 We can check that our code runs without having to knit, though. We have a few options.
 
@@ -59,7 +56,7 @@ We can check that our code runs without having to knit, though. We have a few op
     -   Doesn't unload packages
     -   Useful when developing code
 
-![](images/ClearEnvironment.png){width="50%"}
+![](../images/ClearEnvironment.png){width="50%" fig-align="center"}
 
 -   Restart R to get a clean environment
 
@@ -71,7 +68,7 @@ We can check that our code runs without having to knit, though. We have a few op
 
 For all of these options, we are trying to make sure that the code runs fully and produces the desired result without needed any tweaks.
 
-**3. Stop saving the current state of the environment**
+### 3. Stop saving the current state of the environment
 
 The typical default in RStudio is to automatically save the state of the environment when you close out of RStudio. Alternatively, it might ask if you want to save or not.
 
@@ -79,11 +76,13 @@ If you choose to save the workspace, everything in the environment will get relo
 
 While that might sound convenient, it can actually cause a lot of problems (see #1 above). To reduce the risk of having code that doesn't fully run on one click, we want to stop R from storing the state of the environment when we close RStudio.
 
-To set the default in RStudio to not save the workspace, we want to do the following: \> `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
+To set the default in RStudio to not save the workspace, we want to do the following:
 
-Unclick `Restore .RData into workspace at startup`
+| `Tools` &rightarrow `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
 
-![](images/rstudio-workspace.png)
+Uncheck `Restore .RData into workspace at startup`
+
+![](../images/rstudio-workspace.png){width="50%" fig-align="center"}
 
 **4. Make sure code works on other computers**
 
@@ -218,13 +217,27 @@ Each project is a self-contained unit of work in a specific folder/directory. It
 
 Let's set up an R Project on our own computers.
 
-> `File` -\> `New Project` -\> `New Directory` -\> `New Project` -\> [insert_name_here]
+| \> `File` -\> `New Project` -\> `New Directory` -\> `New Project` -\> [insert_name_here]
 
-![](images/rstudio-project-1.png){width="50%"} ![](images/rstudio-project-2.png){width="50%"} ![](images/rstudio-project-3.png){width="50%"}
+1.  Select "New Directory"
+
+![](../images/rstudio-project-1.png){width="50%" fig-align="center"}
+
+2.  Select "Empty Project"
+
+![](../images/rstudio-project-2.png){width="50%" fig-align="center"}
+
+3.  Use the "Browse" button to find a location for your project folder and name it appropriately.
+
+![](../images/rstudio-project-3.png){width="50%" fig-align="center"}
 
 If you prefer, you can use the `Existing Directory` option to choose a folder that already exists that you want to turn into an R Project.
 
 Once we create our new project, RStudio will create a `.Rproj` file in that directory. This file is not the project itself, but it does contain information about the project. We do not manually change this file.
+
+To open an RStudio Project, you will want to open the `.Rproj` file.
+
+![](../images/rproj_file.png){width="50%" fig-align="center"}
 
 We probably want to move this file into our project directory! We can also add our Shrub Dimensions data into the project directory as well. I will demonstrate how to do this manually.
 
@@ -279,9 +292,9 @@ Setting up a good structure will save you a lot of frustration in long run, even
 
 ### File Structure
 
-![](images/project-based-directory-organization.jpg){width="50%"}
+![](../images/project-based-directory-organization.jpg){width="50%"}
 
-If possible, we want to have all file associated with the project in one main folder. This main folder should be the RProject folder.
+If possible, we want to have all files associated with the project in one main folder. This main folder should be the RProject folder.
 
 From there, we can (and should...) have subfolders. What exactly those subfolders are is up to you. A good starting place is to have something like this (or like the image above):
 
