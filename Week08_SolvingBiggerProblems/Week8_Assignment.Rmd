@@ -191,8 +191,54 @@ The `setdiff()` function takes 2 dataframes and looks for any differences. The o
 
 ### 5. Preparing for Next Week
 
-This is not graded homework, but I want us to be as prepared for next week as we can be.
+This is not graded homework, but I want us to be as prepared for next week as we can be! You don't need to type anything here for submission.
 
-That means that I would like you to have R, RStudio, and git installed on your personal computer and you have registered for a GitHub account (If you haven't done any of this before, it might be a bit of a slog).
+#### Task 1: Prep for Version Control
 
-To do so, I would like you to follow the steps in Chapters 4, 5, and 6 from [Happy git with R](https://happygitwithr.com/install-intro). D2L will have some additional resources in next week's module description, as well. Please don't hesitate to reach out if you're getting stuck!
+Next week, we will be talking about version control!
+
+You will want to have `git` installed on your personal computer and have created a GitHub account.
+
+To do so, I would like you to follow the steps in Chapters 4 and 6 from [Happy git with R](https://happygitwithr.com/install-intro). D2L will have some additional resources in next week's module description, as well. Please don't hesitate to reach out if you're getting stuck!
+
+#### Task 2: Start Thinking about Your Final Project
+
+While we are still quite a ways away from your final project submission, I would like you to at least start thinking about what dataset you would like to use for the assignment. In next week's assignment, you will submit your chosen dataset and answer some questions about it.
+
+#### **Project Guidelines**
+
+As a reminder, the general guidelines for the final project that the project will need to include core concepts covered in a certain number of weeks (6 for WFSC 496B, 10 for WFSC 596B), bringing together many aspects of what we will have learned through the course of the semester. You'll get the details in a few weeks.
+
+Generally speaking, you'll want a somewhat *messy* dataset to work with for your final project. A dataset that is too clean won't give you all that much data wrangling to do.
+
+Note: Your data set does not need to be ecological in nature if you have another interest. It should not be a dataset that we have used in class (see me if you have questions).
+
+#### **Where to Find Data**
+
+IMPORTANT!: *If you have your own data from a research project, use it!*
+
+If you *do not* have your own data, here are some suggestions for where to find data:
+
+1.  From your lab group
+
+If you are working in a lab group, you can almost certainly find data to work with from your lab! Ask your PI or other lab members if you can use their data for this project. It is often helpful to have data that relates somewhat to a project or topic you are familiar with.
+
+2.  From the "Data is Plural" Archive
+
+[Data is Plural](https://www.data-is-plural.com/) is a weekly newsletter about compiled datasets that people have found. They have an [archive](https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit?usp=sharing) of all of the datasets that have been included in the newsletters, which is nearly 2000.
+
+Just because the datasets have been compiled does not mean that they are clean! I've used a few of them in class as demonstrations.
+
+3.  From an agency, NGO, or non-profit
+
+If you have contacts in a local, state, or federal agency or non-profit, they likely have some languishing data floating around that you can clean up.
+
+4.  A data repository
+
+There are many data repositories where you can find data (e.g., [UA's ReDATA](https://arizona.figshare.com/), [Environmental Data Initiative](https://edirepository.org/), [Long Term Ecological Research](https://lternet.edu/using-lter-data/) Network, [NPS DataStore](https://irma.nps.gov/DataStore/)).
+
+I would recommend sticking to some of the other options above to keep your search a bit more constrained, but feel free to ultimately use any dataset you find that you would like to use.
+
+5.  From me!
+
+If you are struggling to find a dataset that you would like to work with, I have a number of datasets that could be of use. Just let me know :)

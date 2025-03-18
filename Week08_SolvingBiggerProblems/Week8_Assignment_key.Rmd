@@ -44,6 +44,7 @@ Load in the `tidyverse`
 ```{r}
 library(tidyverse)
 ```
+
 ### 2. Portal Data Review (25 points)
 
 Load them into R using `read_csv()`.
@@ -60,7 +61,7 @@ e.  Make a scatter plot with `weight` on the x-axis and `hindfoot_length` on the
 f.  Make a histogram of weights with a separate subplot for each `species_id`. Do not include species with no weights. Set the `scales` argument in the `facet_wrap()` function to `"free_y"` so that the y-axes can vary. Include good axis labels.
 g.  (Challenge, optional) Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, colored by `species_id`, with a different facet (i.e., subplot) for each of three `plot_type`'s `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`. Include good axis labels and a title for the plot. Export the plot to a `png` file.
 
-```{r}
+```{r message = FALSE}
 surveys <- read_csv('surveys.csv')
 species <- read_csv('species.csv')
 plots <- read_csv('plots.csv')
@@ -130,47 +131,17 @@ ggplot(data = plot_data, aes(x = weight, fill = species_id)) +
 
 ### 3. Megafaunal Extinction (35 points)
 
-There were a relatively large number of extinctions of mammalian species roughly
-10,000 years ago. To help understand why these extinctions happened scientists
-are interested in understanding if there were differences in the size of the
-species that went extinct and those that did not. You are going to reproduce the
-three main figures from one of the major papers on this topic [Lyons et al.
-2004](http://www.evolutionary-ecology.com/issues/v06n03/ddar1499.pdf).
+There were a relatively large number of extinctions of mammalian species roughly 10,000 years ago. To help understand why these extinctions happened scientists are interested in understanding if there were differences in the size of the species that went extinct and those that did not. You are going to reproduce the three main figures from one of the major papers on this topic [Lyons et al. 2004](http://www.evolutionary-ecology.com/issues/v06n03/ddar1499.pdf).
 
-You will do this using a 
-[large dataset of mammalian body sizes]({{ site.baseurl }}/data/mammal-size-data-clean.tsv)
-that has data on the mass of recently extinct mammals as well as extant mammals
-(i.e., those that are still alive today).
+You will do this using a [large dataset of mammalian body sizes](%7B%7B%20site.baseurl%20%7D%7D/data/mammal-size-data-clean.tsv) that has data on the mass of recently extinct mammals as well as extant mammals (i.e., those that are still alive today).
 
-a. Import the data into R. As with most real world data there are a some things
-   about the dataset that you'll need to identify and address during the import
-   process. Print out the structure of the resulting data frame.
-b. Create a plot showing histograms of masses for mammal species that are still
-   present and those that went extinct during the pleistocene (`extant` and
-   `extinct` in the `status` column). There should be one sub-plot for each
-   continent and that sub-plot should show the histograms for both groups as a
-   stacked histogram. To match the original analysis don't include islands
-   (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA`
-   (because `EA` had no species that went extinct in the pleistocene). Scale the x-axis
-   logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
-c. The 2nd figure in the original paper looks in more detail at two orders,
-   *Xenarthra* and *Carnivora*, which showed extinctions in North and South
-   America. Create a figure similar to the one in Part 2, but that shows 4
-   sub-plots, one for each order on each of the two continents. Still scale the x-axis
-   logarithmically, but use 19 bins to roughly match the original figure.
-d. The 3rd figure in the original paper explores Australia as a case study.
-   Australia is interesting because there is good data on both Pleistocene
-   extinctions (`extinct` in the `status` column) and more modern extinctions
-   occurring over the last 300 years (`historical` in the `status` column). Make
-   single stacked histogram that compares the sizes of `extinct`, `extant`, and
-   `historical` statuses. Scale the x-axis logarithmically and use 25 bins to
-   roughly match the original figure. Use good axis labels.
-e. (Challenge, optional) Instead of excluding continent `EA` by name in your analysis (in
-   part 2), modify your code to determine from the data which continents had
-   species that went extinct in the pleistocene and only include those continents.
-   
-   
-```{r}
+a.  Import the data into R. As with most real world data there are a some things about the dataset that you'll need to identify and address during the import process. Print out the structure of the resulting data frame.
+b.  Create a plot showing histograms of masses for mammal species that are still present and those that went extinct during the pleistocene (`extant` and `extinct` in the `status` column). There should be one sub-plot for each continent and that sub-plot should show the histograms for both groups as a stacked histogram. To match the original analysis don't include islands (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA` (because `EA` had no species that went extinct in the pleistocene). Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
+c.  The 2nd figure in the original paper looks in more detail at two orders, *Xenarthra* and *Carnivora*, which showed extinctions in North and South America. Create a figure similar to the one in Part 2, but that shows 4 sub-plots, one for each order on each of the two continents. Still scale the x-axis logarithmically, but use 19 bins to roughly match the original figure.
+d.  The 3rd figure in the original paper explores Australia as a case study. Australia is interesting because there is good data on both Pleistocene extinctions (`extinct` in the `status` column) and more modern extinctions occurring over the last 300 years (`historical` in the `status` column). Make single stacked histogram that compares the sizes of `extinct`, `extant`, and `historical` statuses. Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
+e.  (Challenge, optional) Instead of excluding continent `EA` by name in your analysis (in part 2), modify your code to determine from the data which continents had species that went extinct in the pleistocene and only include those continents.
+
+```{r message=FALSE, warning=FALSE}
 print("3a")
 mammal_sizes <- read_tsv("mammal-size-data-clean.txt", na = c("-999"))
 str(mammal_sizes)
@@ -229,18 +200,19 @@ mammal_sizes_cleaned
 
 ### 4. Palmer Penguins (35 points)
 
-In this question, we are going to take some raw data and recreate a clean dataset. This is from the `palmerpenguins` R package, which has body size measurements from 3 species of Antarctic penguins from 2007-2009. 
-First, we need to load in the package and take a look at the clean version of the data that we are trying to recreate.
-```{r}
+In this question, we are going to take some raw data and recreate a clean dataset. This is from the `palmerpenguins` R package, which has body size measurements from 3 species of Antarctic penguins from 2007-2009. First, we need to load in the package and take a look at the clean version of the data that we are trying to recreate.
+
+```{r message=FALSE}
 library(palmerpenguins)
 
 # because the data is from a package, it doesnt automatically show up in our environment unless with use the assignment arrow to place it there
 penguins <- penguins
 head(penguins)
 ```
+
 Now, let's bring in the original 3 datasets that were used to create this cleaned version (`penguins`)
 
-```{r}
+```{r message = FALSE}
 # Adelie penguin data from: https://doi.org/10.6073/pasta/abc50eed9138b75f54eaada0841b9b86
 url_adelie <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.219.3&entityid=002f3893385f710df69eeebe893144ff"
 adelie <- read_csv(url_adelie)
@@ -254,30 +226,34 @@ url_chinstrap <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-
 chinstrap <- read_csv(url_chinstrap)
 ```
 
+Problem breakdown (both `a` and `b` are graded for completion, not accuracy) 
 
-Problem breakdown (both a and b are graded for completion, not accuracy)
-a. Start by breaking down the problem into plain language. This stage shouldn't include any specific functions but is allowing you to talk through the steps conceptually.
+a.  Start by breaking down the problem into plain language. This stage shouldn't include any specific functions but is allowing you to talk through the steps conceptually.
 
-b. Make some predictions about the order in which you will want to accomplish this task, including which functions you will likely be using.
+b.  Make some predictions about the order in which you will want to accomplish this task, including which functions you will likely be using.
 
-c. Recreate the clean dataset (`penguins`). Below are some tips (in no particular order) that will likely be helpful along the way
+c.  Recreate the clean dataset (`penguins`). Below are some tips (in no particular order) that will likely be helpful along the way
 
-  -   There is one instance in the sex column of one of the species where an unknown sex is marked with a `.` instead of `NA`
-  -   You do not need to match up data types exactly (character and factors are mostly interchangeable; same with integer, numeric, and double)
-  -   The year column is derived from the `Date Egg` column in the original 3 dataframes
-  -   Culmen is basically a fancy word for a bird's bill
-  -   I've taught you multiple ways to pull out a specific part of a character string. Additional helpful hints are that the regex for extracting the first word in a string is `'\\w*'`; there is also a function called `word()` that is part of the `stringr` package.
+    -   There is one instance in the sex column of one of the species where an unknown sex is marked with a `.` instead of `NA`
+    -   You do not need to match up data types exactly (character and factors are mostly interchangeable; same with integer, numeric, and double)
+    -   The year column is derived from the `Date Egg` column in the original 3 dataframes
+    -   Culmen is basically a fancy word for a bird's bill
+    -   I've taught you multiple ways to pull out a specific part of a character string. Additional helpful hints are that the regex for extracting the first word in a string is `'\\w*'`; there is also a function called `word()` that is part of the `stringr` package.
 
-You will know that you have successfully completed the task at hand if you run the code `setdiff(your_clean_df, penguins)`, and the result has 0 rows. 
+You will know that you have successfully completed the task at hand if you run the code `setdiff(your_clean_df, penguins)`, and the result has 0 rows.
 
 The `setdiff()` function takes 2 dataframes and looks for any differences. The output is a dataframe with rows that do not match up. If you have 0 rows that don't match, that means all rows do match!
 
-
-```{r}
+```{r message = FALSE}
 penguins_raw <- bind_rows(adelie, gentoo, chinstrap)
 
 penguins_clean <- penguins_raw %>% 
-  select(species = Species, island = Island, bill_length_mm = `Culmen Length (mm)`, bill_depth_mm = `Culmen Depth (mm)`, flipper_length_mm = `Flipper Length (mm)`, body_mass_g = `Body Mass (g)`, sex = Sex, year = `Date Egg`) %>% 
+  select(species = Species, island = Island, 
+         bill_length_mm = `Culmen Length (mm)`, 
+         bill_depth_mm = `Culmen Depth (mm)`, 
+         flipper_length_mm = `Flipper Length (mm)`, 
+         body_mass_g = `Body Mass (g)`, 
+         sex = Sex, year = `Date Egg`) %>% 
   mutate(sex = na_if(sex, "."),
          species = str_extract(species, '\\w*'),
          sex = tolower(sex),
@@ -285,4 +261,3 @@ penguins_clean <- penguins_raw %>%
 
 setdiff(penguins_clean, penguins)
 ```
-

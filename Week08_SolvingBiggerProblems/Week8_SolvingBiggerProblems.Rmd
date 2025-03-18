@@ -11,17 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Solving Bigger Problems
 
-This week, we are going to take a break learning commands to talk about
-general approaches to programming.
+This week, we are going to take a break learning commands to talk about general approaches to programming.
 
-Real computational tasks tend to be complicated. To accomplish them, you
-need to **think before you code**.
+Real computational tasks tend to be complicated. To accomplish them, you need to **think before you code**.
 
 ## Set Up
 
-For this lesson and the assignment, we will be using a number of
-datasets, including the 3 datasets with Portal data that we are already
-somewhat familiar with.
+For this lesson and the assignment, we will be using a number of datasets, including the 3 datasets with Portal data that we are already somewhat familiar with.
 
 Let's read in the `tidyverse` and download our datasets to get started.
 
@@ -42,9 +38,7 @@ download.file("https://datacarpentry.org/semester-biology/data/mammal-size-data-
 
 ## Problem Decomposition steps
 
-One great way to work through the steps of coding is to break down the
-problem into smaller, more manageable chunks. This can also help you get
-an idea of the order in which to approach the coding.
+One great way to work through the steps of coding is to break down the problem into smaller, more manageable chunks. This can also help you get an idea of the order in which to approach the coding.
 
 Here are some good guidelines:
 
@@ -54,36 +48,26 @@ Here are some good guidelines:
     c.  Ask for clarification
 2.  Break the problem down
     a.  Write down the pieces, on paper or as comments in a file
-    b.  Break complicated pieces down until all pieces are small and
-        manageable
+    b.  Break complicated pieces down until all pieces are small and manageable
 3.  Code one small piece at a time
     a.  Test it on it's own
     b.  Fix any problems before proceeding
 
 ### Let's Practice!
 
-Take a look at Question 4 in the assignment. Spend a few minutes reading
-through the question, restate the question in your on words, and then
-break down the steps.
+Take a look at Question 4 in the assignment. Spend a few minutes reading through the question, restate the question in your on words, and then break down the steps.
 
 ### Iteration
 
-As you've probably discovered by now, programming requires a lot of
-iteration to get to code to do exactly what you want it to do and
-produce the output you are looking for.
+As you've probably discovered by now, programming requires a lot of iteration to get to code to do exactly what you want it to do and produce the output you are looking for.
 
-When writing more and more complex code, it can help to start simple and
-build the code up.
+When writing more and more complex code, it can help to start simple and build the code up.
 
-> Write a simple version -\> Make sure it works -\> Make sure you
-> understand it -\> Modify it to make it more complicated -\> Repeat
-> until finished
+> Write a simple version -\> Make sure it works -\> Make sure you understand it -\> Modify it to make it more complicated -\> Repeat until finished
 
-Perhaps we want to calculate the average hindfoot length in cm for each
-rodent species at Portal.
+Perhaps we want to calculate the average hindfoot length in cm for each rodent species at Portal.
 
-Let's start by breaking down the problem. Then, we can add one piece at
-a time
+Let's start by breaking down the problem. Then, we can add one piece at a time
 
 ```{r}
 # join species and surveys data
@@ -105,9 +89,7 @@ avg_rodent_hf_cm <- surveys %>%
 
 ## Debugging
 
-A major part of the iterative process of coding is fixing errors that
-come up! You've already had quite a bit of practice with this working on
-your assignments, but let's talk about some general strategies together.
+A major part of the iterative process of coding is fixing errors that come up! You've already had quite a bit of practice with this working on your assignments, but let's talk about some general strategies together.
 
 1.  Be a scientist.
 
@@ -122,23 +104,17 @@ Develop hypotheses!
 -   See where the code failed.
 -   Read the error message.
 -   Observe what the code is doing.
--   Look at the current state of the environment. This gives you a
-    current snapshot of what is going on - Talk through the code
--   [Rubber duck
-    programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
+-   Look at the current state of the environment. This gives you a current snapshot of what is going on - Talk through the code
+-   [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
 
 3.  Run the code line by line checking each step.
 4.  Use generative AI (e.g., ChatGPT)
 
 ### Example
 
-Below, we have a code chunk with some code that is mean to summarize
-some of the Portal data and then plot it. However, as you'll see when
-you try to run the code, we have some errors.
+Below, we have a code chunk with some code that is mean to summarize some of the Portal data and then plot it. However, as you'll see when you try to run the code, we have some errors.
 
-First, copy the code into a new code chunk below. Spend a few minutes
-working through this code chunk to debug it. Utilize some of the
-strategies above.
+First, copy the code into a new code chunk below. Spend a few minutes working through this code chunk to debug it. Utilize some of the strategies above.
 
 Code chunk to debug: leave as is for reference.
 
@@ -160,29 +136,21 @@ ggplot(do_count_by_year, aes(x = year, y = count)) %>%
 
 Insert a code chunk here. Copy the code from above and work to debug it.
 
-Now, let's copy the code into ChatGPT and see what it finds and what it
-gets wrong.
+Now, let's copy the code into ChatGPT and see what it finds and what it gets wrong.
 
 ## Finding Help
 
-In this class, I've provided the instructor versions of the lessons in
-class for you to have a reference sheets. They are super helpful, but
-they won't always have exactly what you need, especially when you are
-working with your own datasets.
+In this class, I've provided the instructor versions of the lessons in class for you to have a reference sheets. They are super helpful, but they won't always have exactly what you need, especially when you are working with your own datasets.
 
-The good news is that there is help! In fact, professional programmers
-use Google regularly; I am constantly googling how to acheive certain
-tasks, including for the lessons and assignments in this class!
+The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly googling how to acheive certain tasks, including for the lessons and assignments in this class!
 
-There is a bit of an art to learning how to search, read, and apply
-online help. Let's talk through a few tips that you might find helpful.
+There is a bit of an art to learning how to search, read, and apply online help. Let's talk through a few tips that you might find helpful.
 
 ### In the Search:
 
 -   Get the vocabulary right
 -   Avoid extra words
--   Specify the programming language (and specify `tidyverse` if that
-    matters to you)
+-   Specify the programming language (and specify `tidyverse` if that matters to you)
 
 ### Results:
 
@@ -195,8 +163,7 @@ online help. Let's talk through a few tips that you might find helpful.
 -   Glance at the comments
 -   Test & modify the example
     -   But don't blindly paste things you don't understand
-    -   Reputation can help - e.g., StackOverflow w/lots of positive
-        votes
+    -   Reputation can help - e.g., StackOverflow w/lots of positive votes
 
 **Blog posts**
 
@@ -211,14 +178,8 @@ online help. Let's talk through a few tips that you might find helpful.
 
 ### Testing and modifying answers
 
-Often, we won't be able to tell right away if the code provided in the
-answer will work for our specific data or situation. We always need to
-test it out.
+Often, we won't be able to tell right away if the code provided in the answer will work for our specific data or situation. We always need to test it out.
 
-First, if given a reproducible examples (reprex), meaning is has data
-and code you can copy and paste to run, do so! This can help with
-understanding what the code is doing and whether or not it will work in
-your case.
+First, if given a reproducible examples (reprex), meaning is has data and code you can copy and paste to run, do so! This can help with understanding what the code is doing and whether or not it will work in your case.
 
-From there, you can begin to modify the example to include your data and
-specific values.
+From there, you can begin to modify the example to include your data and specific values.

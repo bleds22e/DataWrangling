@@ -6,15 +6,15 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
-```{r}
+```{r message = FALSE}
 library(tidyverse)
 ```
 ### 2. Portal Data Review (25 points)
 
-```{r}
+```{r message = FALSE}
 surveys <- read_csv('surveys.csv')
 species <- read_csv('species.csv')
 plots <- read_csv('plots.csv')
@@ -88,7 +88,7 @@ ggplot(data = plot_data, aes(x = weight, fill = species_id)) +
    
 ```{r}
 print("3a")
-mammal_sizes <- read_tsv("mammal-size-data-clean.tsv", na = c("-999"))
+mammal_sizes <- read_tsv("mammal-size-data-clean.txt", na = c("-999"))
 str(mammal_sizes)
 
 # Figure 1
@@ -145,6 +145,7 @@ mammal_sizes_cleaned
 
 ### 4. Palmer Penguins (35 points)
 
+Note: you don't need to worry about data types for each column matching up exactly (e.g., the Species and Island columns can be character data and don't need to be converted to factors). As long as setdiff() comes back with 0 rows, you're good to go.
 ```{r}
 library(palmerpenguins)
 
