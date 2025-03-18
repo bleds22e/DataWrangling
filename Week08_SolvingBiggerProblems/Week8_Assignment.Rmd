@@ -33,7 +33,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-March 18 at midnight MST
+March 25 at before class
 
 # Assignment Exercises
 
@@ -133,10 +133,14 @@ There were a relatively large number of extinctions of mammalian species roughly
 
 You will do this using a large dataset of mammalian body sizes (`mammal-size-data-clean.txt`) that has data on the mass of recently extinct mammals as well as extant mammals (i.e., those that are still alive today).
 
-a.  Import the data into R. As with most real world data there are a some things about the dataset that you'll need to identify and address during the import process. Print out the structure of the resulting data frame.
+a.  Read the data into R. As with most real world data there are a some things about the dataset that you'll need to identify and address during the import process. You should do this _within_ the `read_` function, not after you have read in the file. Print out the structure of the resulting data frame.
+
 b.  Create a plot showing histograms of masses for mammal species that are still present and those that went extinct during the Pleistocene (`extant` and `extinct` in the `status` column). There should be one sub-plot for each continent and that sub-plot should show the histograms for both groups as a stacked histogram. To match the original analysis don't include islands (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA` (because `EA` had no species that went extinct in the Pleistocene). Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
+
 c.  The 2nd figure in the original paper looks in more detail at two orders, *Xenarthra* and *Carnivora*, which showed extinctions in North and South America. Create a figure similar to the one in Part 2, but that shows 4 sub-plots, one for each order on each of the two continents. Still scale the x-axis logarithmically, but use 19 bins to roughly match the original figure.
+
 d.  The 3rd figure in the original paper explores Australia as a case study. Australia is interesting because there is good data on both Pleistocene extinctions (`extinct` in the `status` column) and more modern extinctions occurring over the last 300 years (`historical` in the `status` column). Make single stacked histogram that compares the sizes of `extinct`, `extant`, and `historical` statuses. Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
+
 e.  (Challenge, optional) Instead of excluding continent `EA` by name in your analysis (in part 2), modify your code to determine from the data which continents had species that went extinct in the Pleistocene and only include those continents.
 
 ### 4. Palmer Penguins (35 points)
@@ -191,54 +195,6 @@ The `setdiff()` function takes 2 dataframes and looks for any differences. The o
 
 ### 5. Preparing for Next Week
 
-This is not graded homework, but I want us to be as prepared for next week as we can be! You don't need to type anything here for submission.
+This is not graded homework, but I want us to be as prepared for next week as we can be.
 
-#### Task 1: Prep for Version Control
-
-Next week, we will be talking about version control!
-
-You will want to have `git` installed on your personal computer and have created a GitHub account.
-
-To do so, I would like you to follow the steps in Chapters 4 and 6 from [Happy git with R](https://happygitwithr.com/install-intro). D2L will have some additional resources in next week's module description, as well. Please don't hesitate to reach out if you're getting stuck!
-
-#### Task 2: Start Thinking about Your Final Project
-
-While we are still quite a ways away from your final project submission, I would like you to at least start thinking about what dataset you would like to use for the assignment. In next week's assignment, you will submit your chosen dataset and answer some questions about it.
-
-#### **Project Guidelines**
-
-As a reminder, the general guidelines for the final project that the project will need to include core concepts covered in a certain number of weeks (6 for WFSC 496B, 10 for WFSC 596B), bringing together many aspects of what we will have learned through the course of the semester. You'll get the details in a few weeks.
-
-Generally speaking, you'll want a somewhat *messy* dataset to work with for your final project. A dataset that is too clean won't give you all that much data wrangling to do.
-
-Note: Your data set does not need to be ecological in nature if you have another interest. It should not be a dataset that we have used in class (see me if you have questions).
-
-#### **Where to Find Data**
-
-IMPORTANT!: *If you have your own data from a research project, use it!*
-
-If you *do not* have your own data, here are some suggestions for where to find data:
-
-1.  From your lab group
-
-If you are working in a lab group, you can almost certainly find data to work with from your lab! Ask your PI or other lab members if you can use their data for this project. It is often helpful to have data that relates somewhat to a project or topic you are familiar with.
-
-2.  From the "Data is Plural" Archive
-
-[Data is Plural](https://www.data-is-plural.com/) is a weekly newsletter about compiled datasets that people have found. They have an [archive](https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit?usp=sharing) of all of the datasets that have been included in the newsletters, which is nearly 2000.
-
-Just because the datasets have been compiled does not mean that they are clean! I've used a few of them in class as demonstrations.
-
-3.  From an agency, NGO, or non-profit
-
-If you have contacts in a local, state, or federal agency or non-profit, they likely have some languishing data floating around that you can clean up.
-
-4.  A data repository
-
-There are many data repositories where you can find data (e.g., [UA's ReDATA](https://arizona.figshare.com/), [Environmental Data Initiative](https://edirepository.org/), [Long Term Ecological Research](https://lternet.edu/using-lter-data/) Network, [NPS DataStore](https://irma.nps.gov/DataStore/)).
-
-I would recommend sticking to some of the other options above to keep your search a bit more constrained, but feel free to ultimately use any dataset you find that you would like to use.
-
-5.  From me!
-
-If you are struggling to find a dataset that you would like to work with, I have a number of datasets that could be of use. Just let me know :)
+That means that I would like you to have R and RStudio downloaded on your own device (for real this time).

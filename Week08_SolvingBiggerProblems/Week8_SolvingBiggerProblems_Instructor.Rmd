@@ -72,7 +72,21 @@ Perhaps we want to calculate the average hindfoot length in cm for each rodent s
 Let's start by breaking down the problem. Then, we can add one piece of code at a time.
 
 ```{r}
+# join species and surveys data
+# filter for rodent species only
+# convert hindfoot length to cm
+# group data by species
+# summary data of hindfoot length
 
+surveys <- read_csv("surveys.csv")
+species <- read_csv("species.csv")
+
+avg_rodent_hf_cm <- surveys %>% 
+  inner_join(species, join_by(species_id)) %>% 
+  filter(taxa == "Rodent") %>% 
+  mutate(hindfoot_cm = hindfoot_length / 10) %>% 
+  group_by(species_id) %>% 
+  summarise(mean_hf = mean(hindfoot_cm, na.rm = TRUE))
 ```
 
 ## Debugging
@@ -122,6 +136,22 @@ ggplot(do_count_by_year, aes(x = year, y = count) %>%
 ```
 
 Insert a code chunk here. Copy the code from above and work to debug it.
+```{r}
+surveys <- read_csv('surveys.csv')
+species <- read_csv('species.csv')
+
+do_counts_by_year <- surveys %>% 
+  filter(species_id == "DO") %>% 
+  group_by(year) |> 
+  count()
+
+ggplot(do_counts_by_year, aes(x = year, y = n)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Year", y = "Count") +
+  theme_bw()
+```
+
 
 Now, let's copy the code into ChatGPT and see what it finds and what it gets wrong.
 
@@ -129,17 +159,16 @@ Now, let's copy the code into ChatGPT and see what it finds and what it gets wro
 
 In this class, I've provided the instructor versions of the lessons in class for you to have a reference sheets. They are super helpful, but they won't always have exactly what you need, especially when you are working with your own datasets.
 
-The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly Googling how to achieve certain tasks, including for the lessons and assignments in this class!
+The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly googling how to achieve certain tasks, including for the lessons and assignments in this class!
 
 There is a bit of an art to learning how to search, read, and apply online help. Let's talk through a few tips that you might find helpful.
 
 ### In the Search:
 
--   Use the correct vocabulary
+-   Get the vocabulary right
 -   Avoid extra words
 -   Specify the programming language (and specify `tidyverse` if that matters to you)
-
-Note: The suggestions above are also effective when using generative AI.
+-   These suggestions are also effective with generative AI.
 
 ### Results:
 
@@ -163,7 +192,7 @@ Note: The suggestions above are also effective when using generative AI.
 **Documentation**
 
 -   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
--   Focus on the arguments and the examples
+-   Focus on the examples
 
 ### Testing and Modifying Answers
 
