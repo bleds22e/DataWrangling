@@ -46,11 +46,9 @@ Here are some good guidelines:
     a.  Restate the problem in your own words
     b.  Determine the inputs and outputs
     c.  Ask for clarification
-    
 2.  Break the problem down
     a.  Write down the pieces, on paper or as comments in a file
     b.  Break complicated pieces down until all pieces are small and manageable
-    
 3.  Code one small piece at a time
     a.  Test it on it's own
     b.  Fix any problems before proceeding
@@ -136,6 +134,7 @@ ggplot(do_count_by_year, aes(x = year, y = count) %>%
 ```
 
 Insert a code chunk here. Copy the code from above and work to debug it.
+
 ```{r}
 surveys <- read_csv('surveys.csv')
 species <- read_csv('species.csv')
@@ -151,7 +150,6 @@ ggplot(do_counts_by_year, aes(x = year, y = n)) +
   labs(x = "Year", y = "Count") +
   theme_bw()
 ```
-
 
 Now, let's copy the code into ChatGPT and see what it finds and what it gets wrong.
 
