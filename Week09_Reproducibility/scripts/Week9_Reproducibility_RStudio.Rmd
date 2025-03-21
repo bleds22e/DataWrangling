@@ -55,7 +55,7 @@ We can check that our code runs without having to knit, though. We have a few op
 
     -   Doesn't unload packages
     -   Useful when developing code
-    
+
 ![](images/ClearEnvironment.png){width="50%"}
 
 -   Restart R to get a clean environment
