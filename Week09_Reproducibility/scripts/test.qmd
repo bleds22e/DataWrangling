@@ -1,0 +1,19 @@
+---
+title: "Test"
+format: pdf
+editor: visual
+---
+
+## Quarto
+
+This document is a test to see if Quarto files have the same working directory behavior as RMarkdown files or as R scripts.
+
+```{r}
+read.csv("../data_raw/adelie.csv")
+```
+
+```{r}
+read.csv("Week09_Reproducibility/data_raw/adelie.csv")
+```
+
+They seem to behave like RMarkdown files, meaning their saved location is their working directory.
