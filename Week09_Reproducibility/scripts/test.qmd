@@ -17,3 +17,7 @@ read.csv("Week09_Reproducibility/data_raw/adelie.csv")
 ```
 
 They seem to behave like RMarkdown files, meaning their saved location is their working directory.
+
+```{r}
+getwd()
+```
