@@ -60,71 +60,7 @@ f.  Make a histogram of weights with a separate subplot for each `species_id`. D
 g.  (Challenge, optional) Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, colored by `species_id`, with a different facet (i.e., subplot) for each of three `plot_type`'s `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`. Include good axis labels and a title for the plot. Export the plot to a `png` file.
 
 ```{r}
-surveys <- read_csv('data/surveys.csv')
-species <- read_csv('data/species.csv')
-plots <- read_csv('data/plots.csv')
 
-# a. Create a data frame with only data for the `species_id` `DO`, with the columns `year`, `month`, `day`, `species_id`, and `weight`.
-print("3a")
-surveys %>%
-  filter(species_id == "DO") %>%
-  select(year, month, day, species_id, weight)
-
-# b. Create a data frame with only data for species IDs `PP` and `PB` and for years starting in 1995, with the columns `year`, `species_id`, and `hindfoot_length`, with no null values for `hindfoot_length`.
-prints("3b")
-surveys %>%
-  filter(species_id == "PP" | species_id == "PB") %>%
-  filter(year >= 1995) %>%
-  select(year, species_id, hindfoot_length,) %>%
-  filter(!is.na(hindfoot_length))
-
-# c. Create a data frame with the average `hindfoot_length` for each `species_id` in each `year` with no null values.
-print("3c")
-surveys %>%
-  filter(!is.na(hindfoot_length)) %>%
-  group_by(species_id, year) %>%
-  summarize(mean_hf = mean(hindfoot_length))
-
-# d. Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the `genus` is `"Dipodomys"`.
-print("3d")
-surveys %>%
-  inner_join(species, by = "species_id") %>%
-  inner_join(plots, by = "plot_id") %>%
-  select(year, genus, species, weight, plot_type) %>%
-  filter(genus == "Dipodomys")
-
-# e. Make a scatter plot with `hindfoot_length` on the x-axis and `weight` on the y-axis. Color the points by `species_id`. Include good axis labels.
-print("3e")
-ggplot(data = surveys, mapping = aes(x = weight, y = hindfoot_length, color = species_id)) +
-  geom_point() +
-  scale_x_log10() +
-  labs(x = "Weight (g)", y = "Hindfoot Length (mm)")
-
-# f. Make a histogram of weights with a separate subplot for each `species_id`.
-# Do not include species with no weights.
-# Set the `scales` argument to `"free_y"` so that the y-axes can vary.
-# Include good axis labels.
-print("3f")
-surveys_with_weights <- filter(surveys, !is.na(weight))
-surveys_with_weights
-
-ggplot(data = surveys_with_weights, mapping = aes(x = weight)) +
-  geom_histogram() +
-  facet_wrap(~species_id, scales = "free_y") +
-  labs(x = "Weight (g)", y = "Number of Individuals")
-
-# g. (Challenge) Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, with a different facet (i.e., subplot) for each of three `plot_type`'s `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`.  
-print("3g")
-plot_data <- surveys %>%
-  inner_join(plots) %>%
-  filter(species_id == "PP" | species_id == "PB" | species_id == "DM") %>%
-  filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure" | plot_type == "Short-term Krat Exclosure")
-plot_data
-
-ggplot(data = plot_data, aes(x = weight, fill = species_id)) +
-  geom_histogram() +
-  facet_wrap(~plot_type) +
-  labs(x = "Weight (g)", y = "Number of Individuals", title = "Size distribution comparison across treatments")
 ```
 
 ### 3. Megafaunal Extinction (35 points)
@@ -133,7 +69,7 @@ There were a relatively large number of extinctions of mammalian species roughly
 
 You will do this using a large dataset of mammalian body sizes (`mammal-size-data-clean.txt`) that has data on the mass of recently extinct mammals as well as extant mammals (i.e., those that are still alive today).
 
-a.  Read the data into R. As with most real world data there are a some things about the dataset that you'll need to identify and address during the import process. You should do this _within_ the `read_` function, not after you have read in the file. Print out the structure of the resulting data frame.
+a.  Read the data into R. As with most real world data there are a some things about the dataset that you'll need to identify and address during the import process. You should do this *within* the `read_` function, not after you have read in the file. Print out the structure of the resulting data frame.
 
 b.  Create a plot showing histograms of masses for mammal species that are still present and those that went extinct during the Pleistocene (`extant` and `extinct` in the `status` column). There should be one sub-plot for each continent and that sub-plot should show the histograms for both groups as a stacked histogram. To match the original analysis don't include islands (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA` (because `EA` had no species that went extinct in the Pleistocene). Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. Use good axis labels.
 

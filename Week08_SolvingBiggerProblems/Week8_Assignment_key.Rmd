@@ -226,7 +226,7 @@ url_chinstrap <- "https://portal.edirepository.org/nis/dataviewer?packageid=knb-
 chinstrap <- read_csv(url_chinstrap)
 ```
 
-Problem breakdown (both `a` and `b` are graded for completion, not accuracy) 
+Problem breakdown (both `a` and `b` are graded for completion, not accuracy)
 
 a.  Start by breaking down the problem into plain language. This stage shouldn't include any specific functions but is allowing you to talk through the steps conceptually.
 
