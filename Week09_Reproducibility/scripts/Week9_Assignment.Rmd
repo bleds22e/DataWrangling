@@ -39,7 +39,7 @@ March 25 at midnight MST
 
 For many of the exercises in this week's assignment, we will actually be using a lot of the code that you have already written for Assignment 8. This time, however, all of your file paths will be different...
 
-### 1. Set-Up (10 pts)
+### 1. Set-Up (20 pts)
 
 Now that we are working outside of Posit Cloud, we will need to first *install* our packages onto your computer before we can load them with the `library()` function.
 
@@ -49,7 +49,13 @@ Insert a code chunk and (a) install and (b) load `palmerpenguins`. Since we alre
 
 Once you've installed `palmerpenguins`, comment out that line of code.
 
-If you haven't already, make sure you are working in an R Project. Your project should have sub-directories for raw data, clean data, output, docs, and scripts. The naming convention for these folders is up to you.
+#### Note!
+
+If you haven't already, make sure you are working in an RStudio Project! 
+
+Your project should have sub-directories for raw data, clean data, output, docs, and scripts. The naming convention for these folders is up to you.
+
+Make sure that this .Rmd file is in the appropriate sub-directory.
 
 ### 2. Portal Data Paths Review (20 points)
 
@@ -61,9 +67,9 @@ Then, move those three files from your Downloads folder into your equivalent of 
 
 Now, let's begin to code!
 
-a.  Load the 3 dataframes (surveys, species, plots) into R using `read_csv()`. Make sure your paths are *relative*.
+a.  Load the 3 data frames (surveys, species, plots) into R using `read_csv()`. Make sure your paths are *relative*.
 b.  Copy the answers from Week 8 Assignment, Questions 2d-f, into the code chunk below.
-c.  Save the output of the code from 2d as a new dataframe. Then, save that resulting dataframe as a csv file in the clean data sub-directory using the `write_csv()` function.
+c.  Save the output of the code from 2d as a new data frame. Then, save that resulting data frame as a csv file in the clean data sub-directory using the `write_csv()` function.
 d.  Save the ggplots from 2e and 2f into the outputs folder using the `ggsave()` function.
 
 ### 3. Palmer Penguins and Path Files (20 points)
@@ -86,32 +92,29 @@ download.file(url = "https://portal.edirepository.org/nis/dataviewer?packageid=k
               destfile = "chinstrap.csv")
 ```
 
-b.  Copy and then run the code that you wrote to combine the three above datasets and have the output match the `penguins` dataframe from the `palmerpenguins` dataframe.
+b.  Copy, modify, and then run the code that you wrote to combine the three above datasets and have the output match the `penguins` dataframe from the `palmerpenguins` dataframe.
 c.  Run the `setdiff()` function to make sure that your code worked (it shouldn't have any issues, but it is good to check!)
 d.  Save your version of the cleaned penguins data into your clean data folder.
 
-### 4. Add Version Control: Together in Class (15 points)
+### 4. Usings R Scripts (20 points)
 
-Add version control to this RProject that you are working in. We will do this together in class.
+Finally, we will be recreating Question 3 for Week 8's Assignment.
 
-To get full points for this question, you will need to commit all of the current subdirectories and files to GitHub. This is particularly important, because I will be grading your assignment through the GitHub repo!
+This time, however, you will not be doing so in this .Rmd file. Instead, I want you to make and use an R script!
 
-### 5. Create a Final Project Repository and RProject (35 points)
+a. Create a new R script or use the one we used in class--either is fine. Make sure it is in the correct sub-directory of your RStudio project. If you create a new script, I highly recommend saving it before you continue with this question (unsaved files can lead to wonky file path issues).
+b. Ensure that the `mammal-size-data-clean` text file (download from D2L) is in the appropriate sub-directory in your RStudio Project.
+c. Now, using the code your previously wrote, modify the code so that it runs in your R script file. 
+d. Again, use the `ggsave()` function to save the figures from 3b, 3c, and 3d into your `output` (or similar) sub-directory.
 
-Follow the directions to create a new repository on GitHub in our class organization. This will be the repository that you will use for Final Project in the course.
-
-Connect this GitHub repo with an RStudio Project, as we demonstrated in class. Once you have the R Project set up, add your sub-directories.
+### 5. Final Project Proposal (20 points)
 
 In D2L, you will find a file with a few questions about what dataset you are planning to use. If you don't have one in mind yet, don't worry! I'll provide a list with some options for you to explore.
 
-Download the file from D2L and place it in the documents folder of your R Project.
-
-Complete the questions in that document. Save the changes, commit the changes, and push the changes to GitHub.
+Download the file from D2L and place it in the documents folder of your RStudio Project.
 
 ## Turning in Your Assignment
 
-The way that you will be turning in assignments from now on is going to change now that we are no longer working in Posit Cloud.
+To turn in your assignment, you will need to upload the entire folder that contains your .Rproj file and sub-directories. 
 
-Instead of turning in a PDF of your assignment, you will now be giving me a link to your GitHub repository. We will make sure all the permissions are take care of so that I have access.
-
-It might be a good idea (though is not required) to add a bit of information in your README file for the GitHub repo to tell me where to look to find your assignment for any given week.
+Usually, the easiest way to do this is to go to your Files application, navigate to the folder, and right click on the folder you want to compress. You should see the option to "Compress", "Compress to ZIP file", or something along those lines. Upload the ZIP file to D2L.

@@ -9,6 +9,11 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# TO DO
+
+- Question 3, point students to Week 5 lesson and adding the argument within the read_ function
+- Question 3d, point students to the help file for facet_wrap to learn how to add facets
+
 # Assignment Details
 
 ### Purpose
@@ -126,7 +131,8 @@ plot_data
 ggplot(data = plot_data, aes(x = weight, fill = species_id)) +
   geom_histogram() +
   facet_wrap(~plot_type) +
-  labs(x = "Weight (g)", y = "Number of Individuals", title = "Size distribution comparison across treatments")
+  labs(x = "Weight (g)", y = "Number of Individuals", 
+       title = "Size distribution comparison across treatments")
 ```
 
 ### 3. Megafaunal Extinction (35 points)
@@ -161,7 +167,8 @@ ggplot(mammal_sizes_cleaned, aes(x = mass, fill = status)) +
 # Figure 2
 print("3c")
 fig_2_data <- mammal_sizes %>% 
-  filter(continent %in% c("NA", "SA"), order %in% c("Xenarthra", "Carnivora"),
+  filter(continent %in% c("NA", "SA"), 
+         order %in% c("Xenarthra", "Carnivora"),
          status %in% c("extinct", "extant"))
 
 ggplot(fig_2_data, aes(x = mass, fill = status)) +

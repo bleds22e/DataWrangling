@@ -62,7 +62,6 @@ We can check that our code runs without having to knit, though. We have a few op
 
     -   Does unload packages
     -   Useful for making sure everything works
-    -   As long is it doesn't secretly reload things
 
 -   Run entire file by selecting "Run All" in RMarkdown (`Ctrl + Alt + R` or `Cmd + Opt + R`)
 
@@ -78,7 +77,7 @@ While that might sound convenient, it can actually cause a lot of problems (see 
 
 To set the default in RStudio to not save the workspace, we want to do the following:
 
-| `Tools` &rightarrow `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
+| `Tools` -\> `Global Options` -\> `General` -\> `Save workspace to ~/.RData on exit` -\> `Never`
 
 Uncheck `Restore .RData into workspace at startup`
 
@@ -89,7 +88,7 @@ Uncheck `Restore .RData into workspace at startup`
 We will talk a lot more in-depth about this in a few minutes, but generally speaking, we want to do the following things to increase the likelihood that our code will run on another computer:
 
 -   Avoid using `setwd()` and absolute file paths (e.g., `C:\Users\Batman\DataCarp\data\mydata.csv`)
--   Instead, use R Projects and relative paths (e.g, `data/mydata.csv`)
+-   Instead, use RStudio Projects and relative paths (e.g, `data/mydata.csv`)
 -   Write code that will work on all operating systems
     -   Filenames in code should match actual names exactly, including capitalization
     -   Use `/` instead of `\` or `\\` in paths
@@ -104,7 +103,12 @@ We will talk a lot more in-depth about this in a few minutes, but generally spea
 For example, now that we are using our own computers, we need to ensure that we have the correct packages *installed* on our local computers before we will be able to load them.
 
 ```{r}
-#install.packages("tidyverse")
+# download the package to your computer
+# only needs to be done once
+# install.packages("tidyverse")
+
+# load the package for use
+# needs to be done every time you open RStudio
 library(tidyverse)
 ```
 
@@ -122,7 +126,7 @@ If you click [here](http://www.datacarpentry.org/semester-biology/data/shrub-dim
 
 The details will look a bit different depending on the operating system but, generally, across the top or bottom of your file finder, you'll see the folder that things are stored in.
 
-If we try to load this dataset just using its filename, as we have been doing in Posit Cloud, it won't work.
+If we try to load this dataset just using its filename, as we have been doing in Posit Cloud, it probably won't work.
 
 ```{r eval = FALSE}
 data <- read_csv("shrub-dimensions-labeled.csv")
@@ -170,8 +174,6 @@ Relative paths don't specify exactly where on a computer the file is located. In
 
 The relative file path above is saying "From where I am currently, the shrub-dimensions file is in the `Downloads` sub-directory."
 
-If my current location is in `home/ebledsoe`, then the absolute and relative paths here are the same.
-
 ### Find Out Where You Are
 
 So how do we find out which directory R thinks that we are in? We can use a function called `getwd()`
@@ -207,7 +209,7 @@ In general, using `setwd()` means that your code will only work on a single comp
 
 Ideally, we want to have the working directory set automatically, regardless of what computer we are using, and we use relative paths.
 
-## R Projects
+## RStudio Projects
 
 The simplest way to ensure that we are always using relative paths is to use RStudio Projects (or R Projects, same thing).
 
@@ -292,20 +294,20 @@ Setting up a good structure will save you a lot of frustration in long run, even
 
 ### File Structure
 
-![](../images/project-based-directory-organization.jpg){width="50%"}
+![](../images/rproj-basic-organization.png){width="50%"}
 
-If possible, we want to have all files associated with the project in one main folder. This main folder should be the RProject folder.
+If possible, we want to have all files associated with the project in one main folder. This main folder should be the RStudio Project folder.
 
-From there, we can (and should...) have subfolders. What exactly those subfolders are is up to you. A good starting place is to have something like this (or like the image above):
+From there, we can (and should...) have sub-folders. What exactly those sub-folders are is up to you. A good starting place is to have something like this (or like the image above):
 
--   data_raw
+-   `data_raw`
     -   keeping the raw data in a separate folder helps ensure that the original copy always exists
     -   metadata about the included files can go in this folder as well
--   data_clean
--   docs
--   outputs
+-   `data_clean`
+-   `docs`
+-   `outputs`
     -   big analysis files, data visualizations, etc.
--   scripts
+-   `scripts`
     -   any files in the scripts folder (.R or .Rmd) should have relative file paths to read in and create files
     -   lots of descriptive text and/or comments
     -   good object names (and column names)
@@ -315,7 +317,7 @@ Both folder and file names should follow good naming conventions. They should be
 
 The R Project folder should also contain a README file with descriptions of the file structure, the files in the project, and any other relevant information for how to reproduce analyses or outputs.
 
-### File Paths in RMarkdown
+### File Paths in RMarkdown Files vs. Scripts
 
 Using documents that combine code output and text in single document, such as with RMarkdown files (which we are already doing!), is another great way to promote reproducibility.
 
@@ -323,7 +325,7 @@ There is an odd quirk that comes with using file paths in .Rmd files, however.
 
 For reasons I haven't quite been able to nail down, file paths work a little bit different in R scripts (.R file that only understand the R language) and RMarkdown files (.Rmd files, like we use) in RProjects.
 
--   For scripts, the R Project folder is the working directory, which is standard.
+-   For R scripts, the R Project folder is the working directory, which is standard.
 
 -   For RMarkdown files, the folder that contains the file is the home folder.
 
