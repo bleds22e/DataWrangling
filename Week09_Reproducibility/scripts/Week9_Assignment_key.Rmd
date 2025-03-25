@@ -49,7 +49,11 @@ Insert a code chunk and (a) install and (b) load `palmerpenguins`. Since we alre
 
 Once you've installed `palmerpenguins`, comment out that line of code.
 
-If you haven't already, make sure you are working in an R Project. Your project should have subdirectories for raw data, clean data, output, docs, and scripts. The naming convention for these folders is up to you.
+#### Note!
+
+If you haven't already, make sure you are working in an RStudio Project! 
+
+Your project should have sub-directories for raw data, clean data, output, docs, and scripts. The naming convention for these folders is up to you.
 
 ```{r}
 library(tidyverse)
@@ -66,9 +70,9 @@ Then, move those three files from your Downloads folder into your equivalent of 
 
 Now, let's begin to code!
 
-a.  Load the 3 dataframes (surveys, species, plots) into R using `read_csv()`. Make sure your paths are *relative*.
+a.  Load the 3 data frames (surveys, species, plots) into R using `read_csv()`. Make sure your paths are *relative*.
 b.  Copy the answers from Week 8 Assignment, Questions 2d-f, into the code chunk below.
-c.  Save the output of the code from 2d as a new dataframe. Then, save that resulting dataframe as a csv file in the clean data subdirectory using the `write_csv()` function.
+c.  Save the output of the code from 2d as a new dataframe. Then, save that resulting dataframe as a csv file in the clean data sub-directory using the `write_csv()` function.
 d.  Save the ggplots from 2e and 2f into the outputs folder using the `ggsave()` function.
 
 ```{r}
