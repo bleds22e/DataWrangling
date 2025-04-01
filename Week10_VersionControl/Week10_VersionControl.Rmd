@@ -62,7 +62,8 @@ Get rid of messy folders and track changes to things like data files and code in
 ### Install
 
 ```{r}
-install.packages(c("usethis", "gitcreds"))
+#install.packages("usethis")
+library(usethis)
 ```
 
 ### Introduce yourself to Git
@@ -96,9 +97,9 @@ use_git_config(user.name = "[name]", user.email = "[email]")
 -   Read in data to new R script.
 
 ```{r}
-library(dplyr)
+library(tidyverse)
 
-fish_data = read.csv("Gaeta_etal_CLC_data.csv")
+fish_data <- read_csv("Gaeta_etal_CLC_data.csv")
 ```
 
 -   Save as `fish-analysis.R`.
