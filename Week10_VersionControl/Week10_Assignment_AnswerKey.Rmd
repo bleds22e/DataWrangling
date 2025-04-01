@@ -1,0 +1,33 @@
+---
+title: "Fish Analysis"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+### 3. Committing Multiple Files (15 points)
+
+```{r message = FALSE}
+library(tidyverse)
+fish <- read_csv("data/Gaeta_etal_CLC_data.csv")
+
+# only fish with scalelength > 1mm
+fish |> 
+  filter(scalelength >= 1)
+
+```
+
+### 4. Pulling and Pushing (20 points)
+
+```{r}
+ggplot(fish, aes(x = scalelength)) +
+  geom_histogram(bins = 80) +
+  labs(x = "Scale Length (mm)",
+       y = "Frequency") +
+  theme_classic()
+```
+
