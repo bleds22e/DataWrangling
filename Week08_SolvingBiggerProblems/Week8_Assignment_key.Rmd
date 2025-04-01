@@ -11,8 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # TO DO
 
-- Question 3, point students to Week 5 lesson and adding the argument within the read_ function
-- Question 3d, point students to the help file for facet_wrap to learn how to add facets
+-   Question 3, point students to Week 5 lesson and adding the argument within the read\_ function
+-   Question 3d, point students to the help file for facet_wrap to learn how to add facets
 
 # Assignment Details
 
