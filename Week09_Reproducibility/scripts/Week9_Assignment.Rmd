@@ -63,6 +63,17 @@ For this question, we are going to be using some of the code you've already writ
 
 Click on the links below to download all 3 of the Portal files: surveys, species, and plots.
 
+```{r}
+# data
+download.file("https://ndownloader.figshare.com/files/2292172",
+  "surveys.csv")
+download.file("https://ndownloader.figshare.com/files/3299474",
+  "plots.csv")
+download.file("https://ndownloader.figshare.com/files/3299483",
+  "species.csv")
+```
+
+
 Then, move those three files from your Downloads folder into your equivalent of the raw data folder (yours might have a slightly different name). This assignment file should be in your scripts folder.
 
 Now, let's begin to code!
