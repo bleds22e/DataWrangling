@@ -147,7 +147,7 @@ This is also an opportunity for you to get a bit more familiar with using Markdo
 
 ### 7. Include This Document (5 point)
 
-Place this file in the appropriate sub-directory (something along the lines of `docs` or `code`).
+Place this file in the appropriate sub-directory (something along the lines of `documents` or `code`).
 
 Even though you (probably) haven't added any code or text this *this* specific file, go ahead and "knit" this document.
 
