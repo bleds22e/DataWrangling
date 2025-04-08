@@ -1,5 +1,5 @@
 ---
-title: "Assignment 10"
+title: "Assignment 11"
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -169,22 +169,16 @@ area_vector <- c(3, 5, 1.9, 2.7, 2, 2.6, 6.2, 4.5, 8, 4, 1, 3)
 
 ```{r}
 # Solutions to Writing Tidyverse Functions
+library(ggplot2)
+
+count_data <- data.frame(
+  state = c("AZ", "AZ", "AZ", "AZ", "NM", "NM", "NM", "NM", "NV", "NV", "NV", "NV"),
+  site = c("A", "B", "C", "D", "A", "B", "C", "D", "A", "B", "C", "D"),
+  count = c(9, 16, 3, 10, 2, 26, 5, 8, 17, 8, 2, 6),
+  area = c(3, 5, 1.9, 2.7, 2, 2.6, 6.2, 4.5, 8, 4, 1, 3)
+  )
 
 print("6a")
-
-state_vector <- c("FL", "FL", "FL", "FL", "GA", "GA", "GA", "GA", "SC", "SC", "SC", "SC")
-site_vector <- c("A", "B", "C", "D", "A", "B", "C", "D", "A", "B", "C", "D")
-count_vector <- c(9, 16, 3, 10, 2, 26, 5, 8, 17, 8, 2, 6)
-area_vector <- c(3, 5, 1.9, 2.7, 2, 2.6, 6.2, 4.5, 8, 4, 1, 3)
-
-count_data <- data.frame(state = state_vector,
-                         site = site_vector,
-                         count = count_vector,
-                         area = area_vector)
-count_data
-
-print("6b")
-library(ggplot2)
 make_plot <- function(df, color_col) {
   ggplot(data = df, mapping = aes(x = area,
                                   y = count,
@@ -195,8 +189,19 @@ make_plot <- function(df, color_col) {
 
 make_plot(count_data, state)
 
-print("6c")
+print("6b")
 
 make_plot(count_data, site)
+
+print("6c")
+
+make_plot2 <- function(df, x_axis, y_axis, color_col) {
+  ggplot(data = df, mapping = aes(x = {{ x_axis }},
+                                  y = {{ y_axis }},
+                                  color = {{ color_col }})) +
+    geom_point(size = 3) +
+    labs(x = "Area [ha]", y = "Number of Individuals")
+}
+make_plot2(count_data, area, count, site)
 ```
 
