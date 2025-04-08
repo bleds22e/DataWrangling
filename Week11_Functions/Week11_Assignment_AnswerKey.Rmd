@@ -167,9 +167,9 @@ area_vector <- c(3, 5, 1.9, 2.7, 2, 2.6, 6.2, 4.5, 8, 4, 1, 3)
 
 
 
-```{r}
+```{r message=FALSE}
 # Solutions to Writing Tidyverse Functions
-library(ggplot2)
+library(tidyverse)
 
 count_data <- data.frame(
   state = c("AZ", "AZ", "AZ", "AZ", "NM", "NM", "NM", "NM", "NV", "NV", "NV", "NV"),
@@ -203,5 +203,42 @@ make_plot2 <- function(df, x_axis, y_axis, color_col) {
     labs(x = "Area [ha]", y = "Number of Individuals")
 }
 make_plot2(count_data, area, count, site)
+```
+### 7. Portal Species Time-Series Challenge (OPTIONAL)
+
+```{r message=FALSE}
+surveys <- read_csv('data/surveys.csv')
+species <- read_csv('data/species.csv')
+plots <- read_csv('data/plots.csv')
+
+make_sp_time_series_plot <- function(data, genus_name, species_name){
+  
+  time_series <- data |>
+    filter(genus == genus_name, species == species_name) |>
+    group_by(year) |>
+    summarize(count = n())
+
+  ggplot(time_series, aes(x = year, y = count)) +
+    geom_line(linewidth = 1, color = "blue") +
+    geom_point(size = 2, color = "blue") +
+    xlab("Year") +
+    ylab("Number of Individuals") +
+    theme_classic()
+  
+}
+
+combined <- inner_join(surveys, species, by = "species_id")
+
+print("7b")
+make_sp_time_series_plot(combined, "Dipodomys", "merriami")
+
+print("7c")
+make_sp_time_series_plot(combined, "Chaetodipus", "penicillatus")
+
+print("7d")
+combined |> 
+  full_join(plots) |> 
+  filter(plot_type == "Control") |> 
+  make_sp_time_series_plot("Chaetodipus", "baileyi")
 ```
 

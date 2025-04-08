@@ -157,6 +157,36 @@ c.  Create a new function based on the function you created in (a); in this new 
 
     Remake the same plot as from (b) using your new function. Save your plot as a .png file using `ggsave()` in the appropriate sub-directory.
 
+### 7. Portal Species Time-Series Challenge (OPTIONAL)
+
+If surveys.csv, species.csv, and plots.csv are not available in your workspace download them (modify the `destfile` arguments to point to the correct sub-directory):
+
+```{r}
+download.file(url = "https://ndownloader.figshare.com/files/2292172",
+  destfile = "surveys.csv")
+download.file(url = "https://ndownloader.figshare.com/files/3299474",
+  destfile = "plots.csv")
+download.file(url = "https://ndownloader.figshare.com/files/3299483",
+  destfile = "species.csv")
+```
+
+a.  Write a function that does the following:
+
+-   Takes the following four arguments:
+
+    (1) a data frame (where each row is one individual and there is a genus and a species column)
+    (2) a column to use as a `time` column (e.g., year)
+    (3) a `genus_name` argument for choosing which genus to plot
+    (4) a `species_name` argument for choosing which species to plot
+
+-   Makes a plot using `ggplot2` with the time on the y-axis and the count of the number of individuals (i.e., the number of rows) observed for that time for the species indicated by the genus_name and species_name arguments. The plot should display the data as blue points (with `size = 2`) connected by blue lines (with `linewidth = 1`). The y-axis label should read "Number of Individuals." The theme should be "classic."
+
+b.  Use your function, and the data in `surveys.csv` and `species.csv`, to plot the time-series for `time = year`, `genus_name = "Dipodomys"` and `species_name = "merriami"`.
+
+c.  Use your function, and the data in `surveys.csv` and `species.csv`, to plot the time-series for `time = month`, `genus_name = "Chaetodipus"` and `species_name = "penicillatus"` (this plot will show the average seasonal pattern of *Chaetodipus penicillatus* abundances)
+
+d.  Use your function, and the data from `plots.csv`, `surveys.csv` and `species.csv`, to plot the time-series for `time = year`, `genus_name = "Chaetodipus"` and `species_name = "baileyi"` only on the "Control" plots.
+
 ## Turning in Your Assignment
 
 As a reminder, the way that you will be turning in assignments has changed.

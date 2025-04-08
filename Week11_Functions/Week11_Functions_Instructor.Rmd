@@ -11,19 +11,24 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Writing Our Own Functions
 
-### Understandable and Reusable code
+Functions are the foundation of programming in R. So far, we have been using functions that other people have written for us.
+We all have the ability to write our *own* functions to use in R, though!
 
-Writing our own functions can help us to write code in understandable chunks and also make more reusable code.
+### Understandable and Reusable Code
+
+Writing our own functions can help us to write code in understandable chunks, reduce errors, and also make more reusable code that we can transfer within and between projects, ultimately increasing productivity.
 
 We often run into instances where we want to do something many times but slightly differently.
 
-If you find yourself needing to run the same calculations or make the same plot repeatedly, writing a function to accomplish that task can save you from copying and pasting the same code over and over again.
-
-Doing this can reduce errors in your code as well as condense the code into more understandable bits.
+If you find yourself needing to run the same calculations or make the same plot repeatedly, writing a function to accomplish that task can save you from copying and pasting the same code over and over again...and a lot of time de-bugging repetitive code.
 
 ## Function Structure
 
-Below, I've written out the general structure of a function.
+When we create a function, the structure of the function generally looks like this:
+
+![](images/r-function-syntax.png){width="75%" fig-align="center"}
+
+A slightly different way to think about this is through inputs and outputs.
 
 ```{r}
 # function_name <- function(inputs) {
@@ -41,8 +46,7 @@ Let's write out our first function. We want to calculate shrub volumes.
 
 ```{r}
 calc_shrub_vol <- function(length, width, height) {
-  area <- length * width
-  volume <- area * height
+  volume <- length * width * height
   return(volume)
 }
 ```
@@ -67,7 +71,7 @@ shrub_vol <- calc_shrub_vol(0.8, 1.6, 2.0)
 
 Work on Question 1 in the Assignment.
 
-### Black Box
+## Black Box
 
 It is important to remember a few things about functions. In many ways, we need to treat functions as a black box.
 
@@ -86,7 +90,7 @@ volume
 
 Work on Question 2 in the Assignment.
 
-### Default arguments
+## Default arguments
 
 As with many of the functions that we have already used in this class, we can set defaults for the arguments in the functions that we create.
 
@@ -104,7 +108,24 @@ calc_shrub_vol(0.8, 1.6, 2.0)
 calc_shrub_vol(length = 0.8, width = 1.6, height = 2.0)
 ```
 
-### Combining Functions
+### When do we use argument names?
+
+While you don't always have to name the arguments you are specifying, there are some general suggestions for best practices.
+
+As we saw above, as long as you specify arguments in the correct order, they do not need to be named. On the other hand, if you specify arguments out of the order in which they are written into the function or you are skipping some arguments (using the default) and then specifying later arguments, it is necessary to name them.
+```{r}
+calc_shrub_vol(height = 2.0, length = 0.8, width = 1.6)
+```
+
+With some complicated functions, the order of the arguments is often challenging to remember, so using names by default is a good idea.
+
+Similarly, when there are lots of optional arguments, you will often need to name them if you are using something other than the default. This is standard convention.
+
+```{r}
+calc_shrub_vol(0.8, 1.6, height = 2.0)
+```
+
+## Combining Functions
 
 Again, as with other functions, we can combine functions of our own creation together.
 
@@ -125,7 +146,7 @@ shrub_mass <- calc_shrub_vol(0.8, 1.6, 2.0) %>%
   est_shrub_mass()
 ```
 
-### Using the `tidyverse` in Functions
+## Using the `tidyverse` in Functions
 
 One of the really nice things about the `tidyverse` is that we usually don't need to put columns in quotes.
 
@@ -158,7 +179,7 @@ make_plot(penguins, body_mass_g, "Body Mass (g)")
 
 To fix this issue, we have to tell our code which inputs/arguments are this special type of data variable.
 
-We can do this by "embracing" them in double braces. This tells the function to treat them in the "tidy evaluation" method.
+We can do this by "embracing" them in double braces (e.g., `{{ var }}`). This tells the function to treat them in the "tidy evaluation" method.
 
 ```{r}
 make_plot <- function(df, column, label) {
@@ -171,31 +192,52 @@ make_plot(penguins, body_mass_g, "Body Mass (g)")
 make_plot(penguins, bill_length_mm, "Bill Length (mm)")
 ```
 
-### Code Design with Functions
+## Code Design with Functions
 
 Functions let us break code up into logical chunks that can be understood in isolation.
 
 When you write functions, place them at the top of your code then call them below.
 
-The functions hold the details. You can heavily comment the code of your functions, as well.
+The functions hold the details. You can heavily comment the code of your functions, as well. The function calls will show you the outline of the code execution.
 
-The function calls will show you the outline of the code execution.
+### Example Structure
+
+Functions (at or near the top of the document)
 
 ```{r eval = FALSE}
+
 clean_data <- function(data){
+  # this function does stuff
   do_stuff(data)
 }
 
 process_data <- function(cleaned_data){
+  # this function does dplyr stuff
   do_dplyr_stuff(cleaned_data)
 }
 
 make_graph <- function(processed_data){
+  # this function plots stuff
   do_ggplot_stuff(processed_data)
 }
+```
 
+Using the functions in a different code chunk.
+
+```{r eval = FALSE}
 raw_data <- read.csv('mydata.csv')
 cleaned_data <- clean_data(raw_data)
 processed_data <- process_data(cleaned_data)
 make_graph(processed_data)
+```
+
+### Source
+
+Alternatively, if you have a lot of custom functions, you might consider saving them in their own R script. 
+
+You can then use the `source()` function at the beginning of your document to point to that file, read the file, and then the functions will be available for you to use in your current document.
+
+```{r eval=FALSE}
+# Example
+source("functions.R")
 ```
