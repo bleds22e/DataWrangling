@@ -11,8 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Writing Our Own Functions
 
-Functions are the foundation of programming in R. So far, we have been using functions that other people have written for us.
-We all have the ability to write our *own* functions to use in R, though!
+Functions are the foundation of programming in R. So far, we have been using functions that other people have written for us. We all have the ability to write our *own* functions to use in R, though!
 
 ### Understandable and Reusable Code
 
@@ -24,11 +23,7 @@ If you find yourself needing to run the same calculations or make the same plot 
 
 ## Function Structure
 
-When we create a function, the structure of the function generally looks like this:
-
-![](images/r-function-syntax.png){width="75%" fig-align="center"}
-
-A slightly different way to think about this is through inputs and outputs.
+One way to think about this is through inputs and outputs.
 
 ```{r}
 # function_name <- function(inputs) {
@@ -113,6 +108,7 @@ calc_shrub_vol(length = 0.8, width = 1.6, height = 2.0)
 While you don't always have to name the arguments you are specifying, there are some general suggestions for best practices.
 
 As we saw above, as long as you specify arguments in the correct order, they do not need to be named. On the other hand, if you specify arguments out of the order in which they are written into the function or you are skipping some arguments (using the default) and then specifying later arguments, it is necessary to name them.
+
 ```{r}
 calc_shrub_vol(height = 2.0, length = 0.8, width = 1.6)
 ```
@@ -233,7 +229,7 @@ make_graph(processed_data)
 
 ### Source
 
-Alternatively, if you have a lot of custom functions, you might consider saving them in their own R script. 
+Alternatively, if you have a lot of custom functions, you might consider saving them in their own R script.
 
 You can then use the `source()` function at the beginning of your document to point to that file, read the file, and then the functions will be available for you to use in your current document.
 
