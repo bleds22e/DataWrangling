@@ -115,6 +115,32 @@ Similarly, when there are lots of optional arguments, you will often need to nam
 
 ```
 
+## Vectors and Data Frames
+
+What if, instead of single values, we have a series of vectors or columns in data frame? Those will work!
+
+```{r}
+# vectors
+lengths <- c(1.2, 3, 4.7, 0.3)
+widths <- c(0.5, 2.0, 4.2, 1.0)
+heights <- c(1.1, 2.2, 3.0, 0.7)
+
+calc_shrub_vol(lengths, widths, heights)
+
+# data frame
+shrub_dimensions <- data.frame(length = lengths, width = widths, height = heights)
+calc_shrub_vol(shrub_dimensions$length,
+               shrub_dimensions$width,
+               shrub_dimensions$height)
+```
+
+We can even use our function inside of a mutate function to create a new column in our dataframe.
+
+```{r}
+shrub_dimensions |> 
+  mutate(volume = calc_shrub_vol(length, width, height))
+```
+
 ## Combining Functions
 
 Again, as with other functions, we can combine functions of our own creation together.
