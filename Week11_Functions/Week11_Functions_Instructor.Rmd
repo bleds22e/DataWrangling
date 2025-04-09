@@ -169,7 +169,7 @@ We can even use our function inside of a mutate function to create a new column 
 
 ```{r}
 shrub_dimensions |> 
-  mutate(volume = calc_shrub_vol(length, width, height))
+  dplyr::mutate(volume = calc_shrub_vol(length, width, height))
 ```
 
 ## Using the `tidyverse` in Functions
