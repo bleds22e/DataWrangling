@@ -1,12 +1,12 @@
 ---
-title: 'Assignment 13'
+title: 'Week 14 Assignment'
 author: "Jeff Oliver"
 date: "`r Sys.Date()`"
-output: pdf_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 # Assignment Details
@@ -34,10 +34,9 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-**This Assignment is Optional!**
 April 22 at midnight MST
 
-# Assignment Exercises
+# Assignment Questions
 
 ### 1. Working with raster data in terra (20 pts)
 

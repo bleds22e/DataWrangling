@@ -2,11 +2,11 @@
 title: 'Assignment 11: Conditionals'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
-output: pdf_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 # Assignment

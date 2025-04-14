@@ -1,12 +1,12 @@
 ---
-title: "Week12_Assignment"
+title: "Week 13 Assignment"
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
-output: pdf_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 # Assignment
