@@ -135,6 +135,10 @@ b.  A *Theropoda* that is 8 meters long.
 c.  A *Sauropoda* that is 12 meters long. 
 d.  An *Ankylosauria* that is 13 meters long.
 
+*Challenge 1 (optional)*: If the name is not one of values that have a and b values print warning that it doesn’t know how to convert that group that includes that groups name in a message like “No known estimation for Ankylosauria.” You can use the function `warning("your warning text")` to print a warning and the function `paste()` to combine text with a value from a variable such as `paste("My name is", name)`. Doing this successfully will modify your answer to (d), which is fine.
+
+*Challenge 2 (optional)*: Change your function so that it uses two different values of `a` and `b` for _Stegosauria_. When _Stegosauria_ is greater than 8 meters long use the equation above. When it is less than 8 meters long, use `a = 8.5` and `b = 2.8`. Run the function for a _Stegosauria_ that is 6 meters long.
+
 ### 5. Using `dplyr` Choice Functions (20 points)
 
 For this question, we will be using functions from `dplyr` (part of the `tidyverse`) and data from the `lterdatasampler` package, so make sure you load both of those packages with the `library()` function.

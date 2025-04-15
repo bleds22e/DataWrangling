@@ -24,50 +24,60 @@ dna1 <- "attattaggaccaca"
 dna2 <- "attattaggaacaca"
 ```
 
+1a
 ```{r}
-### Code solution for Choice Operators
-
-print("1a")
 # a.  `w` is greater than 10
 w > 10
+```
 
-print("1b")
+1b
+```{r}
 # b.  `w` + `x` is less than 15
 w + x < 15
+```
 
-print("1c")
+1c
+```{r}
 # c.  `x` is greater than `y`
 x > y
+```
 
-print("1d")
+1d
+```{r}
 # d. Each value in `masses` is greater than 50.
 masses > 40
-
-print("1e")
-# f.  `dna1` is the same as `dna2`
+```
+1e
+```{r}
+# e.  `dna1` is the same as `dna2`
 dna1 == dna2
-
-print("1f")
-# g.  `dna1` is not the same as `dna2`
+```
+1f
+```{r}
+# f.  `dna1` is not the same as `dna2`
 dna1 != dna2
-
-print("1g")
-# h. `w` is greater than `x`, or `y` is greater than `z`
+```
+1g
+```{r}
+# g. `w` is greater than `x`, or `y` is greater than `z`
 w > x | y > z
-
-print("1h")
-# i.  `x` times `w` is between 13.2 and 13.5
+```
+1h
+```{r}
+# h.  `x` times `w` is between 13.2 and 13.5
 13.2 < x * w & x * w < 13.5  # | (a pipe) will return TRUE for all values.
+```
 
-print("1i")
+1i
+```{r}
 # j. Each mass in `masses` is between 30 and 50.
 masses > 30 & masses < 50
 ```
 
 ### 2. If Statements (20 points)
 
+2a
 ```{r}
-print("2a")
 # a. Complete (i.e., copy into your code and them modify) the following `if`
 #   statement so that if `age_class` is equal to "sapling" it sets `y <- 10`.
 
@@ -76,8 +86,10 @@ if (age_class == "sapling"){
   y <-10
 }
 y
+```
 
-print("2b")
+2b
+```{r}
 # b. Complete the following `if` statement so that if `age_class` is equal to
 #   "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it
 #   sets `y <- 5`.
@@ -89,9 +101,10 @@ if (age_class == "sapling"){
   y <- 5
 }
 y
+```
 
-
-print("2c")
+2c
+```{r}
 # c. Complete the following `if` statement so that if `age_class` is equal to
 #   "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it
 #   sets `y <- 5` and if `age_class` is something else then it sets the value of
@@ -106,8 +119,10 @@ if (age_class == "sapling"){
   y <- 0
 }
 y
+```
 
-print("2d")
+2d
+```{r}
 # d. Convert your conditional statement from (c) into a function that takes
 #   `age_class` as an argument and returns `y`. Call this function 5 times, once
 #   with each of the following values for `age_class`: "sapling", "seedling",
@@ -133,10 +148,9 @@ get_y_from_age_class("established")
 
 ### 3. If Statements in Functions (20 points)
 
+3a
 ```{r}
 # Solution to If Statements in Functions exercise
-
-print("3a")
 double_if_small <- function(number){
   if (number < 26){
     output = number * 2
@@ -145,17 +159,20 @@ double_if_small <- function(number){
   }
   return(output)
 }
+```
 
-print("3b")
-
+3b
+```{r}
 double_if_small(10)
+```
 
-print("3c")
-
+3c
+```{r}
 double_if_small(30)
+```
 
-print("3d")
-
+3d
+```{r}
 prediction <- function(x){
   if (x > 0 & x < 15){
       y = 6 + 0.8 * x
@@ -166,15 +183,20 @@ prediction <- function(x){
   }
   return (y)
 }
+```
 
-print("3e")
+3e
+```{r}
 prediction(5)
+```
 
-print("3f")
+3f
+```{r}
 prediction(26)
+```
 
-print("3g")
-
+3g
+```{r}
 prediction(-2)
 ```
 
@@ -209,11 +231,61 @@ get_mass_from_length_by_name <- function(length, name){
   }
   get_mass_from_length(a, b, length)
 }
+```
 
+4a
+```{r}
 get_mass_from_length_by_name(10, "Stegosauria")
+```
+
+4b
+```{r}
 get_mass_from_length_by_name(8, "Theropoda")
+```
+
+4c
+```{r}
 get_mass_from_length_by_name(12, "Sauropoda")
+```
+
+4d
+```{r}
 get_mass_from_length_by_name(13, 'Ankylosauria')
+```
+
+Challenge 1 (optional)
+```{r}
+get_mass_from_length_by_name <- function(length, name){
+  if (name == "Stegosauria"){
+    if (length > 8){
+      a = 10.95
+      b = 2.64
+    } else {
+      a = 8.5
+      b = 2.8
+    }
+  }
+  else if (name == "Theropoda"){
+    a = 0.73
+    b = 3.63
+  }
+  else if (name == "Sauropoda"){
+    a = 214.44
+    b = 1.46
+  }
+  else {
+    return(warning(paste("No known estimation for", name)))
+  }
+  get_mass_from_length(a, b, length)
+}
+
+get_mass_from_length_by_name(13, 'Ankylosauria')
+```
+
+Challenge 2 (optional)
+
+```{r}
+get_mass_from_length_by_name(6, "Stegosauria")
 ```
 
 ### 5. Using `dplyr` Choice Functions (20 points)
@@ -223,33 +295,38 @@ library(dplyr)
 library(lterdatasampler)
 ```
 
+5a
 ```{r}
-print("5a")
-
 crab_size <- 17
 
 if_else(crab_size >= 20, "large", "small")
+```
 
-print("5b")
-
+5b
+```{r}
 if_else(crab_size > 20, "large",
         if_else(crab_size > 10, "medium", "small"))
+```
 
-print("5c")
-
+5c
+```{r}
 case_when(crab_size > 20 ~ "large",
           crab_size > 10 ~ "medium",
           TRUE ~ "small")
+```
 
-print("5d")
-
+5d
+_Note: I used the `.after` argument in the `mutate()` function to control where the new column shows up so it can be seen in the answer key._
+```{r}
 pie_crab %>% 
   mutate(size_category = if_else(size > 20, "large", "small"), .after = size)
+```
 
-print("5e")
-
+5e
+_Note: I used the `.after` argument in the `mutate()` function to control where the new column shows up so it can be seen in the answer key._
+```{r}
 pie_crab %>% 
   mutate(size_category3 = case_when(size > 20 ~ "large",
-                          size > 10 ~ "medium",
-                          TRUE ~ "small"), .after = size)
+                                    size > 10 ~ "medium",
+                                    TRUE ~ "small"), .after = size)
 ```

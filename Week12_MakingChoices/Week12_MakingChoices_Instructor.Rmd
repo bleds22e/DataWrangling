@@ -81,9 +81,11 @@ In doing so, it reverses the boolean values that are returned (`TRUE` becomes `F
 
 > Work on Question 1: Choice Operators
 
-## `if` statements
+## Testing One Condition with an `if` Statement
 
 Conditional statements generate logical values. One type of statement that we can write that uses conditional statements are `if` statements. We can use these to control the flow of our program.
+
+Note that they conditional statement to be tested goes inside a parenthetical. Then, whatever action is to be taken if that condition is met goes inside curly braces (`{}`), similar to how we write a function.
 
 ```{r}
 # if (conditional statement is TRUE) {
@@ -91,7 +93,7 @@ Conditional statements generate logical values. One type of statement that we ca
 # }
 ```
 
-For example:
+For example, let's say we have a value, `x`. If `x` is 5 or less, it can stay the way it is. However, if `x` is more than 5, we want to double it.:
 
 ```{r}
 # create object
@@ -106,12 +108,12 @@ if (x > 5){
 x
 ```
 
-What happens when the conditional statement in `FALSE`?
+What happens when the conditional statement is `FALSE`?
 
 ```{r}
-x = 4
+x <- 4
 if (x > 5){
-  x = x * 2
+  x <- x * 2
 }
 x
 ```
@@ -136,7 +138,7 @@ mass
 
 > Work on Question 2a
 
-## `if`-`else` statements
+## Testing Multiple Conditions with `if`-`else` Statements
 
 Often, we want to chose one of several options rather than just one.
 
@@ -210,7 +212,7 @@ est_biomass(24, "tree")
 
 > Work on Question 2d.
 
-## Multiples
+## Compare How Multiple Conditions Work
 
 Let's compare multiple `if` statements to `if`-`else if` statements.
 

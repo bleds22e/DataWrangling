@@ -276,6 +276,43 @@ get_mass_from_length_by_name(12, "Sauropoda")
 get_mass_from_length_by_name(13, 'Ankylosauria')
 ```
 
+*Challenge 1 (optional)*: If the name is not one of values that have a and b values print warning that it doesn’t know how to convert that group that includes that groups name in a message like “No known estimation for Ankylosauria.” You can use the function `warning("your warning text")` to print a warning and the function `paste()` to combine text with a value from a variable such as `paste("My name is", name)`. Doing this successfully will modify your answer to (d), which is fine.
+
+```{r}
+get_mass_from_length_by_name <- function(length, name){
+  if (name == "Stegosauria"){
+    if (length > 8){
+      a = 10.95
+      b = 2.64
+    } else {
+      a = 8.5
+      b = 2.8
+    }
+  }
+  else if (name == "Theropoda"){
+    a = 0.73
+    b = 3.63
+  }
+  else if (name == "Sauropoda"){
+    a = 214.44
+    b = 1.46
+  }
+  else {
+    return(warning(paste("No known estimation for", name)))
+  }
+  get_mass_from_length(a, b, length)
+}
+
+get_mass_from_length_by_name(13, 'Ankylosauria')
+```
+
+
+*Challenge 2 (optional)*: Change your function so that it uses two different values of `a` and `b` for _Stegosauria_. When _Stegosauria_ is greater than 8 meters long use the equation above. When it is less than 8 meters long, use `a = 8.5` and `b = 2.8`. Run the function for a _Stegosauria_ that is 6 meters long.
+
+```{r}
+get_mass_from_length_by_name(6, "Stegosauria")
+```
+
 ### 5. Using `dplyr` Choice Functions (20 points)
 
 For this question, we will be using functions from `dplyr` and data from the `lterdatasampler` package, so make sure you load both of those packages with the `library()` function.

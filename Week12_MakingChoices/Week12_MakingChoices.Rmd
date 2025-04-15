@@ -49,7 +49,7 @@ For example:
 
 ```
 
-There are other operators that we have not yet used, such as `%in%`. This is a very handy little operator!
+There are other operators that we have not (formally) used yet, such as `%in%`. This is a very handy little operator!
 
 It checks to see if a value is present in a vector of possible values.
 
@@ -77,9 +77,11 @@ In doing so, it reverses the boolean values that are returned (`TRUE` becomes `F
 
 > Work on Question 1: Choice Operators
 
-## `if` statements
+## Testing One Condition with an `if` Statement
 
 Conditional statements generate logical values. One type of statement that we can write that uses conditional statements are `if` statements. We can use these to control the flow of our program.
+
+Note that they conditional statement to be tested goes inside a parenthetical. Then, whatever action is to be taken if that condition is met goes inside curly braces (`{}`), similar to how we write a function.
 
 ```{r}
 # if (conditional statement is TRUE) {
@@ -87,13 +89,13 @@ Conditional statements generate logical values. One type of statement that we ca
 # }
 ```
 
-For example:
+For example, let's say we have a value, `x`. If `x` is 5 or less, it can stay the way it is. However, if `x` is more than 5, we want to double it.
 
 ```{r}
 
 ```
 
-What happens when the conditional statement in `FALSE`?
+What happens when the conditional statement is `FALSE`?
 
 ```{r}
 
@@ -111,11 +113,11 @@ Perhaps different vegetation types require different biomass calculations.
 
 > Work on Question 2a
 
-## `if`-`else` statements
+## Testing Multiple Conditions with `if`-`else` Statements
 
-Often, we want to chose one of several options rather than just one.
+Often, we want to chose one of several options based on our data rather than just one.
 
-To do this, we can add more conditions and associated actions with `else if`
+To do this, we can add more conditions and associated actions with `else if`.
 
 Let's take a look at an example.
 
@@ -153,7 +155,7 @@ Now, we can run this function with different vegetation types and get different 
 
 > Work on Question 2d.
 
-## Multiples
+## Compare How Multiple Conditions Work
 
 Let's compare multiple `if` statements to `if`-`else if` statements.
 
