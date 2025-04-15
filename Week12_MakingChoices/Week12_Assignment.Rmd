@@ -1,5 +1,5 @@
 ---
-title: 'Assignment 11: Conditionals'
+title: 'Assignment 12: Conditionals'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: github_document
@@ -33,13 +33,13 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-April 8 at midnight MST
+April 22 before class
 
 # Assignment Exercises
 
 ### 1. Choice Operators (20 pts)
 
-Create the following variables.
+Create the following variables by running the code chunk below.
 
 ```{r}
 w <- 10.2
@@ -52,7 +52,7 @@ dna1 <- "attattaggaccaca"
 dna2 <- "attattaggaacaca"
 ```
 
-Use them to print whether or not the following statements are `TRUE` or `FALSE`.
+Using the variables above, write code that determines whether the following statements are `TRUE` or `FALSE`.
 
 a.  `w` is greater than 10
 b.  `"green"` is in `colors`
@@ -100,11 +100,13 @@ d.  Convert your conditional statement from (c) into a function that takes `age_
 
 ### 3. If Statements in Functions (20 points)
 
-a.  Write a function named `double_if_small` that takes a number as input and returns the number multiplied by 2 if the input is less than 26 and returns just the number (not multiplied by two) if the input is greater than or equal to 26. Call the function with `10` as the input.
-b.  Call the function from (a) with `30` as the input.
-c.  Write a function called `prediction` that takes a single argument `x`. If `x` is both greater than 0 and less than 15 then return `y = 6 + 0.8 * x`. If `x` is both greater than 15 and less than 30 then return `y = 5 + 0.75 * x`. In all other cases return `y = NA`. Call the function with `5` as the input.
-d.  Call the function from (c) with `26` as the input.
-e.  Call the function from (c) with `-2` as the input.
+a.  Write a function named `double_if_small` that takes a number as input and returns the number multiplied by 2 if the input is less than 26 and returns just the number (not multiplied by two) if the input is greater than or equal to 26.
+b.  Call the function from (b) with `10` as the input.
+c.  Call the function from (b) with `30` as the input.
+d.  Write a function called `prediction` that takes a single argument `x`. If `x` is both greater than 0 and less than 15 then return `y = 6 + 0.8 * x`. If `x` is both greater than 15 and less than 30 then return `y = 5 + 0.75 * x`. In all other cases return `y = NA`.
+e.  Call the function from (d) with `5` as the input.
+f.  Call the function from (d) with `26` as the input.
+g.  Call the function from (d) with `-2` as the input.
 
 ### 4. Size Estimates by Name (20 points)
 
@@ -114,9 +116,11 @@ To make it even easier to work with your dinosaur size estimation functions you 
 
 Remember the general form of the equation is:
 
-> mass \<- a \* length \^ b
+| mass \<- a \* length \^ b
 
-Create a new function `get_mass_from_length_by_name()` that takes two arguments, the `length` and the name of the dinosaur group. Inside this function use `if`/`else if`/`else` statements to check to see if the name is one of the following values and if so use the associated `a` and `b` values to estimate the species mass using these equations:
+Create a new function `get_mass_from_length_by_name()` that takes two arguments: the `length` and the name of the dinosaur group. 
+
+Inside this function use `if`/`else if`/`else` statements to check to see if the name is one of the following values and if so use the associated `a` and `b` values to estimate the species mass using these equations:
 
 -   *Stegosauria*: `mass = 10.95 * length ^ 2.64` ([Seebacher 2001](http://www.jstor.org/stable/4524171))
 -   *Theropoda*: `mass = 0.73 * length ^ 3.63` ([Seebacher 2001](http://www.jstor.org/stable/4524171))
@@ -124,11 +128,16 @@ Create a new function `get_mass_from_length_by_name()` that takes two arguments,
 
 If the name is not any of these values the function should return `NA`.
 
-Run the function for: a. A *Stegosauria* that is 10 meters long. b. A *Theropoda* that is 8 meters long. c. A *Sauropoda* that is 12 meters long. d. A *Ankylosauria* that is 13 meters long.
+Run the function for the following: 
+
+a.  A *Stegosauria* that is 10 meters long. 
+b.  A *Theropoda* that is 8 meters long. 
+c.  A *Sauropoda* that is 12 meters long. 
+d.  An *Ankylosauria* that is 13 meters long.
 
 ### 5. Using `dplyr` Choice Functions (20 points)
 
-For this question, we will be using functions from `dplyr` and data from the `lterdatasampler` package, so make sure you load both of those packages with the `library()` function.
+For this question, we will be using functions from `dplyr` (part of the `tidyverse`) and data from the `lterdatasampler` package, so make sure you load both of those packages with the `library()` function.
 
 First, create an object called `crab_size` and assign the value 17 to it.
 

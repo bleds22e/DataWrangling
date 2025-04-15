@@ -1,5 +1,5 @@
 ---
-title: 'Assignment 11: Conditionals'
+title: 'Assignment 12: Conditionals'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -146,13 +146,15 @@ double_if_small <- function(number){
   return(output)
 }
 
+print("3b")
+
 double_if_small(10)
 
-print("3b")
+print("3c")
 
 double_if_small(30)
 
-print("3c")
+print("3d")
 
 prediction <- function(x){
   if (x > 0 & x < 15){
@@ -165,13 +167,13 @@ prediction <- function(x){
   return (y)
 }
 
+print("3e")
 prediction(5)
 
-print("3d")
-
+print("3f")
 prediction(26)
 
-print("3e")
+print("3g")
 
 prediction(-2)
 ```

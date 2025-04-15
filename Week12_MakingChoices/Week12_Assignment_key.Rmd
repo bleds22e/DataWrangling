@@ -1,5 +1,5 @@
 ---
-title: 'Assignment 11: Conditionals'
+title: 'Assignment 12: Conditionals'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### 1. Choice Operators (20 pts)
 
-Create the following variables.
+Create the following variables by running the code chunk below.
 
 ```{r}
 w <- 10.2
@@ -26,7 +26,7 @@ dna1 <- "attattaggaccaca"
 dna2 <- "attattaggaacaca"
 ```
 
-Use them to print whether or not the following statements are `TRUE` or `FALSE`.
+Using those variables, write code that determines whether the following statements are `TRUE` or `FALSE`.
 
 a.  `w` is greater than 10
 b.  `"green"` is in `colors`
@@ -41,39 +41,30 @@ i.  Each mass in `masses` is between 30 and 50.
 ```{r}
 ### Code solution for Choice Operators
 
-print("1a")
 # a.  `w` is greater than 10
 w > 10
 
-print("1b")
 # b.  `w` + `x` is less than 15
 w + x < 15
 
-print("1c")
 # c.  `x` is greater than `y`
 x > y
 
-print("1d")
 # d. Each value in `masses` is greater than 50.
 masses > 40
 
-print("1e")
 # f.  `dna1` is the same as `dna2`
 dna1 == dna2
 
-print("1f")
 # g.  `dna1` is not the same as `dna2`
 dna1 != dna2
 
-print("1g")
 # h. `w` is greater than `x`, or `y` is greater than `z`
 w > x | y > z
 
-print("1h")
 # i.  `x` times `w` is between 13.2 and 13.5
 13.2 < x * w & x * w < 13.5  # | (a pipe) will return TRUE for all values.
 
-print("1i")
 # j. Each mass in `masses` is between 30 and 50.
 masses > 30 & masses < 50
 ```
@@ -102,7 +93,7 @@ y
 
 c.  Complete the following `if` statement so that if `age_class` is equal to "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it sets `y <- 5` and if `age_class` is something else then it sets the value of `y <- 0`.
 
-```{r eval = FALSE}
+```{r eval=FALSE}
 age_class = "adult"
 if (){
   
@@ -113,21 +104,17 @@ y
 d.  Convert your conditional statement from (c) into a function that takes `age_class` as an argument and returns `y`. Call this function 5 times, once with each of the following values for `age_class`: "sapling", "seedling", "adult", "mature", "established".
 
 ```{r}
-print("2a")
 # a. Complete (i.e., copy into your code and them modify) the following `if`
 #   statement so that if `age_class` is equal to "sapling" it sets `y <- 10`.
-
 age_class = "sapling"
 if (age_class == "sapling"){
   y <-10
 }
 y
 
-print("2b")
 # b. Complete the following `if` statement so that if `age_class` is equal to
 #   "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it
 #   sets `y <- 5`.
-
 age_class = "seedling"
 if (age_class == "sapling"){
   y <-10
@@ -137,12 +124,10 @@ if (age_class == "sapling"){
 y
 
 
-print("2c")
 # c. Complete the following `if` statement so that if `age_class` is equal to
 #   "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it
 #   sets `y <- 5` and if `age_class` is something else then it sets the value of
 #   `y <- 0`.
-
 age_class = "adult"
 if (age_class == "sapling"){
   y <-10
@@ -153,12 +138,10 @@ if (age_class == "sapling"){
 }
 y
 
-print("2d")
 # d. Convert your conditional statement from (c) into a function that takes
 #   `age_class` as an argument and returns `y`. Call this function 5 times, once
 #   with each of the following values for `age_class`: "sapling", "seedling",
 #   "adult", "mature", "established".
-
 get_y_from_age_class <- function(age_class){
   if (age_class == "sapling"){
     y <-10
@@ -179,16 +162,18 @@ get_y_from_age_class("established")
 
 ### 3. If Statements in Functions (20 points)
 
-a.  Write a function named `double_if_small` that takes a number as input and returns the number multiplied by 2 if the input is less than 26 and returns just the number (not multiplied by two) if the input is greater than or equal to 26. Call the function with `10` as the input.
-b.  Call the function from (a) with `30` as the input.
-c.  Write a function called `prediction` that takes a single argument `x`. If `x` is both greater than 0 and less than 15 then return `y = 6 + 0.8 * x`. If `x` is both greater than 15 and less than 30 then return `y = 5 + 0.75 * x`. In all other cases return `y = NA`. Call the function with `5` as the input.
-d.  Call the function from (c) with `26` as the input.
-e.  Call the function from (c) with `-2` as the input.
+a.  Write a function named `double_if_small` that takes a number as input and returns the number multiplied by 2 if the input is less than 26 and returns just the number (not multiplied by two) if the input is greater than or equal to 26. 
+b.  Call the function from (b) with `10` as the input.
+c.  Call the function from (b) with `30` as the input.
+d.  Write a function called `prediction` that takes a single argument `x`. If `x` is both greater than 0 and less than 15 then return `y = 6 + 0.8 * x`. If `x` is both greater than 15 and less than 30 then return `y = 5 + 0.75 * x`. In all other cases return `y = NA`. 
+e.  Call the function from (d) with `5` as the input.
+f.  Call the function from (d) with `26` as the input.
+g.  Call the function from (d) with `-2` as the input.
 
 ```{r}
 # Solution to If Statements in Functions exercise
 
-print("3a")
+# 3a
 double_if_small <- function(number){
   if (number < 26){
     output = number * 2
@@ -198,13 +183,13 @@ double_if_small <- function(number){
   return(output)
 }
 
+# 3b
 double_if_small(10)
 
-print("3b")
-
+#3c
 double_if_small(30)
 
-print("3c")
+#3d
 
 prediction <- function(x){
   if (x > 0 & x < 15){
@@ -217,13 +202,13 @@ prediction <- function(x){
   return (y)
 }
 
+print("3e")
 prediction(5)
 
-print("3d")
-
+print("3f")
 prediction(26)
 
-print("3e")
+print("3g")
 
 prediction(-2)
 ```
@@ -232,13 +217,15 @@ prediction(-2)
 
 This is a follow up to "Use and Modify" from Assignment 10.
 
-To make it even easier to work with your dinosaur size estimation functions you decide to create a function that lets you specify which dinosaur group you need to estimate the size of by name and then have the function automatically choose the right parameters.
+To make it even easier to work with your dinosaur size estimation functions, you decide to create a function that lets you specify which dinosaur group you need to estimate the size of by name and then have the function automatically choose the right parameters.
 
-Remember the general form of the equation is:
+Remember, the general form of the equation is:
 
-> mass \<- a \* length \^ b
+| mass \<- a \* length \^ b
 
-Create a new function `get_mass_from_length_by_name()` that takes two arguments, the `length` and the name of the dinosaur group. Inside this function use `if`/`else if`/`else` statements to check to see if the name is one of the following values and if so use the associated `a` and `b` values to estimate the species mass using these equations:
+Create a new function `get_mass_from_length_by_name()` that takes two arguments: the `length` and the name of the dinosaur group. 
+
+Inside this function use `if`/`else if`/`else` statements to check to see if the name is one of the following values and if so use the associated `a` and `b` values to estimate the species mass using these equations:
 
 -   *Stegosauria*: `mass = 10.95 * length ^ 2.64` ([Seebacher 2001](http://www.jstor.org/stable/4524171))
 -   *Theropoda*: `mass = 0.73 * length ^ 3.63` ([Seebacher 2001](http://www.jstor.org/stable/4524171))
@@ -246,7 +233,12 @@ Create a new function `get_mass_from_length_by_name()` that takes two arguments,
 
 If the name is not any of these values the function should return `NA`.
 
-Run the function for: a. A *Stegosauria* that is 10 meters long. b. A *Theropoda* that is 8 meters long. c. A *Sauropoda* that is 12 meters long. d. A *Ankylosauria* that is 13 meters long.
+Run the function for:
+
+a.  A *Stegosauria* that is 10 meters long.
+b.  A *Theropoda* that is 8 meters long.
+c.  A *Sauropoda* that is 12 meters long.
+d.  An *Ankylosauria* that is 13 meters long.
 
 ```{r}
 get_mass_from_length <- function(a, b, length){
@@ -338,6 +330,6 @@ print("5e")
 
 pie_crab %>% 
   mutate(size_category3 = case_when(size > 20 ~ "large",
-                          size > 10 ~ "medium",
-                          TRUE ~ "small"), .after = size)
+                                    size > 10 ~ "medium",
+                                    TRUE ~ "small"), .after = size)
 ```
