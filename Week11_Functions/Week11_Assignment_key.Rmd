@@ -257,7 +257,7 @@ a.  Write a function takes takes two arguments: (1) a data frame with a `count` 
 b.  Use the function from (a) to make a scatter plot of count as a function of area for the `count_data` data frame with the points colored by the `site` column.
 
     Save your plot as a .png file using `ggsave()` in the appropriate sub-directory.
-    
+
 c.  Create a new function based on the function you created in (a); in this new function, allow the x and y axes to be any column in the data frame, specified as arguments in the function.
 
     Remake the same plot as from (b) using your new function. Save your plot as a .png file using `ggsave()` in the appropriate sub-directory.
@@ -283,16 +283,15 @@ make_plot(count_data, site)
 
 print("6c")
 
-make_plot2 <- function(df, x_axis, y_axis, color_col) {
+make_plot2 <- function(df, x_axis, y_axis, color_col, x_lab, y_lab) {
   ggplot(data = df, mapping = aes(x = {{ x_axis }},
                                   y = {{ y_axis }},
                                   color = {{ color_col }})) +
     geom_point(size = 3) +
-    labs(x = "Area [ha]", y = "Number of Individuals")
+    labs(x = x_lab, y = y_lab)
 }
-make_plot2(count_data, area, count, site)
+make_plot2(count_data, area, count, site, "Area [ha]", "Number of Individuals")
 ```
-
 
 ### 7. Portal Species Time-Series Challenge (OPTIONAL)
 
@@ -356,4 +355,3 @@ make_sp_time_series_plot(combined, "Chaetodipus", "penicillatus")
 ggsave("output/Functions-portal-species-time-series-R-2.png")
 
 ```
-
