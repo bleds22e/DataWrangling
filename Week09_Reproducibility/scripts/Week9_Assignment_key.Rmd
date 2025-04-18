@@ -51,7 +51,7 @@ Once you've installed `palmerpenguins`, comment out that line of code.
 
 #### Note!
 
-If you haven't already, make sure you are working in an RStudio Project! 
+If you haven't already, make sure you are working in an RStudio Project!
 
 Your project should have sub-directories for raw data, clean data, output, docs, and scripts. The naming convention for these folders is up to you.
 
@@ -117,7 +117,7 @@ Like in Question 2 above, we will be recreating Question 4 from Week 8's assignm
 
 a.  The code chunk below uses the `download.file()` function to go to a specific URL and then download the data at that URL. The location where the file is downloaded to is set by the `destfile` argument. Modify the path in the `destfile` argument for all three species datasets so that they are downloaded directly into your raw data folder.
 
-```{r}
+```{r eval = FALSE}
 # Adelie penguin data
 download.file(url = "https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-pal.219.3&entityid=002f3893385f710df69eeebe893144ff",
               destfile = "../data_raw/adelie.csv")
