@@ -33,7 +33,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-April 15 at midnight MST
+April 29 before class
 
 # Assignment Exercises
 
@@ -96,7 +96,7 @@ areas
 
 ### 2. Size Estimates by Name (30 pts)
 
-This is a followup to "Size Estimates by Name" from last week.
+This is a follow-up to "Size Estimates by Name" from last week.
 
 Download the `dinosaur_lengths.csv` file from D2L and place it in the correct directory. Read the file into R.
 
@@ -111,35 +111,63 @@ a.  Use this function and a for loop to calculate the estimated mass for each di
 b.  Add the results in the vector back to the original data frame. Show the first few rows of the data frame using `head()`.
 c.  Calculate the mean mass for each `species` using `dplyr` (no `for` loops).
 
-### 3. Multi-file Analysis (40 pts)
+### 3. Multi-file Analysis (20 pts)
 
 You have satellite collars on a number of different individuals and want to be able to quickly look at all of their recent movements at once. The data is posted daily to a URL that contains one csv file for each individual: [zip file](http://www.datacarpentry.org/semester-biology/data/individual_collar_data.zip)
 
 Start your solution by:
 
--   If `individual_collar_data.zip` is not already in your working directory, download it from the link above and place the zip file in the correct directory.
+-   Download `individual_collar_data.zip` from the link above and place the zip file in the correct directory.
 -   Unzip it using `unzip()`
 -   Obtain a list of all of the files with file names matching the pattern `"collar-data-.*.txt"` (using `list.files()`)
 
 a.  Use a loop to load each of these files into R and make a line plot (using `geom_path()`) for each file with `long` on the `x` axis and `lat` on the `y` axis.
 
-Graphs, like other types of output, won't display inside a loop unless you explicitly display them, so you need put your `ggplot()` command inside a `print()` statement.
+    Graphs, like other types of output, won't display inside a loop unless you explicitly display them, so you need put your `ggplot()` command inside a `print()` statement.
 
-Include the name of the file in the graph as the graph title using the `ggtitle()`.
+    Include the name of the file in the graph as the graph title using the `ggtitle()`.
 
 b.  Add code to the loop to calculate the minimum and maximum latitude in the file, and store these values, along with the name of the file, in a data frame.
 
-Show the data frame as output.
+    Show the data frame as output.
 
-# Reflection
+### 4. DNA or RNA (20 pts)
 
-This reflection is worth 25 points, separate from your Week 12 assignment. Reflections are graded for completion only.
+This question has you write a function and then use the function in various forms of iteration.
 
-Write about 5 sentences addressing *at least* one of the following questions.
+a. Write a function that determines if a sequence of base pairs is DNA, RNA, or if it is not possible to tell given the sequence provided. RNA has the base Uracil ("u") instead of the base Thymine ("t"), so sequences with u’s are RNA, sequences with t’s are DNA, and sequences with neither are unknown.
 
--   What has worked well for you in this course for you so far?
--   What has been particularly challenging for you so far?
--   Is there anything that I can do to help your learning in the course?
--   Other reflections about the content of the course that you would like to share.
+Name the function `dna_or_rna()` and have it take sequence as an argument. Have the function return one of three outputs: "DNA", "RNA", or "UNKNOWN".
 
-*Answer*:
+*HINT: Remember our work with character strings and the `stringr` package from the `tidyverse` (Week 7)?*
+
+b. Use the function to determine the sequence type for the following sequences.
+
+```{r}
+seq1 <- "ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatgcaggcg"
+seq2 <- "gauuauuccccacaaagggagugggauuaggagcugcaucauuuacaagagcagaauguuucaaaugcau"
+seq3 <- "gaaagcaagaaaaggcaggcgaggaagggaagaagggggggaaacc"
+```
+
+Before tackling the next questions (c-f), run the following code chunk to create a vector called sequences.
+
+```{r}
+sequences <- c("ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatgcaggcg",
+              "gauuauuccccacaaagggagugggauuaggagcugcaucauuuacaagagcagaauguuucaaaugcau",
+              "gaaagcaagaaaaggcaggcgaggaagggaagaagggggggaaacc",
+              "guuuccuacaguauuugaugagaaugagaguuuacuccuggaagauaauauuagaauguuuacaacugcaccugaucagguggauaaggaagaugaagacu",
+              "gauaaggaagaugaagacuuucaggaaucuaauaaaaugcacuccaugaauggauucauguaugggaaucagccggguc")
+```
+
+c. Use the function you wrote and a `for` loop to create a vector of sequence types for the values in sequences
+
+d. Use the function and a `for` loop to create a data frame that includes a column of sequences and a column of their types.
+
+e. OPTIONAL: Use the function and `sapply` to create a vector of sequence types for the values in sequences
+
+f. OPTIONAL: Use the function, and `mutate()` to create a data frame that includes a column of sequences and a column of their types. First, run the following line of code to turn the sequence vector into a dataframe.
+
+```{r}
+seq_df <- as.data.frame(sequences)
+```
+

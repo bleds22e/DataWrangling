@@ -110,7 +110,7 @@ mass_from_length <- function(length, dino_group) {
     return(mass)
 }
 
-dino_data <- read_csv("dinosaur_lengths.csv")
+dino_data <- read_csv("../data_raw/dinosaur_lengths.csv")
 ```
 
 2a.
@@ -179,5 +179,79 @@ for (i in 1:length(collar_data_files)){
 }
 
 output
+```
+
+### 4. DNA or RNA (20 points)
+
+4b. 
+```{r}
+library(tidyverse)
+
+dna_or_rna <- function(sequence){
+  # Determines if a character string represents DNA, RNA, or is unknown
+  # by searching the character string for the unique base pairs t & u.
+  if (str_count(sequence, "t") > 0){
+    type = "DNA"
+  } else if (str_count(sequence, "u") > 0){
+    type = "RNA"
+  } else {
+    type = "UNKNOWN"
+  }
+  return(type)
+}
+
+seq1 <- "ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatgcaggcg"
+seq2 <- "gauuauuccccacaaagggagugggauuaggagcugcaucauuuacaagagcagaauguuucaaaugcau"
+seq3 <- "gaaagcaagaaaaggcaggcgaggaagggaagaagggggggaaacc"
+
+dna_or_rna(seq1)
+dna_or_rna(seq2)
+dna_or_rna(seq3)
+```
+
+```{r}
+sequences <- c("ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatgcaggcg",
+              "gauuauuccccacaaagggagugggauuaggagcugcaucauuuacaagagcagaauguuucaaaugcau",
+              "gaaagcaagaaaaggcaggcgaggaagggaagaagggggggaaacc",
+              "guuuccuacaguauuugaugagaaugagaguuuacuccuggaagauaauauuagaauguuuacaacugcaccugaucagguggauaaggaagaugaagacu",
+              "gauaaggaagaugaagacuuucaggaaucuaauaaaaugcacuccaugaauggauucauguaugggaaucagccggguc")
+```
+
+4c.
+
+```{r}
+for (sequence in sequences){
+  print(dna_or_rna(sequence))
+}
+```
+
+
+4d.
+```{r}
+df <- data.frame(type = vector(mode = "character", length = length(sequences)),
+                 sequence = vector(mode = "character", length = length(sequences)))
+
+for (i in 1:length(sequences)) {
+  df$sequence[i] <- sequences[i]
+  df$type[i] <- dna_or_rna(sequences[i])
+}
+
+as.tibble(df)
+```
+
+
+4e. OPTIONAL
+
+```{r}
+sapply(sequences, dna_or_rna)
+```
+
+4f. OPTIONAL
+
+```{r}
+seq_df <- as.data.frame(sequences)
+seq_df |> 
+  rowwise() |> 
+  mutate(type = dna_or_rna(sequences), .before = sequences)
 ```
 
