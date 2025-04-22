@@ -15,31 +15,94 @@ In this week's lesson, we will be talking about how to do repetitive tasks.
 
 As it turns out, computers are really good at repeating tasks. We call this repetition of the same task "iteration."
 
-### Overview of Iteration in R
+## Overview of Iteration in R
 
 While our lesson today will focus mainly on one way to iterate in R, there are actually many ways to do so:
 
 1.  **vectorize**
 
--   We can write functions that take either a single value or a vector of values, do element-wise calculations, and return a vector of results
--   This isn't as tricky as it might sound. Many functions automatically work with either a single value or a vector of values
--   Each function we wrote in our functions lesson in Week 10 can work with vectors
--   An important exception it when we use `if`-`else` statements inside our functions; these do not work with vectors
+    -   We can write functions that take either a single value or a vector of values, do element-wise calculations, and return a vector of results
+
+    -   This isn't as tricky as it might sound. Many functions automatically work with either a single value or a vector of values
+
+    -   Each function we wrote in our functions lesson in Week 10 can work with vectors
+
+    -   An important exception it when we use `if`-`else` statements inside our functions; these do not work with vectors
+
+    ```{r}
+    F_to_C <- function(F) {
+      C <- (F - 32) * (5/9)
+      return(round(C, 1))
+    }
+
+    temps <- c(47.2, 72, 100)
+
+    F_to_C(temps)
+    ```
 
 2.  **`apply` or `map`**
 
--   Both of these family of functions take a function and apply that function to each item in a list of items
--   The `apply` functions (e.g., `apply`, `lapply`, `sapply`) are base R
--   The `map` functions come from the `purrr` package, part of the `tidyverse`
+    -   Both of these family of functions take a function and apply that function to each item in a list of items
+
+    -   The `apply` functions (e.g., `apply`, `lapply`, `sapply`) are base R
+
+    -   The `map` functions come from the `purrr` package, part of the `tidyverse`
+
+    ```{r}
+    # base R
+    sapply(temps, F_to_C)
+
+    # purrr from tidyverse
+    purrr::map(temps, F_to_C)
+    ```
 
 3.  **using `dplyr`**
 
--   We've actually already been iterating quite a bit--specifically in data frames--by using function from `dplyr`; we can also combine our own functions with `dplyr`
--   For example, when we use a `filter` function, we are asking R to check the value in a column in the first row, then determine whether that condition is met (and, therefore, whether to retain the row), then to do the same thing for the next row and the next...
+    -   We've actually already been iterating quite a bit--specifically in data frames--by using function from `dplyr`; we can also combine our own functions with `dplyr`
+
+    -   For example, when we use a `filter` function, we are asking R to check the value in a column in the first row, then determine whether that condition is met (and, therefore, whether to retain the row), then to do the same thing for the next row and the next...
+
+    ```{r}
+    temps_df <- as.data.frame(temps)
+
+    # most functions are vectorized
+    temps_df |>
+      dplyr::mutate(tempsC = F_to_C(temps))
+    ```
+
+    -   An important exception it when we use `if`-`else` statements inside our functions; these do not work with vectors
+
+    -   To do so, we need to use the `rowwise()` function
+
+    ```{r}
+    hot_or_cold <- function(temp){
+      if (temp > 72) {
+        category <- "hot"
+      } else {
+        category <- "cold"
+      }
+    }
+
+    # doesn't work; functions with if-else statements are NOT vectorized
+    temps_df |>
+      dplyr::mutate(category = hot_or_cold(temps))
+
+    # this works!
+    temps_df |>
+      dplyr::rowwise() |>
+      dplyr::mutate(category = hot_or_cold(temps))
+    ```
 
 4.  **loops**
 
--   Loops provide us with complete control to perform of any kind of repetition we want (rather than just one function at a time, for example)
+    -   Loops provide us with complete control to perform of any kind of repetition we want (rather than just one function at a time, for example)
+
+    ```{r}
+    for (i in 1:length(temps)) {
+      print(F_to_C(temps[i]))       # vectorized functions work
+      print(hot_or_cold(temps[i]))  # non-vectorized functions also work
+    }
+    ```
 
 This week's lesson is going to focus primarily on using loops, specifically `for` loops.
 
@@ -106,13 +169,13 @@ Let's take our previous loop and modify it to use an index.
 1.  We often use `i` to stand for "index" as the variable we update with each step through the loop.
 
     ```{r eval = FALSE}
-    
+
     ```
 
 2.  We then create a vector of position values starting at 1 (for the first value) and ending with the length of the object we are looping over.
 
     ```{r eval = FALSE}
-    
+
     ```
 
 3.  What if the length of the object we are looping over is variable or might change in the future? We don't want to be stuck with a certain length.
@@ -125,13 +188,13 @@ Let's take our previous loop and modify it to use an index.
     Because we are currently working with a vector, let's use the `length()` function.
 
     ```{r}
-    
+
     ```
 
 4.  Then, inside the loop, instead of doing the calculation on the index value (which a number between 1 and 3 in our case), we use square brackets and the index as a placeholder. Now, the loop will run through the code, replacing the `i` placeholder with the appropriate value from our vector.
 
     ```{r}
-    
+
     ```
 
 This new version of the loop gives us the same result as our original loop, but it's more complicated to understand. So why would we want to loop by index?
@@ -163,7 +226,7 @@ For each trip through the loop, we want to put the output into the empty vector 
 
 ### Troubleshooting Loops
 
-Occasionally (okay, maybe often) when you write a for loop, it will either give you and error or it will successfully run but the results won't be what you anticipated. 
+Occasionally (okay, maybe often) when you write a for loop, it will either give you and error or it will successfully run but the results won't be what you anticipated.
 
 Since loops (like functions) have some kind of placeholder in them (such as `i` for index), what is the best way to figure out what the error is?
 
