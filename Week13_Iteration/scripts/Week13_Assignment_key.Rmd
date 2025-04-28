@@ -269,6 +269,23 @@ Name the function `dna_or_rna()` and have it take sequence as an argument. Have 
 
 *HINT: Remember our work with character strings and the `stringr` package from the `tidyverse` (Week 7)?*
 
+```{r}
+library(tidyverse)
+
+dna_or_rna <- function(sequence){
+  # Determines if a character string represents DNA, RNA, or is unknown
+  # by searching the character string for the unique base pairs t & u.
+  if (str_count(sequence, "t") > 0){
+    type = "DNA"
+  } else if (str_count(sequence, "u") > 0){
+    type = "RNA"
+  } else {
+    type = "UNKNOWN"
+  }
+  return(type)
+}
+```
+
 b.  Use the function to determine the sequence type for the following sequences.
 
 ```{r}
