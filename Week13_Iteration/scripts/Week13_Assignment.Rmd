@@ -135,13 +135,13 @@ b.  Add code to the loop to calculate the minimum and maximum latitude in the fi
 
 This question has you write a function and then use the function in various forms of iteration.
 
-a. Write a function that determines if a sequence of base pairs is DNA, RNA, or if it is not possible to tell given the sequence provided. RNA has the base Uracil ("u") instead of the base Thymine ("t"), so sequences with u’s are RNA, sequences with t’s are DNA, and sequences with neither are unknown.
+a.  Write a function that determines if a sequence of base pairs is DNA, RNA, or if it is not possible to tell given the sequence provided. RNA has the base Uracil ("u") instead of the base Thymine ("t"), so sequences with u’s are RNA, sequences with t’s are DNA, and sequences with neither are unknown.
 
 Name the function `dna_or_rna()` and have it take sequence as an argument. Have the function return one of three outputs: "DNA", "RNA", or "UNKNOWN".
 
 *HINT: Remember our work with character strings and the `stringr` package from the `tidyverse` (Week 7)?*
 
-b. Use the function to determine the sequence type for the following sequences.
+b.  Use the function to determine the sequence type for the following sequences.
 
 ```{r}
 seq1 <- "ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatgcaggcg"
@@ -159,15 +159,14 @@ sequences <- c("ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatg
               "gauaaggaagaugaagacuuucaggaaucuaauaaaaugcacuccaugaauggauucauguaugggaaucagccggguc")
 ```
 
-c. Use the function you wrote and a `for` loop to create a vector of sequence types for the values in sequences
+c.  Use the function you wrote and a `for` loop to create a vector of sequence types for the values in sequences
 
-d. Use the function and a `for` loop to create a data frame that includes a column of sequences and a column of their types.
+d.  Use the function and a `for` loop to create a data frame that includes a column of sequences and a column of their types.
 
-e. OPTIONAL: Use the function and `sapply` to create a vector of sequence types for the values in sequences
+e.  OPTIONAL: Use the function and `sapply` to create a vector of sequence types for the values in sequences
 
-f. OPTIONAL: Use the function, and `mutate()` to create a data frame that includes a column of sequences and a column of their types. First, run the following line of code to turn the sequence vector into a dataframe.
+f.  OPTIONAL: Use the function, and `mutate()` to create a data frame that includes a column of sequences and a column of their types. First, run the following line of code to turn the sequence vector into a dataframe.
 
 ```{r}
 seq_df <- as.data.frame(sequences)
 ```
-
