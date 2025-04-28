@@ -1,5 +1,5 @@
 ---
-title: 'Assignment 13'
+title: 'Assignment 14'
 author: "Jeff Oliver"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -13,8 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Purpose
 
-The goal of this assignment is to practice working with geospatial raster and 
-vector data.
+The goal of this assignment is to practice working with geospatial raster and vector data.
 
 ### Task
 
@@ -38,20 +37,17 @@ April 22 at midnight MST
 
 # Assignment Exercises
 
-### 1. Working with raster data in terra (20 pts)
+### 1. Working with raster data in `terra` (20 pts)
 
-In this exercise, you will work with the same precipitation data as in class, 
-but this time focus in on the Himalayan region of Asia.
+In this exercise, you will work with the same precipitation data as in class, but this time focus in on the Himalayan region of Asia.
 
-a. Load in the terra package. What version does it say you are using?
+a.  Load in the terra package. What version does it say you are using?
 
-b. Load in the precipitation data ("global_precipitation.tif"), what is the 
-EPSG used in these data?
+b.  Load in the precipitation data ("global_precipitation.tif"), what is the EPSG used in these data?
 
-c. Define a geographic extent object for the Himalayan region.
+c.  Define a geographic extent object for the Himalayan region.
 
-d. Crop the precipitation data to the Himalayan extent; what are resulting 
-dimensions?
+d.  Crop the precipitation data to the Himalayan extent; what are resulting dimensions?
 
 ```{r answers-1}
 # 1a
@@ -60,7 +56,7 @@ library(terra)
 
 # 1b
 # Read in data with rast
-prec <- rast("global_precipitation.tif")
+prec <- rast("image_files/global_precipitation.tif")
 # Print prec raster to see EPSG (4326)
 prec
 
@@ -81,18 +77,15 @@ prec_hima
 
 ### 2. Printing maps (20 points)
 
-Still working with the precipitation data, this exercise focuses on visualizing
-the data.
+Still working with the precipitation data, this exercise focuses on visualizing the data.
 
-a. Plot the precipitation data for the Himalayan region.
+a.  Plot the precipitation data for the Himalayan region.
 
-b. Add a title to the plot.
+b.  Add a title to the plot.
 
-c. Change the palette to that of `topo.colors` (use `?topo.colors` for 
-details) and print the resultant plot.
+c.  Change the palette to that of `topo.colors` (use `?topo.colors` for details) and print the resultant plot.
 
-d. Change the palette to one from [ColorBrewer](https://colorbrewer2.org) for 
-sequential (continuous) data.
+d.  Change the palette to one from [ColorBrewer](https://colorbrewer2.org) for sequential (continuous) data.
 
 ```{r answers-2}
 # 2a
@@ -118,16 +111,17 @@ plot(prec_hima, col = prec_cols)
 
 ### 3. Working with vector data in terra (20 points)
 
-a. Create a data frame of three peaks in the Himalayan region: (lat, lon)
-  + K2: 35.93, 76.50
-  + Annapurna: 28.53, 83.81
-  + Mount Everest: 28.05, 86.91
+a.  Create a data frame of three peaks in the Himalayan region: (lat, lon)
 
-b. Create a SpatVector object from the data frame with peak data.
+-   K2: 35.93, 76.50
+-   Annapurna: 28.53, 83.81
+-   Mount Everest: 28.05, 86.91
 
-c. Convert the points SpatVector object to a lines object.
+b.  Create a SpatVector object from the data frame with peak data.
 
-d. Add the lines object to the precipitation plot of the Himalayan region.
+c.  Add the points of the peaks onto the plot.
+
+d.  Add labels to the points representing the peaks.
 
 ```{r answer-3}
 # 3a
@@ -138,34 +132,34 @@ peaks <- data.frame(peak = c("K2", "Annapurna", "Mount Everest"),
 
 # 3b
 # Convert data frame to SpatVector object
-peaks_vect <- vect(peaks)
+peaks_vect <- vect(peaks, crs = crs(prec_hima))
 
 # 3c
-# Convert from points to lines
-peaks_line <- as.lines(peaks_vect)
-
-# 3d
 # Draw base precipitation plot
 plot(prec_hima, col = prec_cols)
+plot(peaks_vect, add = TRUE)
+
+# 3d
 # Add lines with lines function
-lines(peaks_line)
+plot(prec_hima, col = prec_cols)
+plot(peaks_vect, add = TRUE)
+text(peaks_vect, labels = "peak", pos = 4)
 ```
 
 ### 4. Modifying raster values (20 points)
 
-a. Load in the elevation data ("global_elevation.tif"), what are the units for 
-these data? 
+a.  Load in the elevation data ("global_elevation.tif"), what are the units for these data?
 
-b. Convert the units of the raster to feet.
+b.  Convert the units of the raster to feet.
 
-c. Crop the elevation data to the same geographic extent as precipitation data.
+c.  Crop the elevation data to the same geographic extent as precipitation data.
 
-d. Plot the Himalayan elevation data.
+d.  Plot the Himalayan elevation data.
 
 ```{r answer-4}
 # 4a
 # Load the data
-elev <- rast("global_elevation.tif")
+elev <- rast("image_files/global_elevation.tif")
 # Print the object to see range of elevations, safe to infer units are meters
 elev
 
@@ -183,9 +177,7 @@ plot(elev_hima)
 
 ### 5. Converting raster objects to spatial vector objects (20 points)
 
-For this last exercise, create a plot that shows precipitation for the 
-Himalayan region, using a color palette from ColorBrewer AND add a layer that 
-is partially (50%) transparent to shade out regions below 13,000 feet.
+For this last exercise, create a plot that shows precipitation for the Himalayan region, using a color palette from ColorBrewer AND add a layer that is partially (50%) transparent to shade out regions below 13,000 feet. Take a look at the arguments for the `polys` function for how to set the color and transparency.
 
 ```{r answer-5}
 # 5a

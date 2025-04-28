@@ -19,7 +19,7 @@ library(terra)
 
 # 1b
 # Read in data with rast
-prec <- rast("global_precipitation.tif")
+prec <- rast("image_files/global_precipitation.tif")
 # Print prec raster to see EPSG (4326)
 prec
 
@@ -78,14 +78,15 @@ peaks <- data.frame(peak = c("K2", "Annapurna", "Mount Everest"),
 peaks_vect <- vect(peaks)
 
 # 3c
-# Convert from points to lines
-peaks_line <- as.lines(peaks_vect)
-
-# 3d
 # Draw base precipitation plot
 plot(prec_hima, col = prec_cols)
+plot(peaks_vect, add = TRUE)
+
+# 3d
 # Add lines with lines function
-lines(peaks_line)
+plot(prec_hima, col = prec_cols)
+plot(peaks_vect, add = TRUE)
+text(peaks_vect, labels = "peak", pos = 4)
 ```
 
 ### 4. Modifying raster values (20 points)
@@ -94,7 +95,7 @@ lines(peaks_line)
 ```{r answer-4}
 # 4a
 # Load the data
-elev <- rast("global_elevation.tif")
+elev <- rast("image_files/global_elevation.tif")
 # Print the object to see range of elevations, safe to infer units are meters
 elev
 
