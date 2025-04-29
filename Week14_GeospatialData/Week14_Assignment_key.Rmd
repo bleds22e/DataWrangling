@@ -33,11 +33,11 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-April 22 at midnight MST
+May 6 at midnight MST
 
 # Assignment Exercises
 
-### 1. Working with raster data in `terra` (20 pts)
+### 1. Working with Raster Data in `terra` (20 pts)
 
 In this exercise, you will work with the same precipitation data as in class, but this time focus in on the Himalayan region of Asia.
 
@@ -75,7 +75,7 @@ prec_hima <- crop(prec, hima_ext)
 prec_hima
 ```
 
-### 2. Printing maps (20 points)
+### 2. Printing Maps (20 points)
 
 Still working with the precipitation data, this exercise focuses on visualizing the data.
 
@@ -119,7 +119,13 @@ a.  Create a data frame of three peaks in the Himalayan region: (lat, lon)
 
 b.  Create a SpatVector object from the data frame with peak data.
 
-c.  Add the points of the peaks onto the plot.
+*A quick note about plotting with `terra`:*
+
+When you run multiple plot functions (or a similar function adding something onto the plot, such as `lines()` or `text()`), you need to run all of the functions together at the same time. Running the lines one by one will give you an error like "Error in graphics...plot.new has not been called yet."
+
+You can either highlight all likes of code creating the plot and run them together or use the green arrow at the top of the code chunk--either option should work.
+
+c.  Plot the precipitation data, and ddd the points of the peaks onto the plot.
 
 d.  Add labels to the points representing the peaks.
 

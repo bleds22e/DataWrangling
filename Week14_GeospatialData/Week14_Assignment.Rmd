@@ -33,11 +33,11 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-May 6 at midnight MST
+May 6 before class
 
 # Assignment Questions
 
-### 1. Working with raster data in `terra` (20 pts)
+### 1. Working with Raster Data in `terra` (20 pts)
 
 In this exercise, you will work with the same precipitation data as in class, but this time focus in on the Himalayan region of Asia.
 
@@ -47,35 +47,46 @@ b.  Load in the precipitation data (`global_precipitation.tif`). What is the EPS
 
 c.  Define a geographic extent object for the Himalayan region.
 
+    The latitude and longitude of the Himalayas are, roughly:
+
+    -   Top left: (40.37, 69.33)
+    -   Bottom right: (26.93, 97.15)
+
 d.  Crop the precipitation data to the Himalayan extent; what are resulting dimensions?
 
-### 2. Printing maps (20 points)
+### 2. Printing Maps (20 points)
 
 Still working with the precipitation data, this exercise focuses on visualizing the data.
 
 a.  Plot the precipitation data for the Himalayan region.
 
-b.  Add a title to the plot.
+b.  Add a descriptive title to the plot.
 
 c.  Change the palette to that of `topo.colors` (use `?topo.colors` for details) and print the resultant plot.
 
 d.  Change the palette to one from [ColorBrewer](https://colorbrewer2.org) for sequential (continuous) data.
 
-### 3. Working with vector data in `terra` (20 points)
+### 3. Working with Vector Data in `terra` (20 points)
 
-a.  Create a data frame of three peaks in the Himalayan region: (lat, lon)
+a.  Create a data frame of three peaks in the Himalayan region: (`lat`, `lon`)
 
--   K2: 35.93, 76.50
--   Annapurna: 28.53, 83.81
--   Mount Everest: 28.05, 86.91
+-   K2: (35.93, 76.50)
+-   Annapurna: (28.53, 83.81)
+-   Mount Everest: (28.05, 86.91)
 
 b.  Create a `SpatVector` object from the data frame with peak data.
 
-c.  Convert the points `SpatVector` object to a lines object.
+> *A quick note about plotting with `terra`:*
+>
+> When you run multiple plot functions (or a similar function adding something onto the plot, such as `lines()` or `text()`), you need to run all of the functions together at the same time. Running the lines one by one will give you an error like "Error in graphics...plot.new has not been called yet."
+>
+> You can either highlight all likes of code creating the plot and run them together or use the green arrow at the top of the code chunk--either option should work.
 
-d.  Add the lines object to the precipitation plot of the Himalayan region.
+c.  Plot the precipitation data, and add the points of the peaks onto the plot.
 
-### 4. Modifying raster values (20 points)
+d.  Add labels to the points representing the peaks to the plot.
+
+### 4. Modifying Raster Values (20 points)
 
 a.  Load in the elevation data (`global_elevation.tif`). What are the units for these data?
 
@@ -85,6 +96,8 @@ c.  Crop the elevation data to the same geographic extent as precipitation data.
 
 d.  Plot the Himalayan elevation data.
 
-### 5. Converting raster objects to spatial vector objects (20 points)
+### 5. Converting Raster Objects to Spatial Vector Objects (20 points)
 
-For this last exercise, create a plot that shows precipitation for the Himalayan region, using a color palette from `ColorBrewer` AND add a layer that is partially (50%) transparent to shade out regions below 13,000 feet. Take a look at the arguments for the `polys` function for how to set the color and transparency.
+Create a plot that shows precipitation for the Himalayan region above 13,000 feet elevation.
+
+Use a color palette from `ColorBrewer` *and* add a layer that is partially (50%) transparent to shade out regions below 13,000 feet. Take a look at the arguments for the `polys` function for how to set the color and transparency.

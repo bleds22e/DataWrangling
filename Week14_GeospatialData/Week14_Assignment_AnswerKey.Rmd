@@ -1,5 +1,5 @@
 ---
-title: "Assignment 13"
+title: "Assignment 14"
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-### 1. Working with raster data in terra (20 pts)
+### 1. Working with Raster Data in `terra` (20 pts)
 
 
 ```{r answers-1}
@@ -38,7 +38,7 @@ prec_hima <- crop(prec, hima_ext)
 prec_hima
 ```
 
-### 2. Printing maps (20 points)
+### 2. Printing Maps (20 points)
 
 
 ```{r answers-2}
@@ -63,7 +63,7 @@ prec_cols <- rev(hcl.colors(n = 50, palette = "YlGnBu"))
 plot(prec_hima, col = prec_cols)
 ```
 
-### 3. Working with vector data in terra (20 points)
+### 3. Working with Vector Data in `terra` (20 points)
 
 
 ```{r answer-3}
@@ -89,7 +89,7 @@ plot(peaks_vect, add = TRUE)
 text(peaks_vect, labels = "peak", pos = 4)
 ```
 
-### 4. Modifying raster values (20 points)
+### 4. Modifying Raster Values (20 points)
 
 
 ```{r answer-4}
@@ -111,7 +111,7 @@ elev_hima <- crop(elev, hima_ext)
 plot(elev_hima)
 ```
 
-### 5. Converting raster objects to spatial vector objects (20 points)
+### 5. Converting Raster Objects to Spatial Vector Objects (20 points)
 
 ```{r answer-5}
 # 5a
