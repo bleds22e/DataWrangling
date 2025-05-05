@@ -1,0 +1,142 @@
+---
+title: "Peer Code Review Instructions"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Overview
+
+For this assignment, you will conduct a formal **peer code review** of another student’s final project hosted on GitHub. You will assess code for clarity, functionality, organization, and reproducibility, and provide **constructive, actionable feedback**.
+
+The majority of your code review will occur on GitHub (follow the instructions below). In addition, you will submit a knitted PDF file with a completed checklist and reflection to D2L.
+
+**Total Points**: 100 **Due Date**: Sunday, May 11 at midnight MST
+
+------------------------------------------------------------------------
+
+# Assignment Instructions
+
+## 1. Access Your Assigned Peer’s GitHub Repository *(5 points)*
+
+-   Go to your peer's GitHub repository.
+-   Fork and clone the repository to your computer (see detailed instructions below).
+-   Review the README and folder structure before diving into code.
+
+## 2. Review Code and Comment on GitHub *(75 points total)*
+
+Leave **specific, respectful, and helpful** comments directly on GitHub. Your comments should address:
+
+| Area | Description | Points |
+|-------------------|---------------------------------|---------------------|
+| Clarity & Readability | Are variable names clear? Is the code easy to follow? | 15 |
+| Functionality | Does the code run correctly? Are outputs as expected? | 15 |
+| Code Organization | Are scripts and files structured logically? | 15 |
+| Documentation | Is the README useful? Are scripts well-commented? | 15 |
+| Suggestions for Improvement | Provide 3+ specific, actionable suggestions. | 15 |
+
+-   Leave at least **8 inline comments** across the project.
+-   Be specific. For [[example:\\\\](example:\\){.uri}]([example:\\](example:\){.uri}){.uri} *“Consider renaming this function to clarify its purpose."*\
+    is better than *“This is confusing.”*
+
+## 3. Submit the Checklist and Reflection to D2L *(20 points)*
+
+In the checklist and reflection .Rmd file, write 7-10 sentences summarizing your review experience:
+
+-   What was done well?
+-   What was challenging about this assignment?
+-   What did you learn for your own projects?
+-   How did you approach constructive feedback?
+
+Upload the knitted `.pdf` file to the "Peer Code Review" Assignment on D2L.
+
+------------------------------------------------------------------------
+
+# Grading Rubric
+
+| **Category** | **Points** | **Criteria** |
+|------------------|------------------|-------------------------------------|
+| *Repository Access & Setup* | 5 | Repository is successfully forked and cloned. Reviewer created a new branch. |
+| *Clarity & Readability Comments* | 15 | Comments address variable names, structure, and ease of understanding. |
+| *Functionality Comments* | 15 | Reviewer tested code and provided feedback on functionality and outputs. |
+| *Code Organization Comments* | 15 | Feedback includes directory structure and logic of .Rmd layout. |
+| *Documentation Comments* | 15 | Reviewer comments on README quality and .Rmd documentation. |
+| *Suggestions for Improvement* | 15 | At least 3 specific, actionable, and constructive suggestions are given. |
+| *Checklist and Reflection* | 20 | Checklist completed and a thoughtful, specific, and complete reflection (7-10 sentences). |
+| **Total** | **100** |  |
+
+------------------------------------------------------------------------
+
+## Step-by-Step Instructions for GitHub Peer Code Review
+
+Follow these six steps to complete your peer code review using GitHub. This process uses a **fork-based workflow**. You will fork your peer’s repository, add review comments in your fork, and submit a draft pull request with your feedback.
+
+---
+
+### Step 1: Fork and Clone the Repository
+
+1. Go to your assigned peer’s GitHub repository.
+2. Click the **Fork** button in the top-right corner to create your own copy of their repository under your GitHub account.
+3. On your forked copy, click the green **Code** button and copy the URL.
+4. Open RStudio and use the URL to clone the repository to your computer:
+   - In RStudio: Go to *File > New Project > Version Control > Git*, paste the URL, and choose a folder.
+
+---
+
+### Step 2: Add Comments to the Code
+
+You should leave at least **eight comments** during your review.
+
+1. Open the cloned project.
+2. Leave review notes using comments (for example, lines that begin with “REVIEW:”).
+3. Save the files after adding your comments.
+
+---
+
+### Step 3: Commit and Push Your Changes
+
+1. Save your commented files.
+2. In RStudio:
+   - Use the Git pane to stage and commit the changes.
+   - Write a brief commit message like “Peer review comments.”
+   - Push the changes to your forked GitHub repository.
+
+---
+
+### Step 4: Create a Pull Request to Submit Your Review
+
+1. Go to your **forked repository** on GitHub.
+2. Click the "Contribute" or "Pull request" button.
+3. Make sure the pull request is targeted **from your fork** to your peer’s **original repository**.
+4. Confirm that:
+   - The base repository is your peer’s (e.g., `peerusername/project`).
+   - The head repository is your fork (e.g., `yourusername/project`).
+5. Write a short summary of your review in the pull request description.
+6. Click **“Create pull request.”**
+
+**Important:** You are submitting comments and suggestions only. Do not merge the pull request.
+
+---
+
+### Step 5: Complete the Peer Review Checklist
+
+1. Review the Peer Code Review Checklist provided in this assignment.
+2. Check off each item as you complete it.
+3. Provide brief notes where indicated.
+
+---
+
+### Step 6: Write and Submit Your Reflection
+
+1. Write a reflection of 7-10 sentences addressing the following:
+   - What was done well in the code?
+   - What could be improved?
+   - What did you learn from reviewing this project?
+   - How might this influence how you approach your own coding?
+2. Submit your completed checklist and reflection to the course LMS.
+
+---
