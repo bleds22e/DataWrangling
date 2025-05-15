@@ -330,17 +330,16 @@ surveys <- read_csv('data/surveys.csv')
 species <- read_csv('data/species.csv')
 plots <- read_csv('data/plots.csv')
 
-make_sp_time_series_plot <- function(data, genus_name, species_name){
+make_sp_time_series_plot <- function(data, timestep, genus_name, species_name){
   
   time_series <- data |>
     filter(genus == genus_name, species == species_name) |>
-    group_by(year) |>
+    group_by({{ timestep }}) |>
     summarize(count = n())
 
-  ggplot(time_series, aes(x = year, y = count)) +
+  ggplot(time_series, aes(x = {{ timestep }}, y = count)) +
     geom_line(linewidth = 1, color = "blue") +
     geom_point(size = 2, color = "blue") +
-    xlab("Year") +
     ylab("Number of Individuals") +
     theme_classic()
   
@@ -348,10 +347,15 @@ make_sp_time_series_plot <- function(data, genus_name, species_name){
 
 combined <- inner_join(surveys, species, by = "species_id")
 
-make_sp_time_series_plot(combined, "Dipodomys", "merriami")
+make_sp_time_series_plot(combined, year, "Dipodomys", "merriami")
 ggsave("output/Functions-portal-species-time-series-R-1.png")
 
-make_sp_time_series_plot(combined, "Chaetodipus", "penicillatus")
+make_sp_time_series_plot(combined, month, "Chaetodipus", "penicillatus")
 ggsave("output/Functions-portal-species-time-series-R-2.png")
 
+combined |>
+  left_join(plots) |>
+  filter(plot_type == "Control") |>
+  make_sp_time_series_plot(year, "Chaetodipus", "baileyi")
+ggsave("output/Functions-portal-species-time-series-R-3.png")
 ```
