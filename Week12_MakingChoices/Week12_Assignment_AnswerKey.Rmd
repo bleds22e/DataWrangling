@@ -32,8 +32,8 @@ w > 10
 
 1b
 ```{r}
-# b.  `w` + `x` is less than 15
-w + x < 15
+# b.  "green" is in `colors`
+colors == "green"
 ```
 
 1c
@@ -70,7 +70,7 @@ w > x | y > z
 
 1i
 ```{r}
-# j. Each mass in `masses` is between 30 and 50.
+# i. Each mass in `masses` is between 30 and 50.
 masses > 30 & masses < 50
 ```
 

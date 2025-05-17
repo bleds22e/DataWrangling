@@ -44,8 +44,8 @@ i.  Each mass in `masses` is between 30 and 50.
 # a.  `w` is greater than 10
 w > 10
 
-# b.  `w` + `x` is less than 15
-w + x < 15
+# b.  "green" is in `colors`
+colors == "green"
 
 # c.  `x` is greater than `y`
 x > y
@@ -53,19 +53,19 @@ x > y
 # d. Each value in `masses` is greater than 50.
 masses > 40
 
-# f.  `dna1` is the same as `dna2`
+# e.  `dna1` is the same as `dna2`
 dna1 == dna2
 
-# g.  `dna1` is not the same as `dna2`
+# f.  `dna1` is not the same as `dna2`
 dna1 != dna2
 
-# h. `w` is greater than `x`, or `y` is greater than `z`
+# g. `w` is greater than `x`, or `y` is greater than `z`
 w > x | y > z
 
-# i.  `x` times `w` is between 13.2 and 13.5
+# h.  `x` times `w` is between 13.2 and 13.5
 13.2 < x * w & x * w < 13.5  # | (a pipe) will return TRUE for all values.
 
-# j. Each mass in `masses` is between 30 and 50.
+# i. Each mass in `masses` is between 30 and 50.
 masses > 30 & masses < 50
 ```
 
