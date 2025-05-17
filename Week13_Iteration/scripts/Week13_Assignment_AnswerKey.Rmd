@@ -145,10 +145,8 @@ dino_data %>%
 
 3a. 
 ```{r}
-download.file("http://www.datacarpentry.org/semester-biology/data/individual_collar_data.zip", 
-              "individual_collar_data.zip")
-unzip("individual_collar_data.zip")
-collar_data_files = list.files(pattern = "collar-data-.*.txt", 
+collar_data_files = list.files(path = "../data_raw/",
+                               pattern = "collar-data-.*.txt",
                                full.names = TRUE)
 
 num_data_files = length(collar_data_files)
@@ -157,6 +155,8 @@ output = data.frame(file_name = character(num_data_files),
                     min_lat = numeric(num_data_files),
                     observations = numeric(num_data_files),
                     stringsAsFactors = FALSE)
+
+print("3a")
 
 for (i in 1:length(collar_data_files)){
   data = read.csv(collar_data_files[i])
@@ -167,7 +167,7 @@ for (i in 1:length(collar_data_files)){
 ```
 
 3b. 
-```{r}
+```{r fig.dim=c(2,2)}
 for (i in 1:length(collar_data_files)){
   data = read.csv(collar_data_files[i])
   p <- ggplot(data, aes(x = long, y = lat)) + geom_path() + labs(title = collar_data_files[i])

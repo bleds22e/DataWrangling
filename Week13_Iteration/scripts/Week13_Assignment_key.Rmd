@@ -171,7 +171,7 @@ mass_from_length <- function(length, dino_group) {
     return(mass)
 }
 
-dino_data <- read_csv("dinosaur_lengths.csv")
+dino_data <- read_csv("../data_raw/dinosaur_lengths.csv")
 
 # 2a
 print("2a")
@@ -217,10 +217,12 @@ Include the name of the file in the graph as the graph title using the `labs` fu
 ```{r}
 library(ggplot2)
 
-download.file("http://www.datacarpentry.org/semester-biology/data/individual_collar_data.zip", 
-              "individual_collar_data.zip")
-unzip("individual_collar_data.zip")
-collar_data_files = list.files(pattern = "collar-data-.*.txt", 
+# download.file("http://www.datacarpentry.org/semester-biology/data/individual_collar_data.zip", 
+#               "../data_raw/individual_collar_data.zip")
+# unzip("../data_raw/individual_collar_data.zip",
+#       exdir = "../data_raw/")
+collar_data_files = list.files(path = "../data_raw/",
+                               pattern = "collar-data-.*.txt",
                                full.names = TRUE)
 
 num_data_files = length(collar_data_files)
