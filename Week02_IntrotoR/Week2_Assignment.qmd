@@ -233,7 +233,7 @@ Think about good variable names and then create a new version of this code with 
 
 Follow these steps to successfully turn in your assignment on D2L.
 
-1.  Click the `Knit` button up near the top of this document. This should produce a PDF file that shows up in the `Files` panel on the bottom-right of your screen. (*If you can't get your file to Knit to PDF, you can submit the .Rmd file instead.*)
+1.  Click the `Render` button up near the top of this document. This should produce a PDF file that shows up in the `Files` panel on the bottom-right of your screen. (*If you can't get your file to Knit to PDF, you can submit the .Rmd file instead.*)
 2.  Click the empty box to the left of the PDF file.
 3.  Click on the blue gear near the top of the `Files` panel and choose Export.
 4.  Put your last name at the front of the file name when prompted, then click the Download button. The PDF file of your assignment is now in your "Downloads" folder on your device.
