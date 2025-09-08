@@ -1,0 +1,132 @@
+---
+title: "Week 3: Assignment"
+author: "Ellen Bledsoe"
+format: pdf
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Description
+
+### Purpose
+
+The goal of this assignment is to get comfortable importing data and working with 2-dimensional data in R using `dplyr`, part of the `tidyverse`.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+Feb 11 at 3:30 pm
+
+# Exercises
+
+### 0. Set-up (5 pts)
+
+To complete these exercises, we will need functions from the `dplyr` package and the `readr` package (`read_csv()`).
+
+Add a code chunk below and load these 2 packages into the workspace before beginning.
+
+### 1. Shrub Volume Data Basics (20 pts)
+
+Dr. Morales is interested in studying the factors controlling the size and carbon storage of shrubs. She has conducted an experiment looking at the effect of three different treatments on shrub volume at four different locations.
+
+Get familiar with the shrub data by importing `shrub-volume-data.csv` using `read_csv()` and use `dplyr` functions to complete the following tasks. Remember to add a code chunk!
+
+a.  Select the data from the length column.
+b.  Select the data from the site and experiment columns.
+c.  Add a new column named `area` containing the area of the shrub, which is the length times the width.
+d.  Sort the data by length.
+e.  Filter the data to include only plants with heights greater than 5.
+f.  Filter the data to include only plants with heights greater than 4 and widths greater than 2 (using `,` or `&` to include two conditions).
+g.  Filter the data to include only plants from Experiment 1 or Experiment 3 (using '\|' for “or”).
+h.  Filter the data to remove rows with null values in the height column (using `!is.na`)
+i.  Create a new data frame called `shrub_volumes` that includes all of the original data and a new column containing the volumes (length \* width \* height). Remember to add a line of code afterwards with the name of the dataframe so the dataframe is printed.
+
+### 2. Code Shuffle (15 pts)
+
+We are interested in understanding the monthly variation in precipitation in Tucson, AZ. We’ll use some data from the NOAA National Climatic Data Center. Each row of the data is a year (from 2000-2023) and each column is a month (January - December).
+
+Rearrange the following program so that it:
+
+a.  Imports the data
+b.  Calculates the mean precipitation (ppt) in each month across years
+c.  Plots the monthly averages as a simple line plot
+
+Finally, add a comment above the code that describes what it does. The comment character in R is `#`.
+
+It’s OK if you don’t know exactly how the details of the program work at this point; you just need to figure out the right order of the lines based on when variables are defined and when they are used.
+
+```{r}
+plot(monthly_mean_ppt, type = "l", xlab = "Month", ylab = "Mean Precipitation")
+monthly_mean_ppt <- colMeans(ppt_data)
+ppt_data <- read.csv("tucson_precip.csv", header = FALSE)
+```
+
+### 3. Portal Data Manipulation (20 pts)
+
+Load the `surveys.csv` file into R using `read_csv()`.
+
+Even if you already have `surveys` in your environment, you still need to add a line of code here to read in the file. When you "knit" to PDF, R ignores everything in your environment and runs each line of code in order. If you don't include a line of code that saves the survey data as an object, your assignment won't knit. The same goes for loading packages.
+
+*Note: Do NOT use pipes for this exercise.*
+
+a.  Use `select()` to create a new data frame with just the year, month, day, and species_id columns in that order.
+b.  Use `mutate()`, `select()`, and `filter()` with `!is.na()` to create a new data frame with the year, species_id, and weight in kilograms of each individual, with no null weights. The weight in the table is given in grams so you will need to create a new column for weight in kilograms by dividing the weight column by 1000.
+c.  Use the `filter()` function to get all of the rows in the data frame for the species ID `SH`.
+
+### 4. Portal Data Manipulation Pipes (20 pts)
+
+Using the same data as you did in Exercise 3, use pipes (either `|>` or `%>%`) to combine the following operations to manipulate the data.
+
+a.  Use `mutate()`, `select()`, and `filter()` with `!is.na()` to create a new data frame with the year, species_id, and weight in kilograms of each individual, with no null weights.
+b.  Use the `filter()` and `select()` to get the year, month, day, and species_id columns for all of the rows in the data frame where species_id is `SH`.
+
+### 5. Portal Data Challenge (20 pts)
+
+Develop a data manipulation pipeline for the Portal surveys table that produces a table of data for only the three *Dipodomys* species (DM, DO, DS).
+
+-   The species IDs should be presented as lower case, not upper case.
+-   The table should contain information on the date, the species ID, the weight and hindfoot length.
+-   The data should not include null values for either weight or hindfoot length.
+-   The table should be sorted first by the species (so that each species is grouped together) and then by weight, with the largest weights at the top.
+
+### 6. Using base R (*optional*)
+
+Try using base R (no `dplyr` functions) to perform the same tasks as Question 1. We didn't explicitly cover some of these skills using base R (though we covered all of the individual components needed), so this will likely be a bit of a challenge!
+
+a.  Select the data from the length column.
+b.  Select the data from the site and experiment columns.
+c.  Add a new column named `area` containing the area of the shrub, which is the length times the width.
+d.  Sort the data by length. *Hint: you will use a function called `order()`*
+e.  Filter the data to include only plants with heights greater than 5.
+f.  Filter the data to include only plants with heights greater than 4 and widths greater than 2 (using `&` to include two conditions).
+g.  Filter the data to include only plants from Experiment 1 or Experiment 3 (using '\|' for “or”).
+h.  Filter the data to remove rows with null values in the height column (using `!is.na`)
+i.  Create a new data frame called `shrub_volumes2` that includes all of the original data and a new column containing the volumes (length \* width \* height).
+
+# Turning in Your Assignment
+
+Follow these steps to successfully turn in your assignment on D2L.
+
+1.  Click the `Render` button up near the top of this document. This should produce a PDF file that shows up in the `Files` panel on the bottom-right of your screen. (*If you can't get your file to Knit to PDF, you can submit the .qmd file instead.*)
+2.  Click the empty box to the left of the PDF file.
+3.  Click on the blue gear near the top of the `Files` panel and choose Export.
+4.  Put your last name at the front of the file name when prompted, then click the Download button. The PDF file of your assignment is now in your "Downloads" folder on your device.
+5.  Head over to D2L and navigate to the correct Assignment dropbox. Submit the PDF file that you just downloaded.

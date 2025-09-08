@@ -1,0 +1,117 @@
+---
+title: "Week 3: Pipes"
+author: "Ellen Bledsoe"
+format: pdf
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Combining Steps with Pipes
+
+Because we are starting a new session in R, we need to load in our packages again. In Posit Cloud, you often don't *actually* need to do this, but it is good practice, regardless.
+
+Load both `dplyr` and `readr`. If you need to read in the .csv files again, do so here, as well.
+
+```{r}
+
+```
+
+## When Order Matters
+
+When we run code in a code chunk or in a script/file, R runs the code in order, from beginning to end (first line first, then the second line, and so on).
+
+Let's look at an example: Obtain the data for only DS, sorted by year, with only the year and and weight columns
+
+```{r eval = FALSE}
+# why doesn't this code work?
+ds_weight_by_year <- select(ds_data_by_year, year, weight)
+ds_data <- filter(surveys, species_id == "DS", !is.na(weight))
+ds_data_by_year <- arrange(ds_data, year)
+```
+
+Why doesn't the code above work?
+
+We can put the code in the correct order, and the code chunk with run smoothly.
+
+```{r}
+
+```
+
+### Let's Practice!
+
+Work on Questions 2 and 3 in the Assignment.
+
+## The pipe (`|>` or `%>%`)
+
+You'll notice that in the code above, we made a bunch on intermediate objects (`ds_data`, `ds_data_by_year`). Instead of doing that, we can use a pipe operator to chain functions together.
+
+You can think of the pipe as automatically sending the output from the first line into the next line as the input.
+
+Using pipes is helpful for a lot of reasons, including:
+
+1.  removing the clutter of creating a lot of intermediate objects in your work space, which reduces the chance of errors caused by using the wrong input object
+2.  makes things more human-readable (in addition to computer-readable)
+
+The shortcut for typing a pipe is `Ctrl` + `Shift` + `M` (or `Cmd` + `Shift` + `M` on a Mac)
+
+Let's start with a very small example, one we probably wouldn't actually use in our own code.
+
+```{r}
+
+```
+
+Instead of putting `x` as an argument in the `mean()` function, we could instead pipe the vector into the function.
+
+```{r}
+
+```
+
+This works the same way as above; `x` becomes the first argument in mean.
+
+If we want to add other arguments, they get added to the function call. The `mean()` function already knows that our first argument in going to be `x`.
+
+```{r}
+
+```
+
+Let's try this with some of the `dplyr` functions we have learned.
+
+```{r}
+
+```
+
+### Base R pipe vs. `magrittr` pipe
+
+So far, we have been using the pipe that is now "native" to R, meaning it is automatically loaded into R; it isn't part of a package that needs to be loaded. It looks like `|>`.
+
+The first pipe created to be used in R looked like `%>%` and had to be loaded from an R package if you wanted to use it. It is part of the `magrittr` package and automatically gets loaded when you load a package from the `tidyverse`, such as `dplyr`.
+
+Even though I learned to use `%>%`, I am starting to transition to the native R pipe, `|>`, in my own work and in teaching. It is even what the [creator of the `tidyverse` recommends](https://r4ds.hadley.nz/data-transform.html#sec-the-pipe)!
+
+These pipes operate in nearly the same way, and you can use either one you'd like. If you want to change to the base R pipe in a Posit Cloud project or on your own computer, you can do so:
+
+| Tools -\> Global Options -\> Code -\> Use native pipe operator
+
+### Let's Practice
+
+Try your hand at the Portal Data Manipulation Pipes (Questions 4 and 5).
+
+## Placeholders
+
+Occasionally (not in your assignment, for the record), you will need to pipe the result of a line to something other than the first argument.
+
+To do so, we use a placeholder. This is one major difference between the 2 pipes.
+
+-   For `|>`, the placeholder is `_`
+-   For `%>%`, the placeholder is `.`
+
+We can demonstrate by fitting a linear model at the end of our `dplyr` pipeline.
+
+The `lm` function takes a formula as the first argument (names of columns to use for the dependent and independent variables). The second argument tells it where the data is (our data frame, the thing we are piping).
+
+```{r}
+# lm(dependent_column ~ independent_column, data = <dataframe>)
+```

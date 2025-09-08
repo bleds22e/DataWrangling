@@ -1,8 +1,8 @@
 ---
-title: 'Week 3: Data Tables'
+title: "Week 3: Data Tables"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
