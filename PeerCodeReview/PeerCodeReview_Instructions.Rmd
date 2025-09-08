@@ -52,7 +52,7 @@ Upload the knitted `.pdf` file to the "Peer Code Review" Assignment on D2L.
 # Grading Rubric
 
 | **Category** | **Points** | **Criteria** |
-|-------------------|-------------------|----------------------------------|
+|----|----|----|
 | *Repository Access & Setup* | 5 | Repository is successfully forked and cloned. Reviewer created a new branch. |
 | *Clarity & Readability Comments* | 15 | Comments address variable names, structure, and ease of understanding. |
 | *Functionality Comments* | 15 | Reviewer tested code and provided feedback on functionality and outputs. |
