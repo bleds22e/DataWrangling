@@ -33,7 +33,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-Feb 11 at 3:30 pm
+September 16 before class
 
 # Exercises
 
