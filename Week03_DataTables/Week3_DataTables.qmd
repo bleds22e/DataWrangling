@@ -21,9 +21,7 @@ Until now, all of the coding we have done is in the original R language, which i
 
 Packages are one of the neatest things about working in an open-source environment like R! They contains bits of code (often in the form of functions) that can be reused, making them a core component of reproducible data science. Anyone can develop a package, and there are thousands of them doing all sorts of things.
 
-```{r}
-knitr::include_graphics("images/tidyverse-icons.png")
-```
+![](images/tidyverse-icons.png){width="50%" fig-align="center"}
 
 ### Explore the `tidyverse`
 
@@ -59,7 +57,7 @@ For future reference, though:
 
 Any time we open R/RStudio and want to use functions from a package, we need to "load" the package. We use the `library()` function to do this.
 
-```{r load_packages, message = FALSE}
+```{r load_packages}
 
 ```
 
@@ -156,9 +154,7 @@ Get started with your Assignment. After the set-up, work on Question 1a-b.
 
 ## Creating new columns with `mutate()`
 
-```{r}
-knitr::include_graphics("images/mutate.png")
-```
+![](images/mutate.png){width="50%" fig-align="center"}
 
 Sometimes our data doesn't have our data in exactly the format we want. For example, we might want our hindfoot data in cm instead of mm.
 
@@ -206,9 +202,7 @@ Work on Shrub Volume Data Basics c-d.
 
 ## `filter()`ing rows
 
-```{r}
-knitr::include_graphics("images/filter.png")
-```
+![](images/filter.png){width="50%" fig-align="center"}
 
 The `filter()` function allows you filter rows by certain conditions.
 
