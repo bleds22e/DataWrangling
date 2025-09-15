@@ -98,7 +98,7 @@ new_rodents <- summarize_individual_rodents() %>%
   filter(year > 2002) %>% 
   mutate(record_id = seq(nrow(surveys) + 1, 
                          nrow(surveys) + nrow(.))) %>% 
-  as_tibble()
+  tibble::as_tibble()
 new_rodents
 ```
 

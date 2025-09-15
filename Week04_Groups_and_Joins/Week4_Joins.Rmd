@@ -57,7 +57,7 @@ to gluing datasets together instead of sorting rows to match up.
 They don't match up data based on unique identifiers; instead they match
 up data by column name (`bind_rows`) or row position (`bind_cols`).
 
-![](binds.png){width="50%"}
+![](images/binds.png){width="50%"}
 
 These can be very useful, but you need to be careful using them,
 especially `bind_cols`, as the function will automatically assume that
@@ -79,7 +79,7 @@ new_rodents <- summarize_individual_rodents() %>%
   select(month, day, year, plot_id = plot, species_id = species, sex, hindfoot_length = hfl, weight = wgt) %>% 
   filter(year > 2002) %>% 
   mutate(record_id = seq(nrow(surveys) + 1, nrow(surveys) + nrow(.))) %>% 
-  as_tibble()
+  tibble::as_tibble()
 new_rodents
 ```
 
