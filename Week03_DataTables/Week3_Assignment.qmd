@@ -63,7 +63,7 @@ i.  Create a new data frame called `shrub_volumes` that includes all of the orig
 
 We are interested in understanding the monthly variation in precipitation in Tucson, AZ. We’ll use some data from the NOAA National Climatic Data Center. Each row of the data is a year (from 2000-2023) and each column is a month (January - December).
 
-Rearrange the following program so that it:
+Rearrange the following code chunk so that it:
 
 a.  Imports the data
 b.  Calculates the mean precipitation (ppt) in each month across years
@@ -74,6 +74,7 @@ Finally, add a comment above the code that describes what it does. The comment c
 It’s OK if you don’t know exactly how the details of the program work at this point; you just need to figure out the right order of the lines based on when variables are defined and when they are used.
 
 ```{r}
+# rearrange the following lines of code so they run successfully
 plot(monthly_mean_ppt, type = "l", xlab = "Month", ylab = "Mean Precipitation")
 monthly_mean_ppt <- colMeans(ppt_data)
 ppt_data <- read.csv("tucson_precip.csv", header = FALSE)
