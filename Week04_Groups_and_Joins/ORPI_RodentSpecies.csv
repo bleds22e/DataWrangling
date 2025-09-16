@@ -1,0 +1,19 @@
+﻿RodentSpeciesID,SpeciesCode,GenusSpecies,Family
+109,AMHA,Ammospermohilus harrisi,Sciuridae
+110,CHBA,Chaetodipus baileyi,Heteromyid
+111,CHIN,Chaetodipus intermedius,Heteromyid
+112,CHPE,Chaetodipus penicillatus,Heteromyid
+113,CHSP,Chaetodipus sp.,Heteromyid
+114,DIDE,Dipodomys deserti,Heteromyid
+115,DIME,Dipodomys merriami,Heteromyid
+116,DISP,Dipodomys spectabilis,Heteromyid
+117,NEAL,Neotoma albigula,Muridae
+118,ONTO,Onychomys torridus,Muridae
+119,PEAM,Perognathus amplus,Heteromyid
+120,PEER,Peromyscus eremicus,Muridae
+121,PELE,Peromyscus leucopus,Muridae
+122,PELO,Perognathus longimembris,Muridae
+123,PEMA,Peromyscus maniculatus,Muridae
+124,PEME,Peromyscus merriami,Muridae
+125,SIAR,Sigmodon arizonae,Muridae
+126,SPTE,Spermophilus tereticaudus,Sciuridae

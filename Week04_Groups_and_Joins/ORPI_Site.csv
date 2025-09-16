@@ -1,0 +1,47 @@
+Site,Name,SiteCode,CoreStatus,Easting,Northing
+AGUA,Aguajita Wash,1,Core 1,309977,3535952
+VULT,Vulture Site,2,Non-Core 1,324077,3530095
+LOST,Lost Cabin,3,Non-Core 1,323660,3533387
+SENI,Senita Basin,4,Core 1,323640,3536259
+BURN,Burn Site,5,Non-Core 1,330627,3527627
+DOLO,Dos Lomitas,6,Core 1,333582,3526430
+SALS,Salsola,7,Non-Core 1,337259,3525105
+BULL,Bull Pasture,8,Non-Core 1,340044,3542816
+ARCH,Arch Canyon,9,Non-Core 1,338992,3546011
+ALAM,Alamo Canyon,10,Core 1,338482,3548536
+DRIP,Dripping Springs,11,Non-Core 1,321461,3544589
+ACUN,Acuna Habitat,12,Non-Core 1,319206,3545830
+POZO,Pozo Nuevo,13,Core 1,307813,3543528
+EARM,East Armenta,14,Core 1,331339,3561835
+ARMR,Armenta Ranch,15,Non-Core 1,326785,3563367
+GROW,Growler Canyon,16,Core 1,316420,3560768
+LOWE,Lower Colorado Larrea,17,Core 1,303658,3561442
+QBQT,Quitobaquito,18,Non-Core 1,309197,3535778
+VALL,Valley Floor,19,Core 1,325628,3563532
+MIDB,Middle Bajada,20,Core 1,334804,3551028
+CEME,Cement Tank,24,Other,340488,3537961
+CREO,Creosotebush,21,Other,328381,3563115
+ESTU,Tinaja Estufa,26,Other,316727,3553556
+GORG,Hidden Gorge,26,Other,316880,3553333
+HEAD,Headquarters,NA,Other,0,0
+GACH,Gachado Well,NA,Other,0,0
+GRVA,Growler Valley,NA,Other,309779,3559887
+CUER,Cuerda de Lena,NA,Other,0,0
+JACK,Jackson's Hole,30,Other,320820,3547286
+LIZG,Lizard Grid,22,Other,331815,3561814
+NALA,North Alamo Canyon,25,Other,338329,3549470
+SALA,South Alamo Canyon,NA,Other,0,0
+WILD,Wild Horse Tank,29,Other,336963,3543946
+DOWL,Dowling Ranch,27,Other,326181,3529712
+TILL,69.4 Mile,28,Other,332313,3545753
+KUAK,Kuakatch Wash,NA,Other,0,0
+DIAB,Diablo Canyon,NA,Other,0,0
+CAMP,HQ Campground,0,Other,0,0
+GVAL,Growler Valley,0,Other,0,0
+ROJO,Cono Rojo (Pinacate),0,Other,0,0
+ROSA,Sierra del Rosario,0,Other,0,0
+PONU,Rancho Pozo Nuevo,0,Other,0,0
+GUAD,Rancho Guadalupe Victoria,0,Other,0,0
+PAPA,Papago Tanks,0,Other,0,0
+NEOL,Neolloydia site,0,Non-Core 1,0,0
+LOCO,Lopez Collada,NA,Other,0,0

@@ -117,6 +117,10 @@ This can happen a couple ways, depending on which data frame is the reference an
 
 ![](images/joins.png){width="50%"}
 
+You can find another way to visualize what happens during different type
+of joins through GIFs from
+[tidyexplain](https://www.garrickadenbuie.com/project/tidyexplain/).
+
 To enable us to make these connections, the tables need one (or more) columns that link them together.
 
 In the case of the Portal data, there is one column that links the `surveys` and `species` tables: `species_id`

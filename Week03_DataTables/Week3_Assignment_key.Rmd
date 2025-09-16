@@ -128,7 +128,7 @@ Load the `surveys.csv` file into R using `read_csv()`.
 
 a.  Use `select()` to create a new data frame with just the year, month, day, and species_id columns in that order.
 b.  Use `mutate()`, `select()`, and `filter()` with `!is.na()` to create a new data frame with the year, species_id, and weight in kilograms of each individual, with no null weights. The weight in the table is given in grams so you will need to create a new column for weight in kilograms by dividing the weight column by 1000.
-c.  Use the `filter()` function to get all of the rows from the final data frame you created in b for the species ID `SH`.
+c.  Use the `filter()` function to get all of the rows from the final data frame you created in (b) for the species ID `SH`.
 
 ```{r}
 surveys <- read_csv("surveys.csv")
@@ -196,7 +196,7 @@ e.  Filter the data to include only plants with heights greater than 5.
 f.  Filter the data to include only plants with heights greater than 4 and widths greater than 2 (using `&` to include two conditions).
 g.  Filter the data to include only plants from Experiment 1 or Experiment 3 (using '\|' for “or”).
 h.  Filter the data to remove rows with null values in the height column (using `!is.na`)
-i.  Create a new data frame called `shrub_volumes2` that includes all of the original data and a new column containing the volumes (length \* width \* height). 
+i.  Create a new data frame called `shrub_volumes2` that includes all of the original data and a new column containing the volumes (length \* width \* height).
 
 ```{r}
 #6a
@@ -229,7 +229,6 @@ shrubs$volume <- shrubs$length * shrubs$width * shrubs$height
 shrub_volumes2 <- shrubs
 shrub_volumes2
 ```
-
 
 # Turning in Your Assignment
 
