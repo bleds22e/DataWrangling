@@ -3,24 +3,11 @@ title: 'Week 4: Joins and Binds'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-```{r}
-# TO DO
-# - add link to "tidyexplain" for joins (maybe include gifs?)
-# - use a different dataset for joins either here or in homework
-# - better explanation of binds vs joins
-# - add info about in-class exercise with combining data (hands on)
-```
-
-
 
 # Binds and Joins
 
@@ -37,8 +24,11 @@ Being able to join together data from related tables is a key skill in
 data science, and for working with larger data structures (databases
 with their own languages, like SQL).
 
-To understand binds and joins, we will continue using the Portal
-datasets.
+We are going to use two different datasets to explore binds and joins.
+For binds, we are going to continue to use the Portal data with which we
+have become quite familiar. For joins, we will use rodent capture data
+from Organ Pipe National Monument; you'll use the Portal data for joins
+in your assignment.
 
 ## Set-up
 
@@ -50,12 +40,10 @@ library(dplyr)
 library(readr)
 ```
 
-And load the `surveys`, `species`, and `plots` data.
+To start, let's read in the `surveys` dataframe from the Portal dataset.
 
 ```{r}
 surveys <- read_csv("surveys.csv")
-species <- read_csv("species.csv")
-plots <- read_csv("plots.csv")
 ```
 
 ## Binds vs. Joins
@@ -66,12 +54,27 @@ in different ways.
 ## Binds
 
 One way we can combine data sets in through binds. Binds act similarly
-to gluing datasets together instead of sorting rows to match up.
-
-They don't match up data based on unique identifiers; instead they match
-up data by column name (`bind_rows`) or row position (`bind_cols`).
+to gluing datasets together instead of sorting rows to match up based on
+unique identifiers ("keys).
 
 ![](images/binds.png){width="50%"}
+
+For `bind_rows()`:
+
+-   we are stacking datasets on top of each other vertically
+
+-   columns are matched by name (not position); a column missing in one
+    dataset will be filled with NAs
+
+-   often used when you have multiple datasets with the same structure
+
+For `bind_col()`:
+
+-    we are putting datasets beside each other horizontally
+
+-   rows are matched by position, not by unique values
+
+-   datasets must have the same number of rows
 
 These can be very useful, but you need to be careful using them,
 especially `bind_cols`, as the function will automatically assume that
@@ -106,9 +109,7 @@ When we look at the `new_rodents` data frame, we can see the same
 columns as in `surveys`, though the `record_id` column is at the end.
 
 We want to bind these two data frames together so that we have *all* of
-the rodent data in one data frame. To do so, we would use `bind_rows()`.
-Even though columns are getting matched up, the things we are binding
-together are multiple rows, hence `bind_rows()`.
+the rodent data in one data frame. To do so, we would use `bind_rows()` because we want to "vertically" stack these data frames together since they share the same columns.
 
 The arguments for both `bind_rows()` and `bind_cols()` are the names of
 the data frames you want to bind together.
@@ -140,19 +141,30 @@ allows us to make changes in one place, not hundreds of places.
 
 Our goal is for each table to contain a single kind of information.
 
-Let’s look at this in the Portal dataset.
+Let’s take a look at this using the rodent capture data from Organ Pipe National Monument.
 
-In the Portal dataset:
+First, we need to read in all four data tables.
+```{r}
+rodent_detail <- read_csv("ORPI_RodentDetail.csv") 
+rodent_survey <- read_csv("ORPI_RodentSurvey.csv")
+rodent_species <- read_csv("ORPI_RodentSpecies.csv")
+rodent_site <- read_csv("ORPI_Site.csv")
+```
 
--   `surveys`: information about individuals
--   `species`: information about species
--   `plots`: information about plots
+In these four datasets, we have the following:
+
+-   `rodent_detail`: data about each individual rodent caught
+-   `rodent_survey`: data about each survey occasion
+-   `rodent_species`: data about each rodent species
+-   `rodent_site``: data about rodent trapping sites
 
 This way, if a species name changes (for example), we only need to
 change it in the species table rather than tens of thousands of times.
 
 When we need to combine the datasets together to use data from multiple
-data frames, we use a `join()` function.
+data frames, we use a `join` function.
+
+Take a few minutes to examine these data tables. Each data frame shares at least one column with another data frame (though the column names may or may not match...).
 
 ### How Joins Work
 
@@ -160,8 +172,8 @@ Joins are arguably the more complicated of the two types of ways to
 combine data, but they are, therefore, the more flexible and useful of
 the two.
 
-The magic comes because they *match up columns of data based on unique
-identifiers in each row of data*.
+The magic comes because they merge datasets by *matching up columns of data based on unique
+identifiers ("keys") in each row of data*.
 
 In the following diagram, the two example data frames have the column
 `x1` in common, and each of the values in `x1` are unique (no repeats in
@@ -172,22 +184,23 @@ the `x1` column.
 This can happen a couple ways, depending on which data frame is the
 reference and how much data you want to retain.
 
+Depending on the type of join you use, you will keep all rows from table (`left_join` and `right_join`), both tables (`full_join`), or only rows with matches (`inner_join`).
+
 ![](images/joins.png){width="50%"}
 
-You can find another way to visualize what happens during different type of joins through GIFs from [tidyexplain](https://www.garrickadenbuie.com/project/tidyexplain/).
+You can find another way to visualize what happens during different type
+of joins through GIFs from
+[tidyexplain](https://www.garrickadenbuie.com/project/tidyexplain/).
 
 To enable us to make these connections, the tables need one (or more)
-columns that link them together.
+columns that link them together; these are the "keys."
 
-In the case of the Portal data, there is one column that links the
-`surveys` and `species` tables: `species_id`
-
-There is also one column that links the `surveys` and `plots` tables:
-`plot_id`
 
 #### Inner Joins
 
-Let’s join the surveys and the species tables together using an “inner
+Inner joins keep only rows that have a match in both data frames.
+
+Let’s join the `rodent_detail` and `rodent_species` tables together using an “inner
 join.”
 
 To do this, we use the `inner_join` function from `dplyr`. It takes
@@ -199,22 +212,16 @@ three arguments:
     tables, specified in a `join_by()` function,
 
 ```{r}
-combined <- inner_join(surveys, species, join_by(species_id))
-combined
+inner <- inner_join(rodent_detail, rodent_species, join_by(RodentSpeciesID))
+inner
 ```
 
-Looking at the combined table, we can see that on every row with a
-particular value for `species_id`, the join has added the matching
-values on `genus`, `species`, and `taxa`.
+Looking at the combined table, we can see that on every row in `rodent_detail` with a
+particular value for `RodentSpeciesID` column, the join has added the matching
+values from `rodent_species`, including the species code, scientific name, and family.
 
 One way to think about this join is that it adds the relevant
-information in the species table to the surveys table. Often for
-scientific data, we can think about there being one main table---the
-surveys table in our case---and multiple supplementary tables that
-provide additional details.
-
-Inner joins keep information from both tables when both tables have a
-matching value in the join column.
+information in the `rodent_species` table to the `rodent_details` table. 
 
 Let's go back up and look at the visualization of the inner join. When
 we use the `inner_join` function to merge together table a and b, the
@@ -222,11 +229,9 @@ result only has rows for which the common column (`x1`) have the same
 values in each table (A and B).
 
 Translating this to the rodent data, that means that we dropped any rows
-for which there is no matching `species_id`.
+for which there is no matching `RodentSpeciesID`.
 
-Scroll to Line 324 in the `surveys` table; these have missing species
-IDs. If you look in the `combined` table, you'll notice that
-`record_id`, 324-326 are missing from the table.
+RecordID 7 in the `rodent_detail` table has a missing species ID. If you look in the `inner` table, you'll notice that in the `RecordID` column, number 7 is missing.
 
 The other join functions might have handled this differently, based on
 how they work.
@@ -234,16 +239,36 @@ how they work.
 #### Left Joins
 
 For example, left joins keep all rows in the first, or left, table. If
-we wanted to keep rows with missing species IDs in the `surveys` data
+we wanted to keep rows with missing species IDs in the `rodent_detail` data
 frame, we could use `left_join()`.
 
 ```{r}
-combined <- left_join(surveys, species, join_by(species_id))
+left <- left_join(rodent_detail, rodent_species, join_by(RodentSpeciesID))
+left
 ```
+Because there are no values in the `rodent_species` table that correspond to a missing`RodentSpeciesID`, the columns from that table are filled with NA values in the rows with no match.
 
 There are also right joins, which keep all rows in the second (or right)
 table, and full joins, which keep all rows from both tables, even there
 isn't a matching row.
+
+#### Full Join
+
+To demonstrate a full join, we are going to use the other two tables: `rodent_survey` and `rodent_site`.
+
+Our first step is to identify the uniting column, or "key." In this case, the columns do not share the same name, but they do share the same data. We can successfully join them by setting the column names equal to each other in the `join_by()` function with `==`.
+
+```{r}
+# to join tables when the key column(s) have different names: 
+# set the columns equal to each other in the join_by() function with ==
+# put them in the same order as the data frames are listed in the function
+full <- full_join(rodent_survey, rodent_site, join_by(SiteID == SiteCode))
+full
+
+# older notation for combining tables with columns with different names
+# full_join(rodent_survey, rodent_site, by = c("SiteID" = "SiteCode"))
+```
+
 
 Note: for our assignment, we’ll focus on using inner joins.
 
@@ -254,24 +279,22 @@ Sometimes, we need to combine more than two tables.
 To join more than two tables, we start by joining two tables, then join
 the resulting table to a third table, and so on.
 
-For Portal, we could start by joining the `surveys` and the `species`
-tables. We can then combine the resulting table with the `plots` table
-to get a fully merged data frame.
+Let's combine _all four_ tables from Organ Pipe!
 
 ```{r}
-full_data <- surveys %>% 
-  inner_join(species, join_by(species_id)) %>% 
-  inner_join(plots, join_by(plot_id))
+all_ORPI_data <- rodent_detail %>% 
+  inner_join(rodent_species, join_by(RodentSpeciesID)) %>% 
+  inner_join(rodent_survey, join_by(RodentSurveyID == SurveyID)) %>% 
+  inner_join(rodent_site, join_by(SiteID == SiteCode))
 ```
 
-If it helps you to keep track of which data tables are being joined when
-(especially for left and right joins), you can also use the placeholder
-for your chosen pipe.
+If it helps you to keep track of which data tables are being joined when, you can also use the placeholder for your chosen pipe (`.` for ` %>% `; `_` for `|>`).
 
 ```{r}
-full_data <- surveys %>% 
-  inner_join(., species, join_by(species_id)) %>% 
-  inner_join(., plots, join_by(plot_id))
+all_ORPI_data <- rodent_detail %>% 
+  inner_join(., rodent_species, join_by(RodentSpeciesID)) %>% 
+  inner_join(., rodent_survey, join_by(RodentSurveyID == SurveyID)) %>% 
+  inner_join(., rodent_site, join_by(SiteID == SiteCode))
 ```
 
 ### Let's Practice
