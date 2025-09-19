@@ -1,0 +1,91 @@
+---
+title: "Differences Between Base R Pipe (`|>`) and Magrittr Pipe (`%>%`)"
+format: pdf
+---
+
+These are some of the key differences to be aware of when using the **base R pipe (`|>`)** and the **magrittr/dplyr pipe (`%>%`)**.  
+
+## 1. Basic Use
+Both pipes pass the **left-hand side (LHS)** into the **first argument** of the function on the right.
+
+```r
+# Base R
+mtcars |> head()
+
+# magrittr
+mtcars %>% head()
+```
+
+---
+
+## 2. Placeholder Use
+- `|>` requires `_`, and it can **only** appear in named arguments.  
+- `%>%` uses `.`, and it can appear in **any position**.
+
+```r
+# Base R: must be named
+mtcars |> lm(mpg ~ wt, data = _)
+
+# magrittr: anywhere
+mtcars %>% lm(mpg ~ wt, .)
+```
+
+---
+
+## 3. Functions Without Explicit Arguments
+- `|>` cannot pipe into something like `$`, `[[`, or `[` directly without extra syntax.  
+- `%>%` works more flexibly.
+
+```r
+# magrittr: works
+mtcars %>% .$mpg
+
+# base R: needs an anonymous function
+mtcars |> (\(x) x$mpg)()
+```
+
+---
+
+## 4. Anonymous Functions
+- `|>` has built-in anonymous functions: use `\(x) ...`.  
+- `%>%` doesn’t have this shortcut; you’d use a lambda with `function(x) ...`.
+
+```r
+# Base R
+mtcars |> (\(x) mean(x$mpg))()
+
+# magrittr
+mtcars %>% (function(x) mean(x$mpg))()
+```
+
+---
+
+## 5. Performance and Dependencies
+- `|>` is built into **base R** (since 4.1), no packages required, lightweight, a bit faster.  
+- `%>%` is from **magrittr/dplyr**, more powerful and flexible, but needs a package.
+
+---
+
+## 6. Chaining with Multiple Placeholders
+- `|>` only supports **one placeholder** `_`.  
+- `%>%` allows **multiple `.`** in different argument positions.
+
+```r
+# Base R (only one _ allowed)
+mtcars |> transform(mpg2 = _[["mpg"]] * 2)
+
+# magrittr (multiple . ok)
+mtcars %>% transform(mpg2 = .$mpg * 2, wt2 = .$wt * 2)
+```
+
+---
+
+## ✅ Rule of Thumb
+- Use `|>` if you want **simple, base R, lightweight pipelines**.  
+- Use `%>%` if you want **more flexibility** (multiple placeholders, non-first argument insertion without naming, `$` extraction, etc.).  
+
+---
+
+This document was created by ChatGPT.
+
+OpenAI. (2025). ChatGPT (Sept 19 version) [Large language model]. https://chat.openai.com/
