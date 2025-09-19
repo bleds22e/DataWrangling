@@ -288,13 +288,20 @@ all_ORPI_data <- rodent_detail %>%
   inner_join(rodent_site, join_by(SiteID == SiteCode))
 ```
 
-If it helps you to keep track of which data tables are being joined when, you can also use the placeholder for your chosen pipe (`.` for ` %>% `; `_` for `|>`).
+If it helps you to keep track of which data tables are being joined when, you can also use the placeholder for your chosen pipe (`.` for ` %>% `; `x = _` for `|>`).
 
 ```{r}
 all_ORPI_data <- rodent_detail %>% 
   inner_join(., rodent_species, join_by(RodentSpeciesID)) %>% 
   inner_join(., rodent_survey, join_by(RodentSurveyID == SurveyID)) %>% 
   inner_join(., rodent_site, join_by(SiteID == SiteCode))
+
+# the placeholder for the native pipe has to be used in a named argument
+# the names of the arguments for the two data frames in a join are `x` and `y`
+all_ORPI_data <- rodent_detail |>
+  inner_join(x = _, rodent_species, join_by(RodentSpeciesID)) |> 
+  inner_join(x = _, rodent_survey, join_by(RodentSurveyID == SurveyID)) |>
+  inner_join(x = _, rodent_site, join_by(SiteID == SiteCode))
 ```
 
 ### Let's Practice
