@@ -103,9 +103,10 @@ d.  Use `facet_wrap()` to make the same plot as (c) but with one subplot for eac
 
 Run the following line of code to use `read_tsv` from the `readr` package to read in the data from "TREE.txt". This line of code is using the `col_types` argument to specify the the `HEIGHT` and `AXIS_2` columns should have their data read is as the data class "double," which is like "numeric."
 
-The code might spit out a warning, but everything should work fine (you'll see the `trees` object in your environment).
+The code might spit out a "warning", but everything should work fine (you'll see the `trees` object in your environment).
 
 ```{r}
+# you can ignore the "warning"
 trees <- read_tsv("TREE.txt",
                   col_types = list(HEIGHT = col_double(),
                                    AXIS_2 = col_double())) |> drop_na(TREATMENT)
@@ -189,7 +190,7 @@ The `Envirnment` tab should now say "Environment is empty."
 
 ![](images/restart-and-run-all.png){width="50%" fig-align="center"}
 
-If your code does *not* run all the way through, check the error messages. This will helpful you isolate the potential issue.
+If your code does *not* run all the way through, check the error messages. This will help you isolate the potential issue.
 
 No need to type any answers here. If you are able to submit a PDF, you're good to go.
 
