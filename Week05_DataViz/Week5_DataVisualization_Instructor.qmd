@@ -1,12 +1,12 @@
 ---
-title: "Week 5: DataVisualization"
+title: "Week 5: Data Visualization"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 # Data Visualization
@@ -59,6 +59,7 @@ There are 3 different treatments and 1 control:
 First, let's download the data from the UHURU into Posit Cloud.
 
 ```{r}
+#| eval: false
 download.file("https://ndownloader.figshare.com/files/5629542",
               "ACACIA_DREPANOLOBIUM_SURVEY.txt")
 download.file("https://ndownloader.figshare.com/files/5629536",
@@ -233,22 +234,23 @@ There are a few different ways to do this.
 
 We can show different groups on the same plot by having one aspect of the plot (e.g., color, shape, size) vary by group. To specify this, we add the column name with the groups we are interested into the `aes()` function.
 
-::: {.callout-tip icon="TRUE"}
-## Inside or Outside the `aes()` Function?
-
-Do you want a feature (e.g., color, fill) to vary by values in a *column in the data frame* (e.g., different groups are plotted in different colors)? Put the argument *inside* of the `aes()` function.\
-Example: `aes(color = species)`
-
-Do you want to set a fixed appearance (e.g., every data point is the same color, regardless of group)? Put the argument *outside* of the `aes()` function.\
-Example: `color = "lightgreen"`
-:::
-
 For example, let's say we want to look at the influence of experimental treatment on acacia size.
 
 ```{r fig.width=6}
 ggplot(acacia, aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
   geom_point(size = 3, alpha = 0.5)
 ```
+
+::: {.callout-tip}
+## Tip! Inside or Outside the `aes()` Function?
+
+Do you want a feature (e.g., color, fill) to vary by values in a *column in the data frame* (e.g., different groups are plotted in different colors)? Put the argument *inside* of the `aes()` function.\
+Example: `aes(color = species)`
+\
+
+Do you want to set a fixed appearance (e.g., every data point is the same color, regardless of group)? Put the argument *outside* of the `aes()` function.\
+Example: `color = "lightgreen"`
+:::
 
 ### Multiple Plots by Column with Facets
 
@@ -327,7 +329,8 @@ Each `geom` function also comes with a default position. In many cases the posit
 Let's remake our histogram and color the bars by the treatment.
 
 ```{r}
-# note that the color argument changes the color of the lines, not the inside of the columns
+# note that the color argument changes the color of the lines,
+# and not the inside of the columns; you want `fill` for that
 ggplot(acacia, aes(x = CIRC, color = TREATMENT)) +
   geom_histogram(binwidth = 5)
 ```
@@ -348,7 +351,8 @@ Close, but not quite there! To see all of the treatments, we need to make the co
 ```{r fig.width=6}
 # to change the color of the inside of the colors, set the `fill` argument
 ggplot(acacia, aes(x = CIRC, fill = TREATMENT)) +
-  geom_histogram(binwidth = 5, position = "identity", alpha = 0.5) # set transparency to 50%
+  # set transparency to 50% with alpha = 0.5
+  geom_histogram(binwidth = 5, position = "identity", alpha = 0.5) 
 ```
 
 Let's remind ourselves how to modify axes labels and change the visual presentation of the plot with a theme.
@@ -372,6 +376,7 @@ The `ggplot()` function sets the default for all layers. The first `geom` is plo
 For example, we can add a linear regression onto our scatter plot with the `geom_smooth()` function.
 
 ```{r}
+#| message: false
 ggplot(acacia, aes(x = CIRC, y = HEIGHT)) +
   geom_point() +
   geom_smooth(method = "lm")
@@ -384,6 +389,7 @@ The `geom_smooth` function uses the statistical transformation `stat_smooth()` t
 What if we wanted to create the same plot for each treatment? We can add the `TREATMENT` column into the `aes()` function.
 
 ```{r fig.width=6}
+#| message: false
 ggplot(acacia, aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
   geom_point() +
   geom_smooth(method = "lm")
@@ -398,6 +404,7 @@ When we want all of the layers to have the same defaults, putting those defaults
 To do this we need to better understand how layers and defaults work. So far, we've put all of the information on data and aesthetic mapping into `ggplot()`.
 
 ```{r}
+#| message: false
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   geom_point() +
   geom_smooth(method = "lm")
@@ -405,7 +412,10 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
 
 This sets the default data frame and aesthetic, which is then used by `geom_point()` and `geom_smooth()`. Alternatively, instead of setting the default, we could just give these values directly to `geom_point()` and `geom_smooth()`.
 
-```{r fig.width=6}
+```{r}
+#| message: false
+#| fig-width: 6
+
 ggplot() +
   geom_point(data = acacia,
              mapping = aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
@@ -417,6 +427,7 @@ When we plot this, we can see that this information is no longer shared with oth
 We can use this to combine different aesthetics into one plot. For example, we can make a single model across all treatments while still coloring the points.
 
 ```{r fig.width=6}
+#| message: false
 ggplot() +
   geom_point(data = acacia,
              mapping = aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
@@ -431,6 +442,7 @@ This same sort of change can be used to plot different columns on the same plot 
 We can also condense this code by putting the data frame and mappings that are used in all `geoms` into the `ggplot` function and then specify the arguments that are for specific `geoms` within their respective `geoms`.
 
 ```{r fig.width=6}
+#| message: false
 ggplot(data = acacia, mapping = aes(x = CIRC, y = HEIGHT)) +
   geom_point(mapping = aes(color = TREATMENT)) +
   geom_smooth(method = "lm")
@@ -447,24 +459,28 @@ Often, we want to save our plots to put into other documents. Thankfully, we hav
 By default, `ggsave()` will save the most recent plot you've made.
 
 ```{r}
+#| eval: false
 ggsave("acacia_by_treatment.jpg")
 ```
 
 The type of the file is determined by the file extension. You can use `.jpg`, `.png`, `.pdf`, etc.
 
 ```{r}
+#| eval: false
 ggsave("acacia_by_treatment.pdf")
 ```
 
 There are many optional arguments that you can include, such as height and width.
 
 ```{r}
+#| eval: false
 ggsave("acacia_by_treatment.pdf", height = 5, width = 5)
 ```
 
 If you save the output of the `ggplot` to an object, you can reference that object in the `ggsave()` function.
 
 ```{r}
+#| eval: false
 scatterplot <- ggplot(acacia, aes(CIRC, HEIGHT)) +
   geom_point()
 ggsave("scatterplot.png", scatterplot)
