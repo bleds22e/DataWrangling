@@ -77,7 +77,7 @@ c.  Modify the code you wrote for (b) to calculate the minimum, maximum, and ave
 
 ### 4. Portal Data Joins (15 pts)
 
-Using the Portal data sets, do the following:
+Using the Portal data sets (`surveys`, `species`, and `plots`), do the following:
 
 a.  Use `inner_join()` to create a table that contains the information from both the surveys table and the species table.
 b.  Use `inner_join()` twice to create a table that contains the information from all three tables.
