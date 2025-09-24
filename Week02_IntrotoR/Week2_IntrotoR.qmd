@@ -108,7 +108,7 @@ To run a chunk of code, click the green arrow on the top right corner of the chu
 
 You can also run one or a few lines of code at a time by having your cursor on the line or highlighting multiple lines and hitting `Ctrl` + `Enter` (or `Cmd` + `Enter` on a Mac).
 
-A quick shortcut for adding a code chunk is `Ctrl + Shift + i` (`Cmd + Shift + i` on a Mac). Alternatively, you can go to Code \> Insert Chunk.
+A quick shortcut for adding a code chunk is `Ctrl + Alt + i` (`Cmd + Opt + i` on a Mac). Alternatively, you can go to Code \> Insert Chunk.
 
 ### Some Code Chunk Practice
 
@@ -238,4 +238,4 @@ weight_rounded
 
 ### Let's Practice
 
-Start working on Exercises 4 and 5.
+Start working on Exercises 4 and 5
