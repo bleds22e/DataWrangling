@@ -149,7 +149,7 @@ site2_npp_day
 
 Be sure to run the code chunk above in order to answer the following questions.
 
-At the end of this question, add a new code chunk (`Ctrl + Shift + I` or `Cmd + Shift + I`). In that code chunk, add additional lines of code come accomplish the following:
+At the end of this question, add a new code chunk (`Ctrl + Atl + I` or `Cmd + Opt + I`). In that code chunk, add additional lines of code come accomplish the following:
 
 a.  The sum of the total daily NPP for the two sites.
 b.  The difference between the daily NPP for the two sites. We only want an absolute difference, so use abs() function to make sure the number is positive.
