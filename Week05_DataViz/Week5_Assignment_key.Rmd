@@ -193,29 +193,34 @@ trees <- read_tsv("TREE.txt",
 
 Now that you have the `trees` data frame, do the following:
 
-a.  Update the `trees` data frame with a new column named `canopy_area` that contains the estimated canopy area calculated as the value in the `AXIS_1` column times the value in the `AXIS_2` column. Show output of the `trees` data frame with just the `SURVEY`, `YEAR`, `SITE`, and `canopy_area` columns.
-b.  Make a scatter plot with `canopy_area` on the x axis and `HEIGHT` on the y axis. Color the points by `TREATMENT` and plot the points for each value in the `SPECIES` column in a separate subplot. Label the x axis "Canopy Area (m)" and the y axis "Height (m)". Make the point size 2.
-c.  That's a big outlier in the plot from (b). 50 by 50 meters is a little too big for a real Acacia, so filter the data to remove any values for `AXIS_1` and `AXIS_2` that are over 20 and update the data frame. Then remake the graph.
-d.  Using the data without the outlier (i.e., the data generated in (c)), find out how the abundance of each species has been changing through time. Use `group_by`, `summarize`, and `n` to make a data frame with `YEAR`, `SPECIES`, and an `abundance` column that has the number of individuals in each species in each year. Print out this data frame.
-e.  Using the data frame generated in (d), make a line plot with points (by using `geom_line` in addition to `geom_point`) with `YEAR` on the x axis and `abundance` on the y axis with one subplot per species. To let you seen each trend clearly let the scale for the y axis vary among plots by adding `scales = "free_y"` as an optional argument to `facet_wrap`.
+a.  Update the `trees` data frame with a new column named `canopy_area` that contains the estimated canopy area calculated as the value in the `AXIS_1` column times the value in the `AXIS_2` column.
+b.  Show output of the `trees` data frame with just the `SURVEY`, `YEAR`, `SITE`, and `canopy_area` columns (do not overwrite the `trees` object, though).
+c.  Make a scatter plot with `canopy_area` on the x axis and `HEIGHT` on the y axis. Color the points by `TREATMENT` and plot the points for each value in the `SPECIES` column in a separate subplot. Label the x axis "Canopy Area (m)" and the y axis "Height (m)". Make the point size 2.
+d.  That's a big outlier in the plot from (c). 50 by 50 meters is a little too big for a real Acacia, so filter the data to remove any values for `AXIS_1` and `AXIS_2` that are over 20 and update the data frame. Then remake the graph.
+e.  Using the data without the outlier (i.e., the data generated in (d)), find out how the abundance of each species has been changing through time. Use `group_by`, `summarize`, and `n` to make a data frame with `YEAR`, `SPECIES`, and an `abundance` column that has the number of individuals in each species in each year. Print out this data frame.
+f.  Using the data frame generated in (e), make a line plot with points (by using `geom_line` in addition to `geom_point`) with `YEAR` on the x axis and `abundance` on the y axis with one subplot per species. To let you seen each trend clearly let the scale for the y axis vary among plots by adding `scales = "free_y"` as an optional argument to `facet_wrap`.
 
 ```{r}
 
 # 4a
 print("4a")
 trees <- mutate(trees, canopy_area = AXIS_1 * AXIS_2)
-select(trees, SURVEY, YEAR, SITE, SPECIES, canopy_area)
+trees
 
 # 4b
 print("4b")
+select(trees, SURVEY, YEAR, SITE, SPECIES, canopy_area)
+
+# 4c
+print("4c")
 ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMENT)) + 
   geom_point(size = 2) +
   labs(x = "Canopy Area (m)", y = "Height (m)") +
   facet_wrap(~SPECIES)
 #ggsave("Graphing-acacia-ants-data-manip-R-2.jpeg")
 
-# 4c
-print("4c")
+# 4d
+print("4d")
 trees <- filter(trees, AXIS_1 < 20, AXIS_2 < 20)
 ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMENT)) + 
   geom_point(size = 2) +
@@ -223,15 +228,15 @@ ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMEN
   facet_wrap(~SPECIES)
 #ggsave("Graphing-acacia-ants-data-manip-R-3.jpeg")
 
-# 4d
-print("4d")
+# 4e
+print("4e")
 abundance_time <- trees %>%
   group_by(YEAR, SPECIES) %>%
   summarize(abundance = n())
 abundance_time
 
-# 4e
-print("4e")
+# 4f
+print("4f")
 ggplot(data = abundance_time, mapping = aes(x = YEAR, y = abundance)) +
   geom_point() +
   geom_line() +
@@ -335,18 +340,15 @@ Follow these steps in RStudio to make sure your code really runs:
 
 1.  Restart R by clicking `Session` in the menu bar and selecting `Restart R`.
 
-![](images/restart-r-screenshot.png)
-2. If the `Environment` tab isn’t empty, click on the broom icon to clear it.
+![](images/restart-r-screenshot.png) 2. If the `Environment` tab isn’t empty, click on the broom icon to clear it.
 
 ![](images/clear-rstudio-environment-screenshot.png)
 
 The `Envirnment` tab should now say "Environment is empty."
 
-![](images/empty-rstudio-environment-screenshot.png)
-3. Run all of the code you have written in your assignment so far by selecting `Restart R and Run All Chunks`,`Run All`, or using the keyboard shortcut (`Ctrl`+`Alt`+`R` or `Cmd`+`Opt`+`R`)
+![](images/empty-rstudio-environment-screenshot.png) 3. Run all of the code you have written in your assignment so far by selecting `Restart R and Run All Chunks`,`Run All`, or using the keyboard shortcut (`Ctrl`+`Alt`+`R` or `Cmd`+`Opt`+`R`)
 
-![](images/restart-and-run-all.png)
-If your code does _not_ run all the way through, check the error messages. This will helpful you isolate the potential issue.
+![](images/restart-and-run-all.png) If your code does *not* run all the way through, check the error messages. This will helpful you isolate the potential issue.
 
 No need to type any answers here. If you are able to submit a PDF, you're good to go.
 
@@ -373,4 +375,3 @@ ggplot() +
   scale_y_log10() +
   theme_light()
 ```
-

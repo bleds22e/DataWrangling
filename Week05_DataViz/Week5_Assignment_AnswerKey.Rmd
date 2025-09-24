@@ -151,22 +151,25 @@ trees <- read_tsv("TREE.txt",
 ```
 
 ```{r}
-
-# 1
-
+# 4a
+print("4a")
 trees <- mutate(trees, canopy_area = AXIS_1 * AXIS_2)
+trees
+
+# 4b
+print("4b")
 select(trees, SURVEY, YEAR, SITE, SPECIES, canopy_area)
 
-# 2
-
+# 4c
+print("4c")
 ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMENT)) + 
   geom_point(size = 2) +
   labs(x = "Canopy Area (m)", y = "Height (m)") +
   facet_wrap(~SPECIES)
 #ggsave("Graphing-acacia-ants-data-manip-R-2.jpeg")
 
-# 3
-
+# 4d
+print("4d")
 trees <- filter(trees, AXIS_1 < 20, AXIS_2 < 20)
 ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMENT)) + 
   geom_point(size = 2) +
@@ -174,15 +177,15 @@ ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMEN
   facet_wrap(~SPECIES)
 #ggsave("Graphing-acacia-ants-data-manip-R-3.jpeg")
 
-# 4
-
+# 4e
+print("4e")
 abundance_time <- trees %>%
   group_by(YEAR, SPECIES) %>%
   summarize(abundance = n())
 abundance_time
 
-# 5
-
+# 4f
+print("4f")
 ggplot(data = abundance_time, mapping = aes(x = YEAR, y = abundance)) +
   geom_point() +
   geom_line() +
