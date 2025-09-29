@@ -47,7 +47,7 @@ library(tidyverse)
 
 ### 1. Forest Area per Country (15 pts)
 
-The data in `forest_per_country.csv` are downloaded from the WHO and contain the amount of forest (sq. km) per country. 
+The data in `forest_per_country.csv` are downloaded from the WHO and contain the amount of forest (sq. km) per country.
 
 First, click on the .csv file in the "Files" tab and select "View File." You might notice that the top of the document looks a bit odd.
 
@@ -91,7 +91,7 @@ ggplot(forest, aes(Year, ForestArea_sqkm)) +
 
 The `oecd_annual_data.csv` contains data from the Organisation for Economic Co-operation and Development (OECD) about various global fishing economies and sustainability. This dataset has the area of protected marine reserves.
 
-a. Like the forest data from Question 1, this data has a few rows of metadata at the top of the document that we need to skip. Use the same arguments as we did in Question 1 (same values, as well) when reading in the file.
+a.  Like the forest data from Question 1, this data has a few rows of metadata at the top of the document that we need to skip. Use the same arguments as we did in Question 1 (same values, as well) when reading in the file.
 
 ```{r}
 oecd <- read_csv("oecd_annual_data.csv", skip = 4, col_names = TRUE)
@@ -103,7 +103,6 @@ b.  Use the `fill()` function to fill in the missing values in the first column.
 c.  Using the data frame you created in (b), put the data in a tidy format. You'll need to use the same trick with the year column names as you did in 1a. Save the output as an object.
 
 d.  Using the data frame you created in (c), only keep the rows for non-OECD members. Then, wrangle the data so that it is back in wide format. This time, however, each row should represent a year and each country will have its own column. Your final data frame should only have a year column and each country's column.
-
 
 ```{r}
 #b
@@ -211,7 +210,7 @@ b.  Using the output from (a), select the Site, Trap Location and Grouped Veg co
 
 c.  Using the output from (b) and the final rodent data frame from Question 3, use an `inner_join()` to join those two data frames.
 
-d.  In your own words (~2-3 sentences), explain how the inner join in (c) worked.
+d.  In your own words (\~2-3 sentences), explain how the inner join in (c) worked.
 
 ### 5. Santa Cruz Rodents Wrangling (20 pts)
 
@@ -224,7 +223,6 @@ b.  Using the output from (a), rejoin the three date columns back together into 
 c.  Summarize the data so that we have a count of each species per site. Save this output as a new data frame (do not overwrite the rodents data frame)
 
 d.  Convert the data from (c) from long format to wide format. Use an argument in the `pivot_wider` function to have all blank cells filled with 0 instead of `NA`.
-
 
 ```{r}
 #a

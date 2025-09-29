@@ -173,7 +173,7 @@ This gives us the result we want, with only the stem number in the `Stem` column
 
 You may notice that this number is on the left side of the column, not the right. That's because the number is still stored as a character, because it was extracted from a character string.
 
-To convert it to it's actual type (numeric), we can add the optional argument `convert = TRUE` to `extract`.
+To convert it to its actual type (numeric), we can add the optional argument `convert = TRUE` to `extract`.
 
 ```{r}
 macro_long <- macro_long %>%
