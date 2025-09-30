@@ -239,7 +239,9 @@ The `unite()` function takes the following arguments:
 
 ```
 
-There is also one species code for unknown species. While in long format, we would likely convert this to an `NA` value, because it will become a column name, we probably want to make it something interpretable.
+### Replacing Values
+
+There is also one species code for unknown species. While in long format we would likely convert this to an `NA` value, because it will become a column name, we probably want to make it something interpretable.
 
 To do this, we can use a combination of the mutate function with the `replace` function. The `replace` function is part of the `base` package that comes build into R.
 

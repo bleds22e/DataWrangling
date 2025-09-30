@@ -47,16 +47,16 @@ Load the packages we will need. You can either load all of them individually (`r
 
 ### 1. Forest Area per Country (15 pts)
 
-The data in `forest_per_country.csv` are downloaded from the WHO and contain the amount of forest (sq. km) per country. 
+The data in `forest_per_country.csv` are downloaded from the WHO and contain the amount of forest (sq. km) per country.
 
 First, find this CSV file in the `data` folder in the "Files" tab. Click on the CSV file and select "View File." You might notice that the top of the document looks a bit odd.
 
-The first 3 rows of the file are metadata or empty, which we do not want. 
+The first 3 rows of the file are metadata or empty, which we do not want.
 
 When you use `read_csv` to read in the data and save the output, you will want to do a few things:
 
-- ensure you are using the correct file path (pointing R into the `data` folder first, then the name of the file)
-- add the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with the rows of metadata.
+-   ensure you are using the correct file path (pointing R into the `data` folder first, then the name of the file)
+-   add the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with the rows of metadata.
 
 a.  Currently, this data is in a wide format. We want to convert this to a longer format and make it tidy. Use the `pivot_longer` function to do so. Save the output as an object.
 
@@ -67,9 +67,8 @@ b.  Remove any rows from the output of (a) that have `NA` in the forest area col
 c.  Let's remind ourselves how to plot the data. Make a scatterplot of the data with year on the x-axis and forest area on the y-axis. Make the points partially transparent and the color "forestgreen." Add more descriptive axes labels and a theme.
 
     Add the following line of code to the end of your ggplot code so we can see the years along the x-axis: `theme(axis.text.x = element_text(angle = 45, vjust = 0.5))`.
-    
-d.  In the "Files" tab, click on the "New Folder" button, and create a new folder called "plots". Using the `ggsave()` function and your knowledge of file paths, save the plot you created in (c) directly into the "plots" folder.
 
+d.  In the "Files" tab, click on the "New Folder" button, and create a new folder called "plots". Using the `ggsave()` function and your knowledge of file paths, save the plot you created in (c) directly into the "plots" folder.
 
 ### 2. OECD Data (10 pts)
 
@@ -91,7 +90,7 @@ Take a look at the data. You'll likely notice immediately that there are some is
 
 For this question, there isn't really a good way for me to show you the output in the answer key; you'll want to take a look at the data frame in R and/or make good use of the filter function to make sure the issue got fixed.
 
-a.  Using the `rename()` function, rename any column that should to be renamed according to good column naming practices. Save the output. 
+a.  Using the `rename()` function, rename any column that should to be renamed according to good column naming practices. Save the output.
 
 b.  Using the saved output from (a), we next need to fill in the missing values in the `Site` column. Save the output.
 
@@ -105,7 +104,6 @@ e.  In both the "Hair Sample" and "Position" columns, there is a `?`. Using the 
 
 f.  Let's practice plotting again! Create a series of histograms (subplots within one larger plot) of the rodents' total weights, one histogram per species. Have the color of the histograms be determined by the site. Each histogram should be partially transparent, overlapping (not stacked), and the width of the bins should be 10. Finally, edit the axes labels and apply a theme. Save the output into the "plots" folder using file paths.
 
-
 ### 4. Remembering Joins (15 pts)
 
 Let's remind ourselves about joins from Week 4.
@@ -118,7 +116,7 @@ b.  Using the output from (a), select the `Site`, `Trap Location` and `Grouped V
 
 c.  Using the output from (b) and the final rodent data frame from Question 3, use an `inner_join()` to join those two data frames.
 
-d.  In your own words (~2-3 sentences), explain how the inner join in (c) worked to combine the data in these two dataframes.
+d.  In your own words (\~2-3 sentences), explain how the inner join in (c) worked to combine the data in these two dataframes.
 
 ### 5. Santa Cruz Rodents Wrangling (20 pts)
 
@@ -153,6 +151,6 @@ b.  Use `pivot_longer` so that `density` and `mass` end up in one column and the
 
 c.  Even though the data from (b) is longer, it isn't tidier. Explain why not.
 
-c.  Use the `unite()` function to bring the genus and species column back together as one column with whatever separator you choose.
+d.  Use the `unite()` function to bring the genus and species column back together as one column with whatever separator you choose.
 
-d.  Use `pivot_wider()` to bring the data frame back to it's original state.
+e.  Use `pivot_wider()` to bring the data frame back to it's original state.
