@@ -33,7 +33,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-March 4 at 3:30 pm
+Oct 7 at 2:00 pm
 
 # Assignment Exercises
 
@@ -49,23 +49,26 @@ Load the packages we will need. You can either load all of them individually (`r
 
 The data in `forest_per_country.csv` are downloaded from the WHO and contain the amount of forest (sq. km) per country. 
 
-First, click on the .csv file in the "Files" tab and select "View File." You might notice that the top of the document looks a bit odd.
+First, find this CSV file in the `data` folder in the "Files" tab. Click on the CSV file and select "View File." You might notice that the top of the document looks a bit odd.
 
-The first 3 rows of the file are metadata or empty, which we do not want. I've added the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with this.
+The first 3 rows of the file are metadata or empty, which we do not want. 
 
-```{r}
-forest <- read_csv("forest_per_country.csv", skip = 4, col_names = TRUE)
-```
+When you use `read_csv` to read in the data and save the output, you will want to do a few things:
 
-a.  Currently, this data is in a wide format. We want to convert this to a longer format and make it tidy. Use the `pivot_longer` function to do so. Overwrite the `forest` dataframe so that it contains the long version of the data.
+- ensure you are using the correct file path (pointing R into the `data` folder first, then the name of the file)
+- add the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with the rows of metadata.
+
+a.  Currently, this data is in a wide format. We want to convert this to a longer format and make it tidy. Use the `pivot_longer` function to do so. Save the output as an object.
 
     Because the column names start with numbers, which R does not like, we need to put the column names either in backticks or quotation marks (e.g., "1990":"2022").
 
-b.  Remove any rows that have `NA` in the forest area column using the `drop_na()` function.
+b.  Remove any rows from the output of (a) that have `NA` in the forest area column using the `drop_na()` function.
 
-c.  Let's remind ourselves how to plot the data. Make a scatterplot of the data with year on the x-axis and forest area on the y-axis. Make the points partially tranparent and the color "forestgreen." Add more descriptive axes labels and a theme.
+c.  Let's remind ourselves how to plot the data. Make a scatterplot of the data with year on the x-axis and forest area on the y-axis. Make the points partially transparent and the color "forestgreen." Add more descriptive axes labels and a theme.
 
     Add the following line of code to the end of your ggplot code so we can see the years along the x-axis: `theme(axis.text.x = element_text(angle = 45, vjust = 0.5))`.
+    
+d.  In the "Files" tab, click on the "New Folder" button, and create a new folder called "plots". Using the `ggsave()` function and your knowledge of file paths, save the plot you created in (c) directly into the "plots" folder.
 
 
 ### 2. OECD Data (10 pts)
@@ -78,44 +81,44 @@ b.  Use the `fill()` function to fill in the missing values in the first column.
 
 c.  Using the data frame you created in (b), put the data in a tidy format. You'll need to use the same trick with the year column names as you did in 1a. Save the output as an object.
 
-d.  Using the data frame you created in (c), only keep the rows for non-OECD members. Then, wrangle the data so that it is back in wide format. This time, however, each row should represent a year and each country will have its own column. Your final data frame should only have a year column and each country's column.
+d.  Using the data frame you created in (c), only keep the rows for non-OECD members. Then, wrangle the data so that it is back in wide format. This time, however, each row should represent a year and each country will have its own column. Your final data frame should only have a year column and each country's column. Save this plot directly into the "plots" folder.
 
 ### 3. Santa Cruz Rodents Data Cleaning (20 pts)
 
-Start by reading in the rodent data from the Santa Cruz River, `capture_data.csv`.
+Start by reading in the rodent data from the Santa Cruz River, `capture_data.csv`. You won't need any additional arguments this time.
 
 Take a look at the data. You'll likely notice immediately that there are some issues to be fixed.
 
 For this question, there isn't really a good way for me to show you the output in the answer key; you'll want to take a look at the data frame in R and/or make good use of the filter function to make sure the issue got fixed.
 
-a.  Rename any column that needs to be renamed and save the output. This is the data frame we will use for the remainder of the questions, and you'll want to continue overwriting the output to use in each subsequent step.
+a.  Using the `rename()` function, rename any column that should to be renamed according to good column naming practices. Save the output. 
 
-b.  Next we need to fill in the missing values in the `Site` column.
+b.  Using the saved output from (a), we next need to fill in the missing values in the `Site` column. Save the output.
 
-c.  In the `Species` column, there are 2 different species that have question marks next to their names. Using the `replace` function inside of a `mutate` function, remove the question marks (e.g., `SIOC?` should become `SIOC` and `DIME?` should become `DIME`.
+c.  In the `Species` column, there are 2 different species that have question marks next to their names. Using the output from (b), use the `replace` function inside of a `mutate` function to remove the question marks (e.g., `SIOC?` should become `SIOC` and `DIME?` should become `DIME`. Again, save the output.
 
     (This is just for practice. In reality, we might want to create a code for unknown species or a column for unclear ID).
 
-d.  If we look at the data classes for the columns, we can see that the column for tail length is character when it should be numeric. This usually indicates that there is a special character or letter somewhere in the column. As it turns out, in the last row, the value is `~15.5` instead of `15.5`. Use the `replace` function inside of `mutate` to convert that value to `15.5`.
+d.  If we look at the data classes for the columns, we can see that the column for tail length is character when it should be numeric. This usually indicates that there is a special character or letter somewhere in the column. As it turns out, in the last row, the value is `~15.5` instead of `15.5`. Using the output from (c), use the `replace` function inside of `mutate` to convert that value to `15.5`.
 
-e.  In both the "Hair Sample" and "Position" columns, there is a `?`. Use the `na_if` function inside a `mutate` function to convert those `?` to `NA` values.
+e.  In both the "Hair Sample" and "Position" columns, there is a `?`. Using the output from (d), use the `na_if` function inside a `mutate` function to convert those `?` to `NA` values.
 
-f.  Let's practice plotting again! Create a series of histograms (subplots within one larger plot) of the rodents' total weights, one histogram per species. Have the color of the histograms be determined by the site. Each histogram should be partially transparent, overlapping (not stacked), and the width of the bins should be 10. Finally, edit the axes labels and apply a theme.
+f.  Let's practice plotting again! Create a series of histograms (subplots within one larger plot) of the rodents' total weights, one histogram per species. Have the color of the histograms be determined by the site. Each histogram should be partially transparent, overlapping (not stacked), and the width of the bins should be 10. Finally, edit the axes labels and apply a theme. Save the output into the "plots" folder using file paths.
 
 
 ### 4. Remembering Joins (15 pts)
 
 Let's remind ourselves about joins from Week 4.
 
-Read in the vegetation data that goes along with the Santa Cruz rodent data. The .csv file is called `microsite_grouped_veg.csv`
+Read in the vegetation data that goes along with the Santa Cruz rodent data. The .csv file is called `microsite_grouped_veg.csv`. We will be joining this dataframe with the rodent dataframe from Question 3.
 
-a.  Rename any columns that should be renamed, using best practices in naming. Use a consistent structure (and make the Site and Trap Location column names match those from the rodents data frame in Question 3). Save the output.
+a.  Using the `rename` function rename any columns that should be renamed, using best practices in naming. Use a consistent structure (and make the `Site` and `Trap Location` column names match those from the rodents data frame in Question 3). Save the output.
 
-b.  Using the output from (a), select the Site, Trap Location and Grouped Veg columns and save those as a new data frame. Save the output.
+b.  Using the output from (a), select the `Site`, `Trap Location` and `Grouped Veg` columns and save those as a new data frame. Save the output.
 
 c.  Using the output from (b) and the final rodent data frame from Question 3, use an `inner_join()` to join those two data frames.
 
-d.  In your own words (~2-3 sentences), explain how the inner join in (c) worked.
+d.  In your own words (~2-3 sentences), explain how the inner join in (c) worked to combine the data in these two dataframes.
 
 ### 5. Santa Cruz Rodents Wrangling (20 pts)
 

@@ -31,18 +31,20 @@ First, let's load the `tidyverse`.
 library(tidyverse)
 ```
 
-### Data
+### File Paths
 
-Now, let's read in our data for this lesson.
+Now, let's read in our data. In this lesson, we are going to start incorporating a little bit of information about file paths into our work.
 
-Note: In the past, we have either had our data files already in the "Files" folder or we downloaded them from a URL (using the `download.file()` function) into our "Files" folder and then used a function to read it into our environment.
+So far, our data files have been in the same place ("working directory" or folder) as our Quarto files. Now, however, we have our data in a data folder.
 
-Another way to do this is to read in the data directly from the URL, which is what we do below. This works well if you know the URL is stable.
+In order to tell R which data file we want to use (or where to save a data file we want to download), we have to point R to the exact location, which is no longer the same place as where our Quarto file is stored.
 
-Of these options, which is the more reproducible option? Why?
+To do so, we must tell our to first look in the `data` folder and *then* tell it which file we want to read in.
+
+The data file we are using is called `macroplot_data.txt`. When we open the file and take a look at it, we can see that it is tab-delimited, meaning we will want to use the `read_tsv()` function.
 
 ```{r}
-macroplots <- read_tsv("http://datacarpentry.org/semester-biology/data/Macroplot_data_Rev.txt")
+macroplots <- read_tsv("data/macroplot_data.txt")
 
 # view the dataframe
 macroplots
@@ -54,17 +56,48 @@ Let's take a look. These data are tree girths from the Western Ghats, a mountain
 
 Any time that a tree had more than one stem (trunk), the diameter of each stem got entered into a new column.
 
-Is this good data structure?
+Is this good data structure? Why or why not? What do we need to fix?
 
 Before we get started, let's add a `treeid` column to our data frame using the `mutate` function from `dplyr`. We want one `treeid` for each row because there is one tree for each row. We can use the `.before` argument to determine where the new column in located in the data frame.
 
+Because the `Plot ID` column has a space in its name, we can't reference it as we normally would. Instead, we can put backticks around it.
+
 ```{r}
 macroplots <- macroplots %>%
-  mutate(TreeID = 1:n(), .before = PlotID) 
+  mutate(TreeID = 1:n(), .before = `Plot ID`) 
+  # use ` backticks ` around Plot ID because of the space
   # the .before argument determines where the new column will be placed
 
 macroplots
 tail(macroplots)
+```
+
+## Renaming Columns
+
+After a while, putting backticks around column names is going to get tedious. Thankfully, the `tidyverse` has a helpful function for renaming columns.
+
+The argument in `rename()` is the new name of the column equal to the old name.
+
+```{r}
+macroplots <- macroplots %>% 
+  rename(PlotID = `Plot ID`, SpCode = `Sp Code`)
+head(macroplots)
+```
+
+That is much better!
+
+## Completing Data with Gaps
+
+When recording data, people might write out a value once and then leave the following rows blank, assuming that all of the following rows are the same value until a new value is present.
+
+This is human-readable but not computer-readable.
+
+We can fill in these gaps using the `fill()` function. The default direction is "down," but other directions are possible.
+
+```{r}
+macroplots <- macroplots %>%
+  fill(SpCode)
+head(macroplots)
 ```
 
 ## Wide Data vs. Long Data
@@ -91,7 +124,7 @@ In this example of long data, the data table has one row per tree species per si
 
 One common issue with wide data is that data is spread over multiple columns that should be in one. For example, in the tables above, the "Sites" as column names are violating the rule of not having data in column names. Instead, that data should be in one column, like in the long data.
 
-As with
+To get the data in this form, we can use a function from `tidyr` called `pivot_longer`.
 
 ## Pivot Longer
 
@@ -99,23 +132,23 @@ The `pivot_longer()` function takes the following arguments (as well as many oth
 
 -   the data frame
 -   columns to include (or not include)
--   `names_to`: the name of the new column to put the column names in
--   `values_to`: the name of the new column to put the column values in
+-   `names_to`: the name of the new column to put the previous column names in
+-   `values_to`: the name of the new column to put the values from the cells in
 
 Any redundant or unnecessary columns will be automatically removed.
 
 ```{r}
 macro_long <- macroplots %>%
-  pivot_longer(TreeGirth1:TreeGirth5, 
-               names_to = "Stem", 
-               values_to = "Girth")
+  pivot_longer(TreeGirth1:TreeGirth5, # columns to include in the pivot
+               names_to = "Stem",     # name of new column to hold previous column names
+               values_to = "Girth")   # name of new column to hold values from cells
 
 macro_long
 ```
 
 As a reminder, the colon specifies all columns starting at `TreeGirth1` and ending at `TreeGirth5`
 
-### Replace Values with NAs
+### Replace Values with `NA`
 
 As you might have noticed, there are still 0s where there were no stems. We probably don't want those zeros to still be there. Instead, we might want them to be `NA` values.
 
@@ -173,11 +206,14 @@ This gives us the result we want, with only the stem number in the `Stem` column
 
 You may notice that this number is on the left side of the column, not the right. That's because the number is still stored as a character, because it was extracted from a character string.
 
-To convert it to its actual type (numeric), we can add the optional argument `convert = TRUE` to `extract`.
+To convert it to its actual data class (numeric), we can add the optional argument `convert = TRUE` to `extract`.
 
 ```{r}
 macro_long <- macro_long %>%
-  extract(Stem, "Stem", "TreeGirth(.)", convert = TRUE)
+  extract(col = Stem,              # column from which to extract values
+          into = "Stem",           # name of column to put extracted values in
+          regex = "TreeGirth(.)",  # "regular expression" for extracting values
+          convert = TRUE)          # convert extracted values to their data class
 
 head(macro_long)
 ```
@@ -191,9 +227,9 @@ In the `SpCode` column, the Genus and Species information for each tree are comb
 We can do so using the `separate()` function, which takes the following arguments:
 
 -   the data frame
--   the name of the column to separate
--   new column names
--   the separator value, character, or position (if character, it must be in quotation marks, e.g., "-")
+-   the name of the column to separate (`col`)
+-   new column names (`into`)
+-   the separator value, character, or position (if character, it must be in quotation marks, e.g., "-"; `sep`)
 
 ```{r}
 macro_long <- macro_long %>%
@@ -230,7 +266,12 @@ Work on Question 2 in the assignment.
 
 To bring multiple columns together into one column, we use a function that does the opposite of `separate()`: `unite()`.
 
-We specify the data, the name of the new column, and the columns to combine.
+The `unite()` function takes the following arguments:
+
+-   the data frame
+-   the name of the new column to hold the united date (`col`); this should be written in quotation marks
+-   the columns to be united 
+-   the separator value, character, or position (`sep`)
 
 ```{r}
 stem_counts <- stem_counts %>% 
@@ -286,55 +327,4 @@ stem_counts %>%
               values_fill = 0)
 ```
 
-## Completing Data with Gaps
-
-In some datasets, people might write out a value once and then leave the following rows blank, assuming that all of the following rows are the same value until a new value is present.
-
-This is human-readable but not computer-readable.
-
-```{r}
-gappy_data <- read.csv("http://www.datacarpentry.org/semester-biology/data/gappy-data.csv",
-                       na.strings = "")
-gappy_data
-```
-
-We can fill in these gaps using the `fill()` function. The default direction is "down," but other directions are possible.
-
-```{r}
-complete_data <- gappy_data %>%
-  fill(Species)
-head(complete_data)
-```
-
-## Renaming Columns
-
-Last but very much not least, we often need to change the names of columns.
-
-Let's read in a new .csv file with some less-than-desirable column names.
-
-```{r}
-rodents <- read_csv("capture_data.csv")
-
-colnames(rodents)
-```
-
-We can select a few columns: date, site, and trap ID.
-
-```{r, eval=FALSE}
-rodents %>% select(Date, Site, Trap ID)
-```
-
-Well, that doesn't work. How do we get around it? We use backticks to deal with names with spaces or special charaters.
-
-```{r}
-rodents %>% select(Date, Site, `Trap ID`)
-```
-
-While function, this get gets annoying after a while. Thankfully, the `tidyverse` has a helpful function for renaming columns.
-
-The argument in `rename()` is the new name of the column equal to the old name.
-
-```{r}
-rodents %>% 
-  rename(TrapID = `Trap ID`)
-```
+You should now be able to complete the assignment!

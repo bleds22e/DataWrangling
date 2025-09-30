@@ -5,6 +5,29 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
+
+Edit Macroplots data
+```{r}
+macroplots <- read_tsv("http://datacarpentry.org/semester-biology/data/Macroplot_data_Rev.txt")
+
+# put NAs in SpCode column to use `fill()` function
+macroplots <- macroplots |> 
+  mutate(SpCode = if_else(SpCode == lag(SpCode), NA, SpCode))
+
+# replace first row in SpCode with the original species code
+macroplots[1, "SpCode"] <- "Acaccaes"
+
+# change column names to use `rename()` function
+colnames(macroplots) <- c("Plot ID", "Sp Code", "TreeGirth1", "TreeGirth2", "TreeGirth3", "TreeGirth4", "TreeGirth5")
+
+# save output to data folder for lesson
+write_tsv(macroplots, "data/macroplot_data.txt")
+```
+
+
+
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
