@@ -1,8 +1,8 @@
 ---
-title: "Assignment 8"
+title: "Week 7 Assignment Key"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -62,9 +62,9 @@ f.  Make a histogram of weights with a separate subplot for each `species_id`. D
 g.  (Challenge, optional) Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, colored by `species_id`, with a different facet (i.e., subplot) for each of three `plot_type`'s `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`. Include good axis labels and a title for the plot. Export the plot to a `png` file.
 
 ```{r message = FALSE}
-surveys <- read_csv('surveys.csv')
-species <- read_csv('species.csv')
-plots <- read_csv('plots.csv')
+surveys <- read_csv('data/surveys.csv')
+species <- read_csv('data/species.csv')
+plots <- read_csv('data/plots.csv')
 
 # a. Create a data frame with only data for the `species_id` `DO`, with the columns `year`, `month`, `day`, `species_id`, and `weight`.
 print("2a")
@@ -144,7 +144,7 @@ e.  (Challenge, optional) Instead of excluding continent `EA` by name in your an
 
 ```{r message=FALSE, warning=FALSE}
 print("3a")
-mammal_sizes <- read_tsv("mammal-size-data-clean.txt", na = c("-999"))
+mammal_sizes <- read_tsv("data/mammal-size-data-clean.txt", na = c("-999"))
 str(mammal_sizes)
 
 # Figure 1
@@ -254,24 +254,42 @@ c.  Recreate the clean dataset (`penguins`). Below are some tips (in no particul
 
     The `setdiff()` function takes 2 dataframes and looks for any differences. The output is a dataframe with rows that do not match up. If you have 0 rows that don't match, that means all rows do match!
 
-d.  Create a scatterplot with bill length on the x-axis and bill depth on the y-axis. Add a line of best fit using another geom (remember the argument `method = "lm"` to make it linear). Make the line of best fit black instead of the default blue. Add descriptive column names and a theme.
-
-e.  Make the same plot as (d) above, except this time, both the points and the lines of best fit should be colored by species.
-
 ```{r message = FALSE}
 penguins_raw <- bind_rows(adelie, gentoo, chinstrap)
 
 penguins_clean <- penguins_raw %>% 
-  select(species = Species, island = Island, 
-         bill_length_mm = `Culmen Length (mm)`, 
-         bill_depth_mm = `Culmen Depth (mm)`, 
-         flipper_length_mm = `Flipper Length (mm)`, 
-         body_mass_g = `Body Mass (g)`, 
-         sex = Sex, year = `Date Egg`) %>% 
+  select(species = Species, island = Island, bill_length_mm = `Culmen Length (mm)`, bill_depth_mm = `Culmen Depth (mm)`, flipper_length_mm = `Flipper Length (mm)`, body_mass_g = `Body Mass (g)`, sex = Sex, year = `Date Egg`) %>% 
+  extract(species, "species", regex = "(\\w*)") |> 
+  separate(year, c("year", "extra"), sep = "-", convert = TRUE) |> 
+  select(-extra) |> 
   mutate(sex = na_if(sex, "."),
-         species = str_extract(species, '\\w*'),
-         sex = tolower(sex),
-         year = lubridate::year(year)) 
+         sex = tolower(sex)) 
+
+penguins_clean
 
 setdiff(penguins_clean, penguins)
 ```
+
+d.  Create a scatterplot with bill length on the x-axis and bill depth on the y-axis. Add a line of best fit using another geom (remember the argument `method = "lm"` to make it linear). Make the line of best fit black instead of the default blue. Add descriptive column names and a theme.
+
+```{r}
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+    labs(x = "Bill Length (mm)",
+       y = "Bill Depth (mm)") +
+  theme_classic()
+```
+
+e.  Make the same plot as (d) above, except this time, both the points and the lines of best fit should be colored by species.
+
+```{r}
+ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Bill Length (mm)",
+       y = "Bill Depth (mm)",
+       color = "Penguin Species") +
+  theme_classic()
+```
+

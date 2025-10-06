@@ -1,8 +1,8 @@
 ---
-title: "Assignment 8"
+title: "Week 7 Assignment"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -71,17 +71,17 @@ You will do this using a large dataset of mammalian body sizes (`mammal-size-dat
 
 a.  Read the data into R. As with most real world data there are a some things about the dataset that you'll need to identify and address during the import process. Pay particular attention to the `continent`.
 
-    You should do this *within* the `read_` function, not after you have read in the file. Print out the `head()` and `tail()` of the resulting data frame.
+    You should do this *within* the `read_` function, not after you have read in the file.
 
     *Hint: take a look at the Week 5 lesson (Data Viz) and the `na` argument inside of `read_tsv()`.*
 
-b.  Create a plot showing histograms of masses for mammal species that are still present and those that went extinct during the Pleistocene (`extant` and `extinct` in the `status` column). There should be one sub-plot for each continent and that sub-plot should show the histograms for both groups as a stacked histogram. To match the original analysis don't include islands (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA` (because `EA` had no species that went extinct in the Pleistocene). Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme. 
+b.  Create a plot showing histograms of masses for mammal species that are still present and those that went extinct during the Pleistocene (`extant` and `extinct` in the `status` column). There should be one sub-plot for each continent and that sub-plot should show the histograms for both groups as a stacked histogram. To match the original analysis don't include islands (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA` (because `EA` had no species that went extinct in the Pleistocene). Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme.
 
-c.  The 2nd figure in the original paper looks in more detail at two orders, *Xenarthra* and *Carnivora*, which showed extinctions in North and South America. Create a figure similar to the one in Part 2, but that shows 4 sub-plots, one for each order on each of the two continents. Still scale the x-axis logarithmically, but use 19 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme. 
+c.  The 2nd figure in the original paper looks in more detail at two orders, *Xenarthra* and *Carnivora*, which showed extinctions in North and South America. Create a figure similar to the one in Part 2, but that shows 4 sub-plots, one for each order on each of the two continents. Still scale the x-axis logarithmically, but use 19 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme.
 
     *Hint: look at the help file for `facet_wrap` to figure out how to facet by more than one variable.*
 
-d.  The 3rd figure in the original paper explores Australia as a case study. Australia is interesting because there is good data on both Pleistocene extinctions (`extinct` in the `status` column) and more modern extinctions occurring over the last 300 years (`historical` in the `status` column). Make a single stacked histogram that compares the sizes of `extinct`, `extant`, and `historical` statuses. Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme. 
+d.  The 3rd figure in the original paper explores Australia as a case study. Australia is interesting because there is good data on both Pleistocene extinctions (`extinct` in the `status` column) and more modern extinctions occurring over the last 300 years (`historical` in the `status` column). Make a single stacked histogram that compares the sizes of `extinct`, `extant`, and `historical` statuses. Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme.
 
 e.  (Challenge: optional) Instead of excluding continent `EA` by name in your analysis (in part 3b), modify your code to determine from the data which continents had species that went extinct in the Pleistocene and only include those continents.
 
@@ -122,21 +122,21 @@ c.  Recreate the clean dataset (`penguins`). Below are some tips (in no particul
     -   Culmen is basically a fancy word for a bird's bill
 
     -   The regex for extracting the first word in a string using the `extract` function is `"(\\w*)"`
-    
+
     -   You do not need to match up most data types exactly (character and factors are mostly interchangeable; same with integer, numeric, and double). You might, however, run into the issue of character and integer data being incompatible. There are a number of different ways to address this, one of them being the `convert = TRUE` argument.
 
-If you are already familiar with the `stringr` and/or `lubridate` packages, I encourage you to challenge yourself and think about how you can use only the functions we have covered in class thus far to complete this question.
+    If you are already familiar with the `stringr` and/or `lubridate` packages, I encourage you to challenge yourself and think about how you can use only the functions we have covered in class thus far to complete this question.
 
-You will know that you have successfully completed the task at hand if you run the code `setdiff(your_clean_df, penguins)`, and the result has 0 rows.
+    You will know that you have successfully completed the task at hand if you run the code `setdiff(your_clean_df, penguins)`, and the result has 0 rows.
 
-The `setdiff()` function takes 2 dataframes and looks for any differences. The output is a dataframe with rows that do not match up. If you have 0 rows that don't match, that means all rows do match!
+    The `setdiff()` function takes 2 dataframes and looks for any differences. The output is a dataframe with rows that do not match up. If you have 0 rows that don't match, that means all rows do match!
 
-d. Create a scatterplot with bill length on the x-axis and bill depth on the y-axis. Add a line of best fit using another geom (remember the argument `method = "lm"` to make it linear). Make the line of best fit black instead of the default blue. Add descriptive column names and a theme.
+d.  Create a scatterplot with bill length on the x-axis and bill depth on the y-axis. Add a line of best fit using another geom (remember the argument `method = "lm"` to make it linear). Make the line of best fit black instead of the default blue. Add descriptive column names and a theme.
 
-e. Make the same plot as (d) above, except this time, both the points and the lines of best fit should be colored by species.
+e.  Make the same plot as (d) above, except this time, both the points and the lines of best fit should be colored by species.
 
 ### 5. Preparing for Next Week
 
 This is not graded homework, but I want us to be as prepared for next week as we can be.
 
-That means that I would like you to have *both* R and RStudio downloaded on your own device. If you do not already have these downloaded, instructions for how to do so can be found in the description of "Weekly Materials \> 8. Reproducibility (Oct 14, 16)" on our D2L site.
+That means that I would like you to have *both* R and RStudio downloaded on your own device. If you do not already have these downloaded, instructions for how to do so can be found in the description of "Weekly Materials \> 8. Reproducibility" on our D2L site.

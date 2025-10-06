@@ -1,8 +1,8 @@
 ---
-title: 'Week 8: Solving Bigger Problems'
+title: "Week 7: Solving Bigger Problems"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -70,21 +70,7 @@ Perhaps we want to calculate the average hindfoot length in cm for each rodent s
 Let's start by breaking down the problem. Then, we can add one piece of code at a time.
 
 ```{r}
-# join species and surveys data
-# filter for rodent species only
-# convert hindfoot length to cm
-# group data by species
-# summary data of hindfoot length
 
-surveys <- read_csv("surveys.csv")
-species <- read_csv("species.csv")
-
-avg_rodent_hf_cm <- surveys %>% 
-  inner_join(species, join_by(species_id)) %>% 
-  filter(taxa == "Rodent") %>% 
-  mutate(hindfoot_cm = hindfoot_length / 10) %>% 
-  group_by(species_id) %>% 
-  summarise(mean_hf = mean(hindfoot_cm, na.rm = TRUE))
 ```
 
 ## Debugging
@@ -135,25 +121,6 @@ ggplot(do_count_by_year, aes(x = year, y = count) %>%
 
 Insert a code chunk here. Copy the code from above and work to debug it.
 
-```{r}
-# point to correct directory
-surveys <- read_csv('data/surveys.csv')
-species <- read_csv('data/species.csv')
-
-# don't save as new object until the pipes run and produce expected result
-do_counts_by_year <- surveys %>% # correctly reference `survyes`
-  filter(species_id == "DO") %>% # correctly reference `species_id` and ==
-  group_by(year) |>              # add a pipe
-  count()
-
-# correctly reference object name and correct column name for y
-ggplot(do_counts_by_year, aes(x = year, y = n)) +
-  geom_point() +
-  geom_line() +                   # add missing +
-  labs(x = "Year", y = "Count") + # correct function is labs
-  theme_bw()
-```
-
 Now, let's copy the code into ChatGPT and see what it finds and what it gets wrong.
 
 ## Finding Help
@@ -199,6 +166,6 @@ There is a bit of an art to learning how to search, read, and apply online help.
 
 Often, we won't be able to tell right away if the code provided in the answer will work for our specific data or situation. We always need to test it out.
 
-First, if given a reproducible examples (reprex), meaning is has data and code you can copy and paste to run, do so! This can help with understanding what the code is doing and whether or not it will work in your case.
+First, if given a reproducible examples (reprex), meaning it has data and code you can copy and paste to run, do so! This can help with understanding what the code is doing and whether or not it will work in your case.
 
 From there, you can begin to modify the example to include your data and specific values.

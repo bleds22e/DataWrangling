@@ -1,8 +1,8 @@
 ---
-title: 'Week 8: Solving Bigger Problems'
+title: "Week 7: Solving Bigger Problems"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -76,8 +76,8 @@ Let's start by breaking down the problem. Then, we can add one piece of code at 
 # group data by species
 # summary data of hindfoot length
 
-surveys <- read_csv("surveys.csv")
-species <- read_csv("species.csv")
+surveys <- read_csv("data/surveys.csv")
+species <- read_csv("data/species.csv")
 
 avg_rodent_hf_cm <- surveys %>% 
   inner_join(species, join_by(species_id)) %>% 
