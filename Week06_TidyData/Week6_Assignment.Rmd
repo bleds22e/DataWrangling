@@ -80,7 +80,7 @@ b.  Use the `fill()` function to fill in the missing values in the first column.
 
 c.  Using the data frame you created in (b), put the data in a tidy format. You'll need to use the same trick with the year column names as you did in 1a. Save the output as an object.
 
-d.  Using the data frame you created in (c), only keep the rows for non-OECD members. Then, wrangle the data so that it is back in wide format. This time, however, each row should represent a year and each country will have its own column. Your final data frame should only have a year column and each country's column. Save this plot directly into the "plots" folder.
+d.  Using the data frame you created in (c), only keep the rows for non-OECD members. Then, wrangle the data so that it is back in wide format. This time, however, each row should represent a year and each country will have its own column. Your final data frame should only have a year column and each country's column.
 
 ### 3. Santa Cruz Rodents Data Cleaning (20 pts)
 
