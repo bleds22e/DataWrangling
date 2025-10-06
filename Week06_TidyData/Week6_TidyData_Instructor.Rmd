@@ -270,7 +270,7 @@ The `unite()` function takes the following arguments:
 
 -   the data frame
 -   the name of the new column to hold the united date (`col`); this should be written in quotation marks
--   the columns to be united 
+-   the columns to be united
 -   the separator value, character, or position (`sep`)
 
 ```{r}

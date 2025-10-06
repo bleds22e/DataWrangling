@@ -241,12 +241,11 @@ ggplot(acacia, aes(x = CIRC, y = HEIGHT, color = TREATMENT)) +
   geom_point(size = 3, alpha = 0.5)
 ```
 
-::: {.callout-tip}
+::: callout-tip
 ## Tip! Inside or Outside the `aes()` Function?
 
 Do you want a feature (e.g., color, fill) to vary by values in a *column in the data frame* (e.g., different groups are plotted in different colors)? Put the argument *inside* of the `aes()` function.\
-Example: `aes(color = species)`
-\
+Example: `aes(color = species)`\
 
 Do you want to set a fixed appearance (e.g., every data point is the same color, regardless of group)? Put the argument *outside* of the `aes()` function.\
 Example: `color = "lightgreen"`
