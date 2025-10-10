@@ -245,7 +245,7 @@ c.  Recreate the clean dataset (`penguins`). Below are some tips (in no particul
     -   Culmen is basically a fancy word for a bird's bill
 
     -   The regex for extracting the first word in a string using the `extract` function is `"(\\w*)"`
-    
+
     -   You do not need to match up most data types exactly (character and factors are mostly interchangeable; same with integer, numeric, and double). You might, however, run into the issue of character and integer data being incompatible. There are a number of different ways to address this, one of them being the `convert = TRUE` argument.
 
     If you are already familiar with the `stringr` and/or `lubridate` packages, I encourage you to challenge yourself and think about how you can use only the functions we have covered in class thus far to complete this question.
@@ -292,4 +292,3 @@ ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = species)) +
        color = "Penguin Species") +
   theme_classic()
 ```
-
