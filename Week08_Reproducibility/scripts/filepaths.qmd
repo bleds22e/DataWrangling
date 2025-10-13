@@ -1,0 +1,33 @@
+---
+title: "FilePaths"
+format: pdf
+editor: visual
+---
+
+```{r setup, include=FALSE, eval = FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+## Absolute File Path
+
+![](../images/absolute.png){width="75%"}
+
+```{r eval = FALSE}
+## Mac
+"/Users/ebledsoe/Documents/Git/DataWrangling/Week08_Reproducibility/scripts/
+Week8_Reproducibility.qmd"
+## Windows
+"C:/Users/ebledsoe/Documents/Git/DataWrangling/Week08_Reproducibility/scripts/
+Week8_Reproducibility.qmd"
+```
+
+## Relative File Path
+
+The working directory is the "DataWrangling" folder.
+
+![](../images/relative.png)
+
+```{r eval=FALSE}
+# File path from DataWrangling folder
+"Week08_Reproducibility/scripts/Week8_Reproducibility.qmd"
+```

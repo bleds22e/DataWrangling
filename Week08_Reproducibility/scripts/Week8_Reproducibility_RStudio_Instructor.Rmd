@@ -25,7 +25,7 @@ We are making the shift from working in Posit Cloud to using R and RStudio on yo
 
 For most of us, even though we have downloaded the R software, we will likely never interact with the R program directly; I personally never open up R on my own computer.
 
-Instead, in order to code in R and work with the R software, we will want to open up RStudio. Like it does in Posit Cloud, RStudio on our own computers connects to the R software that we have downloaded and lets us interact with R within the RStudio environment. So while I never personally open up R software directly, I frequently open up RStudio and work with R there!
+Instead, in order to code in R and work with the R software, we will want to open up RStudio. Like it does in Posit Cloud, RStudio on our own computers connects to the R software that we have downloaded and let's us interact with R within the RStudio environment. So while I never personally open up R software directly, I frequently open up RStudio and work with R there!
 
 ## Introduction to Reproducibility
 
@@ -358,4 +358,3 @@ Below I'm including some resources that you might find helpful while you're star
 -   [RStudio Projects and Working Directories: A Beginner's Guide](https://martinctc.github.io/blog/rstudio-projects-and-working-directories-a-beginner%27s-guide/)
 -   Posit: [RStudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects)
 -   R 4 Data Science: [Workflow: Projects](https://r4ds.had.co.nz/workflow-projects.html)
-
