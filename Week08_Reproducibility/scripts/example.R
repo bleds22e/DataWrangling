@@ -9,10 +9,12 @@
 
 ## How does this differ from an RMarkdown or Quarto file? ##
 
-# Because RMarkdown combine text with code, we have to specify when the file 
+# Because Quarto files combine text with code, we have to specify when the file 
 # should interpret what we are typing as the R language; these are the code chunks.
-# Since this document only understand the R language, we don't need code chunks...
+# Since this document only understands the R language, we don't need code chunks...
 # and there is no "visual" mode.
+
 # You can think of this document as basically one giant code chunk!
+# You can still run lines of code with `Ctrl` + `Enter` or `Cmd` + `Return`
 
 getwd()
