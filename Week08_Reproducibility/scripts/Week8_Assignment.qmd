@@ -86,7 +86,7 @@ Like in Question 2 above, we will be recreating Question 4 from Week 7's assignm
 
 a.  The code chunk below uses the `download.file()` function to go to a specific URL and then download the data at that URL. The location where the file is downloaded to is set by the `destfile` argument.
 
-    Modify the path in the `destfile` argument for all three species datasets so that they are downloaded directly into your raw data folder.
+    Modify the path in the `destfile` argument for all three species datasets so that they are downloaded directly into your raw data folder (do not move them into the correct sub-directory after the fact).
 
 ```{r}
 # Adelie penguin data
@@ -121,10 +121,12 @@ d.  Again, use the `ggsave()` function to save the figures from `3b`, `3c`, and 
 
 In D2L, you will find a file with a few questions about what dataset you are planning to use. If you don't have one in mind yet, don't worry! I'll provide a list with some options for you to explore.
 
-Download the file from D2L and place it in the documents folder of your RStudio Project.
+Download the file from D2L, answer the questions, and place it in the code or documents folder of your RStudio Project.
 
 ## Turning in Your Assignment
 
-To turn in your assignment, you will need to upload the entire folder that contains your .Rproj file and sub-directories.
+First, render this assignment to PDF to ensure it is fully reproducible.
+
+To turn in this assignment, you will need to upload the entire folder that contains your .Rproj file and sub-directories.
 
 Usually, the easiest way to do this is to go to your Files application, navigate to the folder, and right click on the folder you want to compress. You should see the option to "Compress", "Compress to ZIP file", or something along those lines. Upload the ZIP file to D2L.

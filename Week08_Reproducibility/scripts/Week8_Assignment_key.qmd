@@ -115,27 +115,26 @@ ggplot(data = surveys_with_weights, mapping = aes(x = weight)) +
   labs(x = "Weight (g)", y = "Number of Individuals")
 ```
 
-
 ### 3. Palmer Penguins and Path Files (20 points)
 
 Like in Question 2 above, we will be recreating Question 4 from Week 7's assignment but within our own RStudio Project. As a reminder, this is the question that used the `palmerpenguins` data.
 
 a.  The code chunk below uses the `download.file()` function to go to a specific URL and then download the data at that URL. The location where the file is downloaded to is set by the `destfile` argument.
 
-    Modify the path in the `destfile` argument for all three species datasets so that they are downloaded directly into your raw data folder.
+    Modify the path in the `destfile` argument for all three species datasets so that they are downloaded directly into your raw data folder (do not move them into the appropriate folder after the fact).
 
 ```{r}
 # Adelie penguin data
 download.file(url = "https://pasta.lternet.edu/package/data/eml/knb-lter-pal/219/5/002f3893385f710df69eeebe893144ff",
-              destfile = "../data_raw/adelie.csv")
+              destfile = "adelie.csv")
 
 # Gentoo penguin data
 download.file(url = "https://pasta.lternet.edu/package/data/eml/knb-lter-pal/220/3/e03b43c924f226486f2f0ab6709d2381",
-              destfile = "../data_raw/gentoo.csv")
+              destfile = "gentoo.csv")
 
 # Chinstrap penguin data 
 download.file(url = "https://pasta.lternet.edu/package/data/eml/knb-lter-pal/221/2/fe853aa8f7a59aa84cdd3197619ef462",
-              destfile = "../data_raw/chinstrap.csv")
+              destfile = "chinstrap.csv")
 ```
 
 b.  Copy, modify, and then run the code from last week's assignment that you wrote to combine the three above datasets and have the output match the `penguins` dataframe from the `palmerpenguins` dataframe.
@@ -178,7 +177,6 @@ ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = species)) +
   theme_classic()
 ```
 
-
 ### 4. Using R Scripts (20 points)
 
 Here, we will be recreating Question 3 from Week 7's Assignment.
@@ -194,10 +192,12 @@ d.  Again, use the `ggsave()` function to save the figures from `3b`, `3c`, and 
 
 In D2L, you will find a file with a few questions about what dataset you are planning to use. If you don't have one in mind yet, don't worry! I'll provide a list with some options for you to explore.
 
-Download the file from D2L and place it in the documents folder of your RStudio Project.
+Download the file from D2L, answer the questions, and place it in either the code or documents folder of your RStudio Project.
 
 ## Turning in Your Assignment
 
-To turn in your assignment, you will need to upload the entire folder that contains your .Rproj file and sub-directories.
+First, render this assignment to PDF to ensure it is fully reproducible.
+
+To turn in this assignment, you will need to upload the entire folder that contains your .Rproj file and sub-directories.
 
 Usually, the easiest way to do this is to go to your Files application, navigate to the folder, and right click on the folder you want to compress. You should see the option to "Compress", "Compress to ZIP file", or something along those lines. Upload the ZIP file to D2L.
