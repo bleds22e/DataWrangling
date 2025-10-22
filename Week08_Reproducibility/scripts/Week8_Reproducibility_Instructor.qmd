@@ -215,7 +215,7 @@ Spoiler alert: no, you should not.
 
 Changing the working directory is a common approach, albeit not the best approach. To do so, people use the `setwd()` function, which sets the working directory to a specific location.
 
-This, however, can cause a number of issues. 
+This, however, can cause a number of issues.
 
 If you are working with someone else's files or on another computer, the directory that you want to be working from is likely different from the file path that has been put in the `setwd()` function. In general, using `setwd()` means that your code will only work on a single computer. This breaks a core tenet of reproducibility, so we want to avoid doing this.
 
@@ -353,9 +353,9 @@ shrub_dims <- read_csv("../data_raw/shrub-dimensions-labeled.csv")
 
 Often, projects end up requiring us to write A LOT of code to do A LOT of different tasks: data wrangling, analyzing, plotting, etc. Before we get to the final version, we often do a lot of experimentation to see what works and what doesn't.
 
-While you _can_ put all of your code in one giant file, it is often considered best practice to separate your code into "manageable" amounts and at logical breaks. What constitutes a manageable amount or a logical break, however, is up to you! 
+While you *can* put all of your code in one giant file, it is often considered best practice to separate your code into "manageable" amounts and at logical breaks. What constitutes a manageable amount or a logical break, however, is up to you!
 
-Sometimes, you might have some pieces of code that are stored in a separate file that you want to use in another file. One example of this is if you've written your own functions for use. 
+Sometimes, you might have some pieces of code that are stored in a separate file that you want to use in another file. One example of this is if you've written your own functions for use.
 
 The `source()` function will read and execute all of the code in a file and put the outputs in the environment.
 
