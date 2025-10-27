@@ -1,7 +1,5 @@
-Assignment 10: Version Control
-================
+# Assignment 10: Version Control
 Ellen Bledsoe
-2025-04-03
 
 # Assignment Details
 
@@ -90,9 +88,9 @@ You discover that the device used to measure the scale length of the
 fish in `Gaeta_etal_CLC_data.csv` is not accurate for those smaller than
 1 mm.
 
-Create a new data frame without fish with a `scalelength` of less than 1
-mm from `fish_data`. The new dataset will have 4,029 rows (see answer
-key).
+In the `fish_analysis.Rmd` file, create a new data frame without fish
+with a `scalelength` of less than 1 mm from `fish_data`. The new dataset
+will have 4,029 rows (see answer key).
 
 Use the `write_csv()` function to save this new data frame as a CSV
 file. It should be in an appropriate sub-directory.
@@ -191,13 +189,26 @@ document.
 
 ### 7. Include This Document (5 point)
 
-Include this file in the appropriate sub-directory (something along the
-lines of `docs` or `code`). Commit and push to your repo.
+Place this file in the appropriate sub-directory (something along the
+lines of `documents` or `code`).
+
+Even though you (probably) haven’t added any code or text this *this*
+specific file, go ahead and “knit” this document.
+
+You’ll notice that the output is not a PDF this time. That’s because the
+output of this file is a `github_document` (instead of `pdf_output`, for
+example). You can confirm this by scrolling to the very top of this
+document and looking at the first few lines (under “title”, “author”,
+and “date”, you’ll find “output”).
+
+In your files, you will now see not only the `.Rmd` file for the
+assignment, but also a file that ends in `.md`.
+
+Commit and push both the `.Rmd` and the `.md` files to your repo.
 
 Find this document on GitHub. If you click on the `.md` version (*not*
-the `.Rmd`), it should show you the “visual” output on GitHub. That’s
-because the output of this file is a “github_document” (not a
-pdf_output, for example).
+the `.Rmd`), it should show you the “visual” output on GitHub. This can
+be a great way to share your work with advisers, colleagues, etc.!
 
 # Turning in Your Assignment
 
