@@ -1,0 +1,32 @@
+---
+title: "Fish Analysis"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Fish Length Analysis
+
+Analysis fish length data from Gaeta et al.
+
+### Set-Up
+
+```{r}
+library(tidyverse)
+fish <- read_csv("data_raw/Gaeta_etal_CLC_data.csv")
+```
+
+```{r}
+glimpse(fish)
+```
+
+```{r}
+fish %>% 
+  group_by(lakeid) %>% 
+  summarize(min_scale_length = min(scalelength, na.rm = T),
+            max_scale_length = max(scalelength, na.rm = T))
+```

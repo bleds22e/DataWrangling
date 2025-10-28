@@ -102,29 +102,29 @@ library(tidyverse)
 fish_data <- read_csv("Gaeta_etal_CLC_data.csv")
 ```
 
--   Save as `fish-analysis.qmd`.
--   Git -\> Select `fish-analysis.qmd`.
+-   Save as `fish-analysis.R`.
+-   Git -\> Select `fish-analysis.R`.
     -   Changes in staged files will be included in next commit.
     -   Can also see changes by selecting `Diff`
 -   Commit with message.
     -   `Start script comparing fish length and scale size`
 -   History:
     -   Two commits
-    -   See what changes were made to `fish-analysis.qmd`
+    -   See what changes were made to `fish-analysis.R`
 
 ### Building a history
 
--   `fish-analysis.qmd` doesn't currently show on the `Git` tab
+-   `fish-analysis.R` doesn't currently show on the `Git` tab
     -   No saved changes since last commit
 -   Add some more code to `fish-analysis.R`
     -   Create new categorical size column
 
 ```{r}
 fish_data_cat = fish_data |>
-  mutate(length_cat = if_else(length > 200, "big", "small"))
+  mutate(length_cat = ifelse(length > 200, "big", "small"))
 ```
 
--   Save `fish-analysis.qmd`.
+-   Save `fish-analysis.R`.
 -   Now we see the file on the `Git` tab.
     -   `M` indicates that it's been modified.
 -   To commit these changes, we need to stage the file.
@@ -139,7 +139,7 @@ fish_data_cat = fish_data |>
 
 ```{r}
 fish_data_cat = fish_data %>% 
-  mutate(length_cat = if_else(length > 300, "big", "small"))
+  mutate(length_cat = ifelse(length > 300, "big", "small"))
 ```
 
 -   Save file -\> stage -\> commit
