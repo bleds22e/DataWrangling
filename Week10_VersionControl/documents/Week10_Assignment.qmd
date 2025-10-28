@@ -132,8 +132,8 @@ To do so, you will want to follow a similar process (and structure) as Question 
 a.  Start by creating a new repo on GitHub
 b.  Create a new RStudio Project which is connected to this repo.
 c.  Create sub-directories according to your preferred project structure (note: if the folders are empty, you likely won't be able to commit them yet--that's ok!)
-d.  If you already know what data you will be using (and it is smaller than 100 MB), add it to the appropriate sub-directory. If you haven't yet committed to a dataset, that's fine; no need to add data. If your data are larger than 100 MB, let's chat first!
-e.  Commit (with a strong commit message) and push your changes.
+d.  Put your final project proposal document (from Week 8) into the relevant sub-directory. Follow the correct steps to commit the file (with a strong commit message!) and push it to the GitHub repo.
+e.  If you already know what data you will be using (and it is smaller than 100 MB), add it to the appropriate sub-directory, commit the dataset, and push it to GitHub. If you haven't yet committed to a dataset, that's fine; no need to add data. If your data are larger than 100 MB, let's chat first!
 
 ### 6. Modify a README.md File (10 points)
 
@@ -149,7 +149,7 @@ Some suggestions for what to include:
 
 This is also an opportunity for you to get a bit more familiar with using Markdown, if you are interested; that said, this question *will not be graded on aesthetics or style* but on completion.
 
-[This website](https://www.markdownguide.org/basic-syntax/) is a great references for how to "code" in Markdown. If you are in Visual mode, you can also add headers and whatnot through the tool bar at the top of the document.
+[This website](https://www.markdownguide.org/basic-syntax/) is a great reference for how to "code" in Markdown. If you are in Visual mode, you can also add headers and whatnot through the tool bar at the top of the document.
 
 ### 7. Include This Document (5 point)
 
