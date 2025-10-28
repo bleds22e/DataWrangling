@@ -129,7 +129,7 @@ You will now need to set up a repo for your final project.
 
 To do so, you will want to follow a similar process (and structure) as Question 1.
 
-a.  Start by creating a new repo on GitHub
+a.  Start by creating a new repo on GitHub. Again, put the repo in the class organization (rather than your personal GitHub account).
 b.  Create a new RStudio Project which is connected to this repo.
 c.  Create sub-directories according to your preferred project structure (note: if the folders are empty, you likely won't be able to commit them yet--that's ok!)
 d.  Put your final project proposal document (from Week 8) into the relevant sub-directory. Follow the correct steps to commit the file (with a strong commit message!) and push it to the GitHub repo.
