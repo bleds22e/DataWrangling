@@ -34,9 +34,17 @@ to GitHub.
 
 ### Due Date
 
-April 8 before class
+Nov 4 before class
 
 # Assignment Exercises
+
+> [!NOTE]
+>
+> ### Note!
+>
+> You will not actually be writing anything in this document for your
+> assignment. Your assignment will be completed in git/GitHub and in the
+> `fish_analysis.qmd` file that we start together in class.
 
 ### 1. Set Up Git (15 points)
 
@@ -50,8 +58,8 @@ device and have an account with GitHub.
 1.  Navigate to Github in a web browser and log in.
 2.  Click the `+` at the upper right corner of the page and choose
     `New repository`.
-3.  Choose the class organization (e.g., `WFSC-DataWrangling`) as the
-    “Owner” of the repo.
+3.  Choose the class organization (e.g., `DataWrangling-Fall2025`) as
+    the “Owner” of the repo.
 4.  Fill in a `Repository name` that follows the form
     `FirstnameLastname_DataWrangling`.
 5.  Select `Private`.
@@ -76,7 +84,7 @@ device and have an account with GitHub.
 
 ### 2. First Solo Commit (15 points)
 
-In `fish_analysis.Rmd` (which we started in class), add some text about
+In `fish_analysis.qmd` (which we started in class), add some text about
 the code chunk(s) describing what the code does in each code chunk.
 
 Commit this change to version control with a concise and descriptive
@@ -88,9 +96,9 @@ You discover that the device used to measure the scale length of the
 fish in `Gaeta_etal_CLC_data.csv` is not accurate for those smaller than
 1 mm.
 
-In the `fish_analysis.Rmd` file, create a new data frame without fish
-with a `scalelength` of less than 1 mm from `fish_data`. The new dataset
-will have 4,029 rows (see answer key).
+In the `fish_analysis.qmd` file, create a new data frame that does not
+include fish with scale lengths of less than 1 mm from `fish_data`. The
+new dataset will have 4,029 rows (see answer key).
 
 Use the `write_csv()` function to save this new data frame as a CSV
 file. It should be in an appropriate sub-directory.
@@ -98,7 +106,7 @@ file. It should be in an appropriate sub-directory.
 Commit this change to version control with a good commit message.
 
 Once you’ve made the commit, push the commit to your repo. Pop over to
-GitHub to ensure that the .Rmd file and the new dataset are there.
+GitHub to ensure that the .qmd file and the new dataset are there.
 
 **NOTE:** Send your instructor an email letting them know you have
 completed Questions 1-3. Include a link to your repo. Wait until you
@@ -108,12 +116,13 @@ have received confirmation from the instructor to move onto Question 4.
 
 **STOP: Make sure you informed your instructor an email following the
 last exercise with a link to your Github repository and wait until your
-teacher has told you they’ve updated your repository before doing this
+professor has told you they’ve updated your repository before doing this
 one.**
 
 While you were working on your plot of size among lakes, your colleague
 wrote some code to generate a histogram of scale lengths. To get it
-you’ll need to `pull` the most recent changes from Github.
+you’ll need to `pull` the most recent changes to the `fish_analysis.qmd`
+file from Github.
 
 1.  On the `Git` tab, click on the `Pull` button with the blue arrow.
     You should see some text that looks something like:
@@ -122,13 +131,13 @@ you’ll need to `pull` the most recent changes from Github.
            1e24ac8..815e600  main     -> origin/main
         Updating 1e24ac8..815e600
         Fast-forward
-         fish_analysis.Rmd | 1 +
+         fish_analysis.qmd | 1 +
          1 file changed, 2 insertion(+)
-        create mode 100644 fish_analysis.Rmd
+        create mode 100644 fish_analysis.qmd
 
 2.  Click `OK`.
 
-3.  You should see the new lines of code in your `fish_analysis.Rmd`.
+3.  You should see the new lines of code in your `fish_analysis.qmd`.
 
         ggplot(fish_data, aes(x = scalelength)) +
           geom_histogram()
@@ -190,25 +199,31 @@ document.
 ### 7. Include This Document (5 point)
 
 Place this file in the appropriate sub-directory (something along the
-lines of `documents` or `code`).
+lines of `documents` or `code`; long story, but do NOT name the folder
+`docs` or weird things will happen).
 
 Even though you (probably) haven’t added any code or text this *this*
-specific file, go ahead and “knit” this document.
+specific file, go ahead and render this document.
 
 You’ll notice that the output is not a PDF this time. That’s because the
-output of this file is a `github_document` (instead of `pdf_output`, for
-example). You can confirm this by scrolling to the very top of this
-document and looking at the first few lines (under “title”, “author”,
-and “date”, you’ll find “output”).
+format of this file is a `gfm` (instead of `pdf`, for example), which
+stands for “github-flavored markdown.” You can confirm this by scrolling
+to the very top of this document and looking at the first few lines
+(under “title” and “author” you’ll find “format”).
 
-In your files, you will now see not only the `.Rmd` file for the
+In your files, you will now see not only the `.qmd` file for the
 assignment, but also a file that ends in `.md`.
 
-Commit and push both the `.Rmd` and the `.md` files to your repo.
+Commit and push both the `.qmd` and the `.md` files to your repo.
 
 Find this document on GitHub. If you click on the `.md` version (*not*
-the `.Rmd`), it should show you the “visual” output on GitHub. This can
+the `.qmd`), it should show you the “visual” output on GitHub. This can
 be a great way to share your work with advisers, colleagues, etc.!
+
+You can absolutely still render to PDF or other outputs if you want to.
+Those documents can also be stored on GitHub. For the remainder of the
+semester, though, I will generally be asking you to render your
+assignments to `gfm` (`.md` file endings).
 
 # Turning in Your Assignment
 
@@ -216,5 +231,7 @@ To successfully “submit” your assignments for the rest of the semester,
 you will be submitting the URL to whatever repo on GitHub contains that
 work.
 
-For this week, you will need to submit two URLS: one for the repo you
-created in class (for Question 1) and one for your Final Project repo.
+For this week, you will need to submit two URLS:
+
+- one for the repo you created in class (for Question 1)
+- one for your Final Project repo.
