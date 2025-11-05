@@ -27,7 +27,7 @@ If you find yourself needing to run the same calculations or make the same plot 
 
 When we create a function, the structure of the function generally looks like this:
 
-![](images/r-function-syntax.png){width="75%" fig-align="center"}
+![](r-function-syntax.png){width="75%" fig-align="center"}
 
 A slightly different way to think about this is through inputs and outputs.
 
