@@ -1,7 +1,7 @@
 ---
 title: "Week 11: Writing Functions"
 author: "Ellen Bledsoe"
-format: html
+format: gfm
 editor: visual
 ---
 
