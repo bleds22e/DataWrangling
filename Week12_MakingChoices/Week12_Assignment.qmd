@@ -28,7 +28,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-April 22 before class
+November 18 before class
 
 # Assignment Exercises
 
@@ -155,3 +155,11 @@ d.  Take a look at the `pie_crab` dataset from the `lterdatasampler` package by 
 e.  Now use the `case_when` function inside a `mutate` function to create a new column called `size_category3` in the `pie_crab` dataframe that meets the same conditions as (b) and (c).
 
     I've placed my new column next to the size column for the sake of the answer key; you don't need to do this.
+
+## Turning in Your Assignment
+
+As with the last few weeks, you will be submitting your assignment by submitting the link to your GitHub repository.
+
+**NOTE**: While I won't take points off for not doing this, it is very helpful for grading if you can "Render" your assignments to markdown (.md) files and push the .md files to GitHub.
+
+That way, I (a) know that your code runs successfully and (b) can go to your .md file on GitHub and easily see everything in your assignment, including your outputs, much like in the PDFs you submitted earlier in the semester.
