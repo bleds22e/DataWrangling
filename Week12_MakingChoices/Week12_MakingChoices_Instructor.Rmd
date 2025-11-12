@@ -205,13 +205,13 @@ We can place our entire `if`-`else` statement inside a function, making sure tha
 est_biomass <- function(volume, veg_type){
   # function to calculate biomass based on vegetation type and volume value
   if (veg_type == "shrub") {
-    mass <- 2.65 * volume^0.9
+    biomass <- 2.65 * volume^0.9
   } else if (veg_type == "grass") {
-    mass <- 0.65 * volume^1.2
+    biomass <- 0.65 * volume^1.2
   } else {
-    mass <- NA
+    biomass <- NA
   }
-  return(mass)
+  return(biomass)
 }
 ```
 
@@ -249,7 +249,7 @@ y1; y2 # code for both if statements has been run
 
 On the other hand, an `else if` statement is going to check each condition sequentially. It will only execute code for the first condition which is `TRUE`.
 
-```{r}
+```{r eval=FALSE}
 x <- 5
 
 if (x > 2){
@@ -258,7 +258,8 @@ if (x > 2){
   y4 <- x * 4
 }
 
-y3; y4  # only code for the first statement has been run
+y3
+y4  # only code for the first statement has been run
 ```
 
 ### Nested Conditionals
@@ -351,9 +352,9 @@ case_when(veg_type == "grass" ~ "small",
           veg_type == "tree" ~ "large")
 ```
 
-In a circumstance where you want something similar to the `else` statement (meaning, if none of these conditions are met, do something else), we have to do something rather unique in the `case_when` function.
+When none of the conditions are meant, `case_when` will return `NA` by default.
 
-Essentially, we have to force a `TRUE` outcome, which we do by literally using `TRUE` as the final option.
+If you want something else returned instead of `NA`, you can modify the `.default` argument.
 
 ```{r}
 veg_type <- "forb"
@@ -361,7 +362,7 @@ veg_type <- "forb"
 case_when(veg_type == "grass" ~ "small",
           veg_type == "shrub" ~ "medium",
           veg_type == "tree" ~ "large",
-          TRUE ~ NA)
+          .default = "gigantic")
 ```
 
 ### Using `if_else` and `case_when` with `mutate`
@@ -388,8 +389,7 @@ Let's make a new column in the data frame that has "Clear Cut" when the value is
 ```{r}
 and_vertebrates %>% 
   mutate(ForestType = case_when(section == "CC" ~ "Clear Cut",
-                                section == "OG" ~ "Old Growth",
-                                TRUE ~ NA))
+                                section == "OG" ~ "Old Growth"))
 ```
 
 ## Why `if`-`else if`?
@@ -404,4 +404,4 @@ There are a few reasons.
 
 3)  Finally, while `if_else` and `case_when` are really handy for somewhat straight-forward decisions, sometimes you need to perform a lot of tasks if a condition is true or false. It is much easier to add in multiple tasks to do in the `if`-`else if` structure than in the `tidyverse` structure.
 
-3) The `dplyr` functions serve a very specific purpose; they are almost always used for modifying data points in data frames, because that is how the `tidyverse` is designed to work. More complicated `if`-`else` statements are much more flexible and can do a lot more, such as controlling your workflow. For example: (a) if a statistical test throws a specific error, make it stop running or (b) if a data frame meets one set of requirements, send it through one data cleaning pipeline, otherwise send it through a different pipeline.
+4) The `dplyr` functions serve a very specific purpose; they are almost always used for modifying data points in data frames, because that is how the `tidyverse` is designed to work. More complicated `if`-`else` statements are much more flexible and can do a lot more, such as controlling your workflow. For example: (a) if a statistical test throws a specific error, make it stop running or (b) if a data frame meets one set of requirements, send it through one data cleaning pipeline, otherwise send it through a different pipeline.
