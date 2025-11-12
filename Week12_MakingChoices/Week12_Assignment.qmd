@@ -1,13 +1,8 @@
 ---
-title: 'Assignment 12: Conditionals'
-author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: github_document
+title: "Week 12 Assignment"
+format: gfm
+editor: visual
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
-```
 
 # Assignment
 
@@ -86,7 +81,7 @@ if (){
 y
 ```
 
-c.  Complete the following `if` statement so that if `age_class` is equal to "sapling" it sets `y <- 10` and if `age_class` is equal to "seedling" it sets `y <- 5` and if `age_class` is something else then it sets the value of `y <- 0`.
+c.  Complete the following `if` statement so that if `age_class` is equal to "sapling" it sets `y` as 10, if `age_class` is equal to "seedling" it sets `y` to 5, and if `age_class` is something else then it sets the value of `y` to 0.
 
 ```{r}
 age_class = "adult"
@@ -118,7 +113,7 @@ Remember the general form of the equation is:
 
 | mass \<- a \* length \^ b
 
-Create a new function `get_mass_from_length_by_name()` that takes two arguments: the `length` and the name of the dinosaur group. 
+Create a new function `get_mass_from_length_by_name()` that takes two arguments: the `length` and the name of the dinosaur group.
 
 Inside this function use `if`/`else if`/`else` statements to check to see if the name is one of the following values and if so use the associated `a` and `b` values to estimate the species mass using these equations:
 
@@ -128,16 +123,16 @@ Inside this function use `if`/`else if`/`else` statements to check to see if the
 
 If the name is not any of these values the function should return `NA`.
 
-Run the function for the following: 
+Run the function for the following:
 
-a.  A *Stegosauria* that is 10 meters long. 
-b.  A *Theropoda* that is 8 meters long. 
-c.  A *Sauropoda* that is 12 meters long. 
+a.  A *Stegosauria* that is 10 meters long.
+b.  A *Theropoda* that is 8 meters long.
+c.  A *Sauropoda* that is 12 meters long.
 d.  An *Ankylosauria* that is 13 meters long.
 
 *Challenge 1 (optional)*: If the name is not one of values that have a and b values print warning that it doesn’t know how to convert that group that includes that groups name in a message like “No known estimation for Ankylosauria.” You can use the function `warning("your warning text")` to print a warning and the function `paste()` to combine text with a value from a variable such as `paste("My name is", name)`. Doing this successfully will modify your answer to (d), which is fine.
 
-*Challenge 2 (optional)*: Change your function so that it uses two different values of `a` and `b` for _Stegosauria_. When _Stegosauria_ is greater than 8 meters long use the equation above. When it is less than 8 meters long, use `a = 8.5` and `b = 2.8`. Run the function for a _Stegosauria_ that is 6 meters long.
+*Challenge 2 (optional)*: Change your function so that it uses two different values of `a` and `b` for *Stegosauria*. When *Stegosauria* is greater than 8 meters long use the equation above. When it is less than 8 meters long, use `a = 8.5` and `b = 2.8`. Run the function for a *Stegosauria* that is 6 meters long.
 
 ### 5. Using `dplyr` Choice Functions (20 points)
 

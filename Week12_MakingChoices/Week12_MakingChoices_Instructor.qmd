@@ -1,13 +1,9 @@
 ---
-title: 'Week 11: Making Choices'
+title: "Week 12: Making Choices"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 # Making Choices
 
@@ -205,13 +201,13 @@ We can place our entire `if`-`else` statement inside a function, making sure tha
 est_biomass <- function(volume, veg_type){
   # function to calculate biomass based on vegetation type and volume value
   if (veg_type == "shrub") {
-    mass <- 2.65 * volume^0.9
+    biomass <- 2.65 * volume^0.9
   } else if (veg_type == "grass") {
-    mass <- 0.65 * volume^1.2
+    biomass <- 0.65 * volume^1.2
   } else {
-    mass <- NA
+    biomass <- NA
   }
-  return(mass)
+  return(biomass)
 }
 ```
 
@@ -249,7 +245,7 @@ y1; y2 # code for both if statements has been run
 
 On the other hand, an `else if` statement is going to check each condition sequentially. It will only execute code for the first condition which is `TRUE`.
 
-```{r}
+```{r eval=FALSE}
 x <- 5
 
 if (x > 2){
@@ -258,7 +254,8 @@ if (x > 2){
   y4 <- x * 4
 }
 
-y3; y4  # only code for the first statement has been run
+y3
+y4  # only code for the first statement has been run
 ```
 
 ### Nested Conditionals
@@ -270,7 +267,7 @@ For example, we might have different equations for some vegetation types based o
 In order to do this, we can "nest" conditionals inside of one another.
 
 ```{r}
-est_mass <- function(volume, veg_type, age){
+est_biomass <- function(volume, veg_type, age){
   if (veg_type == "shrub") {
     # equation changes by age of shrub
     if (age < 5) {
@@ -279,16 +276,16 @@ est_mass <- function(volume, veg_type, age){
       biomass <- 2.65 * volume^0.9
     }
   } else if (veg_type == "grass" | veg_type == "sedge") {
-    mass <- 0.65 * volume^1.2
+    biomass <- 0.65 * volume^1.2
   } else {
-    mass <- NA
+    biomass <- NA
   }
-  return(mass)
+  return(biomass)
 }
 
-est_mass(24, "shrub", age = 2) # uses different equations for shrubs of different ages
-est_mass(24, "shrub", age = 6)
-est_mass(24, "grass")   # does not require the age argument because it does not apply to grass
+est_biomass(24, "shrub", age = 2) # uses different equations for shrubs of different ages
+est_biomass(24, "shrub", age = 6)
+est_biomass(24, "grass")   # does not require the age argument because it does not apply to grass
 ```
 
 This function first checks if the vegetation type is "shrub".
@@ -351,9 +348,17 @@ case_when(veg_type == "grass" ~ "small",
           veg_type == "tree" ~ "large")
 ```
 
-In a circumstance where you want something similar to the `else` statement (meaning, if none of these conditions are met, do something else), we have to do something rather unique in the `case_when` function.
+When the input does not match any of the options, the default value that is returned is `NA`.
 
-Essentially, we have to force a `TRUE` outcome, which we do by literally using `TRUE` as the final option.
+```{r}
+veg_type <- "forb"
+
+case_when(veg_type == "grass" ~ "small",
+          veg_type == "shrub" ~ "medium",
+          veg_type == "tree" ~ "large")
+```
+
+In a circumstance where you want something other than this returned, you can modify the `.default` argument.
 
 ```{r}
 veg_type <- "forb"
@@ -361,7 +366,7 @@ veg_type <- "forb"
 case_when(veg_type == "grass" ~ "small",
           veg_type == "shrub" ~ "medium",
           veg_type == "tree" ~ "large",
-          TRUE ~ NA)
+          .default = "unknown")
 ```
 
 ### Using `if_else` and `case_when` with `mutate`
@@ -404,4 +409,4 @@ There are a few reasons.
 
 3)  Finally, while `if_else` and `case_when` are really handy for somewhat straight-forward decisions, sometimes you need to perform a lot of tasks if a condition is true or false. It is much easier to add in multiple tasks to do in the `if`-`else if` structure than in the `tidyverse` structure.
 
-3) The `dplyr` functions serve a very specific purpose; they are almost always used for modifying data points in data frames, because that is how the `tidyverse` is designed to work. More complicated `if`-`else` statements are much more flexible and can do a lot more, such as controlling your workflow. For example: (a) if a statistical test throws a specific error, make it stop running or (b) if a data frame meets one set of requirements, send it through one data cleaning pipeline, otherwise send it through a different pipeline.
+4)  The `dplyr` functions serve a very specific purpose; they are almost always used for modifying data points in data frames, because that is how the `tidyverse` is designed to work. More complicated `if`-`else` statements are much more flexible and can do a lot more, such as controlling your workflow. For example: (a) if a statistical test throws a specific error, make it stop running or (b) if a data frame meets one set of requirements, send it through one data cleaning pipeline, otherwise send it through a different pipeline.
