@@ -1,7 +1,7 @@
 ---
 title: "Week 12: Making Choices"
 author: "Ellen Bledsoe"
-format: pdf
+format: gfm
 editor: visual
 ---
 
