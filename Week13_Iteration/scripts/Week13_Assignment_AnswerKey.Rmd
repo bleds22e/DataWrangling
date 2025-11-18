@@ -183,16 +183,15 @@ output
 
 ### 4. DNA or RNA (20 points)
 
-4b. 
+4a. 
 ```{r}
-library(tidyverse)
 
 dna_or_rna <- function(sequence){
   # Determines if a character string represents DNA, RNA, or is unknown
   # by searching the character string for the unique base pairs t & u.
-  if (str_count(sequence, "t") > 0){
+  if (stringr::str_count(sequence, "t") > 0){
     type = "DNA"
-  } else if (str_count(sequence, "u") > 0){
+  } else if (stringr::str_count(sequence, "u") > 0){
     type = "RNA"
   } else {
     type = "UNKNOWN"
@@ -213,32 +212,51 @@ dna_or_rna(seq3)
 sequences <- c("ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatgcaggcg",
               "gauuauuccccacaaagggagugggauuaggagcugcaucauuuacaagagcagaauguuucaaaugcau",
               "gaaagcaagaaaaggcaggcgaggaagggaagaagggggggaaacc",
-              "guuuccuacaguauuugaugagaaugagaguuuacuccuggaagauaauauuagaauguuuacaacugcaccugaucagguggauaaggaagaugaagacu",
+              "guuuccuacaguauuugaugagaaugagagcaccugaucagguggauaaggaagaugaagacu",
               "gauaaggaagaugaagacuuucaggaaucuaauaaaaugcacuccaugaauggauucauguaugggaaucagccggguc")
 ```
 
-4c.
+4b.
 
 ```{r}
 for (sequence in sequences){
   print(dna_or_rna(sequence))
 }
 ```
-
-
-4d.
+4c.
 ```{r}
 df <- data.frame(type = vector(mode = "character", length = length(sequences)),
                  sequence = vector(mode = "character", length = length(sequences)))
 
-for (i in 1:length(sequences)) {
+for (i in 1:nrow(df)) {
   df$sequence[i] <- sequences[i]
   df$type[i] <- dna_or_rna(sequences[i])
 }
 
-as.tibble(df)
+df
 ```
+4d.
 
+```{r}
+df <- data.frame(type = vector(mode = "character", length = length(sequences)),
+                 sequence = vector(mode = "character", length = length(sequences)))
+
+for (i in 1:nrow(df)) {
+  
+  df$sequence[i] <- sequences[i]
+  
+  if (stringr::str_count(sequences[i], "t") > 0){
+    df$type[i] <- "DNA"
+  } else if (stringr::str_count(sequences[i], "u") > 0){
+    df$type[i] <- "RNA"
+  } else {
+    df$type[i] <- "UNKNOWN"
+  }
+  
+}
+
+df
+```
 
 4e. OPTIONAL
 
@@ -251,7 +269,7 @@ sapply(sequences, dna_or_rna)
 ```{r}
 seq_df <- as.data.frame(sequences)
 seq_df |> 
-  rowwise() |> 
-  mutate(type = dna_or_rna(sequences), .before = sequences)
+  dplyr::rowwise() |> 
+  dplyr::mutate(type = dna_or_rna(sequences), .before = sequences)
 ```
 
