@@ -144,16 +144,16 @@ Ultimately, the loop above is doing the exact same thing as the code below, but 
 
 ```{r}
 # same as the for loop above
-volume <- volumes[1]
-biomass <- 2.65 * volume ^ 0.9
+vol <- volumes[1]
+biomass <- 2.65 * vol ^ 0.9
 print(biomass)
 
-volume <- volumes[2]
-biomass <- 2.65 * volume ^ 0.9
+vol <- volumes[2]
+biomass <- 2.65 * vol ^ 0.9
 print(biomass)
 
-volume <- volumes[3]
-biomass <- 2.65 * volume ^ 0.9
+vol <- volumes[3]
+biomass <- 2.65 * vol ^ 0.9
 print(biomass)
 ```
 

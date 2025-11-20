@@ -151,16 +151,16 @@ Ultimately, the loop above is doing the exact same thing as the code below, but 
 
 ```{r}
 # same as the for loop above
-volume <- volumes[1]
-biomass <- 2.65 * volume ^ 0.9
+vol <- volumes[1]
+biomass <- 2.65 * vol ^ 0.9
 print(biomass)
 
-volume <- volumes[2]
-biomass <- 2.65 * volume ^ 0.9
+vol <- volumes[2]
+biomass <- 2.65 * vol ^ 0.9
 print(biomass)
 
-volume <- volumes[3]
-biomass <- 2.65 * volume ^ 0.9
+vol <- volumes[3]
+biomass <- 2.65 * vol ^ 0.9
 print(biomass)
 ```
 
@@ -502,7 +502,7 @@ For example, let's say we want to associate the file name with the observation c
 
 We would start by creating an empty data frame that we will then populate with the results of our loop. We can use the `data.frame` function. Each argument is for one column.
 
--    `column_name` = an empty vector of the correct type and length
+-   `column_name` = an empty vector of the correct type and length
 
 ```{r}
 results <- data.frame(file_name = vector(mode = "character", length = num_files),
