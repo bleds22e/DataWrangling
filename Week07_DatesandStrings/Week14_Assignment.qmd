@@ -1,0 +1,163 @@
+---
+title: "Assignment 14: Dates and Strings"
+author: "Ellen Bledsoe"
+format: gfm
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment Details
+
+### Purpose
+
+The goal of this assignment is to work with dates and times using the `lubridate` package and to work with character strings using the `stringr` package.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+-   Code is within the provided code chunks or new code chunks are created where necessary
+-   Code chunks run without errors
+-   Code chunks have brief comments indicating which code is answering which part of the question
+-   Code will be assessed as follows:
+    -   Produces the correct answer using the requested approach: 100%
+    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+    -   Answer demonstrates a lack of understanding of the core concept: 0%
+-   Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+Dec 9 before class
+
+# Assignment Exercises
+
+### 1. Set-Up (5 pts)
+
+Load in the `tidyverse`.
+
+### 2. When Did You Knit This Document? (10 pts)
+
+Write code to do the following:
+
+a.  The first line should print only the date that you knit this document.
+b.  The second line should print the date and time that you knit this document.
+
+### 3. Plant Vouchers (20 pts)
+
+During my PhD, I collected plant vouchers from my field site that I eventually submitted to the UA Herbarium for identification. I also got DNA sequences for most of them (but not all). Read in that dataset by running the code chunk below.
+
+```{r}
+vouchers <- read_csv("https://raw.githubusercontent.com/weecology/DNA_metabarcoding/master/data/collection_data/plant_voucher_collection.csv")
+vouchers
+```
+
+a.  Using the `make_date` function and the `mutate()` function, create a new column called "collection_date" that has the year, month, and day that I collected the voucher specimen for each plant. Save this new column in the `vouchers` dataframe.
+b.  Using the `min()` function, find the earliest date that I collected a voucher specimen. Using the `summarize()` function is optional.
+c.  Use code to find the last date that I collected a vocuher specimen.
+d.  Find the span of time (duration) that I was collecting voucher specimens.
+e.  Create a column for the day of year that each specimen was collected.
+
+### 4. NDVI from the Santa Rita Experimental Range (20 pts)
+
+There is a large network of phenocams (cameras set up to take daily images of a landscape to monitor plant phenology) across the US. The Santa Rita Experimental Range (SRER) has one such camera.
+
+One value that we can calculate from these phenocam images is the NDVI of the landscape in the picture, which gives us a measurement of vegetation "greenness." This value is likely to change through time due to seasonal changes in temperature, precipitation, etc.
+
+Run the following code chunk to bring in a subset of the SRER phenocam data.
+
+```{r}
+phenocam <- read_csv("neon_srer_ndvi_phencom.csv", skip = 17, col_names = TRUE, 
+                    col_types = "ccncc") %>% 
+  select(date, local_std_time, contains("mean"), NDVI_c)
+```
+
+a.  Create a new column in `phenocam` that uses the `unite()` function to join the date and time columns together into one column. Separate the date and time with a space.
+b.  Convert the datetime column you created in (a) to a POSIXct format. Save this new column to `phenocam`. You can use whichever function you would like.
+c.  Calculate the duration of the phenocam dataset provided here.
+d.  Create new columns in `phenocam` for the year, the month, and the day of year.
+e.  Using the year and month columns you created in (d), calculate the average NDVI value for each month in the dataset (each month in each year).
+
+### 5. Vectors with Strings (10 pts)
+
+Let's ease into our practice working with strings with some lyrics from the first Black woman to ever hit the top of the Country music charts.
+
+No need to save your outputs.
+
+```{r}
+lyrics <- c("This ain't Texas (woo),", 
+           "ain't no hold 'em (hey)/",
+           "So lay your cards down, down, down, down")
+```
+
+a.  Use `str_length` to determine how many characters are in each string in the vector.
+b.  Use `str_detect` to find the strings which have the word "Texas" in them.
+c.  Use `str_count` to count the number of times the word "down" occurs in each string. `str_count` is a function that we didn't explicitly cover in the lesson, but the structure of the arguments is comparable to `str_detect`. You can also use the help files to get more information.
+d.  Use `str_extract` to pull out the parentheticals themselves. Use the following regex as the pattern to match: `\\((.*?)\\)`. Remember that regex patterns need to go inside quotation marks.
+
+```{r}
+
+```
+
+### 6. Dugout Data (15 pts)
+
+Dugouts are human-made water reservoirs on the landscape, often used for cattle or other ranching ventures.
+
+Here is another example of data from my postdoc lab that I was asked to clean up. I'm going to go ahead and clean up the column names for the columns we will be using in the following questions.
+
+```{r}
+dugout <- read_csv("elevation_2017.csv") %>% 
+  rename(SoilSalinity = `Soil Salinity`,
+         SoilZone = `Soil Zone`,
+         MajorSalts = `Major Salts in groundwater`)
+dugout
+```
+
+You do not need to save any of the outputs for this question.
+
+a.  Using `filter` and `str_detect`, return rows that have "slight" in the values in the `SoilSalinity` column.
+b.  Using `filter` and `str_detect`, return rows that have a letter in the values in the `Site_ID` column. The regex pattern to match is `"[A-Z]+"`.
+c.  Using `mutate` and `str_replace`, replace the word "acid" with "acidic" in the `pH` column.
+
+```{r}
+
+```
+
+### 7. Santa Cruz Rodents (20 pts)
+
+Remember the rodent data from the Santa Cruz that we used in our assignment for Week 6? There were quite a few columns that had messy data, and we used a combination of `replace` and `na_if` to address the issues.
+
+Let's use `stringr` functions to complete the same tasks.
+
+First, read in the `capture_data.csv` file.
+
+```{r}
+
+```
+
+The column names in the dataset have not been cleaned. You can either clean up the column names before working through the questions or you can use the column names in backticks throughout the rest of the question--up to you!
+
+We will be using the `Species`, `Tail length`, `Hair sample (Y/N)`, and `Position (R/L)` columns.
+
+Also, you do not need to save any of the outputs from this question, though you can in (b)-(d), if you would like to.
+
+```{r}
+
+```
+
+a.  Species codes should be exactly 4 characters long, not more and not less. Filter the dataframe (but do not save it) to show rows that have species codes that do not fit that requirement (hint: use `!=`).
+
+b.  Use `str_remove` to remove the `~` from the `Tail Length` column (it is in the last row).
+
+c.  Use `str_remove` to remove the `?` from the `Species` column.
+
+    Because `stringr` by default expects regex in the "pattern" argument and `?` is a special regex character, we need to use the pattern `"\\?"`. The `\\` is an "escape," telling regex to treat the ? as a regular ?, not as a regex symbol.
+
+d.  Use `str_replace` to replace the `?` in hair sample and position with `NA`. Remember to use `"\\?"`.
+
+    `stringr` expects a character value, and NA is not a character value--it is a NULL value. To get around this, we need to use `NA_character_` in place of `NA`, a special work around.

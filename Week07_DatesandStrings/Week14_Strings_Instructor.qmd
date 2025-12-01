@@ -1,8 +1,8 @@
 ---
-title: 'Week 7: Character Strings'
+title: "Week 14: Character Strings"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -30,12 +30,12 @@ We’ll cover a number of helpful `stringr` functions in this lesson:
 Let's load the `tidyverse` and get started.
 
 ```{r}
-
+library(tidyverse)
 ```
 
 We will use some real data from my postdoc lab that I was tasked with cleaning.
 
-It's a long story, but I ended up in an aquatic biogeochemistry lab for my postdoc. The lab had 4+ years of data from dugouts, which are small, human-made water resevoirs that are common across the prairie states and provinces.
+It's a long story, but I ended up in an aquatic biogeochemistry lab for my postdoc. The lab had 4+ years of data from dugouts, which are small, human-made water reservoirs that are common across the prairie states and provinces.
 
 Unfortunately, the data were collected by many different people without a standard data entry protocol, so there was extensive data cleaning that needed to happen to bring all of the datasets together across the years.
 
@@ -43,6 +43,9 @@ Many of the tools we are covering in this class (especially the last few weeks w
 
 ```{r}
 url <- "https://raw.githubusercontent.com/bleds22e/FAST_lab_training/master/merging_masters/data/carbon_2020.csv"
+
+carbon <- read_csv(url) %>% rename(SampleID = `Sample ID`)
+carbon
 ```
 
 ### Strings in Vectors
@@ -52,7 +55,8 @@ To start working with strings, let's start with a vector instead of a dataframe.
 Let's pull out the first column (the `Sample ID` column) from the `carbon` dataframe.
 
 ```{r}
-
+sampleID <- carbon$SampleID
+sampleID
 ```
 
 Let's practice with each of our functions.
@@ -60,31 +64,34 @@ Let's practice with each of our functions.
 `str_length(string)`: count the number of characters in the string
 
 ```{r}
-
+str_length(sampleID)
 ```
 
 `str_detect(string, pattern)`: determine if pattern is found within string
 
 ```{r}
-
+str_detect(sampleID, "DEEP")
 ```
 
-`str_extract(string, pattern)`: return portion of each string that matches the pattern
+`str_extract()`: return portion of each string that matches the pattern
 
 ```{r}
-
+# 3 characters after the /
+str_extract(sampleID, "/(...)")
+months <- str_extract(sampleID, "/(...)")
 ```
 
-`str_remove(string, pattern)` - remove portion of the string that matches the pattern
+`str_remove()` - remove portion of the string that matches the pattern
 
 ```{r}
-
+str_remove(months, "/")
 ```
 
-`str_replace(string, pattern, replacement)`: replace portion of string that matches the pattern with something else
+`str_replace()`: replace portion of string that matches the pattern with something else
 
 ```{r}
-
+# we can also replace values (with something new or with a blank)
+str_replace(months, "/", "")
 ```
 
 ## Using `stringr` in Data Frames
@@ -96,25 +103,23 @@ Let's run through a few examples using the full `carbon` dataframe.
 Perhaps we want only samples that were collected in August. We can use the `str_detect` function to set our condition. This works because the output of `str_detect` is a logical vector, as with other conditional statements or `is.na()`.
 
 ```{r}
-
+carbon %>% 
+  filter(str_detect(SampleID, "AUG"))
 ```
 
 Perhaps we want to filter for sample names over a certain length (for some reason). We can do that as well, though we need to structure our condition a little differently this time, because the output of `str_length` is not a logical vector.
 
 ```{r}
-
+carbon %>% 
+  filter(str_length(SampleID) > 13)
 ```
 
 Alternatively, perhaps we want to create a column with the month the sample was collected. We can use the `str_extract` and `str_replace` columns in a mutate function.
 
 ```{r}
-
-```
-
-Alternatively, we could create a column for whether or not the sample was taken from below the surface ("DEEP").
-
-```{r}
-
+carbon %>% 
+  mutate(Month = str_extract(SampleID, "/(...)"),
+         Month = str_remove(Month, "/"))
 ```
 
 ## Regular Expressions
@@ -128,7 +133,7 @@ I'm not going to go deep into "regex," but you should know that they exist in ca
 As one example, let's say I wanted to pull out all of the characters after the `/` in the `sampleID` vector, since they represent dates. We could use the regular expression `"(?<=/).*"` to do so.
 
 ```{r}
-
+str_extract(sampleID, "(?<=/).*")
 ```
 
 ### Helpful Resources
@@ -139,4 +144,4 @@ While memorizing regular expressions is wildly daunting, there are thankfully nu
 
 Honestly, though, I use ChatGPT to build my regex!
 
-To build the `"(?<=/).*"` expression from above, I asked ChatGPT to "use regex and `str_extract` to extract everything after a `/`, not including the `/`," and it produced exactly what I needed.
+To build the `"(?<=/).*"` expression from above, I asked ChatGPT to "use regex and `str_extract` to extract everything after a `/`, not including the `/`", and it produced exactly what I needed.
