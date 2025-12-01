@@ -454,7 +454,9 @@ We, however, just want the data files we downloaded, so we'll add the optional `
 The pattern argument can also take regular expressions if you need to be more nuanced about which files to include.
 
 ```{r}
-data_files <- list.files(path = "../data_raw/", pattern = ".txt")
+# in regex, .* means any character (.) any number of times (*)
+# "locations.*.txt" indicates any file starting with "locations" and ending with ".txt"
+data_files <- list.files(path = "../data_raw/", pattern = "locations.*.txt")
 data_files
 ```
 
@@ -502,7 +504,7 @@ For example, let's say we want to associate the file name with the observation c
 
 We would start by creating an empty data frame that we will then populate with the results of our loop. We can use the `data.frame` function. Each argument is for one column.
 
--    `column_name` = an empty vector of the correct type and length
+-   `column_name` = an empty vector of the correct type and length
 
 ```{r}
 results <- data.frame(file_name = vector(mode = "character", length = num_files),
