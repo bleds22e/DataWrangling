@@ -1,8 +1,8 @@
 ---
-title: 'Week 7: Character Strings'
+title: "Week 14: Character Strings"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: gfm
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +20,7 @@ All functions in the `stringr` package start with `str_`. There are *many* helpf
 We’ll cover a number of helpful `stringr` functions in this lesson:
 
 | Function | Use | Output |
-|:---|:---|:---|
+|:-----------------|:-----------------------------------|:-----------------|
 | `str_length()` | count the number of characters in the string | numeric vector |
 | `str_detect()` | determine if pattern is found within string | logical (T/F) vector |
 | `str_extract()` | return portion of each string that matches the pattern | character vector |
@@ -39,7 +39,7 @@ It's a long story, but I ended up in an aquatic biogeochemistry lab for my postd
 
 Unfortunately, the data were collected by many different people without a standard data entry protocol, so there was extensive data cleaning that needed to happen to bring all of the datasets together across the years.
 
-Many of the tools we are covering in this class (especially the last few weeks with joins, pivots, and strings) were integral to getting those datasets wrangled. Here is just one example of the type of dataset I was working with.
+Many of the tools we are covering in this class (especially joins, pivots, and strings) were integral to getting those datasets wrangled. Here is just one example of the type of dataset I was working with.
 
 ```{r}
 url <- "https://raw.githubusercontent.com/bleds22e/FAST_lab_training/master/merging_masters/data/carbon_2020.csv"
@@ -111,7 +111,7 @@ Alternatively, perhaps we want to create a column with the month the sample was 
 
 ```
 
-Alternatively, we could create a column for whether or not the sample was taken from below the surface ("DEEP").
+Finally, we could create a column for whether or not the sample was taken from below the surface ("DEEP").
 
 ```{r}
 

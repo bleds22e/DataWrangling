@@ -454,7 +454,9 @@ We, however, just want the data files we downloaded, so we'll add the optional `
 The pattern argument can also take regular expressions if you need to be more nuanced about which files to include.
 
 ```{r}
-data_files <- list.files(path = "../data_raw/", pattern = ".txt")
+# in regex, .* means any character (.) any number of times (*)
+# "locations.*.txt" indicates any file starting with "locations" and ending with ".txt"
+data_files <- list.files(path = "../data_raw/", pattern = "locations.*.txt")
 data_files
 ```
 
