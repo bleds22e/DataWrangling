@@ -2,7 +2,7 @@
 title: "Week 13 Assignment"
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
-output: gfm
+format: gfm
 ---
 
 ```{r setup, include=FALSE}
@@ -184,7 +184,7 @@ b.  Use the function and a `for` loop to create a vector of sequence types for t
 
 c.  Use the function and a `for` loop to create a data frame that includes a column of sequences and a column of their types.
 
-d. This time, instead of using the function, place the `if`-`else` portion of the code directly into the `for` loop. Modify the code so that it successfully creates the same output as (c) above. Remember to "reset" the data frame that will hold the output so it is empty before you start your loop.
+d.  This time, instead of using the function, place the `if`-`else` portion of the code directly into the `for` loop. Modify the code so that it successfully creates the same output as (c) above. Remember to "reset" the data frame that will hold the output so it is empty before you start your loop.
 
 e.  OPTIONAL: Use the function and `sapply` to create a vector of sequence types for the values in sequences
 
@@ -192,6 +192,7 @@ f.  OPTIONAL: Use the function, and `mutate()` to create a data frame that inclu
 
 ```{r}
 seq_df <- as.data.frame(sequences)
+
 ```
 
 ## Turning in Your Assignment
