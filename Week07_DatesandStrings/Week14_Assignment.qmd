@@ -57,15 +57,15 @@ vouchers <- read_csv("https://raw.githubusercontent.com/weecology/DNA_metabarcod
 vouchers
 ```
 
-a.  Using the `make_date` function and the `mutate()` function, create a new column called "collection_date" that has the year, month, and day that I collected the voucher specimen for each plant. Save this new column in the `vouchers` dataframe.
+a.  Using the `make_date` function and the `mutate()` function, create a new column called "collection_date" that has the year, month, and day that I collected the voucher specimen for each plant. Save this new column in the `vouchers` data frame.
 b.  Using the `min()` function, find the earliest date that I collected a voucher specimen. Using the `summarize()` function is optional.
-c.  Use code to find the last date that I collected a vocuher specimen.
+c.  Use code to find the last date that I collected a voucher specimen.
 d.  Find the span of time (duration) that I was collecting voucher specimens.
-e.  Create a column for the day of year that each specimen was collected.
+e.  Create a column for the day of year (DOY) that each specimen was collected.
 
 ### 4. NDVI from the Santa Rita Experimental Range (20 pts)
 
-There is a large network of phenocams (cameras set up to take daily images of a landscape to monitor plant phenology) across the US. The Santa Rita Experimental Range (SRER) has one such camera.
+There is a large [network of phenocams](https://phenocam.nau.edu/webcam/) (cameras set up to take daily images of a landscape to monitor plant phenology) across the US. The Santa Rita Experimental Range (SRER) has one such camera.
 
 One value that we can calculate from these phenocam images is the NDVI of the landscape in the picture, which gives us a measurement of vegetation "greenness." This value is likely to change through time due to seasonal changes in temperature, precipitation, etc.
 
@@ -77,22 +77,22 @@ phenocam <- read_csv("neon_srer_ndvi_phencom.csv", skip = 17, col_names = TRUE,
   select(date, local_std_time, contains("mean"), NDVI_c)
 ```
 
-a.  Create a new column in `phenocam` that uses the `unite()` function to join the date and time columns together into one column. Separate the date and time with a space.
-b.  Convert the datetime column you created in (a) to a POSIXct format. Save this new column to `phenocam`. You can use whichever function you would like.
+a.  Create a new column in `phenocam` using the `unite()` function to join the date and time columns together into one column. Separate the date and time with a space.
+b.  Convert the datetime column you created in (a) to a POSIXct format. Save this new column to `phenocam`. You can use whichever `lubridate` function you would like.
 c.  Calculate the duration of the phenocam dataset provided here.
-d.  Create new columns in `phenocam` for the year, the month, and the day of year.
+d.  Create new columns in `phenocam` for the year, the month, and the day of year using `lubridate` functions.
 e.  Using the year and month columns you created in (d), calculate the average NDVI value for each month in the dataset (each month in each year).
 
 ### 5. Vectors with Strings (10 pts)
 
-Let's ease into our practice working with strings with some lyrics from the first Black woman to ever hit the top of the Country music charts.
+Let's ease into our practice working with strings with some lyrics from the first Black woman to ever hit the top of the Country music charts (you can tell when I first wrote this question...).
 
 No need to save your outputs.
 
 ```{r}
 lyrics <- c("This ain't Texas (woo),", 
-           "ain't no hold 'em (hey)/",
-           "So lay your cards down, down, down, down")
+            "ain't no hold 'em (hey)/",
+            "So lay your cards down, down, down, down")
 ```
 
 a.  Use `str_length` to determine how many characters are in each string in the vector.

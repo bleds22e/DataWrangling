@@ -17,9 +17,10 @@ I've divided the lessons into 2 parts this week. Today, we will work with the `l
 
 ## Set-Up
 
-As is becoming standard for us now, let's start by loading in the `tidyverse`.
+As is standard for us, let's start by loading in the `tidyverse`.
 
 ```{r message=FALSE}
+# note lubridate and stringr
 library(tidyverse)
 ```
 
@@ -28,7 +29,7 @@ We are going to use some stream data from the Santa Cruz River here in Tucson. T
 When we take a look at the data, we can see a number of rows that we need to skip when we read in the data...27 to be exact.
 
 ```{r message=FALSE}
-water <- read_tsv("santa_cruz.txt", skip = 27, col_names = TRUE)
+water <- read_tsv("data_raw/santa_cruz.txt", skip = 27, col_names = TRUE)
 
 water
 ```
@@ -85,6 +86,8 @@ now()
 
 Aside from these functions, we will mostly be using the `lubridate` functions within a `mutate` function to modify entire columns at once.
 
+| Let's Practice: Complete Questions 1 and 2 in the assignment.
+
 ### Making a `datetime` Column
 
 The most generic function in `lubridate` is `as_date` or the variant, `as_datetime`. These convert non-dates into a date data class.
@@ -97,7 +100,7 @@ We need to specify the following arguments:
 
 The way we specify the format of the datetime is a bit unusual. We use "conversion specifications," which are introduced by a `%` and are typically represented by a letter. There are lots of options, many of which are in the image below:
 
-![Table from: <https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html>](common_r_date_formats.png){width="85%" fig-align="center"}
+![Table from: <https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html>](images/common_r_date_formats.png){width="85%" fig-align="center"}
 
 The characters that are used to separate the date and time data are interpreted literally. What does that mean? If the date is separated by `-`, the conversion specifications should be separated by `-`, too.
 
@@ -141,6 +144,8 @@ ggplot(water, aes(datetime, discharge_ft3_s)) +
   geom_point()
 
 ```
+
+| Let's Practice: Work on Question 4a and 4b in the assignment.
 
 ### Extracting Specific Components
 
@@ -190,7 +195,7 @@ water %>%
 What if you are given a dataset that has separate year, month, and day columns that you need to combine? If you recall, this is how the data frame for the Portal rodents is set up.
 
 ```{r}
-surveys <- read_csv("surveys.csv")
+surveys <- read_csv("data_raw/surveys.csv")
 surveys
 ```
 
@@ -203,6 +208,8 @@ surveys <- surveys %>%
                           day = day))
 surveys
 ```
+
+| Let's Practice: Work on Question 4d in the assignment.
 
 ### Performing Calculations
 

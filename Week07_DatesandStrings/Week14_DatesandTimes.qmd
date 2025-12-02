@@ -71,6 +71,8 @@ First, let's start with functions that return the current date and/or time. Thes
 
 Aside from these functions, we will mostly be using the `lubridate` functions within a `mutate` function to modify entire columns at once.
 
+| Let's Practice: Complete Questions 1 and 2 in the assignment.
+
 ### Making a `datetime` Column
 
 The most generic function in `lubridate` is `as_date` or the variant, `as_datetime`. These convert non-dates into a date data class.
@@ -155,6 +157,8 @@ We can also create new columns such as day of year (DOY). This is the day of yea
 
 ```
 
+| Let's Practice: Work on Question 4a and 4b in the assignment.
+
 ### Creating Dates from Segments
 
 What if you are given a dataset that has separate year, month, and day columns that you need to combine? If you recall, this is how the data frame for the Portal rodents is set up.
@@ -168,6 +172,8 @@ We can bring these columns together to form a date column using the `make_date()
 ```{r}
 
 ```
+
+| Let's Practice: Work on Question 4d in the assignment.
 
 ### Performing Calculations
 
