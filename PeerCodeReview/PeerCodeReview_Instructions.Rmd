@@ -17,28 +17,28 @@ The majority of your code review will occur on GitHub (follow the instructions b
 
 **Total Points**: 100
 
-**Due Date**: Sunday, May 11 at midnight MST
+**Due Date**: Tuesday, Dec 9 at midnight MST
 
 ------------------------------------------------------------------------
 
 # Assignment Instructions
 
-## 1. Access Your Assigned Peer’s GitHub Repository *(5 points)*
+### 1. Access Your Assigned Peer’s GitHub Repository (5 points)
 
 -   Go to your peer's GitHub repository.
 -   Fork and clone the repository to your computer (see detailed instructions below).
 -   Review the README and folder structure before diving into code.
 
-## 2. Review Code and Comment on GitHub *(75 points total)*
+### 2. Review Code and Submit Comments via GitHub (75 points)
 
-Leave **specific, respectful, and helpful** comments directly on GitHub. See the "Checklist" document for more detailed information.
+Provide **specific, respectful, and helpful** comments via GitHub. See the "Checklist" document for more detailed information.
 
 -   Leave at least **8 inline comments, suggestions, or edits** across the project.
 -   Be specific. For example, *"Consider renaming this function to clarify its purpose"* is more helpful than "*This is confusing."*
 
-## 3. Submit the Checklist and Reflection to D2L *(20 points)*
+### 3. Submit the Checklist and Reflection to D2L (20 points)
 
-In the `PeerCodeReview_Checklist_Reflection.Rmd` file, complete the checklist and write 7-10 sentences summarizing your review experience:
+In the `PeerCodeReview_Checklist_Reflection.qmd` file, complete the checklist and write 7-10 sentences summarizing your review experience:
 
 -   What was done well?
 -   What was challenging about this assignment?
@@ -49,22 +49,22 @@ Upload the knitted `.pdf` file to the "Peer Code Review" Assignment on D2L.
 
 ------------------------------------------------------------------------
 
-# Grading Rubric
+## Grading Rubric
 
 | **Category** | **Points** | **Criteria** |
-|----|----|----|
+|-------------------|:-----------------:|------------------------------------|
 | *Repository Access & Setup* | 5 | Repository is successfully forked and cloned. Reviewer created a new branch. |
 | *Clarity & Readability Comments* | 15 | Comments address variable names, structure, and ease of understanding. |
 | *Functionality Comments* | 15 | Reviewer tested code and provided feedback on functionality and outputs. |
 | *Code Organization Comments* | 15 | Feedback includes directory structure and logic of .Rmd layout. |
-| *Documentation Comments* | 15 | Reviewer comments on README quality and .Rmd documentation. |
+| *Documentation Comments* | 15 | Reviewer comments on README quality and .qmd documentation. |
 | *Suggestions for Improvement* | 15 | At least 3 specific, actionable, and constructive suggestions are given. |
 | *Checklist and Reflection* | 20 | Checklist completed and a thoughtful, specific, and complete reflection (7-10 sentences). |
 | **Total** | **100** |  |
 
 ------------------------------------------------------------------------
 
-## Step-by-Step Instructions for GitHub Peer Code Review
+# Step-by-Step Instructions
 
 Follow these steps to complete your peer code review using GitHub. This process uses a **fork-based workflow**. You will fork your peer’s repository, add review comments in your fork, and submit a draft pull request with your feedback.
 
@@ -87,7 +87,7 @@ Follow these steps to complete your peer code review using GitHub. This process 
 
 ![](images/04_clone_fork.png){width="75%" fig-align="center"}
 
--   You can now proceed to create an RStudio Project linked to your forked version of the repository as you would with any Github repository
+-   You can now proceed to create an RStudio Project linked to your forked version of the repository as you would with any Github repository.
 -   In RStudio: Go to *File \> New Project \> Version Control \> Git*, paste the URL, and choose a folder.
 
 ![](images/05_create_new_project.png){width="49%"}
@@ -134,15 +134,16 @@ Once you have completed your comments:
 ![](images/12_open_PR.png){width="75%" fig-align="center"}
 
 -   Confirm that:
-    -   The *base* repository is your peer’s/the class organization's (e.g., `WFSC-DataWrangling-Sp25/project`).
+    -   The *base* repository is your peer’s/the class organization's (e.g., `DataWrangling-Fall2025/project`).
     -   The *head* repository is your fork (e.g., `yourusername/project`).
 -   Write a short summary of your review in the pull request description.
+-   Include the "3 actionable suggestions" from your review (and any other notes not included in the code).
 -   Click on the downward arrow on the right side of the **"Create pull request"** button and select "Create draft pull request."
 
 ![](images/13_draft_PR.png){width="75%" fig-align="center"}
 
 **Important Note!** You are submitting comments and suggestions only. Do NOT merge the pull request.
 
-If you and/or you peer want to have further discussion about any of the comments or suggestions, you can use the "Conservation" and "Files Changed" tabs.
+If you and/or you peer want to have further discussion about any of the comments or suggestions, you can use the "Conversation" and "Files Changed" tabs.
 
 ![](images/14_PR_conversation.png){width="49%"} ![](images/15_PR_comments.png){width="49%"}
