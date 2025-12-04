@@ -11,16 +11,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Working with Strings
 
-Working with character strings (text data) can be particularly challenging in R. Thankfully, we have the `stringr` to help!
+Working with character strings (text data) can be particularly challenging in R. Thankfully, we have the `stringr` package, also part of the `tidyverse`, to help!
 
-All functions in the `stringr` package start with `str_`. There are *many* helpful functions in the `stringr` package. We’ll only cover a handful here, but if you’re looking to accomplish something with a string and aren’t sure how to approach it, the `stringr` package is a good place to start.
+All functions in the `stringr` package start with `str_`. There are *many* helpful functions in the `stringr` package. We’ll only cover a handful here, but if you’re looking to accomplish something with a string and aren’t sure how to approach it, the `stringr` package almost certainly can get it done.
 
 ## `stringr` Functions
 
-We’ll cover a number of helpful `stringr` functions in this lesson:
+We’ll cover five `stringr` functions in this lesson. Each `stringr` function will take the object (or vector or column...) of character strings as the first argument. From there, the subsequent arguments and the outputs of the functions differ.
+
+Paying attention to the *output* of a `stringr` function is particularly useful in determining when and how to use that function, especially in `filter()` or `mutate()` functions.
 
 | Function | Use | Output |
-|:-----------------|:-----------------------------------|:-----------------|
+|:------------------|:----------------------------------|:------------------|
 | `str_length()` | count the number of characters in the string | numeric vector |
 | `str_detect()` | determine if pattern is found within string | logical (T/F) vector |
 | `str_extract()` | return portion of each string that matches the pattern | character vector |
@@ -35,7 +37,7 @@ Let's load the `tidyverse` and get started.
 
 We will use some real data from my postdoc lab that I was tasked with cleaning.
 
-It's a long story, but I ended up in an aquatic biogeochemistry lab for my postdoc. The lab had 4+ years of data from dugouts, which are small, human-made water resevoirs that are common across the prairie states and provinces.
+It's a long story, but I ended up in an aquatic biogeochemistry lab for my postdoc. The lab had 4+ years of data from dugouts, which are small, human-made water reservoirs that are common across the prairie states and provinces.
 
 Unfortunately, the data were collected by many different people without a standard data entry protocol, so there was extensive data cleaning that needed to happen to bring all of the datasets together across the years.
 
@@ -47,15 +49,15 @@ url <- "https://raw.githubusercontent.com/bleds22e/FAST_lab_training/master/merg
 
 ### Strings in Vectors
 
-To start working with strings, let's start with a vector instead of a dataframe.
+For simplicity's sake, let's start working with strings first in vectors rather than a data frame.
 
-Let's pull out the first column (the `Sample ID` column) from the `carbon` dataframe.
+We want to pull out the first column (the `Sample ID` column) from the `carbon` data frame as a vector; we can do that using the `$` from base R.
 
 ```{r}
 
 ```
 
-Let's practice with each of our functions.
+Now, let's demonstrate how each of the five `stringr` functions work. I've listed the *required* arguments in the parentheses for each funtion.
 
 `str_length(string)`: count the number of characters in the string
 
@@ -75,7 +77,7 @@ Let's practice with each of our functions.
 
 ```
 
-`str_remove(string, pattern)` - remove portion of the string that matches the pattern
+`str_remove(string, pattern)`: remove portion of the string that matches the pattern
 
 ```{r}
 
@@ -93,7 +95,7 @@ Like we saw with the `lubridate` functions, you will often want to use `stringr`
 
 Let's run through a few examples using the full `carbon` dataframe.
 
-Perhaps we want only samples that were collected in August. We can use the `str_detect` function to set our condition. This works because the output of `str_detect` is a logical vector, as with other conditional statements or `is.na()`.
+Perhaps we want only samples that were collected in August. We can use the `str_detect` function to set our condition in the `filter` function. This works because the output of `str_detect` is a logical vector (T/F), as with other conditional statements or `is.na()`.
 
 ```{r}
 
