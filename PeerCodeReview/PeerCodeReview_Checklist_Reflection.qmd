@@ -1,7 +1,7 @@
 ---
 title: "Peer Code Review Checklist and Reflection"
 author: "Ellen Bledsoe"
-format: pdf
+format: docx
 editor: visual
 ---
 
