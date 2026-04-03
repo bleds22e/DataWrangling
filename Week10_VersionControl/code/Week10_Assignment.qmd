@@ -35,6 +35,10 @@ Write R code to successfully answer each question below. Use an RStudio Project 
 
 Nov 4 before class
 
+::: {.content-visible when-format="html"}
+[View Answer Key](Week10_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
+:::
+
 # Assignment Exercises
 
 ::: callout-note

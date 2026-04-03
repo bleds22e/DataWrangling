@@ -35,6 +35,10 @@ Write R code to successfully answer each question below.
 
 Oct 21 at 2pm MST
 
+::: {.content-visible when-format="html"}
+[View Answer Key](../../Week08_SolvingBiggerProblems/Week7_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
+:::
+
 # Assignment Exercises
 
 For many of the exercises in this week's assignment, we will actually be using a lot of the code that you have already written for Assignment 7. This time, however, all of your file paths will be different...

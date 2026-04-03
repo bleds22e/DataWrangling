@@ -35,6 +35,10 @@ Write R code to successfully answer each question below.
 
 Sept 30 at 2 pm
 
+::: {.content-visible when-format="html"}
+[View Answer Key](Week5_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
+:::
+
 # Assignment Exercises
 
 ### Set-up

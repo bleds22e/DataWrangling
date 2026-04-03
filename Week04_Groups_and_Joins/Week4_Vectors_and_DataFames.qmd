@@ -1,0 +1,87 @@
+---
+title: "Extracting Vectors"
+author: "Ellen Bledsoe"
+date: today
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Vectors and Data Frames
+
+We've learned about two general ways to store data: vectors and data frames.
+
+Vectors store a single set of values with the same type. Data frames store multiple sets of values, one in each column, that can have different data types.
+
+As I've mentioned previously, these two ways of storing data are related to one another. A data frame is a bunch of equal length vectors that are grouped together.
+
+Because of this, we can extract vectors from data frames, and we can also make data frames from vectors.
+
+## Extracting Vectors from Data Frames
+
+There are several ways to extract a vector from a data frame.
+
+Let's look at how this works with the `species` data frame.
+
+We'll start by loading the species table into R if it isn't there already.
+
+```{r}
+
+```
+
+### Square Brackets
+
+One way to pull out a vector is by using square brackets. Remember that `[]` basically means "give me a piece of something."
+
+Let's get the species_id column. The column name has to be in quotes this time because we aren't using `dplyr`.
+
+```{r}
+
+```
+
+Well, this *almost* returned a vector. What it actually returns a one column data frame, not a vector. Often this isn't a big deal, but sometimes functions will only accept vectors, not data frames.
+
+To extract a single column as a vector, we use two sets of square brackets. We can think of the second set of `[]` as getting the single vector from inside the one column data frame
+
+```{r}
+
+```
+
+### The `$` Operator
+
+Another common approach to extracting a column into a vector is to use `$`.
+
+The `$` in R is short hand for `[[]]` in cases where the piece we want to get has a name.
+
+As usual, we start with the object from which we want to pull a part; in this case, it would be the `surveys` data frame. We follow that with the `$`, which will then list all the names of our columns. We can then type the name of the column we want to choose (without quotes, just to make things extra confusing).
+
+```{r}
+
+```
+
+If you click on the little arrow next to the `surveys` data frame in the environment, you will notice that all of the column names are preceded by `$`, really hammering home the fact that each column is really a vector.
+
+## Combining Vectors into Data Frames
+
+We can also combine vectors to make a data frame.
+
+We can make a data frame using the `data.frame` function. It takes one argument for each column in the data frame. Like in `mutate()` and `summarize()`, the argument includes the name of the column we want in the data frame, an equal sign, and the name of the vector whose values we want in that column.
+
+```{r}
+
+```
+
+We can also add columns to the data from that only include a single value without first creating a vector. We do this by providing a name for the new column, an equals sign, and the value that we want to occur in every row of the column.
+
+For example, if all of these data were collected in the same year, and we wanted to add that year as a column in our data frame, we could do it like this:
+
+```{r}
+
+```
+
+In the first argument, `year =` sets the name of the column in the data frame and 2000 is that value that will occur on every row of that column. If we wanted to fill a column with character data, we would need to put the data in quotation marks.
+
+## Let's Practice!
+
+Work on Questions 8 and 9 in the Assignment.
