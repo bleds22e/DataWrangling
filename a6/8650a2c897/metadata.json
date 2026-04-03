@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "a68650a2c897",
+  "strategy": "manual-commit",
+  "branch": "quarto-website",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "Week06_TidyData/Week6_Assignment.qmd",
+    "Week06_TidyData/Week6_TidyData.qmd",
+    "Week10_VersionControl/code/Week10_VersionControl.qmd",
+    "Week14_GeospatialData/Week14_GeospatialData.qmd",
+    "Week14_GeospatialData/Week9_Assignment.qmd",
+    "_quarto.yml",
+    "index.qmd"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a6/8650a2c897/0/metadata.json",
+      "transcript": "/a6/8650a2c897/0/full.jsonl",
+      "content_hash": "/a6/8650a2c897/0/content_hash.txt",
+      "prompt": "/a6/8650a2c897/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 80,
+    "cache_creation_tokens": 261870,
+    "cache_read_tokens": 2788066,
+    "output_tokens": 61206,
+    "api_call_count": 46
+  }
+}

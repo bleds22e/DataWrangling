@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "a68650a2c897",
+  "session_id": "ebb43d4e-8bd1-44c7-a93f-5a47b48efd7c",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-03T20:43:01.459069Z",
+  "branch": "quarto-website",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "Week06_TidyData/Week6_Assignment.qmd",
+    "Week06_TidyData/Week6_TidyData.qmd",
+    "Week10_VersionControl/code/Week10_VersionControl.qmd",
+    "Week14_GeospatialData/Week14_GeospatialData.qmd",
+    "Week14_GeospatialData/Week9_Assignment.qmd",
+    "_quarto.yml",
+    "index.qmd"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "53b9a03f9e28",
+  "token_usage": {
+    "input_tokens": 80,
+    "cache_creation_tokens": 261870,
+    "cache_read_tokens": 2788066,
+    "output_tokens": 61206,
+    "api_call_count": 46
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-03T20:43:00.868572Z",
+    "agent_lines": 1219,
+    "agent_removed": 0,
+    "human_added": 449,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 1669,
+    "total_lines_changed": 1669,
+    "agent_percentage": 73.03774715398443,
+    "metric_version": 2
+  }
+}

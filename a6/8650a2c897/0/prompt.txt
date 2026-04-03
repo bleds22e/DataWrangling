@@ -1,0 +1,49 @@
+I want to create a website using the material in this repo. I want to make it with quarto and github pages via a docs folder
+
+---
+
+I want to include the lessons and assignments, but not the instructor versions or keys. For the assignment pages, please add a button that points to the assignment "AnswerKey" quarto file. This should produce the expected outputs for the assignment without showing the code used to make it. I still have some more instructions
+
+---
+
+There are some folders which have .rmd files instead of quarto files. Please convert those. Also, structure the content without reference to weeks (focus on the content). Keep the content in the same order. There are some weeks that are a little confusing--use the newest material (e.g., week7 soving bigger problems instead of week 8 solving bigger problems).
+
+---
+
+Before we do any of this, can we update quarto?
+
+---
+
+is it still installing?
+
+---
+
+ok, I'm back. First, I want all of the changes to happen in a new branch
+
+---
+
+steps 0 and 1 are good. my main issue is that i do not want the output of the current quarto files to be changed. i want those to either remain pdf or gfm. I have a question. Would it maybe make more sense to have a new repo for the quarto website? the new repo could reference files from the Data Wrangling repo but have them with an html output while leaving the files in the original repo to stay as they are. perhaps we could create github action to update the quarto files in the new repo whenever there is an update tothe file in the DataWrangling repo
+
+---
+
+ok yes, lets go with c
+
+---
+
+You shouldn't need to create new answer key files; echo = false is already there. Also, for the reproducibility answer key, us the week 7 "solving bigger problems" answer key file
+
+---
+
+Don't forget the week on Spreadsheets! i'll be manually adding files later
+
+---
+
+that sounds good
+
+---
+
+The course name is now RNR 437/537 instead of WFSC 496B/596B
+
+---
+
+Leave the website title as is, but fix the name in the description
