@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "40502186035c",
+  "strategy": "manual-commit",
+  "branch": "quarto-website",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/40/502186035c/0/metadata.json",
+      "transcript": "/40/502186035c/0/full.jsonl",
+      "content_hash": "/40/502186035c/0/content_hash.txt",
+      "prompt": "/40/502186035c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 101,
+    "cache_creation_tokens": 492878,
+    "cache_read_tokens": 3467634,
+    "output_tokens": 89635,
+    "api_call_count": 59
+  }
+}

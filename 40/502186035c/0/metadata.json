@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "40502186035c",
+  "session_id": "ebb43d4e-8bd1-44c7-a93f-5a47b48efd7c",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-04T18:29:52.847598Z",
+  "branch": "quarto-website",
+  "checkpoints_count": 1,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "9c53f8ce551c",
+  "token_usage": {
+    "input_tokens": 101,
+    "cache_creation_tokens": 492878,
+    "cache_read_tokens": 3467634,
+    "output_tokens": 89635,
+    "api_call_count": 59
+  },
+  "session_metrics": {
+    "turn_count": 7
+  }
+}
