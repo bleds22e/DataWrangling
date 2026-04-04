@@ -1,9 +1,13 @@
 ---
 title: "Fish Analysis"
 author: "Ellen Bledsoe"
-format: pdf
-editor: visual
+date: "`r Sys.Date()`"
+format: gfm
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 # Fish Length Analysis
 
@@ -26,4 +30,3 @@ fish %>%
   summarize(min_scale_length = min(scalelength, na.rm = T),
             max_scale_length = max(scalelength, na.rm = T))
 ```
-
