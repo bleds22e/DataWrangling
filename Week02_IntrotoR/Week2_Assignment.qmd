@@ -35,6 +35,10 @@ Write R code to successfully answer each question below.
 
 Sept 9 at 2:00 MST
 
+::: {.content-visible when-format="html"}
+[View Answer Key](Week2_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
+:::
+
 # Exercises
 
 ### 1. Basic Expressions (10 pts)

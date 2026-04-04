@@ -1,0 +1,243 @@
+---
+title: "Assignment 11"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+format: pdf
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+### 1. Writing Functions (15 points)
+
+
+
+```{r}
+###Code solution for Writing Functions
+
+print("1a")
+pounds_to_grams <- function(weight_lbs){
+  weight_g <- weight_lbs * 453.6
+  return(weight_g)
+}
+pounds_to_grams(3.75)
+
+print("1b")
+convert_fahrenheit_to_celsius <- function(fahrenheit) {
+    celsius = (fahrenheit - 32) * 5 / 9
+    return(celsius)
+}
+convert_fahrenheit_to_celsius(80)
+
+print('1c')
+double <- function(number){
+  doubled <- number * 2
+  return(doubled)
+}
+
+double(512)
+
+print("1d")
+prediction <- function(a, b, x){
+  y <- a + b * x
+  return(y)
+}
+prediction(6, 0.8, 12)
+
+```
+
+### 2. Use and Modify (15 points)
+
+
+```{r}
+get_mass_from_length_theropoda <- function(length){
+  mass <- 0.73 * length ^ 3.63
+  return(mass)
+}
+```
+
+
+
+```{r}
+###Code solution for Use and Modify
+
+print("2a")
+get_mass_from_length_theropoda <- function(length){
+  mass = 0.73 * length ** 3.63
+  return (mass)
+}
+
+get_mass_from_length_theropoda(16)
+
+print("2b")
+get_mass_from_length <- function(a, b, length){
+  mass = a * length ** b
+  return (mass)
+}
+
+get_mass_from_length(214.44, 1.46, 26)
+```
+
+### Writing Functions, 2 (15 points)
+
+
+```{r}
+# convert_pounds_to_grams <- function(________, numdigits = __) {
+#   grams <- 453.6 * pounds
+#   rounded <- round(grams, digits = numdigits)
+#   return(________)
+# }
+```
+
+```{r}
+### Code solution for Writing Functions 2
+
+print("3a")
+convert_pounds_to_grams <- function(pounds, numdigits = 1) {
+  grams <- 453.6 * pounds
+  rounded <- round(grams, digits = numdigits)
+  return(rounded)
+}
+
+convert_pounds_to_grams(4.3)
+
+print("3b")
+get_height_from_weight <- function(weight, a = 12, b = 0.38){
+  height <- a * weight ^ b
+  return(height)
+}
+
+get_height_from_weight(42)
+
+print("3c")
+convert_pounds_to_grams(2) |>
+  get_height_from_weight(b = 0.32)
+```
+
+### 4. Default Arguments (15 points)
+
+
+```{r}
+print("4a")
+
+get_mass_from_length <- function(a = 39.9, b = 2.6, length){
+  mass = a * length ** b
+  return (mass)
+}
+get_mass_from_length(a = 214.44, b = 1.46, length = 22)
+
+print("4b")
+get_mass_from_length(length = 16)
+```
+
+
+### 5. Combining Functions (20 points)
+
+
+```{r}
+convert_kg_to_pounds <- function(kg){
+  pounds = 2.205 * kg
+  return(pounds)
+}
+
+get_mass_from_length(a = 10.95, b = 2.64, length = 12) |>
+  convert_kg_to_pounds()
+```
+
+
+### 6. Writing Tidyverse Functions (20 points)
+
+
+```{r}
+state_vector <- c("FL", "FL", "FL", "FL", "GA", "GA", "GA", "GA", "SC", "SC", "SC", "SC")
+site_vector <- c("A", "B", "C", "D", "A", "B", "C", "D", "A", "B", "C", "D")
+count_vector <- c(9, 16, 3, 10, 2, 26, 5, 8, 17, 8, 2, 6)
+area_vector <- c(3, 5, 1.9, 2.7, 2, 2.6, 6.2, 4.5, 8, 4, 1, 3)
+```
+
+
+
+```{r message=FALSE}
+# Solutions to Writing Tidyverse Functions
+library(tidyverse)
+
+count_data <- data.frame(
+  state = c("AZ", "AZ", "AZ", "AZ", "NM", "NM", "NM", "NM", "NV", "NV", "NV", "NV"),
+  site = c("A", "B", "C", "D", "A", "B", "C", "D", "A", "B", "C", "D"),
+  count = c(9, 16, 3, 10, 2, 26, 5, 8, 17, 8, 2, 6),
+  area = c(3, 5, 1.9, 2.7, 2, 2.6, 6.2, 4.5, 8, 4, 1, 3)
+  )
+
+print("6a")
+make_plot <- function(df, color_col) {
+  ggplot(data = df, mapping = aes(x = area,
+                                  y = count,
+                                  color = {{ color_col }})) +
+    geom_point(size = 3) +
+    labs(x = "Area [ha]", y = "Number of Individuals")
+}
+
+make_plot(count_data, state)
+
+print("6b")
+
+make_plot(count_data, site)
+
+print("6c")
+
+make_plot2 <- function(df, x_axis, y_axis, color_col) {
+  ggplot(data = df, mapping = aes(x = {{ x_axis }},
+                                  y = {{ y_axis }},
+                                  color = {{ color_col }})) +
+    geom_point(size = 3) +
+    labs(x = "Area [ha]", y = "Number of Individuals")
+}
+make_plot2(count_data, area, count, site)
+```
+
+### 7. Portal Species Time-Series Challenge (OPTIONAL)
+
+```{r message=FALSE}
+
+surveys <- read_csv('data/surveys.csv')
+species <- read_csv('data/species.csv')
+plots <- read_csv('data/plots.csv')
+
+make_sp_time_series_plot <- function(data, timestep, genus_name, species_name){
+
+  time_series <- data |>
+    filter(genus == genus_name, species == species_name) |>
+    group_by({{ timestep }}) |>
+    summarize(count = n())
+
+  ggplot(time_series, aes(x = {{ timestep }}, y = count)) +
+    geom_line(linewidth = 1, color = "blue") +
+    geom_point(size = 2, color = "blue") +
+    ylab("Number of Individuals") +
+    theme_classic()
+
+}
+
+combined <- inner_join(surveys, species, by = "species_id")
+```
+
+7b
+```{r}
+make_sp_time_series_plot(combined, year, "Dipodomys", "merriami")
+```
+
+7c
+```{r}
+make_sp_time_series_plot(combined, month, "Chaetodipus", "penicillatus")
+```
+
+7d
+```{r}
+combined |>
+  left_join(plots) |>
+  filter(plot_type == "Control") |>
+  make_sp_time_series_plot(year, "Chaetodipus", "baileyi")
+```

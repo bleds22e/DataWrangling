@@ -35,6 +35,10 @@ Write R code to successfully answer each question below.
 
 Sept 23 before class
 
+::: {.content-visible when-format="html"}
+[View Answer Key](Week4_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
+:::
+
 # Assignment Exercises
 
 ### 1. Set-Up (5 pts)

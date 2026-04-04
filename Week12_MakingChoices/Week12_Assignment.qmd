@@ -30,6 +30,10 @@ Write R code to successfully answer each question below.
 
 November 18 before class
 
+::: {.content-visible when-format="html"}
+[View Answer Key](Week12_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
+:::
+
 # Assignment Exercises
 
 ### 1. Choice Operators (20 pts)

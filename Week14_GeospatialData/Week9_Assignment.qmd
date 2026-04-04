@@ -1,7 +1,7 @@
 ---
 title: "Week 14 Assignment"
 author: "Jeff Oliver & Ellen Bledsoe"
-format: html
+format: docx
 editor: visual
 ---
 
@@ -34,6 +34,10 @@ Write R code to successfully answer each question below.
 ### Due Date
 
 May 6 before class
+
+::: {.content-visible when-format="html"}
+[View Answer Key](Week14_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
+:::
 
 # Assignment Questions
 
