@@ -1,0 +1,253 @@
+---
+title: "Week 5 Assignment"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+format: pdf
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+### 1. Acacia and Ants (20 pts)
+
+```{r}
+acacia <- read_tsv("ACACIA_DREPANOLOBIUM_SURVEY.txt", na = c("", "dead"))
+```
+
+```{r}
+# 1a
+
+ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
+  geom_point() +
+  labs(x = "Circumference", y = "Canopy Diameter")
+
+# 1b
+
+ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Circumference", y = "Canopy Diameter")
+
+# 1c
+
+ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1, color = ANT)) +
+  geom_point() +
+  labs(x = "Circumference", y = "Canopy Diameter")
+
+# 1d
+
+ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
+  geom_point() +
+  labs(x = "Circumference", y = "Canopy Diameter") +
+  facet_wrap(~ANT)
+
+# 1e
+
+ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
+  geom_point() +
+  labs(x = "Circumference", y = "Canopy Diameter") +
+  facet_wrap(~ANT) +
+  geom_smooth()
+```
+
+### 2. Mass vs. Metabolism (20 pts)
+
+```{r}
+size_mr_data <- data.frame(
+  body_mass = c(32000, 37800, 347000, 4200, 196500, 100000,
+    4290, 32000, 65000, 69125, 9600, 133300, 150000, 407000,
+    115000, 67000,325000, 21500, 58588, 65320, 85000, 135000,
+    20500, 1613, 1618),
+  metabolic_rate = c(49.984, 51.981, 306.770, 10.075, 230.073,
+    148.949, 11.966, 46.414, 123.287, 106.663, 20.619, 180.150,
+    200.830, 224.779, 148.940, 112.430, 286.847, 46.347,
+    142.863, 106.670, 119.660, 104.150, 33.165, 4.900, 4.865),
+  family = c("Antilocapridae", "Antilocapridae", "Bovidae",
+    "Bovidae", "Bovidae", "Bovidae", "Bovidae", "Bovidae",
+    "Bovidae", "Bovidae", "Bovidae", "Bovidae", "Bovidae",
+    "Camelidae", "Camelidae", "Canidae", "Cervidae",
+    "Cervidae", "Cervidae", "Cervidae", "Cervidae", "Suidae",
+    "Tayassuidae", "Tragulidae", "Tragulidae"))
+```
+
+```{r}
+# 1.  A graph of body mass vs. metabolic rate
+ggplot(size_mr_data, aes(body_mass, metabolic_rate)) + geom_point() +
+  labs(x = "Body Mass", y = "Metabolic Rate")
+
+# 2.  A graph of body mass vs. metabolic rate, log scaled, with pt size 5.
+ggplot(data = size_mr_data, mapping = aes(x = body_mass, y = metabolic_rate)) +
+  geom_point(size=3) +
+  labs(x = "Body Mass", y = "Metabolic Rate") +
+  scale_x_log10() + scale_y_log10()
+
+# 3. The same plot as (2), but with the different families indicated using color.
+ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate, color = family)) +
+  geom_point(size = 3) +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Body Mass", y = "Metabolic Rate")
+
+# 4. The same plot as (2), but with the different families each in their own subplot.
+ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate)) +
+  geom_point(size = 3) +
+  scale_x_log10() +
+  scale_y_log10() +
+  facet_wrap(~family) +
+  labs(x = "Body Mass", y = "Metabolic Rate")
+```
+
+### 3. Acacia and Ants Histograms (20 pts)
+
+```{r}
+# 1
+
+ggplot(data = acacia, mapping = aes(x = ANT)) +
+  geom_bar()
+
+# 2
+
+ggplot(data = acacia, mapping = aes(x = HEIGHT)) +
+  geom_histogram() +
+  labs(x = "Height(m)", y = "Number of Acacia")
+
+# 3
+
+ggplot(data = acacia) +
+  geom_histogram(mapping = aes(x = AXIS1), fill = 'red', alpha = 0.3) +
+  geom_histogram(mapping = aes(x = AXIS2), fill = 'black', alpha = 0.3) +
+  labs(x = "Canopy Diameter", y = "Number of Acacia")
+
+# 4
+
+ggplot(data = acacia) +
+  geom_histogram(mapping = aes(x = AXIS1), fill = 'red', alpha = 0.3, bins = 10) +
+  geom_histogram(mapping = aes(x = AXIS2), fill = 'black', alpha = 0.3, bins = 10) +
+  labs(x = "Canopy Diameter", y = "Number of Acacia") +
+  facet_wrap(~TREATMENT)
+```
+
+### 4. Acacia and Ants Data Manipulation (20 pts)
+
+```{r}
+trees <- read_tsv("TREE.txt",
+                  col_types = list(HEIGHT = col_double(),
+                                   AXIS_2 = col_double())) |> drop_na(TREATMENT)
+```
+
+```{r}
+# 4a
+print("4a")
+trees <- mutate(trees, canopy_area = AXIS_1 * AXIS_2)
+trees
+
+# 4b
+print("4b")
+select(trees, SURVEY, YEAR, SITE, SPECIES, canopy_area)
+
+# 4c
+print("4c")
+ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMENT)) +
+  geom_point(size = 2) +
+  labs(x = "Canopy Area (m)", y = "Height (m)") +
+  facet_wrap(~SPECIES)
+
+# 4d
+print("4d")
+trees <- filter(trees, AXIS_1 < 20, AXIS_2 < 20)
+ggplot(data = trees, mapping = aes(x = canopy_area, y = HEIGHT, color = TREATMENT)) +
+  geom_point(size = 2) +
+  labs(x = "Canopy Area (m)", y = "Height (m)") +
+  facet_wrap(~SPECIES)
+
+# 4e
+print("4e")
+abundance_time <- trees %>%
+  group_by(YEAR, SPECIES) %>%
+  summarize(abundance = n())
+abundance_time
+
+# 4f
+print("4f")
+ggplot(data = abundance_time, mapping = aes(x = YEAR, y = abundance)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~SPECIES, scales = "free_y")
+```
+
+### 5. Adult vs. Newborn Size (20 pts)
+
+```{r}
+mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt",
+                             na = c("-999", "-999.00")) %>%
+  rename(mass_g = `mass(g)`,
+         gestation_mo = `gestation(mo)`,
+         newborn_g = `newborn(g)`,
+         weaning_mo = `weaning(mo)`,
+         wean_mass_g = `wean mass(g)`,
+         AFR_mo = `AFR(mo)`,
+         max_life_mo = `max. life(mo)`,
+         litter_size = `litter size`,
+         litters_per_year = `litters/year`)
+```
+
+```{r}
+
+# a. Graph adult mass vs. newborn mass.
+ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
+  geom_point() +
+  labs(x = "Adult Mass", y = "Newborn Mass")
+
+# b. Graph adult mass vs. newborn mass, with both axes scaled logarithmically.
+ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Adult Mass", y = "Newborn Mass")
+
+# c. Graph adult mass vs. newborn mass, log-scaled, with data colored by order.
+ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
+  geom_point(aes(color=order)) +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Adult Mass", y = "Newborn Mass")
+
+# d. Use `facet_wrap` to create subplot for each order.
+ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  facet_wrap(~ order) +
+  labs(x = "Adult Mass", y = "Newborn Mass")
+
+# e. use `geom_smooth` to fit a linear model to each order.
+ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_log10() +
+  scale_y_log10() +
+  facet_wrap(~ order) +
+  labs(x = "Adult Mass", y = "Newborn Mass")
+```
+
+### 7. Graphing Data from Multiple Tables (*Optional*)
+
+```{r, message=FALSE, warning=FALSE}
+ggplot() +
+  geom_point(data = trees, aes(x = CIRC, y = HEIGHT), color = "gray") +
+  geom_smooth(data = trees, aes(x = CIRC, y = HEIGHT), color = "black", method = "lm") +
+  geom_point(data = acacia, aes(x = CIRC, y = HEIGHT), color = "red") +
+  geom_smooth(data = acacia, aes(x = CIRC, y = HEIGHT), color = "red", method = "lm") +
+  facet_wrap(~ TREATMENT) +
+  labs(x = "Circumfrence (cm)",
+       y = "Height (m)") +
+  scale_x_log10() +
+  scale_y_log10() +
+  theme_light()
+```
