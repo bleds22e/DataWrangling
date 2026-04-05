@@ -595,3 +595,7 @@ Error: Process completed with exit code 1.
 ---
 
 This has helped me understand something important. First of all, I want any lesson files with "Instructor" at the end and are .Rmd files to be converted to quarto files in the DataWrangling repo. In the DataWranglingWebsite repo, the lessons on the website should be the "Instructor" versions, too.
+
+---
+
+no. can you write the commits
