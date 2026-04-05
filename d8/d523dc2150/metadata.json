@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "d8d523dc2150",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "Week02_IntrotoR/Week2_IntrotoR_Instructor.qmd",
+    "Week02_IntrotoR/Week2_Vectors_Instructor.qmd",
+    "Week03_DataTables/Week3_DataTables_Instructor.qmd",
+    "Week03_DataTables/Week3_Pipes_Instructor.qmd",
+    "Week04_Groups_and_Joins/Week4_Aggregation_Instructor.qmd",
+    "Week04_Groups_and_Joins/Week4_Joins_Instructor.qmd",
+    "Week04_Groups_and_Joins/Week4_Vectors_and_DataFames_Instructor.qmd",
+    "Week06_TidyData/Week6_TidyData_Instructor.qmd",
+    "Week11_Functions/Week11_Functions_Instructor.qmd",
+    "Week14_GeospatialData/Week14_GeospatialData_Instructor.qmd"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d8/d523dc2150/0/metadata.json",
+      "transcript": "/d8/d523dc2150/0/full.jsonl",
+      "content_hash": "/d8/d523dc2150/0/content_hash.txt",
+      "prompt": "/d8/d523dc2150/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 305,
+    "cache_creation_tokens": 1088011,
+    "cache_read_tokens": 16292561,
+    "output_tokens": 164513,
+    "api_call_count": 174
+  }
+}

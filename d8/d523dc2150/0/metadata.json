@@ -1,0 +1,46 @@
+{
+  "cli_version": "0.5.3",
+  "checkpoint_id": "d8d523dc2150",
+  "session_id": "ebb43d4e-8bd1-44c7-a93f-5a47b48efd7c",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-05T21:36:33.822087Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "Week02_IntrotoR/Week2_IntrotoR_Instructor.qmd",
+    "Week02_IntrotoR/Week2_Vectors_Instructor.qmd",
+    "Week03_DataTables/Week3_DataTables_Instructor.qmd",
+    "Week03_DataTables/Week3_Pipes_Instructor.qmd",
+    "Week04_Groups_and_Joins/Week4_Aggregation_Instructor.qmd",
+    "Week04_Groups_and_Joins/Week4_Joins_Instructor.qmd",
+    "Week04_Groups_and_Joins/Week4_Vectors_and_DataFames_Instructor.qmd",
+    "Week06_TidyData/Week6_TidyData_Instructor.qmd",
+    "Week11_Functions/Week11_Functions_Instructor.qmd",
+    "Week14_GeospatialData/Week14_GeospatialData_Instructor.qmd"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "42ff606c0fd4",
+  "token_usage": {
+    "input_tokens": 305,
+    "cache_creation_tokens": 1088011,
+    "cache_read_tokens": 16292561,
+    "output_tokens": 164513,
+    "api_call_count": 174
+  },
+  "session_metrics": {
+    "turn_count": 40
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-05T21:36:32.582461Z",
+    "agent_lines": 2659,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2659,
+    "total_lines_changed": 2659,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
