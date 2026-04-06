@@ -86,7 +86,7 @@ library; if you see an error that says something like
 probably means you need to load the terra library with `library(terra)`.
 
 ```{r read-temperature-data}
-temp <- rast("global_temperature.tif")
+temp <- rast("data/global-temperature.tif")
 ```
 
 _Note_: All the data we will use in this lesson come from the
@@ -394,7 +394,7 @@ about [defining deserts on Wikipedia](https://en.wikipedia.org/wiki/Desert#Defin
 So we start by loading in a file with global precipitation data:
 
 ```{r read-precipitation-data}
-prec <- rast("global_precipitation.tif")
+prec <- rast("data/global-precipitation.tif")
 prec
 ```
 
