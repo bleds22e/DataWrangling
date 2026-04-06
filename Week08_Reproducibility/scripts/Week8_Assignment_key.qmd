@@ -9,6 +9,11 @@ editor: visual
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r message=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
 # Assignment Details
 
 ### Purpose
