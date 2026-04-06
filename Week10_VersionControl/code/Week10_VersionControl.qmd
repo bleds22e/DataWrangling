@@ -69,6 +69,7 @@ library(usethis)
 ### Introduce yourself to Git
 
 ```{r}
+#| eval: false
 library(usethis)
 
 use_git_config(user.name = "[name]", user.email = "[email]")
@@ -181,8 +182,9 @@ fish_data = read.csv("data/Gaeta_etal_CLC_data.csv")
 #### Experiment with impunity
 
 ```{r}
+#| eval: false
 fish_data_cat = fish_data %>%
-  mutate(length_cat = ifelse(length > 300, <b>"large"</b>, "small"))
+  mutate(length_cat = ifelse(length > 300, "large", "small"))
 ```
 
 -   `Save` and show changes are staged
@@ -224,6 +226,7 @@ fish_data_cat = fish_data %>%
 -   Then create a GitHub token, this is like a special password just for one computer
 
 ```{r}
+#| eval: false
 usethis::create_github_token()
 ```
 
@@ -236,6 +239,7 @@ usethis::create_github_token()
 -   Now add this token our local git setup so that it can use it to connect to GitHub
 
 ```{r}
+#| eval: false
 gitcreds::gitcreds_set()
 ```
 
@@ -283,12 +287,14 @@ ggplot(fish_data_cat, aes(x = scalelength, fill = length_cat)) +
 -   You decide to change the number of histogram bins to 10
 
 ```{r}
+#| eval: false
 geom_histogram(bins = 10)
 ```
 
 -   Your collaborator reassesses the measurement device and decides it is accurate down to 0.5 mm and pushes the change to the remote repository [make this change in the remote]
 
 ```{r}
+#| eval: false
 filter(scalelength >= 0.5)
 ```
 
@@ -309,13 +315,15 @@ filter(scalelength >= 0.5)
 -   You decide to change `"big"` to `"large"`
 
 ```{r}
-mutate(length_cat = ifelse(length > 300, <b>"large"</b>, "small"))
+#| eval: false
+mutate(length_cat = ifelse(length > 300, "large", "small"))
 ```
 
 -   Your collaborator changes the size threshold and pushes to the remote
 
 ```{r}
-mutate(length_cat = ifelse(length > 250, <b>"big"</b>, "small"))
+#| eval: false
+mutate(length_cat = ifelse(length > 250, "big", "small"))
 ```
 
 -   You attempt to push your changes
@@ -326,6 +334,7 @@ mutate(length_cat = ifelse(length > 250, <b>"big"</b>, "small"))
 -   Combine into a single block that includes everything
 
 ```{r}
+#| eval: false
 mutate(length_cat = ifelse(length > 250, "large", "small"))
 ```
 
