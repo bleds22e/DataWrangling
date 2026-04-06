@@ -99,7 +99,7 @@ use_git_config(user.name = "[name]", user.email = "[email]")
 ```{r}
 library(tidyverse)
 
-fish_data <- read_csv("Gaeta_etal_CLC_data.csv")
+# fish_data <- read_csv("Gaeta_etal_CLC_data.csv")
 ```
 
 -   Save as `fish-analysis.qmd`.
@@ -158,6 +158,7 @@ fish_data_cat = fish_data %>%
 -   Change code to read from new subdirectory
 
 ```{r}
+#| eval: false
 fish_data = read.csv("data/Gaeta_etal_CLC_data.csv")
 ```
 

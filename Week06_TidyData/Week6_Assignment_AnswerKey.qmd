@@ -25,7 +25,7 @@ library(tidyverse)
 
 
 ```{r message=FALSE}
-forest <- read_csv("forest_per_country.csv", skip = 4, col_names = TRUE)
+forest <- read_csv("data/forest_per_country.csv", skip = 4, col_names = TRUE)
 ```
 
 
@@ -54,7 +54,7 @@ ggplot(forest, aes(Year, ForestArea_sqkm)) +
 
 ```{r message=FALSE}
 print("2a")
-oecd <- read_csv("oecd_annual_data.csv", skip = 4, col_names = TRUE)
+oecd <- read_csv("data/oecd_annual_data.csv", skip = 4, col_names = TRUE)
 oecd
 ```
 
@@ -80,7 +80,7 @@ oecd |>
 
 
 ```{r message=FALSE}
-rodents <- read_csv("capture_data.csv")
+rodents <- read_csv("data/capture_data.csv")
 
 #a
 rodents <- rodents %>%
@@ -123,7 +123,7 @@ ggplot(rodents, aes(TotalWeight, fill = Site)) +
 ### 4. Remembering Joins (15 pts)
 
 ```{r message=FALSE}
-veg <- read_csv("microsite_grouped_veg.csv")
+veg <- read_csv("data/microsite_grouped_veg.csv")
 
 #a
 veg <- veg %>%

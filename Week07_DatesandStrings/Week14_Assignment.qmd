@@ -76,8 +76,8 @@ One value that we can calculate from these phenocam images is the NDVI of the la
 Run the following code chunk to bring in a subset of the SRER phenocam data.
 
 ```{r}
-phenocam <- read_csv("neon_srer_ndvi_phencom.csv", skip = 17, col_names = TRUE, 
-                    col_types = "ccncc") %>% 
+phenocam <- read_csv("data_raw/neon_srer_ndvi_phencom.csv", skip = 17, col_names = TRUE,
+                    col_types = "ccncc") %>%
   select(date, local_std_time, contains("mean"), NDVI_c)
 ```
 
@@ -115,7 +115,7 @@ Dugouts are human-made water reservoirs on the landscape, often used for cattle 
 Here is another example of data from my postdoc lab that I was asked to clean up. I'm going to go ahead and clean up the column names for the columns we will be using in the following questions.
 
 ```{r}
-dugout <- read_csv("elevation_2017.csv") %>% 
+dugout <- read_csv("data_raw/elevation_2017.csv") %>%
   rename(SoilSalinity = `Soil Salinity`,
          SoilZone = `Soil Zone`,
          MajorSalts = `Major Salts in groundwater`)
