@@ -1,0 +1,202 @@
+---
+title: "Data Entry and Storage"
+date: today
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+---
+
+## Dataset Critique
+
+![](01_DataEntry_files/image1.png)
+
+## Our goal is [tidy data]{.underline}
+
+![](01_DataEntry_files/image2.jpeg)
+
+------------------------------------------------------------------------
+
+![](01_DataEntry_files/image3.jpeg)
+
+## Make it a rectangle
+
+:::::: columns
+::: {.column width="33%"}
+![](01_DataEntry_files/image4.png)
+:::
+
+::: {.column width="33%"}
+![](01_DataEntry_files/image5.png)
+:::
+
+::: {.column width="33%"}
+![](01_DataEntry_files/image6.png)
+:::
+::::::
+
+## Make it a rectangle
+
+::::: columns
+::: {.column width="50%"}
+**Untidy:**
+
+![](01_DataEntry_files/image5.png)
+
+![](01_DataEntry_files/image7.png)
+:::
+
+::: {.column width="50%"}
+**Tidy:**
+
+![](01_DataEntry_files/image8.png)
+
+![](01_DataEntry_files/image9.png)
+:::
+:::::
+
+## One value per cell
+
+::::: columns
+::: {.column width="50%"}
+**Untidy:**
+
+![](01_DataEntry_files/image10.png)
+
+![](01_DataEntry_files/image11.png)
+:::
+
+::: {.column width="50%"}
+**Tidy:**
+
+![](01_DataEntry_files/image12.png)
+
+![](01_DataEntry_files/image13.png)
+:::
+:::::
+
+------------------------------------------------------------------------
+
+![](01_DataEntry_files/image14.png)
+
+## Avoid confusing the computer
+
+::::: columns
+::: {.column width="50%"}
+**Untidy:**
+
+![](01_DataEntry_files/image15.png)
+
+![](01_DataEntry_files/image16.png)
+:::
+
+::: {.column width="50%"}
+**Tidy:**
+
+![](01_DataEntry_files/image17.png)
+
+![](01_DataEntry_files/image18.png)
+:::
+:::::
+
+## Naming things
+
+![](01_DataEntry_files/image19.png)
+
+## Just for fun!
+
+![](01_DataEntry_files/image20.png)
+
+## Be clear and consistent
+
+::::: columns
+::: {.column width="50%"}
+**Untidy:**
+
+![](01_DataEntry_files/image21.png)
+
+![](01_DataEntry_files/image22.png)
+:::
+
+::: {.column width="50%"}
+**Tidy:**
+
+![](01_DataEntry_files/image23.png)
+:::
+:::::
+
+## Dealing with dates
+
+If you want your dates all in one column, use "Format cells" to ensure dates are entered and returned in the same format.
+
+![](01_DataEntry_files/image24.png)
+
+Alternatively, right-click on the selected data and select "Format Cells"
+
+## One table of each type of data
+
+**Untidy:**
+
+![](01_DataEntry_files/image25.png)
+
+![](01_DataEntry_files/image26.png)
+
+## One table of each type of data
+
+You need at least one unifying column.
+
+**Tidy:**
+
+::::: columns
+::: {.column width="50%"}
+![](01_DataEntry_files/image27.png)
+:::
+
+::: {.column width="50%"}
+![](01_DataEntry_files/image28.png)
+
+![](01_DataEntry_files/image29.png)
+:::
+:::::
+
+## One table per sheet...
+
+![](01_DataEntry_files/image30.png)
+
+Human-readable but not computer-readable
+
+## ...and one sheet per file
+
+![](01_DataEntry_files/image31.png)
+
+If the same type of data (observational unit) is in each sheet, collapse it all down into one sheet. Otherwise, save them as separate files instead.
+
+## Data Storage
+
+"Comma separated value"
+
+::::: columns
+::: {.column width="50%"}
+**Excel (.xlsx)**
+
+-   Proprietary
+-   Can have multiple sheets
+-   Cannot be edited in text editors
+-   Takes more memory
+:::
+
+::: {.column width="50%"}
+**CSV**
+
+-   Non-proprietary
+-   Only one sheet
+-   Can be edited in text editors
+-   More efficient in storage
+:::
+:::::
+
+![](01_DataEntry_files/image32.jpeg)
+
+## "Save As" a CSV for storage
+
+![](01_DataEntry_files/image33.png)

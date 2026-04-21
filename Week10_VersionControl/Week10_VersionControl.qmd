@@ -1,0 +1,166 @@
+---
+title: "Version Control"
+date: today
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+---
+
+---
+
+![](Week10_VersionControl_files/image1.png)
+
+---
+
+![](Week10_VersionControl_files/image2.jpeg)
+
+## What is version control?
+
+Version control is a system that records changes to documents, code, data, etc. through time.
+
+It allows us to take **snapshots ("commit")** of our files and to revert back to previous snapshots if desired.
+
+It also allows us to work **collaboratively** on files by keeping track of who did what and finding any conflicts (e.g., if 2 people changed the same line of code).
+
+---
+
+![](Week10_VersionControl_files/image3.png)
+
+Allison Horst: <https://openscapes.org/blog/2022-05-27-github-illustrated-series/>
+
+---
+
+![](Week10_VersionControl_files/image4.png)
+
+Allison Horst: <https://openscapes.org/blog/2022-05-27-github-illustrated-series/>
+
+## Remote vs. Local
+
+::::: columns
+::: {.column width="50%"}
+![](Week10_VersionControl_files/image5.png)
+:::
+::: {.column width="50%"}
+![](Week10_VersionControl_files/image6.jpeg)
+:::
+:::::
+
+## The git/GitHub Workflow
+
+::::: columns
+::: {.column width="30%"}
+**Remote Repo (GitHub)**
+
+push / pull
+
+**Local Repos (git)**
+
+add → commit → push
+
+pull → work → add → commit
+:::
+::: {.column width="70%"}
+![](Week10_VersionControl_files/image7.png)
+:::
+:::::
+
+## The git/GitHub Workflow
+
+![](Week10_VersionControl_files/image8.svg)
+
+## Introduce Ourselves to git
+
+Tell git who you are (and what your GitHub account is).
+
+## Chapter 7: Introductions
+
+![](Week10_VersionControl_files/image9.png)
+
+## git/GitHub and RStudio
+
+Version Control through RStudio Projects
+
+## Chapter 9: PAT for HTTPS
+
+::::: columns
+::: {.column width="50%"}
+**STEP 1** — Select no expiration
+
+![](Week10_VersionControl_files/image10.png)
+:::
+::: {.column width="50%"}
+**STEP 2**
+
+![](Week10_VersionControl_files/image11.png)
+:::
+:::::
+
+## Chapter 11: Connect everything!
+
+**STEP 1:** Clone the repository address
+
+![](Week10_VersionControl_files/image12.png)
+
+Images from: <https://rstudio-conf-2020.github.io/r-for-excel/github.html#github>
+
+## Chapter 11: Connect everything!
+
+**STEP 2:** Create a new RStudio Project
+
+![](Week10_VersionControl_files/image13.png)
+
+Images from: <https://rstudio-conf-2020.github.io/r-for-excel/github.html#github>
+
+## Chapter 11: Connect everything!
+
+**STEPS 3 and 4:** Select "Version Control", then "Git"
+
+::::: columns
+::: {.column width="50%"}
+![](Week10_VersionControl_files/image14.png)
+:::
+::: {.column width="50%"}
+![](Week10_VersionControl_files/image15.png)
+:::
+:::::
+
+Images from: <https://rstudio-conf-2020.github.io/r-for-excel/github.html#github>
+
+## Chapter 11: Connect everything!
+
+**STEP 5:** Paste the repo address in "Repository URL"
+
+![](Week10_VersionControl_files/image16.png)
+
+Images from: <https://rstudio-conf-2020.github.io/r-for-excel/github.html#github>
+
+## How to Commit Files
+
+1. **Save** — Save the changes in the file(s) you have been working on
+2. **Add** — Open the Commit window by clicking "Commit" in the Git tab; click the empty square next to the file to "stage" it
+3. **Commit** — Write a descriptive commit message, then click "Commit"
+4. **Pull** — Click the Pull button (blue arrow ↓); fix any merge conflicts that occur
+5. **Push** — Click the Push button (green arrow ↑) to send your committed changes to GitHub
+
+---
+
+![](Week10_VersionControl_files/image17.jpeg)
+
+---
+
+![](Week10_VersionControl_files/image18.jpeg)
+
+---
+
+![](Week10_VersionControl_files/image19.jpeg)
+
+## First, pull any commits from the remote repo
+
+![](Week10_VersionControl_files/image20.jpeg)
+
+## Helpful Resources
+
+- **Happy Git with R** — the most helpful resource
+- **GitHub Docs** — well-documented official documentation
+- When in doubt, Google or use ChatGPT!
