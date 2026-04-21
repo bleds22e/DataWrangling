@@ -50,3 +50,7 @@ rsconnect/
 
 # .DS store
 .DS_Store
+
+# Quarto output
+*.html
+*_files/libs/
