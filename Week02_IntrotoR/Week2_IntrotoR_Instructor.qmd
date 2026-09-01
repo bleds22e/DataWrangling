@@ -1,8 +1,9 @@
 ---
 title: 'Week 2: Intro to R'
-author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+author: Ellen Bledsoe
+date: today
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -29,33 +30,33 @@ Computational reproducibility is a large component of **Open Science**, a moveme
 
 Open Science has numerous components, as you can see in the figure above. In this class, we are focusing primarily on open data, open methodology, and open source software.
 
--   Using interoperable file types (e.g., CSV files) is an important part of making data openly available.
--   Using open-source software for analyses instead of expensive statistical programs (which are often point-and-click) is an important part of making science transparent and accessible.
+- Using interoperable file types (e.g., CSV files) is an important part of making data openly available.
+- Using open-source software for analyses instead of expensive statistical programs (which are often point-and-click) is an important part of making science transparent and accessible.
 
 ## What's What: R vs. RStudio vs. Posit Cloud
 
 ### What is R?
 
--   Programming language and software
--   Started as a statistics and data analysis environment, but it can also build websites, run simulations, and many other things
--   R is what runs all of the code we will write this semester
--   R is **open source**, meaning it is free, non-proprietary (not owned by a company), and reproducible. This also means that anyone can contribute to it!
--   Separate from RStudio
+- Programming language and software
+- Started as a statistics and data analysis environment, but it can also build websites, run simulations, and many other things
+- R is what runs all of the code we will write this semester
+- R is **open source**, meaning it is free, non-proprietary (not owned by a company), and reproducible. This also means that anyone can contribute to it!
+- Separate from RStudio
 
 ### What is RStudio?
 
--   IDE - Integrated Development Environment
--   Makes developing code in R easier by including a number of tools in one place
--   Created by a company that is now called Posit
+- IDE - Integrated Development Environment
+- Makes developing code in R easier by including a number of tools in one place
+- Created by a company that is now called Posit
 
 ### What is Posit Cloud?
 
--   An online version of RStudio that runs in your browser
--   We're using it because it:
-    1.  Avoids installation difficulties
-    2.  Makes sharing code with instructors for debugging easier
-    3.  Leaves some of the complexities of working with R until after we've learned the basics
--   We will switch to using RStudio on our own computers in the second half of the semester.
+- An online version of RStudio that runs in your browser
+- We're using it because it:
+  1.  Avoids installation difficulties
+  2.  Makes sharing code with instructors for debugging easier
+  3.  Leaves some of the complexities of working with R until after we've learned the basics
+- We will switch to using RStudio on our own computers in the second half of the semester.
 
 ## Rstudio Mini-Tour
 
@@ -95,13 +96,13 @@ Try multiplying 5 and 3 in the Console (hint: \* means multiply). Hit `Enter` to
 
 RMarkdown (.Rmd) is a file format that lets us incorporate text and code into one document seamlessly. In fact, it is the file format for this document!
 
--   For writing text, you can type as you normally would.
--   Code chunks are a bit different:
-    -   Near the top right of your screen you can toggle between viewing this document as under Source or Visual.
-    -   If you view this document under `Source` mode, you will see that all code chunks are sandwiched between an opening line of code with 3 backticks and `{r}` and a closing line of code with 3 more backticks.
-    -   In `Visual` mode, however, you can type R code in the lines under `{r}`.
-    -   To include text in chunks, you will need to put a `#` in front. R will not read anything in the line after `#` as code.
-    -   Commenting your code is considered best practice. Not only does it help other people understand what your code is doing, but it will help *you* remember what your code is doing and why!
+- For writing text, you can type as you normally would.
+- Code chunks are a bit different:
+  - Near the top right of your screen you can toggle between viewing this document as under Source or Visual.
+  - If you view this document under `Source` mode, you will see that all code chunks are sandwiched between an opening line of code with 3 backticks and `{r}` and a closing line of code with 3 more backticks.
+  - In `Visual` mode, however, you can type R code in the lines under `{r}`.
+  - To include text in chunks, you will need to put a `#` in front. R will not read anything in the line after `#` as code.
+  - Commenting your code is considered best practice. Not only does it help other people understand what your code is doing, but it will help *you* remember what your code is doing and why!
 
 Code chunks look like this:
 
@@ -163,8 +164,8 @@ weight_g
 
 Use the`tab` key to autocomplete objects (and other things)
 
--   Let the computer do repetitious work.
--   It's easier and causes fewer mistakes.
+- Let the computer do repetitious work.
+- It's easier and causes fewer mistakes.
 
 Also, you can see the commands you've run under `History` in case you forgot to write something down in your Source code.
 
@@ -180,8 +181,8 @@ Functions are pre-written bits of codes that perform specific tasks for us. Effe
 
 A function call consists of two main parts.
 
--   First, the name of the function, followed by parentheses.
--   Next, the arguments that the function requires to perform its task. Anything you type into the parentheses are arguments.
+- First, the name of the function, followed by parentheses.
+- Next, the arguments that the function requires to perform its task. Anything you type into the parentheses are arguments.
 
 For example:
 
@@ -244,4 +245,4 @@ weight_rounded
 
 ### Let's Practice
 
-Start working on Exercises 4 and 5.
+Start working on Questions 4 and 5.

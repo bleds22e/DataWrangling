@@ -2,7 +2,8 @@
 title: 'Week 2: Vectors'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +21,7 @@ states <- c("AZ", "AZ", "NM", "CA")
 states
 ```
 
-Using the `str` function we learned last time shows that this is a vector of 4 character strings. The output of the `str` function is essentially the same as what is shown in the environment tab.
+Using the `str()` function we learned last time shows that this is a vector of 4 character strings. The output of the `str()` function is essentially the same as what is shown in the environment tab.
 
 ```{r}
 str(states)
@@ -44,11 +45,11 @@ states[1]
 states[1:3] # one through three
 ```
 
-Using the colon (1:3) is shorthand for making a vector of the whole numbers 1 through 3. This means that `states[1:3]` is the same as `states[c(1, 2, 3)]`.
+Using the colon (`1:3`) is shorthand for making a vector of the whole numbers 1 through 3. This means that `states[1:3]` is the same as `states[c(1, 2, 3)]`.
 
 You can use a vector to get any subset or order you want `states[c(4, 1, 3)]`.
 
-Many functions in R take a vector as input and return a value. This includes the function `length`, which determines how many items are in a vector.
+Many functions in R take a vector as input and return a value. This includes the function `length()`, which determines how many items are in a vector.
 
 ```{r}
 length(states)
@@ -172,9 +173,9 @@ states[density < 3]
 states[density <= 3]
 ```
 
--   Can subset a vector based on itself
--   If we want to look at the densities greater than 3
--   `density` is both the vector being subset and part of the condition
+- Can subset a vector based on itself
+- If we want to look at the densities greater than 3
+- `density` is both the vector being subset and part of the condition
 
 ```{r}
 density[density > 3]
