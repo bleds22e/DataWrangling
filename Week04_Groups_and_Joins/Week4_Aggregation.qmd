@@ -31,9 +31,9 @@ Next, we read in our surveys data using the `read_csv()` function.
 
 One common way we analyze (and aggregate) data is through something we call the "split, apply, combine" approach. This means that we:
 
--   *split* data up into groups via some type of categorization
--   *apply* some type of analysis to each group independently and
--   *combine* the data back together
+- *split* data up into groups via some type of categorization
+- *apply* some type of analysis to each group independently and
+- *combine* the data back together
 
 ![](images/split-apply-combine.png){width="75%" fig-align="center"}
 

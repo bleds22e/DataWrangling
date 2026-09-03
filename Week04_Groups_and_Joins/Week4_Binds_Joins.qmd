@@ -45,19 +45,19 @@ One way we can combine data sets in through binds. Binds act similarly to gluing
 
 For `bind_rows()`:
 
--   we are stacking datasets on top of each other vertically
+- we are stacking datasets on top of each other vertically
 
--   columns are matched by name (not position); a column missing in one dataset will be filled with NAs
+- columns are matched by name (not position); a column missing in one dataset will be filled with NAs
 
--   often used when you have multiple datasets with the same structure
+- often used when you have multiple datasets with the same structure
 
 For `bind_col()`:
 
--   we are putting datasets beside each other horizontally
+- we are putting datasets beside each other horizontally
 
--   rows are matched by position, not by unique values
+- rows are matched by position, not by unique values
 
--   datasets must have the same number of rows
+- datasets must have the same number of rows
 
 These can be very useful, but you need to be careful using them, especially `bind_cols`, as the function will automatically assume that the rows are in the correct positions.
 
@@ -119,10 +119,10 @@ rodent_site <- read_csv("ORPI_Site.csv")
 
 In these four datasets, we have the following:
 
--   `rodent_detail`: data about each individual rodent caught
--   `rodent_survey`: data about each survey occasion
--   `rodent_species`: data about each rodent species
--   `rodent_site`: data about rodent trapping sites
+- `rodent_detail`: data about each individual rodent caught
+- `rodent_survey`: data about each survey occasion
+- `rodent_species`: data about each rodent species
+- `rodent_site`: data about rodent trapping sites
 
 This way, if a species name changes (for example), we only need to change it in the species table rather than tens of thousands of times.
 

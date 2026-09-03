@@ -54,3 +54,4 @@ rsconnect/
 # Quarto output
 *.html
 *_files/libs/
+.positai
