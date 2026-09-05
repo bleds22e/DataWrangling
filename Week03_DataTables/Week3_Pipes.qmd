@@ -1,6 +1,7 @@
 ---
 title: "Week 3: Pipes"
 author: "Ellen Bledsoe"
+date: today
 format: pdf
 editor: visual
 ---
@@ -105,8 +106,8 @@ Occasionally (not in your assignment, for the record), you will need to pipe the
 
 To do so, we use a placeholder. This is one major difference between the 2 pipes.
 
--   For `|>`, the placeholder is `_`
--   For `%>%`, the placeholder is `.`
+- For `|>`, the placeholder is `_`
+- For `%>%`, the placeholder is `.`
 
 We can demonstrate by fitting a linear model at the end of our `dplyr` pipeline.
 
