@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width = "50%")
 
 ## Introduction
 
-Last week, we talked about 1-dimensional data in R: vectors!
+Last week, we talked about 1-dimensional data in R: *vectors*!
 
 Vectors are objects in R which contain more than one related data points, which we call elements. They are considered 1D data because we only need to specify one location or position in a given vector to identify an individual data point.
 
@@ -37,9 +37,11 @@ area <- c(3, 5, 1.9, 2.7)
 Then, we will combine them into a data frame. Each vector will become a column in the data frame.
 
 ```{r}
+# create data frame
 state_data <- data.frame(states, count, area)
-state_data
+state_data # print data frame
 
+# compare output of structure to environment for data frame and vectors
 str(state_data)
 ```
 
@@ -49,11 +51,11 @@ Different programming languages have different syntax (language structure). The 
 
 Until now, all of the coding we have done is in the original R language, which is called "base R." The syntax in the `tidyverse` is often different from base R. Both are useful, and many people combine them, which is why we start with base R.
 
+![](images/tidyverse.png){width="40%" fig-align="center"}
+
 ### Wait, what is a package??
 
 Packages are one of the neatest things about working in an open-source environment like R! They contains bits of code (often in the form of functions) that can be reused, making them a core component of reproducible data science. Anyone can develop a package, and there are thousands of them doing all sorts of things.
-
-![](images/tidyverse-icons.png){width="50%" fig-align="center"}
 
 ### Explore the `tidyverse`
 
@@ -99,15 +101,9 @@ We are going to download to files into Posit Cloud for us to work with this week
 
 ```{r}
 # the arguments in the function are the URL and the file destination (file name)
-
-# for the lesson
 download.file(url = "https://ndownloader.figshare.com/files/2292172", destfile = "surveys.csv")
 download.file(url = "https://ndownloader.figshare.com/files/3299474", destfile = "plots.csv")
 download.file(url = "https://ndownloader.figshare.com/files/3299483", destfile = "species.csv")
-
-# for the assignment
-download.file(url = "http://www.datacarpentry.org/semester-biology/data/shrub-volume-data.csv",
-              destfile = "shrub-volume-data.csv")
 ```
 
 We've already talked about some of the benefits of CSV file. They work very nicely in R.
@@ -195,11 +191,13 @@ Sometimes our data doesn't have our data in exactly the format we want. For exam
 
 The `dplyr` function called `mutate()` lets us create a new column.
 
-The first part of the argument in the mutate function (before the `=`) is the name of the new column we want to create (or, sometimes, the name of a column we want to overwrite). After the `=` is what we want the new column to contain.
+| The format is `mutate(new_column = content_to_put_in_column)`.
 
 ```{r}
 
 ```
+
+The first part of the argument in the mutate function (before the `=`) is the name of the new column we want to create (or, sometimes, the name of a column we want to overwrite). After the `=` is what we want the new column to contain.
 
 If we look at the `surveys` object, will it contain the new column?
 
@@ -259,11 +257,11 @@ Like with vectors, we can have a condition that is “not equal to” using “!
 
 We can also filter on multiple conditions at once.
 
-In computing, we combine conditions in two ways: “and” & “or”
+In computing, we combine conditions in two ways: "and" & "or"
 
-Using “and” means that all of the conditions must be true. Do this in `dplyr`, we can add arguments separated by commas or use the `&` symbol.
+Using "and" means that all of the conditions must be true. Do this in `dplyr`, we can add arguments separated by commas or use the `&` symbol.
 
-To get the data on species “DS” for the year 1995:
+To get the data on species "DS" for the year 1995:
 
 ```{r}
 
@@ -271,7 +269,7 @@ To get the data on species “DS” for the year 1995:
 
 This approach is mostly useful for building more complex conditions.
 
-When we want rows for which one or more of the conditions are met, we use “or”, which is the `|` symbol.
+When we want rows for which one or more of the conditions are met, we use "or", which is the `|` symbol.
 
 ```{r}
 
@@ -295,13 +293,13 @@ Why didn’t that work? Null values like `NA` are special. Instead, we use a spe
 
 ```
 
-To remove null values, we combine this with `!` for “not”
+To remove null values, we combine this with `!` for "not"
 
 ```{r}
 
 ```
 
-It is common to combine a null filter with other conditions using “and.” For example we might want all of the data on a species that contains weights.
+It is common to combine a null filter with other conditions using "and." For example we might want all of the data on a species that contains weights.
 
 ```{r}
 

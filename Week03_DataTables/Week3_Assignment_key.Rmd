@@ -21,19 +21,19 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
-Feb 5 at midnight MST
+Sept 15 before class
 
 # Exercises
 
@@ -49,6 +49,12 @@ library(readr)
 ### 1. Shrub Volume Data Basics (20 pts)
 
 Dr. Morales is interested in studying the factors controlling the size and carbon storage of shrubs. She has conducted an experiment looking at the effect of three different treatments on shrub volume at four different locations.
+
+First, run the code chunk below to download the data file.
+```{r}
+download.file(url = "http://www.datacarpentry.org/semester-biology/data/shrub-volume-data.csv", 
+              destfile = "shrub-volume-data.csv")
+```
 
 Get familiar with the data by importing it using `read.csv()` and use `dplyr` functions to complete the following tasks. Remember to add a code chunk!
 
@@ -170,10 +176,10 @@ surveys %>%
 
 Develop a data manipulation pipeline for the Portal surveys table that produces a table of data for only the three Dipodomys species (DM, DO, DS).
 
--   The species IDs should be presented as lower case, not upper case.
--   The table should contain information on the date, the species ID, the weight and hindfoot length.
--   The data should not include null values for either weight or hindfoot length.
--   The table should be sorted first by the species (so that each species is grouped together) and then by weight, with the largest weights at the top.
+- The species IDs should be presented as lower case, not upper case.
+- The table should contain information on the date, the species ID, the weight and hindfoot length.
+- The data should not include null values for either weight or hindfoot length.
+- The table should be sorted first by the species (so that each species is grouped together) and then by weight, with the largest weights at the top.
 
 ```{r}
 surveys %>% 

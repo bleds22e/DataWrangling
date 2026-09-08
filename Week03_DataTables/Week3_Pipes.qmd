@@ -49,34 +49,14 @@ Work on Questions 2 and 3 in the Assignment.
 
 You'll notice that in the code above, we made a bunch on intermediate objects (`ds_data`, `ds_data_by_year`). Instead of doing that, we can use a pipe operator to chain functions together.
 
-You can think of the pipe as automatically sending the output from the first line into the next line as the input.
+You can think of the pipe as automatically sending the output from the first line into the next line as the input--specifically, it becomes the first *argument* in the next function.
 
 Using pipes is helpful for a lot of reasons, including:
 
 1.  removing the clutter of creating a lot of intermediate objects in your work space, which reduces the chance of errors caused by using the wrong input object
 2.  makes things more human-readable (in addition to computer-readable)
 
-The shortcut for typing a pipe is `Ctrl` + `Shift` + `M` (or `Cmd` + `Shift` + `M` on a Mac)
-
-Let's start with a very small example, one we probably wouldn't actually use in our own code.
-
-```{r}
-
-```
-
-Instead of putting `x` as an argument in the `mean()` function, we could instead pipe the vector into the function.
-
-```{r}
-
-```
-
-This works the same way as above; `x` becomes the first argument in mean.
-
-If we want to add other arguments, they get added to the function call. The `mean()` function already knows that our first argument in going to be `x`.
-
-```{r}
-
-```
+The shortcut for typing a pipe is `Ctrl` + `Shift` + `M` (or `Cmd` + `Shift` + `M` on a Mac).
 
 Let's try this with some of the `dplyr` functions we have learned.
 

@@ -33,11 +33,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-September 16 before class
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week3_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
+September 15 before class
 
 # Exercises
 
@@ -50,6 +46,14 @@ Add a code chunk below and load these 2 packages into the workspace before begin
 ### 1. Shrub Volume Data Basics (20 pts)
 
 Dr. Morales is interested in studying the factors controlling the size and carbon storage of shrubs. She has conducted an experiment looking at the effect of three different treatments on shrub volume at four different locations.
+
+First, run the code chunk below to download the data file.
+
+```{r}
+# download "shrub-volume-data.csv" data file
+download.file(url = "http://www.datacarpentry.org/semester-biology/data/shrub-volume-data.csv", 
+              destfile = "shrub-volume-data.csv")
+```
 
 Get familiar with the shrub data by importing `shrub-volume-data.csv` using `read_csv()` and use `dplyr` functions to complete the following tasks. Remember to add a code chunk!
 
@@ -105,7 +109,7 @@ b.  Use the `filter()` and `select()` to get the year, month, day, and species_i
 
 ### 5. Portal Data Challenge (20 pts)
 
-Develop a data manipulation pipeline for the Portal surveys table that produces a table of data for only the three *Dipodomys* species (DM, DO, DS).
+Develop a data processing pipeline for the Portal surveys table that produces a table of data for only the three *Dipodomys* species (DM, DO, DS).
 
 - The species IDs should be presented as lower case, not upper case.
 - The table should contain information on the date, the species ID, the weight and hindfoot length.

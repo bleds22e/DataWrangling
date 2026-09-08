@@ -3,17 +3,18 @@ title: 'Week 3: Data Tables'
 author: "Ellen Bledsoe"
 date: today
 format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.align="center", out.width = "50%")
 ```
 
-# 2-dimensional Data and the `tidyverse`
+# 2-Dimensional Data and the `tidyverse`
 
 ## Introduction
 
-Last week, we talked about 1-dimensional data in R: vectors!
+Last week, we talked about 1-dimensional data in R: *vectors*!
 
 Vectors are objects in R which contain more than one related data points, which we call elements. They are considered 1D data because we only need to specify one location or position in a given vector to identify an individual data point.
 
@@ -47,15 +48,15 @@ str(state_data)
 
 ## The `tidyverse`: What is it?
 
-Different programming languages have different syntax (language structure). The `tidyverse` is a package (more accurately, a set of packages) offered in R that all have similar goals and a unified syntax designed to work particularly well with data frames.
+Different programming languages have different syntax (language structure). The `tidyverse` is a package--more accurately, a set of packages--offered in R that all have similar goals and a unified syntax designed to work particularly well with data frames.
 
 Until now, all of the coding we have done is in the original R language, which is called "base R." The syntax in the `tidyverse` is often different from base R. Both are useful, and many people combine them, which is why we start with base R.
+
+![](images/tidyverse.png){width="40%" fig-align="center"}
 
 ### Wait, what is a package??
 
 Packages are one of the neatest things about working in an open-source environment like R! They contains bits of code (often in the form of functions) that can be reused, making them a core component of reproducible data science. Anyone can develop a package, and there are thousands of them doing all sorts of things.
-
-![](images/tidyverse-icons.png){width="50%" fig-align="center"}
 
 ### Explore the `tidyverse`
 
@@ -103,14 +104,12 @@ We are going to download to files into Posit Cloud for us to work with this week
 
 ```{r}
 # the arguments in the function are the URL and the file destination (file name)
-
-# for the lesson
-download.file(url = "https://ndownloader.figshare.com/files/2292172", destfile = "surveys.csv")
-download.file(url = "https://ndownloader.figshare.com/files/3299474", destfile = "plots.csv")
-download.file(url = "https://ndownloader.figshare.com/files/3299483", destfile = "species.csv")
-
-# for the assignment
-download.file("http://www.datacarpentry.org/semester-biology/data/shrub-volume-data.csv", "shrub-volume-data.csv")
+download.file(url = "https://ndownloader.figshare.com/files/2292172", # surveys
+              destfile = "surveys.csv")
+download.file(url = "https://ndownloader.figshare.com/files/3299474", # plots
+              destfile = "plots.csv")
+download.file(url = "https://ndownloader.figshare.com/files/3299483", # species
+              destfile = "species.csv")
 ```
 
 We've already talked about some of the benefits of CSV file. They work very nicely in R.
@@ -205,7 +204,7 @@ select(surveys, month:year)
 select(surveys, -weight)
 ```
 
-It is important to remember that the computer interprets everything literally. We need to tell the function the **exact** names of the columns.
+It is important to remember that the computer interprets everything literally. We need to tell the function the *exact* names of the columns.
 
 ### Let's Practice!
 
@@ -221,11 +220,13 @@ Sometimes our data doesn't have our data in exactly the format we want. For exam
 
 The `dplyr` function called `mutate()` lets us create a new column.
 
-The first part of the argument in the mutate function (before the `=`) is the name of the new column we want to create (or, sometimes, the name of a column we want to overwrite). After the `=` is what we want the new column to contain.
+| The format is `mutate(new_column = content_to_put_in_column)`.
 
 ```{r}
 mutate(surveys, hindfoot_length_cm = hindfoot_length / 10)
 ```
+
+The first part of the argument in the mutate function (before the `=`) is the name of the new column we want to create (or, sometimes, the name of a column we want to overwrite). After the `=` is what we want the new column to contain.
 
 If we look at the `surveys` object, will it contain the new column?
 
