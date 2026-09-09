@@ -3,6 +3,7 @@ title: "Week 4 Assignment"
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
