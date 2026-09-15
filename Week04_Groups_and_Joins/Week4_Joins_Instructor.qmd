@@ -44,22 +44,18 @@ We have 2 main methods of combining datasets: binds and joins. They work in diff
 
 One way we can combine data sets in through binds. Binds act similarly to gluing datasets together instead of sorting rows to match up based on unique identifiers ("keys).
 
-![](images/binds.png){width="50%"}
+![](images/binds.png){width="50%" fig-align="center"}
 
 For `bind_rows()`:
 
 - we are stacking datasets on top of each other vertically
-
 - columns are matched by name (not position); a column missing in one dataset will be filled with NAs
-
 - often used when you have multiple datasets with the same structure
 
 For `bind_col()`:
 
 - we are putting datasets beside each other horizontally
-
 - rows are matched by position, not by unique values
-
 - datasets must have the same number of rows
 
 These can be very useful, but you need to be careful using them, especially `bind_cols`, as the function will automatically assume that the rows are in the correct positions.
@@ -70,6 +66,7 @@ The `surveys` data only goes through 2002, but we have a lot more data from the 
 
 ```{r}
 # load our package
+# we can ignore the message produced
 library(portalr)
 
 # load the new rodent data and do a little cleaning
@@ -128,7 +125,7 @@ In these four datasets, we have the following:
 - `rodent_detail`: data about each individual rodent caught
 - `rodent_survey`: data about each survey occasion
 - `rodent_species`: data about each rodent species
-- \`rodent_site\`\`: data about rodent trapping sites
+- `rodent_site`: data about rodent trapping sites
 
 This way, if a species name changes (for example), we only need to change it in the species table rather than tens of thousands of times.
 
@@ -148,11 +145,11 @@ This can happen a couple ways, depending on which data frame is the reference an
 
 Depending on the type of join you use, you will keep all rows from table (`left_join` and `right_join`), both tables (`full_join`), or only rows with matches (`inner_join`).
 
-![](images/joins.png){width="50%"}
+![](images/joins.png){width="50%" fig-align="center"}
 
 You can find another way to visualize what happens during different type of joins through GIFs from [tidyexplain](https://www.garrickadenbuie.com/project/tidyexplain/).
 
-To enable us to make these connections, the tables need one (or more) columns that link them together; these are the "keys."
+To enable us to make these connections, the tables need one (or more) columns that link them together; these are called *primary keys*.
 
 #### Inner Joins
 
@@ -164,7 +161,7 @@ To do this, we use the `inner_join` function from `dplyr`. It takes three argume
 
 1)  The first of the two tables we want to join
 2)  The second of the two tables we want to join
-3)  The column, or columns, that provide the linkage between the two tables, specified in a `join_by()` function,
+3)  The column, or columns, that provide the linkage between the two tables, specified in a `join_by()` function
 
 ```{r}
 inner <- inner_join(rodent_detail, rodent_species, join_by(RodentSpeciesID))
@@ -192,7 +189,7 @@ left <- left_join(rodent_detail, rodent_species, join_by(RodentSpeciesID))
 left
 ```
 
-Because there are no values in the `rodent_species` table that correspond to a missing`RodentSpeciesID`, the columns from that table are filled with NA values in the rows with no match.
+Because there are no values in the `rodent_species` table that correspond to a missing `RodentSpeciesID`, the columns from that table are filled with NA values in the rows with no match.
 
 There are also right joins, which keep all rows in the second (or right) table, and full joins, which keep all rows from both tables, even there isn't a matching row.
 
@@ -213,7 +210,7 @@ full
 # full_join(rodent_survey, rodent_site, by = c("SiteID" = "SiteCode"))
 ```
 
-Note: for our assignment, we'll focus on using inner joins.
+Note: for our assignment, we'll focus on using `inner_join`.
 
 ### Multi-table Joins
 
@@ -228,6 +225,7 @@ all_ORPI_data <- rodent_detail %>%
   inner_join(rodent_species, join_by(RodentSpeciesID)) %>%
   inner_join(rodent_survey, join_by(RodentSurveyID == SurveyID)) %>%
   inner_join(rodent_site, join_by(SiteID == SiteCode))
+all_ORPI_data
 ```
 
 If it helps you to keep track of which data tables are being joined when, you can also use the placeholder for your chosen pipe (`.` for `%>%`; `x = _` for `|>`).

@@ -5,10 +5,6 @@ format: pdf
 editor: visual
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # Data Aggregation
 
 When we have data, a common need is to condense many data points into fewer, useful pieces of information, such as descriptive statistics. We call this process data aggregation.
@@ -49,7 +45,9 @@ Let's see what happens to the `surveys` dataframe when we group by the year colu
 
 ```
 
-The `group_by()` function doesn't seem to change the data frame visually in any way. However, you will notice that next to the information about the tibble (number of rows and columns), there is now an additional bit of information that tells us that this is now a grouped dataframe: grouped by the year column, and there are 26 groups.
+The `group_by()` function doesn't seem to change the data frame visually in any way. 
+
+However, you will notice that next to the information about the tibble (number of rows and columns), there is now an additional bit of information that tells us that this is now a grouped data frame: grouped by the year column, and there are 26 groups.
 
 In order to complete the "apply" and "combine" tasks, `group_by()` is most often paired with `mutate()` or `summarize()` functions.
 
@@ -57,7 +55,7 @@ In order to complete the "apply" and "combine" tasks, `group_by()` is most often
 
 Often times, we are interested in calculating summary statistics for our data, such as the mean, standard deviation, minimums, maximums, etc.
 
-Fortunately, the `dplyr` has a handy-dandy function to make this easy to do with data frames. The `summarize()` function creates a new dataframe with columns and values we give it.
+Fortunately, the `dplyr` has a handy-dandy function to make this easy to do with data frames. The `summarize()` function creates a new data frame with columns and values we give it.
 
 Similar to `mutate()`, what is on the left of the `=` is the name of the new column, and what is on the right of the `=` is the value(s) to put in the new column.
 
@@ -97,7 +95,7 @@ We can see that there are now 622 groups! Let's add our summarize function.
 
 Start working on Question 1 and Question 2a-b.
 
-## Additional Points
+## Some Additional Points
 
 We can perform multiple calculations within the summarize function.
 

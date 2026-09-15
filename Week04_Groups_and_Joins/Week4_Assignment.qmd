@@ -1,14 +1,9 @@
 ---
 title: "Week 4 Assignment"
-author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
+date: today
 format: pdf
 editor: visual
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 # Assignment Details
 
@@ -111,7 +106,9 @@ Based on your answer above, bind the `shrub_dims` and `new_data` data frames tog
 
 This is a follow-up to Question 3, Shrub Volume Aggregation.
 
-In addition to the main data table on shrub dimensions (`shrub_dims`), Dr. Morales has two additional data tables. The first describes the manipulation for each experiment. The second provides information about the different sites. Run the following code chunk to bring them into your environment.
+In addition to the main data table on shrub dimensions (`shrub_dims`), Dr. Morales has two additional data tables. The first describes the manipulation for each experiment. The second provides information about the different sites.
+
+Run the following code chunk to bring them into your environment.
 
 ```{r}
 experiments <- read_csv("https://datacarpentry.org/semester-biology/data/shrub-volume-experiments.csv")

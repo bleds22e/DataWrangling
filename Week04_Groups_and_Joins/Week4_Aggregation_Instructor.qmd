@@ -6,10 +6,6 @@ format: pdf
 editor: visual
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ```{r}
 # TO DO
 # - add explanation for why summarize runs when you don't set a column name and explain issues with that method
@@ -18,7 +14,6 @@ knitr::opts_chunk$set(echo = TRUE)
 # - add more explanation of how group_by and mutate work together
 # - explicitly state that na.rm must be inside the summary function NOT the summarize function alone
 ```
-
 
 # Data Aggregation
 
@@ -43,11 +38,11 @@ surveys <- read_csv("surveys.csv")
 
 One common way we analyze (and aggregate) data is through something we call the "split, apply, combine" approach. This means that we:
 
--   *split* data up into groups via some type of categorization
--   *apply* some type of analysis to each group independently and
--   *combine* the data back together
+- *split* data up into groups via some type of categorization
+- *apply* some type of analysis to each group independently and
+- *combine* the data back together
 
-![](images/split-apply-combine.png)
+![](images/split-apply-combine.png){width="75%" fig-align="center"}
 
 ### Splitting by Group
 
@@ -62,8 +57,9 @@ surveys %>%
   group_by(year)
 ```
 
+The `group_by()` function doesn't seem to change the data frame visually in any way. 
 
-The `group_by()` function doesn't seem to change the data frame visually in any way. However, you will notice that next to the information about the tibble (number of rows and columns), there is now an additional bit of information that tells us that this is now a grouped dataframe: grouped by the year column, and there are 26 groups.
+However, you will notice that next to the information about the tibble (number of rows and columns), there is now an additional bit of information that tells us that this is now a grouped data frame: grouped by the year column, and there are 26 groups.
 
 In order to complete the "apply" and "combine" tasks, `group_by()` is most often paired with `mutate()` or `summarize()` functions.
 
@@ -71,7 +67,7 @@ In order to complete the "apply" and "combine" tasks, `group_by()` is most often
 
 Often times, we are interested in calculating summary statistics for our data, such as the mean, standard deviation, minimums, maximums, etc.
 
-Fortunately, the `dplyr` has a handy-dandy function to make this easy to do with data frames. The `summarize()` function creates a new dataframe with columns and values we give it.
+Fortunately, the `dplyr` has a handy-dandy function to make this easy to do with data frames. The `summarize()` function creates a new data frame with columns and values we give it.
 
 Similar to `mutate()`, what is on the left of the `=` is the name of the new column, and what is on the right of the `=` is the value(s) to put in the new column.
 
@@ -174,8 +170,7 @@ Try working on Question 2c.
 
 ## Using `group_by()` with `mutate()`
 
-While we most commonly will use grouping before the summarize function, there are some occassions where using groups with the `mutate()` function can be particularly helpful.
-
+While we most commonly will use grouping before the summarize function, there are some occasions where using groups with the `mutate()` function can be particularly helpful.
 
 You won't need to do this in your assignment, but you should know that it is possible!
 
@@ -185,6 +180,7 @@ We will want want to calculate (a) the abundance of each species in each year, (
 
 ```{r}
 surveys %>%
+  # create groups based on year and species
   group_by(year, species_id) %>%
   # calculate the total number of individuals per species per year
   summarise(abundance = n()) %>%

@@ -39,24 +39,20 @@ We have 2 main methods of combining datasets: binds and joins. They work in diff
 
 ## Binds
 
-One way we can combine data sets in through binds. Binds act similarly to gluing datasets together instead of sorting rows to match up based on unique identifiers ("keys).
+One way we can combine data sets in through binds. Binds act similarly to gluing datasets together instead of sorting rows to match up based on unique identifiers ("keys").
 
 ![](images/binds.png){width="50%" fig-align="center"}
 
 For `bind_rows()`:
 
 - we are stacking datasets on top of each other vertically
-
 - columns are matched by name (not position); a column missing in one dataset will be filled with NAs
-
 - often used when you have multiple datasets with the same structure
 
 For `bind_col()`:
 
 - we are putting datasets beside each other horizontally
-
 - rows are matched by position, not by unique values
-
 - datasets must have the same number of rows
 
 These can be very useful, but you need to be careful using them, especially `bind_cols`, as the function will automatically assume that the rows are in the correct positions.
@@ -67,6 +63,7 @@ The `surveys` data only goes through 2002, but we have a lot more data from the 
 
 ```{r}
 # load our package
+# we can ignore the message produced
 library(portalr)
 
 # load the new rodent data and do a little cleaning
@@ -146,7 +143,7 @@ Depending on the type of join you use, you will keep all rows from table (`left_
 
 You can find another way to visualize what happens during different type of joins through GIFs from [tidyexplain](https://www.garrickadenbuie.com/project/tidyexplain/).
 
-To enable us to make these connections, the tables need one (or more) columns that link them together; these are the "keys."
+To enable us to make these connections, the tables need one (or more) columns that link them together; these are called *primary keys*.
 
 #### Inner Joins
 
@@ -158,7 +155,7 @@ To do this, we use the `inner_join` function from `dplyr`. It takes three argume
 
 1)  The first of the two tables we want to join
 2)  The second of the two tables we want to join
-3)  The column, or columns, that provide the linkage between the two tables, specified in a `join_by()` function,
+3)  The column, or columns, that provide the linkage between the two tables, specified in a `join_by()` function
 
 ```{r}
 
@@ -198,7 +195,7 @@ Our first step is to identify the uniting column, or "key." In this case, the co
 
 ```
 
-Note: for our assignment, we’ll focus on using inner joins.
+Note: for our assignment, we’ll focus on using `inner_join`.
 
 ### Multi-table Joins
 

@@ -5,10 +5,6 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # Assignment Details
 
 ### Purpose
@@ -21,15 +17,15 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
@@ -48,9 +44,9 @@ library(dplyr)
 
 Read in the following data sets using `read_csv()`:
 
--   `surveys.csv`
--   `species.csv`
--   `plots.csv`
+- `surveys.csv`
+- `species.csv`
+- `plots.csv`
 
 ```{r}
 surveys <- read_csv("surveys.csv")
@@ -85,7 +81,6 @@ surveys %>%
   filter(species_id == "DO") %>%
   group_by(year) %>%
   summarize(avg_mass = mean(weight, na.rm = TRUE))
-
 ```
 
 ### 3. Shrub Volume Aggregation (15 pts)
