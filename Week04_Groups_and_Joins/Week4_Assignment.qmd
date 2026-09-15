@@ -22,23 +22,19 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
-Sept 23 before class
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week4_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
+Sept 22 before class
 
 # Assignment Exercises
 
@@ -48,9 +44,9 @@ Load the `readr` and `dplyr` packages.
 
 Read in the following data sets using `read_csv()`. Even if they already exist in your current working environment, you will need to have the code to read them in this document to successfully `Render`.
 
--   `surveys.csv`
--   `species.csv`
--   `plots.csv`
+- `surveys.csv`
+- `species.csv`
+- `plots.csv`
 
 ### 2. Portal Data Aggregation (15 pts)
 
