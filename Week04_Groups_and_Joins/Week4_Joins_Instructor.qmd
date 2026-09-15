@@ -1,7 +1,7 @@
 ---
 title: 'Week 4: Joins and Binds'
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
+date: today
 format: pdf
 editor: visual
 ---
