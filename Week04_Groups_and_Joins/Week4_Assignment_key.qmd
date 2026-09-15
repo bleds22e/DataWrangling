@@ -1,8 +1,7 @@
 ---
 title: "Week 4 Assignment"
-author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 # Assignment Details
