@@ -27,7 +27,7 @@ Let's go ahead and load our usual packages.
 
 ```
 
-To start, let's read in the `surveys` dataframe from the Portal dataset.
+To start, let's read in the `surveys` data frame from the Portal dataset.
 
 ```{r}
 
@@ -131,7 +131,7 @@ Take a few minutes to examine these data tables. Each data frame shares at least
 
 Joins are arguably the more complicated of the two types of ways to combine data, but they are, therefore, the more flexible and useful of the two.
 
-The magic comes because they merge datasets by *matching up columns of data based on unique identifiers ("keys") in each row of data*.
+The magic comes because they merge datasets by *matching up rows of data based on unique identifiers ("keys") in the specified columns*.
 
 In the following diagram, the two example data frames have the column `x1` in common, and each of the values in `x1` are unique (no repeats in the same data frame). When combining the datasets, all of the columns are added, and their rows are matched up to their respective values in the `x1` column.
 
