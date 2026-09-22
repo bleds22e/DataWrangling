@@ -47,10 +47,10 @@ For the this week's lesson and assignment, we'll be working with data on acacia 
 
 There are 3 different treatments and 1 control:
 
--   The top-left image shows *megaherbivore exclosures*, which use wires 2m high to keep out animals like elephants and giraffes.
--   The top-right image shows *mesoherbivore exclosures*, which use fences starting 1/3m off the ground to exclude things like impala.
--   The bottom-left image shows *full exclosures*, which use fences all the way to the ground to keep out all mammalian herbivores.
--   The bottom-right image shows *control plots*
+- The top-left image shows *megaherbivore exclosures*, which use wires 2m high to keep out animals like elephants and giraffes.
+- The top-right image shows *mesoherbivore exclosures*, which use fences starting 1/3m off the ground to exclude things like impala.
+- The bottom-left image shows *full exclosures*, which use fences all the way to the ground to keep out all mammalian herbivores.
+- The bottom-right image shows *control plots*
 
 ![Pictures of 4 experimental treatments. (A) Megaherbivore fences consist of two parallel wires starting 2-m above ground level. (B) Mesoherbivore fences consist of 11 parallel wires starting \~0.3 m above ground level and continuing to 2.4-m above ground level. (C) Total-exclusion fences consist of 14 wires up to 2.4-m above ground level, with a 1-m high chain-link barrier at ground level. (D) Open control plots are unfenced, with boundaries demarcated by short wooden posts at 10-m intervals.](https://esapubs.org/archive/ecol/E095/064/images/Fig2.png)
 
@@ -66,9 +66,9 @@ download.file(url = "https://ndownloader.figshare.com/files/5629536",
               destfile = "TREE.txt")
 ```
 
-So far we've been working with datasets that are separated by commas, saved as .csv files. This dataset, however, is a bit different.
+So far we've been working with datasets that are separated by commas, saved as `.csv` files. This dataset, however, is a bit different.
 
-When we open this data, we can see that the data are separated by tabs. We can also see that the dataset is not a .csv file but rather a .txt (or "text" file).
+When we open this data, we can see that the data are separated by tabs. We can also see that the dataset is not a `.csv` file but rather a `.txt` (a "text" file).
 
 In order to read this data into our working environment, we will use another function from the `readr` package: `read_tsv()` ("read tab-separated values").
 
@@ -93,11 +93,11 @@ The argument is passed as a vector in order to allow multiple different values t
 
 Looking at the data frame, we can see that it includes information on:
 
--   the time and location of the sampling
--   the experimental treatment
--   the size of each acacia including a height, the canopy diameter measured in the direction (or axis) or the largest diameter and the diameter of the axis perpendicular to that, and the circumference of the shrub
--   information on the number of flowers, buds, and fruits
--   information on the species of ant associated with the shrub
+- the time and location of the sampling
+- the experimental treatment
+- the size of each acacia including a height, the canopy diameter measured in the direction (or axis) or the largest diameter and the diameter of the axis perpendicular to that, and the circumference of the shrub
+- information on the number of flowers, buds, and fruits
+- information on the species of ant associated with the shrub
 
 For those of you who may not know, there is a very interesting ant-acacia mutualism where the acacia (actually in the genus *Vachellia*) provides nectar and shelter for the ants, developing special structures that serve as houses for the ants; in return, the ants protect the acacia by swarming herbivores that try to eat the acacia!
 
@@ -109,10 +109,10 @@ For those of you who may not know, there is a very interesting ant-acacia mutual
 
 Here are some resources you might find helpful now or in the future:
 
--   [R Graphics Cookbook](https://r-graphics.org/)
--   [UC Business Analytics ggplot2 intro](https://uc-r.github.io/ggplot_intro)
--   [R for Data Science Data Visualization chapter](https://r4ds.hadley.nz/data-visualize.html)
--   [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/index.html)
+- [R Graphics Cookbook](https://r-graphics.org/)
+- [UC Business Analytics ggplot2 intro](https://uc-r.github.io/ggplot_intro)
+- [R for Data Science Data Visualization chapter](https://r4ds.hadley.nz/data-visualize.html)
+- [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/index.html)
 
 The `gg` in `ggplot2` stands for "[Grammar of Graphics](https://info5940.infosci.cornell.edu/notes/dataviz/grammar-of-graphics/)." The "grammar" part is based on an idea that all statistical plots have the same fundamental features: data and mapping (and specific components of mapping).
 
@@ -122,7 +122,7 @@ The typical structure looks like this:
 
 ```{r}
 # ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +  
-# <GEOM_FUNCTION>()
+#   <GEOM_FUNCTION>()
 ```
 
 ## Building a Plot
@@ -153,7 +153,7 @@ Let's plot the relationship between the circumference of an acacia and its heigh
 
 This still doesn't create a figure; it's a blank canvas and some additional information on default values for data and mapping columns to pieces of the plot.
 
-### Adding a `geom` Layer (with `+`)
+### Adding a `geom` Layer 
 
 We can add data to the plot using layers. We connect layers with a `+`. It works similarly to the pipe. It is considered best practice to hit `Enter` after the plus so that each layer shows up on its own line.
 
@@ -171,9 +171,9 @@ If we want to make any changes to the layer, we can pass additional arguments to
 
 For example, we can change:
 
--   the `size` of the points
--   the `color` of the points
--   the transparency of the points, which is called `alpha`
+- the `size` of the points
+- the `color` of the points
+- the transparency of the points, which is called `alpha`
 
 ```{r}
 
@@ -235,7 +235,6 @@ Do you want to set a fixed appearance (e.g., every data point is the same color,
 Example: `color = "lightgreen"`
 :::
 
-
 ### Multiple Plots by Column with Facets
 
 The other way to see data from different groups is with a `facet`. Rather than changing an aspect of the plot, faceting creates multiple smaller plots within the larger plot based on a column.
@@ -258,9 +257,9 @@ If you finish those, you should now have all the skills to work on Question 2 (w
 
 So far, we've seen that `ggplot2` makes graphs by combining information on
 
--   data
--   mapping parts of the data to aspects of the plot (`aes()`)
--   a geometric object to represent the data (`geom`)
+- data
+- mapping parts of the data to aspects of the plot (`aes()`)
+- a geometric object to represent the data (`geom`)
 
 Up until now, we have only used one `geom`, `geom_point()`. There are *many* other `geoms` that we can use, though! You can find a list [here](https://ggplot2.tidyverse.org/reference/).
 
@@ -354,7 +353,9 @@ Because the color aesthetic is the default set in `ggplot()` function, it is inh
 
 ### Changing Values across Layers
 
-When we want all of the layers to have the same defaults, putting those defaults into the `ggplot` function makes a lot of sense. However, sometimes we want to plot data from different columns or even data frames on the same graph.
+When we want all of the layers to have the same defaults, putting those defaults into the `ggplot` function makes a lot of sense.
+
+However, sometimes we want to plot data from different columns or even data frames on the same graph.
 
 To do this we need to better understand how layers and defaults work. So far, we've put all of the information on data and aesthetic mapping into `ggplot()`.
 

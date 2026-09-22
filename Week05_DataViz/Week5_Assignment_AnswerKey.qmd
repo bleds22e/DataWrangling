@@ -21,13 +21,13 @@ acacia <- read_tsv("ACACIA_DREPANOLOBIUM_SURVEY.txt", na = c("", "dead"))
 
 ```{r}
 # 1a
-
+print("1a")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter")
 
 # 1b
-
+print("1b")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   scale_x_log10() +
@@ -35,20 +35,20 @@ ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   labs(x = "Circumference", y = "Canopy Diameter")
 
 # 1c
-
+print("1c")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1, color = ANT)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter")
 
 # 1d
-
+print("1d")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter") +
   facet_wrap(~ANT)
 
 # 1e
-
+print("1e")
 ggplot(data = acacia, mapping = aes(x = CIRC, y = AXIS1)) +
   geom_point() +
   labs(x = "Circumference", y = "Canopy Diameter") +
@@ -77,17 +77,20 @@ size_mr_data <- data.frame(
 ```
 
 ```{r}
+print("2a")
 # 1.  A graph of body mass vs. metabolic rate
 ggplot(size_mr_data, aes(body_mass, metabolic_rate)) + geom_point() +
   labs(x = "Body Mass", y = "Metabolic Rate")
 
 # 2.  A graph of body mass vs. metabolic rate, log scaled, with pt size 5.
+print("2b")
 ggplot(data = size_mr_data, mapping = aes(x = body_mass, y = metabolic_rate)) +
   geom_point(size=3) +
   labs(x = "Body Mass", y = "Metabolic Rate") +
   scale_x_log10() + scale_y_log10()
 
 # 3. The same plot as (2), but with the different families indicated using color.
+print("2c")
 ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate, color = family)) +
   geom_point(size = 3) +
   scale_x_log10() +
@@ -95,6 +98,7 @@ ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate, color = family)) +
   labs(x = "Body Mass", y = "Metabolic Rate")
 
 # 4. The same plot as (2), but with the different families each in their own subplot.
+print("2d")
 ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate)) +
   geom_point(size = 3) +
   scale_x_log10() +
@@ -107,25 +111,25 @@ ggplot(size_mr_data, aes(x = body_mass, y = metabolic_rate)) +
 
 ```{r}
 # 1
-
+print("3a")
 ggplot(data = acacia, mapping = aes(x = ANT)) +
   geom_bar()
 
 # 2
-
+print("3b")
 ggplot(data = acacia, mapping = aes(x = HEIGHT)) +
   geom_histogram() +
   labs(x = "Height(m)", y = "Number of Acacia")
 
 # 3
-
+print("3c")
 ggplot(data = acacia) +
   geom_histogram(mapping = aes(x = AXIS1), fill = 'red', alpha = 0.3) +
   geom_histogram(mapping = aes(x = AXIS2), fill = 'black', alpha = 0.3) +
   labs(x = "Canopy Diameter", y = "Number of Acacia")
 
 # 4
-
+print("3d")
 ggplot(data = acacia) +
   geom_histogram(mapping = aes(x = AXIS1), fill = 'red', alpha = 0.3, bins = 10) +
   geom_histogram(mapping = aes(x = AXIS2), fill = 'black', alpha = 0.3, bins = 10) +
@@ -198,13 +202,14 @@ mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt",
 ```
 
 ```{r}
-
+print("5a")
 # a. Graph adult mass vs. newborn mass.
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point() +
   labs(x = "Adult Mass", y = "Newborn Mass")
 
 # b. Graph adult mass vs. newborn mass, with both axes scaled logarithmically.
+print("5b")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point() +
   scale_x_log10() +
@@ -212,6 +217,7 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 
 # c. Graph adult mass vs. newborn mass, log-scaled, with data colored by order.
+print("5c")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point(aes(color=order)) +
   scale_x_log10() +
@@ -219,6 +225,7 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 
 # d. Use `facet_wrap` to create subplot for each order.
+print("5d")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point() +
   scale_x_log10() +
@@ -227,6 +234,7 @@ ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   labs(x = "Adult Mass", y = "Newborn Mass")
 
 # e. use `geom_smooth` to fit a linear model to each order.
+print("5e")
 ggplot(mammal_histories, aes(x = mass_g, y = newborn_g)) +
   geom_point() +
   geom_smooth(method = "lm") +

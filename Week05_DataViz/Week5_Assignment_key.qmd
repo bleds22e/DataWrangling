@@ -1,15 +1,36 @@
 ---
 title: "Week 5 Assignment"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+date: today
+format: pdf
+editor: visual
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # Week 5 Assignment
+
+### Purpose
+
+The goal of this assignment is to make plots using `ggplot2` and some review of `dplyr` and `readr` functions.
+
+### Task
+
+Write R code to successfully answer each question below.
+
+### Criteria for Success
+
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
+
+### Due Date
+
+Sept 29 at 11 am
 
 # Assignment Exercises
 
@@ -181,7 +202,7 @@ ggplot(data = acacia) +
 
 ### 4. Acacia and Ants Data Manipulation (20 pts)
 
-Run the following line of code to use `read_tsv` from the `readr` package to read in the data from "TREE.txt". This line of code is using the `col_types` argument to specify the the `HEIGHT` and `AXIS_2` columns should have their data read is as the data class "double," which is like "numeric."
+Run the following line of code to use `read_tsv` from the `readr` package to read in the data from `TREE.txt`. This line of code is using the `col_types` argument to specify the the `HEIGHT` and `AXIS_2` columns should have their data read is as the data class "double," which is like "numeric."
 
 You'll see a warning when you read in the data. You can ignore it.
 
@@ -249,13 +270,15 @@ ggplot(data = abundance_time, mapping = aes(x = YEAR, y = abundance)) +
 
 Larger organisms have larger offspring. We want to explore the form of this relationship in mammals.
 
-First, read in the data frame with the code below and take a look at the dataframe. Do you see any issues that need to be addressed?
+First, read in the data frame with the code below and take a look at the data frame. Do you see any issues that need to be addressed?
 
 ```{r}
 read_tsv("Mammal_lifehistories_v2.txt")
 ```
 
-The code below will read in the dataset and save it as the object `mammal_histories`. You should recognize the `na` argument in the `read_tsv()` function; this will handle our -999 values and convert them to NAs. This code also uses a handy function called `rename` from the `tidyverse` to rename columns, removing any special characters.
+The code below will read in the dataset and save it as the object `mammal_histories`.
+
+You should recognize the `na` argument in the `read_tsv()` function; this will handle our -999 values and convert them to NAs. This code also uses a handy function called `rename` from the `tidyverse` to rename columns, removing any special characters.
 
 ```{r}
 mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt", 

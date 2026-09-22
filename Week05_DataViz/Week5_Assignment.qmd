@@ -5,10 +5,6 @@ format: pdf
 editor: visual
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # Week 5 Assignment
 
 ### Purpose
@@ -21,23 +17,19 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
-Sept 30 at 2 pm
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week5_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
+Sept 29 at 11 am
 
 # Assignment Exercises
 
@@ -54,10 +46,12 @@ Load the packages we will need. You can either load all of them individually (`r
 Read in the acacia data frame by running the following code chunk.
 
 ```{r}
+# read_tsv() for tab-separated data
+# set NAs for blanks and cells with "dead"
 acacia <- read_tsv("ACACIA_DREPANOLOBIUM_SURVEY.txt", na = c("", "dead"))
 ```
 
-a.  Make a scatter plot with `CIRC` on the x axis and `AXIS1` (the maximum canopy width) on the y axis. Label the x axis "Circumference" and the y axis "Canopy Diameter".
+a.  Make a scatter plot with `CIRC` on the x-axis and `AXIS1` (the maximum canopy width) on the y axis. Label the x-axis "Circumference" and the y-axis "Canopy Diameter".
 b.  The same plot as (a), but with both axes scaled logarithmically (using `scale_x_log10` and `scale_y_log10`).
 c.  The same plot as (a), but with points colored based on the `ANT` column (the species of ant symbiont living with the acacia)
 d.  The same plot as (c), but instead of different colors show different species of ant (values of `ANT`) each in a separate subplot.
@@ -98,33 +92,33 @@ d.  The same plot as (b), but with the different families each in their own subp
 In this exercise, we will be making a number of different histograms with the `acacia` dataset.
 
 a.  Make a bar plot of the number of acacia with each mutualist ant species (using the `ANT` column).
-b.  Make a histogram of the height of acacia (using the `HEIGHT` column). Label the x axis "Height (m)" and the y axis "Number of Acacia".
+b.  Make a histogram of the height of acacia (using the `HEIGHT` column). Label the x-axis "Height (m)" and the y-axis "Number of Acacia".
 c.  Make a plot that shows histograms of both `AXIS1` and `AXIS2`. Due to the way the data are structured, you’ll need to add a 2nd geom_histogram() layer that specifies a new aesthetic.\
-    To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument `alpha = 0.3`. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x axis "Canopy Diameter (m)" and the y axis "Number of Acacia".
+    To make it possible to see both sets of bars you’ll need to make them transparent with the optional argument `alpha = 0.3`. Set the color for `AXIS1` to "red" and `AXIS2` to "black" using the `fill` argument. Label the x-axis "Canopy Diameter (m)" and the y-axis "Number of Acacia".
 d.  Use `facet_wrap()` to make the same plot as (c) but with one subplot for each treatment. Set the number of bins in the histogram to 10.
 
 ### 4. Acacia and Ants Data Manipulation (20 pts)
 
-Run the following line of code to use `read_tsv` from the `readr` package to read in the data from "TREE.txt". This line of code is using the `col_types` argument to specify the the `HEIGHT` and `AXIS_2` columns should have their data read is as the data class "double," which is like "numeric."
+Run the following line of code to use `read_tsv` from the `readr` package to read in the data from `TREE.txt`. This line of code is using the `col_types` argument to specify the the `HEIGHT` and `AXIS_2` columns should have their data read is as the data class "double," which is like "numeric."
 
-The code might spit out a "warning", but everything should work fine (you'll see the `trees` object in your environment).
+The code might spit out a warning, but everything should work fine (you'll see the `trees` object in your environment).
 
 ```{r}
 # you can ignore the "warning"
 trees <- read_tsv("TREE.txt",
                   col_types = list(HEIGHT = col_double(),
-                                   AXIS_2 = col_double())) |> drop_na(TREATMENT)
+                                   AXIS_2 = col_double())) |> 
+  drop_na(TREATMENT)
 ```
-
 
 Now that you have the `trees` data frame, do the following:
 
 a.  Update the `trees` data frame with a new column named `canopy_area` that contains the estimated canopy area calculated as the value in the `AXIS_1` column times the value in the `AXIS_2` column.
 b.  Show output of the `trees` data frame with just the `SURVEY`, `YEAR`, `SITE`, and `canopy_area` columns (do not overwrite the `trees` object, though).
-c.  Make a scatter plot with `canopy_area` on the x axis and `HEIGHT` on the y axis. Color the points by `TREATMENT` and plot the points for each value in the `SPECIES` column in a separate subplot. Label the x axis "Canopy Area (m)" and the y axis "Height (m)". Make the point size 2.
+c.  Make a scatter plot with `canopy_area` on the x-axis and `HEIGHT` on the y axis. Color the points by `TREATMENT` and plot the points for each value in the `SPECIES` column in a separate subplot. Label the x-axis "Canopy Area (m)" and the y axis "Height (m)". Make the point size 2.
 d.  That's a big outlier in the plot from (c). 50 by 50 meters is a little too big for a real Acacia, so filter the data to remove any values for `AXIS_1` and `AXIS_2` that are over 20 and update the data frame. Then remake the graph.
 e.  Using the data without the outlier (i.e., the data generated in (d)), find out how the abundance of each species has been changing through time. Use `group_by`, `summarize`, and `n` to make a data frame with `YEAR`, `SPECIES`, and an `abundance` column that has the number of individuals in each species in each year. Print out this data frame.
-f.  Using the data frame generated in (e), make a line plot with points (by using `geom_line` in addition to `geom_point`) with `YEAR` on the x axis and `abundance` on the y axis with one subplot per species. To let you seen each trend clearly let the scale for the y axis vary among plots by adding `scales = "free_y"` as an optional argument to `facet_wrap`.
+f.  Using the data frame generated in (e), make a line plot with points (by using `geom_line` in addition to `geom_point`) with `YEAR` on the x axis and `abundance` on the y-axis with one subplot per species. To let you seen each trend clearly let the scale for the y-axis vary among plots by adding `scales = "free_y"` as an optional argument to `facet_wrap`.
 
 ### 5. Adult vs. Newborn Size (20 pts)
 
@@ -140,7 +134,9 @@ download.file("https://esapubs.org/archive/ecol/E084/093/Mammal_lifehistories_v2
 read_tsv("Mammal_lifehistories_v2.txt")
 ```
 
-The code below will read in the dataset and save it as the object `mammal_histories`. You should recognize the `na` argument in the `read_tsv()` function; this will handle our -999 values and convert them to NAs. This code also uses a handy function called `rename` from the `tidyverse` to rename columns, removing any special characters.
+The code below will read in the dataset and save it as the object `mammal_histories`.
+
+You should recognize the `na` argument in the `read_tsv()` function; this will handle our -999 values and convert them to NAs. This code also uses a handy function called `rename` from the `tidyverse` to rename columns, removing any special characters.
 
 ```{r}
 mammal_histories <- read_tsv("Mammal_lifehistories_v2.txt", 
@@ -170,13 +166,13 @@ Sometimes we think our code runs, but it only actually works because of somethin
 
 To make sure it actually runs, you should save your work and then run it in a clean (read: empty) environment.
 
-I have actually be forcing the issue by having you "knit" your file before submitting it. To successfully knit, every RMarkdown file must be "self-contained," meaning every line of code that is necessary to run anything in the .Rmd file must be written in the .Rmd file. The file doesn't recognize things already in the environment.
+I have actually be forcing the issue by having you "render" your file before submitting it. To successfully render, every Quarto file must be "self-contained," meaning every line of code that is necessary to run anything in the `.qmd` file must be written in the `.qmd` file. The file doesn't recognize things already in the environment.
 
-For example, if you use a function from the `readr` package (e.g., `read_csv`) anywhere in your .Rmd file, you will need to have `library(readr)` in a code chunk in your .Rmd file before any line with `read_csv`.
+For example, if you use a function from the `readr` package (e.g., `read_csv`) anywhere in your `.qmd` file, you will need to have `library(readr)` in a code chunk in your .Rmd file before any line with `read_csv`.
 
 Similarly, if you have a line of code referencing an object (like a data frame), you need to have a line of code beforehand in your .Rmd file that creates the object.
 
-While attempting to knit a document is one way to learn if your code actually runs the way you think it should, there are other (and maybe better) ways to test this out before you ever try to knit a document.
+While attempting to render a document is one way to learn if your code actually runs the way you think it should, there are other (and maybe better) ways to test this out before you ever try to knit a document.
 
 Follow these steps in RStudio to make sure your code really runs:
 
@@ -188,7 +184,7 @@ Follow these steps in RStudio to make sure your code really runs:
 
 ![](images/clear-rstudio-environment-screenshot.png){fig-align="center"}
 
-The `Envirnment` tab should now say "Environment is empty."
+The `Environment` tab should now say "Environment is empty."
 
 ![](images/empty-rstudio-environment-screenshot.png){fig-align="center"}
 
