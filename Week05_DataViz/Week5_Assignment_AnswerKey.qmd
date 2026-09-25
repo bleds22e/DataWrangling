@@ -153,7 +153,7 @@ trees
 
 # 4b
 print("4b")
-select(trees, SURVEY, YEAR, SITE, SPECIES, canopy_area)
+select(trees, SURVEY, YEAR, SITE, canopy_area)
 
 # 4c
 print("4c")
