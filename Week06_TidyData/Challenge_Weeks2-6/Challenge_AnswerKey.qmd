@@ -25,16 +25,13 @@ download.file("https://esapubs.org/archive/ecol/E095/178/MamFuncDat.txt", "data/
 ### 1. Import the Data
 
 ```{r}
-print("1: dimensions (rows, columns) of each data frame")
+print("1")
 surveys       <- read_csv("data/surveys.csv")
 plots         <- read_csv("data/plots.csv")
 species       <- read_csv("data/species.csv")
 mammal_traits <- read_tsv("data/MamFuncDat.txt")
 
-dim(surveys)
-dim(plots)
-dim(species)
-dim(mammal_traits)
+surveys; plots; species; mammal_traits
 ```
 
 ### 2. Tidy the Trait Table
@@ -57,7 +54,7 @@ rodent_species <- species |>
   unite("sci_name", genus, species, sep = " ", remove = FALSE)
 rodent_species
 
-print("3b: rodent species with no match in the trait table")
+print("3b")
 rodent_species |>
   left_join(traits, join_by(sci_name)) |>
   filter(is.na(mass_g)) |>
@@ -178,10 +175,10 @@ diet_plot
 ggsave("plots/community_diet.png", diet_plot, width = 6, height = 4)
 ```
 
-### Extension: Do the Database Masses Match What Portal Measured?
+### 8: Do the Database Masses Match What Portal Measured?
 
 ```{r}
-print("Extension a-b")
+print("8a-b")
 mass_check <- portal |>
   group_by(sci_name, mass_g) |>
   summarize(n_captures = n(),
@@ -190,7 +187,7 @@ mass_check <- portal |>
   filter(!is.na(mean_weight_g))
 mass_check
 
-print("Extension c")
+print("8c")
 ggplot(mass_check, aes(x = mass_g, y = mean_weight_g)) +
   geom_point() +
   geom_smooth(method = "lm") +
@@ -200,7 +197,7 @@ ggplot(mass_check, aes(x = mass_g, y = mean_weight_g)) +
        y = "Mean measured weight at Portal (g)") +
   theme_bw()
 
-print("Extension d")
+print("8d")
 mass_check |>
   mutate(ratio = mass_g / mean_weight_g) |>
   arrange(desc(ratio)) |>
