@@ -1,8 +1,8 @@
 ---
 title: "Week 6 Assignment"
-author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
+date: today
 format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -21,23 +21,19 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
-Oct 7 at 2:00 pm
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week6_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
+Oct 6 at 11 am
 
 # Assignment Exercises
 
@@ -59,8 +55,13 @@ The first 3 rows of the file are metadata or empty, which we do not want.
 
 When you use `read_csv` to read in the data and save the output, you will want to do a few things:
 
--   ensure you are using the correct file path (pointing R into the `data` folder first, then the name of the file)
--   add the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with the rows of metadata.
+- ensure you are using the correct file path (pointing R into the `data` folder first, then the name of the file)
+- add the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with the rows of metadata.
+
+```{r}
+# read in the file here
+```
+
 
 a.  Currently, this data is in a wide format. We want to convert this to a longer format and make it tidy. Use the `pivot_longer` function to do so. Save the output as an object.
 
@@ -84,7 +85,7 @@ b.  Use the `fill()` function to fill in the missing values in the first column.
 
 c.  Using the data frame you created in (b), put the data in a tidy format. You'll need to use the same trick with the year column names as you did in 1a. Save the output as an object.
 
-d.  Using the data frame you created in (c), only keep the rows for non-OECD members. Then, wrangle the data so that it is back in wide format. This time, however, each row should represent a year and each country will have its own column. Your final data frame should only have a year column and each country's column.
+d.  Using the data frame you created in (c), keep only the rows for non-OECD members. Then, wrangle the data so that it is back in wide format. This time, however, each row should represent a year and each country will have its own column. Your final data frame should only have a year column and each country's column.
 
 ### 3. Santa Cruz Rodents Data Cleaning (20 pts)
 
@@ -153,8 +154,10 @@ a.  Use the `separte()` function to create columns for the genus and species (fr
 
 b.  Use `pivot_longer` so that `density` and `mass` end up in one column and the values end up in another column.
 
-c.  Even though the data from (b) is longer, it isn't tidier. Explain why not.
+c.  Even though the data from (b) is longer, it isn't necessarily tidier. Explain why not.
 
 d.  Use the `unite()` function to bring the genus and species column back together as one column with whatever separator you choose.
 
 e.  Use `pivot_wider()` to bring the data frame back to it's original state.
+
+### 7. Challenge (Optional)

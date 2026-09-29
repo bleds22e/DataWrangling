@@ -1,8 +1,9 @@
 ---
 title: 'Week 6: Making Untidy Data Tidy'
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
+date: today
 format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -57,7 +58,7 @@ Is this good data structure? Why or why not? What do we need to fix?
 
 Before we get started, let's add a `treeid` column to our data frame using the `mutate` function from `dplyr`. We want one `treeid` for each row because there is one tree for each row. We can use the `.before` argument to determine where the new column in located in the data frame.
 
-Because the `Plot ID` column has a space in its name, we can't reference it as we normally would. Instead, we can put backticks around it.
+Because the `Plot ID` column has a space in its name, we can't reference it as we normally would. Instead, we can put back ticks around it.
 
 ```{r}
 
@@ -65,7 +66,7 @@ Because the `Plot ID` column has a space in its name, we can't reference it as w
 
 ## Renaming Columns
 
-After a while, putting backticks around column names is going to get tedious. Thankfully, the `tidyverse` has a helpful function for renaming columns.
+After a while, putting back ticks around column names is going to get tedious. Thankfully, the `tidyverse` has a helpful function for renaming columns.
 
 The argument in `rename()` is the new name of the column equal to the old name.
 
@@ -113,14 +114,16 @@ One common issue with wide data is that data is spread over multiple columns tha
 
 To get the data in this form, we can use a function from `tidyr` called `pivot_longer`.
 
-## Pivot Longer
+### Pivot Longer
 
-The `pivot_longer()` function takes the following arguments (as well as many other optional arguments). This function was previously called `spread()`, which you might still see in other people's code sometimes.
+The `pivot_longer()` function "lengthens" the data, increasing the number of rows and decreasing the number of columns. It was previously called `gather()`, which you might still see in other people's code sometimes.
 
--   the data frame
--   columns to include (or not include)
--   `names_to`: the name of the new column to put the previous column names in
--   `values_to`: the name of the new column to put the values from the cells in
+The `pivot_longer()` function takes the following arguments (and many other optional ones):
+
+- the data frame
+- columns to include (or not include)
+- `names_to`: the name of the new column to put the previous column names in
+- `values_to`: the name of the new column to put the values from the cells in
 
 Any redundant or unnecessary columns will be automatically removed.
 
@@ -152,7 +155,7 @@ Alternatively, we could use the `drop_na()` function, which does the same thing.
 
 ```
 
-### Let's Practice!
+#### Let's Practice!
 
 In the assignment, work on Question 1a and 1b.
 
@@ -160,16 +163,16 @@ In the assignment, work on Question 1a and 1b.
 
 There are a number of ways that we can work with character strings, and we will cover many of those more in depth in another lesson. For now, we will stick to one helpful function called `extract()`.
 
-Let's say we want the `Stem` column to have only the number of the stem (1-5) rather than "TreeGirth1".
+Let's say we want the `StemID` column to have only the number of the stem (1-5) rather than "TreeGirth1".
 
 `extract()` will extract one or more values from a column. It uses something called "regular expressions." We might get into details about regular expression later, but we won't worry about them too much for now.
 
 The arguments for `extract` are:
 
--   the data frame
--   the name of the column from which we want to extract something (`col`)
--   the name(s) of the new column(s) (`into`)
--   the "regular expression" specifying what to extract (we will talk more about regular expressions, or "regex", later in the semester; `regex`)
+- the data frame
+- the name of the column from which we want to extract something (`col`)
+- the name(s) of the new column(s) (`into`)
+- the "regular expression" specifying what to extract (we will talk a little more about regular expressions, or "regex," next week)
 
 ```{r}
 
@@ -195,20 +198,18 @@ In the `SpCode` column, the Genus and Species information for each tree are comb
 
 We can do so using the `separate()` function, which takes the following arguments:
 
-We can do so using the `separate()` function, which takes the following arguments:
-
--   the data frame
--   the name of the column to separate (`col`)
--   new column names (`into`)
--   the separator value, character, or position (if character, it must be in quotation marks, e.g., "-"; `sep`)
+- the data frame
+- the name of the column to separate (`col`)
+- new column names (`into`)
+- the separator value, character, or position (if character, it must be in quotation marks, e.g., "-"; `sep`)
 
 ```{r}
 
 ```
 
-## Pivot Wider
+### Pivot Wider
 
-Occasionally, we need to convert data the other way: from long to wide.
+Occasionally, we need to convert data the other way---from long to wide---creating more columns and fewer rows.
 
 For example, this is fairly common for analyses of community-level data. Many packages will want cross-tab (or wide) data, such as a site by species matrix.
 
@@ -220,24 +221,28 @@ Let's demonstrate with an example calculating the number of stems per species. F
 
 To get the site by species matrix, we need to make the dataset wider. Since the species ID will end up as column names, we need to bring the columns back together.
 
-### Let's Practice!
+#### Let's Practice!
 
 Work on Question 2 in the assignment.
 
-### `unite` Columns into One
+### `unite()` Columns into One
 
 To bring multiple columns together into one column, we use a function that does the opposite of `separate()`: `unite()`.
 
 The `unite()` function takes the following arguments:
 
--   the data frame
--   the name of the new column to hold the united date (`col`); this should be written in quotation marks
--   the columns to be united
--   the separator value, character, or position (`sep`)
+- the data frame
+- the name of the new column to hold the united date (`col`); this should be written in quotation marks
+- the columns to be united
+- the separator value, character, or position (`sep`)
 
 ```{r}
 
 ```
+
+#### Let's Practice!
+
+Work on Question 6.
 
 ### Replacing Values
 
@@ -247,9 +252,9 @@ To do this, we can use a combination of the mutate function with the `replace` f
 
 The `replace` function, when used inside the `mutate` function, the arguments are:
 
--   the name of the column
--   the condition that, if met, means the value will be replaced
--   the value to use as the replacement
+- the name of the column
+- the condition that, if met, means the value will be replaced
+- the value to use as the replacement
 
 ```{r}
 
@@ -259,13 +264,13 @@ Now we can go ahead and convert the data into a wider format.
 
 ### `pivot_wider()`
 
-Using `pivot_wider()` will spread values from one column into column names. It will then fill in the appropriate values. Like `pivot_longer()`, `pivot_wider()` has an older counterpart that you will likely still see called `gather()`.
+Using `pivot_wider()` will spread values from one column into column names. It will then fill in the appropriate values. Like `pivot_longer()`, `pivot_wider()` has an older counterpart that you might still see called `spread()`.
 
 `pivot_wider()` has many arguments, but these are the required ones:
 
--   the data frame
--   the name of column to use for column names
--   the name of column that contains the values to fill in the cells
+- the data frame
+- the name of column to use for column names
+- the name of column that contains the values to fill in the cells
 
 ```{r}
 

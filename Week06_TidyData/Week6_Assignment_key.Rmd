@@ -21,15 +21,15 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
@@ -55,8 +55,8 @@ The first 3 rows of the file are metadata or empty, which we do not want.
 
 When you use `read_csv` to read in the data and save the output, you will want to do a few things:
 
--   ensure you are using the correct file path (pointing R into the `data` folder first, then the name of the file)
--   add the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with the rows of metadata.
+- ensure you are using the correct file path (pointing R into the `data` folder first, then the name of the file)
+- add the arguments `skip = 4` and `col_names = TRUE` to the `read_csv` function to deal with the rows of metadata.
 
 ```{r}
 forest <- read_csv("data/forest_per_country.csv", skip = 4, col_names = TRUE)
