@@ -46,7 +46,6 @@ traits <- mammal_traits |>
          mass_g = `BodyMass-Value`) |>
   select(sci_name, mass_g, `Diet-Inv`:`Diet-PlantO`)
 traits
-dim(traits)
 ```
 
 ### 3. Match Portal Species to Traits
@@ -64,7 +63,7 @@ rodent_species |>
   filter(is.na(mass_g)) |>
   select(species_id, sci_name, genus, species, mass_g)
 
-print("3c: 24 species")
+print("3c")
 rodent_traits <- species |>
   filter(taxa == "Rodent") |>
   mutate(species = replace(species, species == "harrisi", "harrisii"),
@@ -72,7 +71,6 @@ rodent_traits <- species |>
   unite("sci_name", genus, species, sep = " ", remove = FALSE) |>
   inner_join(traits, join_by(sci_name))
 rodent_traits
-nrow(rodent_traits)
 ```
 
 ### 4. Build the Analysis Table
@@ -84,11 +82,6 @@ portal <- surveys |>
   inner_join(plots, join_by(plot_id)) |>
   filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure")
 portal
-
-print("4: captures per plot type")
-portal |>
-  group_by(plot_type) |>
-  summarize(n_captures = n())
 ```
 
 ### 5. Relative Abundance of Kangaroo Rats
@@ -104,11 +97,6 @@ species_abund <- portal |>
   ungroup() |>
   arrange(plot_type, desc(rel_abund))
 species_abund
-
-print("5a: relative abundances sum to 1 within each plot type")
-species_abund |>
-  group_by(plot_type) |>
-  summarize(total = sum(rel_abund))
 
 print("5b")
 species_abund |>
@@ -162,11 +150,6 @@ community_diet <- diet_long |>
   summarize(mean_percent = mean(diet_percent)) |>
   ungroup()
 community_diet
-
-print("7b: each plot type sums to 100")
-community_diet |>
-  group_by(plot_type) |>
-  summarize(total = sum(mean_percent))
 
 print("7c")
 community_diet <- community_diet |>

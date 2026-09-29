@@ -12,6 +12,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Challenge Description
 
+### Acknowledgment
+
+Most of this challenge (the question, the choice of data, and the solution code) was created by Claude, an AI model from Anthropic, with direction and revisions from Ellen Bledsoe.
+
+Anthropic. (2026). *Claude Sonnet 5.5* [Large language model]. <https://www.anthropic.com/claude>
+
 ### Purpose
 
 This optional challenge is a chance to test yourself. The goal is to pull together everything from Weeks 2-6 -- importing data, wrangling with `dplyr`, summarizing by group, joining tables, reshaping with `tidyr`, and plotting with `ggplot2` -- to answer a real ecological question with openly available data, from download to finished figure.
@@ -20,22 +26,22 @@ This optional challenge is a chance to test yourself. The goal is to pull togeth
 
 Since 1977, researchers at the Portal Project (a Chihuahuan Desert site near Portal, Arizona) have trapped rodents on 24 experimental plots. On the *Long-term Krat Exclosure* plots, fences with small holes keep out the kangaroo rats (genus *Dipodomys*), some of the largest rodents at the site, while smaller rodents can pass through. *Control* plots are left alone.
 
-You have compared these plots before. In this challenge, you will ask a different question: **when the kangaroo rats are removed, what kind of rodent community is left? Is it made up of smaller animals? Do they eat different foods?**
+You have compared these plots before. In this challenge, you will ask a different question: when the kangaroo rats are removed, what kind of rodent community is left? Is it made up of smaller animals? Do they eat different foods?
 
-The Portal data record *which species* were caught, but not what those species are like. To fill that gap, you will bring in a second open dataset, **EltonTraits 1.0** (Wilman et al. 2014), which estimates the body mass and diet of every mammal (and bird) in the world.
+The Portal data record *which species* were caught, but not what those species are like. To fill that gap, you will bring in a second open dataset, EltonTraits 1.0 (Wilman et al. 2014), which estimates the body mass and diet of every mammal (and bird) in the world.
 
 ### The Data
 
 All of the data are free to download; the set-up code below does that for you.
 
-- **Portal Project Teaching Database** (Ernest et al., CC0): the `surveys.csv`, `plots.csv`, and `species.csv` tables you already know. <https://doi.org/10.6084/m9.figshare.1314459>
-- **EltonTraits 1.0, mammals** (Wilman et al. 2014, *Ecology* 95:2027): `MamFuncDat.txt`, a tab-delimited file with one row per mammal species. <https://doi.org/10.1890/13-1917.1>
+- Portal Project Teaching Database (Ernest et al., CC0): the `surveys.csv`, `plots.csv`, and `species.csv` tables you already know. <https://doi.org/10.6084/m9.figshare.1314459>
+- EltonTraits 1.0, mammals (Wilman et al. 2014, *Ecology* 95:2027): `MamFuncDat.txt`, a tab-delimited file with one row per mammal species. <https://doi.org/10.1890/13-1917.1>
 
 The EltonTraits columns you will use:
 
 - `Scientific`: the species name, written "Genus species"
 - `BodyMass-Value`: average adult body mass, in grams
-- `Diet-Inv` through `Diet-PlantO`: ten columns giving the estimated **percent** of the species' diet made up of each food type. The ten values for a species add up to 100.
+- `Diet-Inv` through `Diet-PlantO`: ten columns giving the estimated percent of the species' diet made up of each food type. The ten values for a species add up to 100.
 
 The ten diet categories are:
 
@@ -52,21 +58,21 @@ The ten diet categories are:
 
 ### Task
 
-Work through the parts below **in order**; each one builds on the last. Unlike the weekly assignments, I will usually tell you *what* to produce rather than *which function* to use. Everything you need was covered in Weeks 2-6, but you will not need every function on this list:
+Work through the parts below in order; each one builds on the last. Unlike the weekly assignments, I will usually tell you *what* to produce rather than *which function* to use. Everything you need was covered in Weeks 2-6, but you will not need every function on this list:
 
-- **Weeks 2-3:** `na.rm = TRUE`, `select()`, `mutate()`, `filter()`, `arrange()`, `desc()`, pipes
-- **Week 4:** `group_by()`, `summarize()`, `n()`, `ungroup()`, `inner_join()`, `left_join()`, `join_by()`
-- **Week 5:** `ggplot()`, `geom_point()`, `geom_line()`, `geom_smooth()`, `facet_wrap()`, `scale_x_log10()`, `labs()`, themes, `ggsave()`
-- **Week 6:** `read_tsv()`, `rename()`, `pivot_longer()`, `pivot_wider()`, `extract()`, `separate()`, `unite()`, `replace()`, `na_if()`, `drop_na()`, file paths
+- Weeks 2-3: `na.rm = TRUE`, `select()`, `mutate()`, `filter()`, `arrange()`, `desc()`, pipes
+- Week 4: `group_by()`, `summarize()`, `n()`, `ungroup()`, `inner_join()`, `left_join()`, `join_by()`
+- Week 5: `ggplot()`, `geom_point()`, `geom_line()`, `geom_smooth()`, `facet_wrap()`, `scale_x_log10()`, `labs()`, themes, `ggsave()`
+- Week 6: `read_tsv()`, `rename()`, `pivot_longer()`, `pivot_wider()`, `extract()`, `separate()`, `unite()`, `replace()`, `na_if()`, `drop_na()`, file paths
 
 Use pipes (`|>` or `%>%`) wherever they make your code easier to read, and save intermediate results with the object names I give you; later parts rely on them.
 
 ### Criteria for Success
 
-This challenge is **optional** and is not graded, but a successful attempt looks like this:
+This challenge is optional and is not graded, but a successful attempt looks like this:
 
 - Code is within the provided code chunks or new code chunks are created where necessary
-- Code chunks run without errors, **from top to bottom in a fresh R session** (remember the "Restart R and Run All Chunks" check from Week 5)
+- Code chunks run without errors, from top to bottom in a fresh R session (remember the "Restart R and Run All Chunks" check from Week 5)
 - Code chunks have brief comments indicating which code is answering which part of the question
 - Figures are saved in a folder called `plots`
 
@@ -107,8 +113,6 @@ a.  Rename `Scientific` to `sci_name` and `BodyMass-Value` to `mass_g`.
 
 b.  Keep only the `sci_name` column, the `mass_g` column, and the ten diet columns (`Diet-Inv` through `Diet-PlantO`). Save the result as `traits`.
 
-    *Checkpoint:* `traits` should have 5,400 rows and 12 columns.
-
 ::: callout-tip
 ## Tip! Column Names with Special Characters
 
@@ -131,13 +135,11 @@ a.  From the `species` table, keep only the rodents (use the `taxa` column). The
 By default, `unite()` removes the columns it combines. Check `?unite` to find the argument that keeps them.
 :::
 
-b.  Join your table from (a) to `traits` so that **every rodent species is kept**, even if it has no match in the trait table. Then filter to show only the rodent species that did *not* get a body mass.
+b.  Join your table from (a) to `traits` so that every rodent species is kept, even if it has no match in the trait table. Then filter to show only the rodent species that did *not* get a body mass.
 
-c.  Two of the species from (b) are not real gaps: the same animal is simply named differently in the two databases. Fix those two using `mutate()` and `replace()` (change the name in the **Portal** table, not the trait table). The rest cannot be fixed (they are not identified to species). *(Tip: use `View(traits)` and the search box in the data viewer to look for similar names.)*
+c.  Two of the species from (b) are not real gaps: the same animal is simply named differently in the two databases. Fix those two using `mutate()` and `replace()` (change the name in the Portal table, not the trait table). The rest cannot be fixed (they are not identified to species). *(Tip: use `View(traits)` and the search box in the data viewer to look for similar names.)*
 
     Then redo the join, this time keeping only species that are in *both* tables. Save the result as `rodent_traits`.
-
-    *Checkpoint:* `rodent_traits` should have 24 rows (one per species).
 
 ```{r}
 
@@ -145,9 +147,7 @@ c.  Two of the species from (b) are not real gaps: the same animal is simply nam
 
 ### 4. Build the Analysis Table
 
-Combine `surveys`, `rodent_traits`, and `plots` into one data frame called `portal`, which has one row per rodent capture, along with the traits of that species and the type of plot it was caught on. Keep only captures from **Control** plots and **Long-term Krat Exclosure** plots.
-
-*Checkpoint:* `portal` should have 20,451 rows (15,428 on Control plots and 5,023 on Long-term Krat Exclosure plots).
+Combine `surveys`, `rodent_traits`, and `plots` into one data frame called `portal`, which has one row per rodent capture, along with the traits of that species and the type of plot it was caught on. Keep only captures from Control plots and Long-term Krat Exclosure plots.
 
 ```{r}
 
@@ -155,9 +155,7 @@ Combine `surveys`, `rodent_traits`, and `plots` into one data frame called `port
 
 ### 5. Relative Abundance of Kangaroo Rats
 
-a.  For each plot type, calculate the number of captures of each species and its **relative abundance** (the species' captures divided by all captures on that plot type). Save this as `species_abund`, sorted so the most abundant species on each plot type come first.
-
-    *Checkpoint:* within each plot type, the relative abundances should add up to 1.
+a.  For each plot type, calculate the number of captures of each species and its relative abundance (the species' captures divided by all captures on that plot type). Save this as `species_abund`, sorted so the most abundant species on each plot type come first.
 
 ::: callout-tip
 ## Tip! Watch Your Groups
@@ -192,8 +190,6 @@ Now let's compare what the two rodent communities eat. Each captured animal is a
 a.  Starting from `portal`, put the ten diet columns into long format: one row per capture per diet category, with one column for the diet category and one for the percent. Then clean up the diet category names so they read `Inv`, `Seed`, etc., rather than `Diet-Inv`, `Diet-Seed`, etc.
 
 b.  For each plot type and each diet category, calculate the mean percent of diet across all captures (the community's "average diet"). Save this as `community_diet`.
-
-    *Checkpoint:* for each plot type, the ten mean percentages should add up to 100.
 
 c.  Five of the diet categories are 0% for every rodent at Portal. Remove them from `community_diet` by first converting the 0s to `NA` and then dropping those rows. Overwrite `community_diet`. *(Do this after (b), not before; removing the 0s first would change the averages.)*
 
