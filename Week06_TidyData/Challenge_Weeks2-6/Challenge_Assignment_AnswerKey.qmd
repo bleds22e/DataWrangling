@@ -1,0 +1,225 @@
+---
+title: "Challenge: Kangaroo Rats, Diets, and Body Size"
+author: "Ellen Bledsoe"
+date: "`r Sys.Date()`"
+format: pdf
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+### Set-up
+
+```{r}
+library(tidyverse)
+
+dir.create("data", showWarnings = FALSE)
+
+download.file("https://ndownloader.figshare.com/files/2292172", "data/surveys.csv", quiet = TRUE)
+download.file("https://ndownloader.figshare.com/files/3299474", "data/plots.csv", quiet = TRUE)
+download.file("https://ndownloader.figshare.com/files/3299483", "data/species.csv", quiet = TRUE)
+download.file("https://esapubs.org/archive/ecol/E095/178/MamFuncDat.txt", "data/MamFuncDat.txt", quiet = TRUE)
+```
+
+### 1. Import the Data
+
+```{r}
+print("1: dimensions (rows, columns) of each data frame")
+surveys       <- read_csv("data/surveys.csv")
+plots         <- read_csv("data/plots.csv")
+species       <- read_csv("data/species.csv")
+mammal_traits <- read_tsv("data/MamFuncDat.txt")
+
+dim(surveys)
+dim(plots)
+dim(species)
+dim(mammal_traits)
+```
+
+### 2. Tidy the Trait Table
+
+```{r}
+print("2")
+traits <- mammal_traits |>
+  rename(sci_name = Scientific,
+         mass_g = `BodyMass-Value`) |>
+  select(sci_name, mass_g, `Diet-Inv`:`Diet-PlantO`)
+traits
+dim(traits)
+```
+
+### 3. Match Portal Species to Traits
+
+```{r}
+print("3a")
+rodent_species <- species |>
+  filter(taxa == "Rodent") |>
+  unite("sci_name", genus, species, sep = " ", remove = FALSE)
+rodent_species
+
+print("3b: rodent species with no match in the trait table")
+rodent_species |>
+  left_join(traits, join_by(sci_name)) |>
+  filter(is.na(mass_g)) |>
+  select(species_id, sci_name, genus, species, mass_g)
+
+print("3c: 24 species")
+rodent_traits <- species |>
+  filter(taxa == "Rodent") |>
+  mutate(species = replace(species, species == "harrisi", "harrisii"),
+         genus = replace(genus, species_id == "PH", "Chaetodipus")) |>
+  unite("sci_name", genus, species, sep = " ", remove = FALSE) |>
+  inner_join(traits, join_by(sci_name))
+rodent_traits
+nrow(rodent_traits)
+```
+
+### 4. Build the Analysis Table
+
+```{r}
+print("4")
+portal <- surveys |>
+  inner_join(rodent_traits, join_by(species_id)) |>
+  inner_join(plots, join_by(plot_id)) |>
+  filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure")
+portal
+
+print("4: captures per plot type")
+portal |>
+  group_by(plot_type) |>
+  summarize(n_captures = n())
+```
+
+### 5. Relative Abundance of Kangaroo Rats
+
+```{r}
+print("5a")
+species_abund <- portal |>
+  group_by(plot_type, genus, species) |>
+  summarize(n = n()) |>
+  ungroup() |>
+  group_by(plot_type) |>
+  mutate(rel_abund = n / sum(n)) |>
+  ungroup() |>
+  arrange(plot_type, desc(rel_abund))
+species_abund
+
+print("5a: relative abundances sum to 1 within each plot type")
+species_abund |>
+  group_by(plot_type) |>
+  summarize(total = sum(rel_abund))
+
+print("5b")
+species_abund |>
+  filter(genus == "Dipodomys") |>
+  group_by(plot_type) |>
+  summarize(prop_krats = sum(rel_abund))
+```
+
+### 6. Body Size Through Time
+
+```{r}
+print("6a")
+size_by_year <- portal |>
+  group_by(year, plot_type) |>
+  summarize(n_captures = n(),
+            mean_mass_g = mean(mass_g)) |>
+  ungroup()
+size_by_year
+
+print("6b")
+size_plot <- ggplot(size_by_year, aes(x = year, y = mean_mass_g)) +
+  geom_point() +
+  geom_line() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~ plot_type) +
+  labs(x = "Year",
+       y = "Community mean body mass (g)") +
+  theme_bw()
+size_plot
+
+# 6c
+dir.create("plots", showWarnings = FALSE)
+ggsave("plots/body_size_through_time.png", size_plot, width = 8, height = 4)
+```
+
+### 7. Community Diet
+
+```{r}
+print("7a")
+diet_long <- portal |>
+  pivot_longer(`Diet-Inv`:`Diet-PlantO`,
+               names_to = "diet",
+               values_to = "diet_percent") |>
+  extract(diet, into = "diet", regex = "Diet-(.*)")
+diet_long |>
+  select(record_id, sci_name, plot_type, diet, diet_percent)
+
+print("7b")
+community_diet <- diet_long |>
+  group_by(plot_type, diet) |>
+  summarize(mean_percent = mean(diet_percent)) |>
+  ungroup()
+community_diet
+
+print("7b: each plot type sums to 100")
+community_diet |>
+  group_by(plot_type) |>
+  summarize(total = sum(mean_percent))
+
+print("7c")
+community_diet <- community_diet |>
+  mutate(mean_percent = na_if(mean_percent, 0)) |>
+  drop_na(mean_percent)
+community_diet
+
+print("7d")
+diet_compare <- community_diet |>
+  pivot_wider(names_from = plot_type, values_from = mean_percent) |>
+  rename(control = Control,
+         exclosure = `Long-term Krat Exclosure`) |>
+  mutate(difference = exclosure - control) |>
+  arrange(desc(difference))
+diet_compare
+
+print("7e")
+diet_plot <- ggplot(community_diet, aes(x = diet, y = mean_percent, color = plot_type)) +
+  geom_point(size = 3) +
+  labs(x = "Diet category",
+       y = "Mean percent of diet",
+       color = "Plot type") +
+  theme_bw()
+diet_plot
+
+ggsave("plots/community_diet.png", diet_plot, width = 6, height = 4)
+```
+
+### Extension: Do the Database Masses Match What Portal Measured?
+
+```{r}
+print("Extension a-b")
+mass_check <- portal |>
+  group_by(sci_name, mass_g) |>
+  summarize(n_captures = n(),
+            mean_weight_g = mean(weight, na.rm = TRUE)) |>
+  ungroup() |>
+  filter(!is.na(mean_weight_g))
+mass_check
+
+print("Extension c")
+ggplot(mass_check, aes(x = mass_g, y = mean_weight_g)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Database body mass (g)",
+       y = "Mean measured weight at Portal (g)") +
+  theme_bw()
+
+print("Extension d")
+mass_check |>
+  mutate(ratio = mass_g / mean_weight_g) |>
+  arrange(desc(ratio)) |>
+  select(sci_name, n_captures, mass_g, mean_weight_g, ratio)
+```

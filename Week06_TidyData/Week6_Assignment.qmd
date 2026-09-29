@@ -159,5 +159,3 @@ c.  Even though the data from (b) is longer, it isn't necessarily tidier. Explai
 d.  Use the `unite()` function to bring the genus and species column back together as one column with whatever separator you choose.
 
 e.  Use `pivot_wider()` to bring the data frame back to it's original state.
-
-### 7. Challenge (Optional)

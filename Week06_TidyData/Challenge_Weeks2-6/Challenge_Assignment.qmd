@@ -1,0 +1,237 @@
+---
+title: "Challenge: Kangaroo Rats, Diets, and Body Size"
+author: ""    # <- Your name here, in quotation marks
+date: today   # <- No need to edit; this will produce the correct date
+format: pdf
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Challenge Description
+
+### Purpose
+
+This optional challenge is a chance to test yourself. The goal is to pull together everything from Weeks 2-6 -- importing data, wrangling with `dplyr`, summarizing by group, joining tables, reshaping with `tidyr`, and plotting with `ggplot2` -- to answer a real ecological question with openly available data, from download to finished figure.
+
+### The Scientific Question
+
+Since 1977, researchers at the Portal Project (a Chihuahuan Desert site near Portal, Arizona) have trapped rodents on 24 experimental plots. On the *Long-term Krat Exclosure* plots, fences with small holes keep out the kangaroo rats (genus *Dipodomys*), some of the largest rodents at the site, while smaller rodents can pass through. *Control* plots are left alone.
+
+You have compared these plots before. In this challenge, you will ask a different question: **when the kangaroo rats are removed, what kind of rodent community is left? Is it made up of smaller animals? Do they eat different foods?**
+
+The Portal data record *which species* were caught, but not what those species are like. To fill that gap, you will bring in a second open dataset, **EltonTraits 1.0** (Wilman et al. 2014), which estimates the body mass and diet of every mammal (and bird) in the world.
+
+### The Data
+
+All of the data are free to download; the set-up code below does that for you.
+
+- **Portal Project Teaching Database** (Ernest et al., CC0): the `surveys.csv`, `plots.csv`, and `species.csv` tables you already know. <https://doi.org/10.6084/m9.figshare.1314459>
+- **EltonTraits 1.0, mammals** (Wilman et al. 2014, *Ecology* 95:2027): `MamFuncDat.txt`, a tab-delimited file with one row per mammal species. <https://doi.org/10.1890/13-1917.1>
+
+The EltonTraits columns you will use:
+
+- `Scientific`: the species name, written "Genus species"
+- `BodyMass-Value`: average adult body mass, in grams
+- `Diet-Inv` through `Diet-PlantO`: ten columns giving the estimated **percent** of the species' diet made up of each food type. The ten values for a species add up to 100.
+
+The ten diet categories are:
+
+- `Inv`: invertebrates
+- `Vend`: endothermic vertebrates (mammals, birds)
+- `Vect`: ectothermic vertebrates (reptiles, amphibians)
+- `Vfish`: fish
+- `Vunk`: vertebrates, general or unknown
+- `Scav`: scavenged carrion and garbage
+- `Fruit`: fruit
+- `Nect`: nectar
+- `Seed`: seeds
+- `PlantO`: other plant material (grasses, leaves, roots, etc.)
+
+### Task
+
+Work through the parts below **in order**; each one builds on the last. Unlike the weekly assignments, I will usually tell you *what* to produce rather than *which function* to use. Everything you need was covered in Weeks 2-6, but you will not need every function on this list:
+
+- **Weeks 2-3:** `na.rm = TRUE`, `select()`, `mutate()`, `filter()`, `arrange()`, `desc()`, pipes
+- **Week 4:** `group_by()`, `summarize()`, `n()`, `ungroup()`, `inner_join()`, `left_join()`, `join_by()`
+- **Week 5:** `ggplot()`, `geom_point()`, `geom_line()`, `geom_smooth()`, `facet_wrap()`, `scale_x_log10()`, `labs()`, themes, `ggsave()`
+- **Week 6:** `read_tsv()`, `rename()`, `pivot_longer()`, `pivot_wider()`, `extract()`, `separate()`, `unite()`, `replace()`, `na_if()`, `drop_na()`, file paths
+
+Use pipes (`|>` or `%>%`) wherever they make your code easier to read, and save intermediate results with the object names I give you; later parts rely on them.
+
+### Criteria for Success
+
+This challenge is **optional** and is not graded, but a successful attempt looks like this:
+
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors, **from top to bottom in a fresh R session** (remember the "Restart R and Run All Chunks" check from Week 5)
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Figures are saved in a folder called `plots`
+
+# Exercises
+
+### Set-up
+
+Run the following code chunk once. It loads the `tidyverse`, creates a `data` folder if you do not already have one, and downloads the four data files into it.
+
+```{r}
+library(tidyverse)
+
+# create a folder called "data" (does nothing if it already exists)
+dir.create("data", showWarnings = FALSE)
+
+# Portal Project Teaching Database (figshare)
+download.file("https://ndownloader.figshare.com/files/2292172", "data/surveys.csv")
+download.file("https://ndownloader.figshare.com/files/3299474", "data/plots.csv")
+download.file("https://ndownloader.figshare.com/files/3299483", "data/species.csv")
+
+# EltonTraits 1.0, mammals (Ecological Archives)
+download.file("https://esapubs.org/archive/ecol/E095/178/MamFuncDat.txt", "data/MamFuncDat.txt")
+```
+
+### 1. Import the Data
+
+Read the three Portal files and the EltonTraits file into R. Save them as `surveys`, `plots`, `species`, and `mammal_traits`. Pay attention to (1) the folder the files are in and (2) which `read_` function matches each file's delimiter. *(Tip: in the Files tab, click a file and choose "View File" to see how it is delimited.)*
+
+```{r}
+
+```
+
+### 2. Tidy the Trait Table
+
+We only need three kinds of information from `mammal_traits`: the scientific name, the body mass, and the ten diet percentages.
+
+a.  Rename `Scientific` to `sci_name` and `BodyMass-Value` to `mass_g`.
+
+b.  Keep only the `sci_name` column, the `mass_g` column, and the ten diet columns (`Diet-Inv` through `Diet-PlantO`). Save the result as `traits`.
+
+    *Checkpoint:* `traits` should have 5,400 rows and 12 columns.
+
+::: callout-tip
+## Tip! Column Names with Special Characters
+
+R does not like the `-` in names like `Diet-Inv`. As in Week 6, wrap those names in backticks. The colon still works for selecting a range of columns (e.g., `` `Diet-Inv`:`Diet-PlantO` ``).
+:::
+
+```{r}
+
+```
+
+### 3. Match Portal Species to Traits
+
+Portal identifies species with a two-letter `species_id`, but the trait table uses scientific names. The only link between the two is the genus and species names.
+
+a.  From the `species` table, keep only the rodents (use the `taxa` column). Then create a `sci_name` column formatted like the one in `traits` ("Genus species", e.g., `Dipodomys merriami`). Keep the original `genus` and `species` columns, too; you will need them later.
+
+::: callout-tip
+## Tip! Keeping the Original Columns
+
+By default, `unite()` removes the columns it combines. Check `?unite` to find the argument that keeps them.
+:::
+
+b.  Join your table from (a) to `traits` so that **every rodent species is kept**, even if it has no match in the trait table. Then filter to show only the rodent species that did *not* get a body mass.
+
+c.  Two of the species from (b) are not real gaps: the same animal is simply named differently in the two databases. Fix those two using `mutate()` and `replace()` (change the name in the **Portal** table, not the trait table). The rest cannot be fixed (they are not identified to species). *(Tip: use `View(traits)` and the search box in the data viewer to look for similar names.)*
+
+    Then redo the join, this time keeping only species that are in *both* tables. Save the result as `rodent_traits`.
+
+    *Checkpoint:* `rodent_traits` should have 24 rows (one per species).
+
+```{r}
+
+```
+
+### 4. Build the Analysis Table
+
+Combine `surveys`, `rodent_traits`, and `plots` into one data frame called `portal`, which has one row per rodent capture, along with the traits of that species and the type of plot it was caught on. Keep only captures from **Control** plots and **Long-term Krat Exclosure** plots.
+
+*Checkpoint:* `portal` should have 20,451 rows (15,428 on Control plots and 5,023 on Long-term Krat Exclosure plots).
+
+```{r}
+
+```
+
+### 5. Relative Abundance of Kangaroo Rats
+
+a.  For each plot type, calculate the number of captures of each species and its **relative abundance** (the species' captures divided by all captures on that plot type). Save this as `species_abund`, sorted so the most abundant species on each plot type come first.
+
+    *Checkpoint:* within each plot type, the relative abundances should add up to 1.
+
+::: callout-tip
+## Tip! Watch Your Groups
+
+After `summarize()`, look at which groups the data frame is still grouped by (the message printed by `summarize()` tells you). Then think about which groups you want when you calculate relative abundance. Week 4 has a section on this!
+:::
+
+b.  Use `species_abund` to calculate the proportion of all captures that were kangaroo rats (genus *Dipodomys*) on each plot type.
+
+```{r}
+
+```
+
+### 6. Body Size Through Time
+
+Because each captured animal is assigned the database body mass of its species, the average across captures is a *community-weighted mean body mass*. Use `mass_g` for this (not the measured `weight` column; many animals were not weighed).
+
+a.  For each year and each plot type, calculate the number of captures and the community-weighted mean body mass. Save the result as `size_by_year`.
+
+b.  Make a plot with year on the x-axis and mean body mass on the y-axis. Put the two plot types in separate panels, show both the points and a line connecting them, and add a linear trend with `geom_smooth(method = "lm")`. Label the axes clearly and add a theme.
+
+c.  Save your plot into a folder called `plots` (create it first if needed) using `ggsave()` and a file path.
+
+```{r}
+
+```
+
+### 7. Community Diet
+
+Now let's compare what the two rodent communities eat. Each captured animal is assumed to eat the diet of its species.
+
+a.  Starting from `portal`, put the ten diet columns into long format: one row per capture per diet category, with one column for the diet category and one for the percent. Then clean up the diet category names so they read `Inv`, `Seed`, etc., rather than `Diet-Inv`, `Diet-Seed`, etc.
+
+b.  For each plot type and each diet category, calculate the mean percent of diet across all captures (the community's "average diet"). Save this as `community_diet`.
+
+    *Checkpoint:* for each plot type, the ten mean percentages should add up to 100.
+
+c.  Five of the diet categories are 0% for every rodent at Portal. Remove them from `community_diet` by first converting the 0s to `NA` and then dropping those rows. Overwrite `community_diet`. *(Do this after (b), not before; removing the 0s first would change the averages.)*
+
+d.  Reshape `community_diet` to a wide table with one row per diet category and one column for each plot type. Then add a new column with the difference between the two plot types (exclosure minus control) and sort the table so the largest difference is at the top. Save this as `diet_compare`.
+
+e.  Using `community_diet` (the long version), make a plot with the diet category on the x-axis, the mean percent of diet on the y-axis, and the plot types shown in different colors. Make the points size 3, label the axes clearly, add a theme, and save the plot in your `plots` folder.
+
+```{r}
+
+```
+
+### Extension: Do the Database Masses Match What Portal Measured?
+
+Portal researchers weighed most of the animals they caught. Use those measurements to check the database.
+
+a.  For each species in `portal`, calculate the mean measured `weight` and pair it with the species' database `mass_g`.
+
+b.  One species has no measured weights at all, so its mean is `NaN`. Remove it. *(Tip: `is.na()` also catches `NaN`.)*
+
+c.  Make a scatter plot of measured mean weight against database mass with both axes on a log10 scale and a linear model added (`geom_smooth`). Label the axes clearly.
+
+d.  Show the species sorted by how much the database mass disagrees with the measured mean weight (database mass divided by measured mean weight, largest first).
+
+```{r}
+
+```
+
+# Turning in Your Assignment
+
+Follow these steps to successfully turn in your assignment.
+
+1.  Click the `Render` button up near the top of this document. This should produce a PDF file that shows up in the `Files` panel on the bottom-right of your screen. (*If you can't get your file to Knit to PDF, you can submit the .qmd file instead.*)
+2.  Click the empty box to the left of the PDF file in the `Files` panel.
+3.  Click on the blue gear near the top of the `Files` panel and choose Export.
+4.  Put your last name at the front of the file name when prompted, then click the Download button. The PDF file of your assignment is now in your "Downloads" folder on your device.
+5.  Head over to Brightspace/D2L and navigate to the correct Assignment dropbox. Submit the PDF file that you just downloaded.
+
+# Data Sources
+
+- Ernest, M., J. Brown, T. Valone, and E. P. White. *Portal Project Teaching Database*. figshare. <https://doi.org/10.6084/m9.figshare.1314459> (CC0)
+- Wilman, H., J. Belmaker, J. Simpson, C. de la Rosa, M. M. Rivadeneira, and W. Jetz. 2014. EltonTraits 1.0: Species-level foraging attributes of the world's birds and mammals. *Ecology* 95:2027. <https://doi.org/10.1890/13-1917.1>
