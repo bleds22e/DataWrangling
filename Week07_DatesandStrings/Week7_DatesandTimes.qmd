@@ -125,6 +125,8 @@ Now, when we plot the trend of water discharge through 2023, we can see that ggp
 
 ```
 
+| Let's Practice: Work on Question 4a and 4b in the assignment.
+
 ### Extracting Specific Components
 
 Sometimes, we don't want all of the data from the datetime or we want to `filter`, `group_by`, `summarize`, etc. by a part of the datetime.
