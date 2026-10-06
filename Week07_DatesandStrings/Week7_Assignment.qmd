@@ -1,7 +1,7 @@
 ---
-title: "Assignment 14: Dates and Strings"
-author: "Ellen Bledsoe"
-format: gfm
+title: "Assignment 7: Dates and Strings"
+date: today
+format: pdf
 editor: visual
 ---
 
@@ -21,23 +21,19 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
-Dec 9 before class
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week7_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
+Oct 13 before class
 
 # Assignment Exercises
 
@@ -165,3 +161,26 @@ c.  Use `str_remove` to remove the `?` from the `Species` column.
 d.  Use `str_replace` to replace the `?` in hair sample and position with `NA`. Remember to use `"\\?"`.
 
     `stringr` expects a character value, and NA is not a character value--it is a NULL value. To get around this, we need to use `NA_character_` in place of `NA`, a special work around.
+
+### 8. Challenge: What Do Kangaroo Rats Eat? (*Optional*)
+
+This question follows up from Question 3, where I collected plant vouchers for my PhD. In this question, we use the fecal samples collected and the results from the DNA metabarcoding analysis.
+
+Run the code chunk below to read in two data frames.
+
+- `fecal` has one row per fecal sample, including the month, day, and year it was collected and a `vial_barcode` that identifies the sample.
+- `reads` has the DNA sequencing results for the kangaroo rat samples. Each row is one type of DNA sequence (`OTU`) found in one sample (`SampleID`, which matches `vial_barcode`). `Reads` is the number of times that sequence was detected. `ConsensusLineage` is the taxonomy assigned to the sequence, stored as one long string in which `f__`, `g__`, and `s__` come before the family, genus, and species (e.g., `k__Eukaryota; p__Streptophyta; c__Liliopsida; o__Poales; f__Poaceae; g__Panicum; s__Panicum miliaceum`).
+
+```{r}
+fecal <- read_csv("https://raw.githubusercontent.com/weecology/DNA_metabarcoding/master/data/collection_data/fecal_sample_collection.csv")
+
+reads <- read_csv("https://raw.githubusercontent.com/weecology/DNA_metabarcoding/master/data/sequenced_data/krat_fecal_its.csv") %>%
+  select(SampleID, OTU, Reads, ConsensusLineage)
+```
+
+a.  Add a `collection_date` column to `fecal`. Be sure the dates are in ISO format. Then use `month()` (with `label = TRUE`) to add a `month_name` column. Save the result as `fecal`.
+b.  The `reads` data frame contains more than plants: some sequences are bacteria or lab contaminants. Keep only the sequences whose lineage contains "Streptophyta" (the green plants). Additionally, remove the sequences from millet (*Panicum miliaceum*), which was the bait in the traps and not a natural food. Save the result as `plant_reads`. *(Hint: `!` reverses a TRUE/FALSE vector.)*
+c.  reate a `family` column in `plant_reads` containing the plant family from `ConsensusLineage` (the text after `f__` and before the next `;`). Use Gen AI or Google to write the necessary regex pattern. Some sequences were not identified to a family and have the value "None"; convert those to `NA` and then drop those rows. Save the result as `plant_reads`.
+d.  Join `fecal` and `plant_reads`, keeping only the samples that are in both. Then calculate the total number of reads for each plant family in each month, and the proportion of each month's reads that came from each family. Save the result as `family_by_month`.
+e.  Reshape `family_by_month` so there is one row per family and one column per month, with the proportions in the cells. Fill any family-month combination with no reads with 0, and sort the rows so the family with the highest proportion in March is at the top.
+f.  Make a plot of the proportion of reads for each plant family, with the family on the x-axis, the proportion of reads on the y-axis, and the months shown in different colors. To keep the plot readable, include only the families that make up at least 10% of the reads in at least one month. Make the points size 3, label the axes clearly, and add a theme. *(Hint: Adding `theme(axis.text.x = element_text(angle = 45, hjust = 1))` makes the family names easier to read.)*

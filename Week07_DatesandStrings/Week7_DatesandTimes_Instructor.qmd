@@ -1,7 +1,7 @@
 ---
-title: "Week 14: Dates and Times"
+title: "Week 7: Dates and Times"
 author: "Ellen Bledsoe"
-format: gfm
+format: pdf
 editor: visual
 ---
 
@@ -9,7 +9,7 @@ editor: visual
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Working with Dates and Strings
+# Working with Dates and Times
 
 This week, we are going to learn a bit about how to work with some of the more troublesome data types in R: dates and character strings.
 
@@ -17,26 +17,32 @@ I've divided the lessons into 2 parts this week. Today, we will work with the `l
 
 ## Set-Up
 
-Let's start by loading in the `tidyverse`.
+As is standard for us, let's start by loading in the `tidyverse`.
 
-```{r}
-
+```{r message=FALSE}
+# note lubridate and stringr
+library(tidyverse)
 ```
 
 We are going to use some stream data from the Santa Cruz River here in Tucson. The data are recorded every 15 minutes; these data are from 2023.
 
 When we take a look at the data, we can see a number of rows that we need to skip when we read in the data...27 to be exact.
 
-```{r}
+```{r message=FALSE}
+water <- read_tsv("data_raw/santa_cruz.txt", skip = 27, col_names = TRUE)
 
+water
 ```
 
-Ok, we are close but not quite there. The first row of data is metadata rather than data.
+Ok, we are close but not quite there. The first row of data is metadata rather than data values.
 
-To remove that, we are going to use a new function called `slice()`, from the `dplyr` package. It allows us to select (or remove, in our case) rows from a data frame based on position. We want to remove the first row.
+To remove that, we are going to use a new function called `slice()`, from the `dplyr` package. It allows us to choose (or remove, in our case) rows from a dataframe based on position. We want to remove the first row.
 
 ```{r}
+water <- water %>% 
+  slice(-1)
 
+water
 ```
 
 That's better! Let's also rename the last 2 columns. Those numbers are going to be pretty annoying to deal with down the road.
@@ -44,13 +50,18 @@ That's better! Let's also rename the last 2 columns. Those numbers are going to 
 The stream discharge column should be numeric but got read in as character for some reason, so we need to convert it to a numeric data class.
 
 ```{r}
-
+water <- water %>% 
+  rename(discharge_ft3_s = `307121_00060`,
+         qualification_code = `307121_00060_cd`) %>% 
+  mutate(discharge_ft3_s = as.double(discharge_ft3_s))
+water
 ```
 
 Let's try to plot the amount of water flowing through the stream through time.
 
 ```{r}
-
+ggplot(water, aes(datetime, discharge_ft3_s)) +
+  geom_point()
 ```
 
 Well, that doesn't look great...
@@ -63,10 +74,14 @@ Dates and times can be particularly challenging to work with, but thankfully the
 
 ### Referencing the Current Date and Time
 
-First, let's start with functions that return the current date and/or time. These are helpful if you want to "stamp" with the date/time something happens (e.g., when exactly did you knit that PDF file?).
+First, let's start with functions that return the current date and/or time. These are helpful if you want to "stamp" with the date/time something happens (e.g., when exactly did you knit that PDF file).
 
 ```{r}
+# date
+today()
 
+# date and time
+now()
 ```
 
 Aside from these functions, we will mostly be using the `lubridate` functions within a `mutate` function to modify entire columns at once.
@@ -79,13 +94,13 @@ The most generic function in `lubridate` is `as_date` or the variant, `as_dateti
 
 We need to specify the following arguments:
 
--   the data to be converted to a datetime
--   the format of the datetime data
--   optionally, we can specify the time zone
+- the data to be converted to a datetime
+- the format of the datetime data
+- optionally, we can specify the time zone
 
 The way we specify the format of the datetime is a bit unusual. We use "conversion specifications," which are introduced by a `%` and are typically represented by a letter. There are lots of options, many of which are in the image below:
 
-![Table from: <https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html>](common_r_date_formats.png){width="85%" fig-align="center"}
+![Table from: <https://stat.ethz.ch/R-manual/R-devel/library/base/html/strptime.html>](images/common_r_date_formats.png){width="85%" fig-align="center"}
 
 The characters that are used to separate the date and time data are interpreted literally. What does that mean? If the date is separated by `-`, the conversion specifications should be separated by `-`, too.
 
@@ -94,7 +109,8 @@ For example, if our dates were formatted as `02/29/24`, the corresponding conver
 Let's convert our datetime column to a datetime data class.
 
 ```{r}
-
+water %>% 
+  mutate(datetime = as_datetime(datetime, format = "%Y-%m-%d %H:%M", tz = "MST"))
 ```
 
 We can now see that the `datetime` column is something new, called `POSIXct`.
@@ -116,14 +132,20 @@ When we use these, we don't need to specify the exact format or the separators, 
 As we know from the previous code, our `datetime` column has year, month, day, hours and minutes.
 
 ```{r}
-
+water <- water %>% 
+  mutate(datetime = ymd_hm(datetime))
+water
 ```
 
 Now, when we plot the trend of water discharge through 2023, we can see that ggplot knows how to deal with the values more efficiently.
 
 ```{r}
+ggplot(water, aes(datetime, discharge_ft3_s)) +
+  geom_point()
 
 ```
+
+| Let's Practice: Work on Question 4a and 4b in the assignment.
 
 ### Extracting Specific Components
 
@@ -136,41 +158,55 @@ There are numerous functions we can use to extract specific components from the 
 We can use the `date()` function to pull out the date from the datetime. As a note, it is surprisingly challenging to create a time column...
 
 ```{r}
-
+water %>% 
+  mutate(Date = date(datetime))
 ```
 
 Let's create columns for each segment.
 
 ```{r}
-
+water <- water %>% 
+  mutate(Year = year(datetime),
+         Month = month(datetime, label = TRUE),
+         Day = day(datetime),
+         Hour = hour(datetime),
+         Minutes = minute(datetime),
+         Seconds = second(datetime))
+water
 ```
 
 Now, we can calculate the average value per month.
 
 ```{r}
-
+water %>% 
+  group_by(Month) %>% 
+  summarise(mean = mean(discharge_ft3_s))
 ```
 
 We can also create new columns such as day of year (DOY). This is the day of year, running from 0-365. One common use for DOY is in phenology, measuring the annual timing of life history stages. The function to calculate DOY is `yday()`.
 
 ```{r}
-
+water %>% 
+  mutate(DOY = yday(datetime), .after = tz_cd)
 ```
-
-| Let's Practice: Work on Question 4a and 4b in the assignment.
 
 ### Creating Dates from Segments
 
 What if you are given a dataset that has separate year, month, and day columns that you need to combine? If you recall, this is how the data frame for the Portal rodents is set up.
 
 ```{r}
-
+surveys <- read_csv("data_raw/surveys.csv")
+surveys
 ```
 
 We can bring these columns together to form a date column using the `make_date()` function.
 
 ```{r}
-
+surveys <- surveys %>% 
+  mutate(date = make_date(year = yr,
+                          month = mo,
+                          day = day))
+surveys
 ```
 
 | Let's Practice: Work on Question 4d in the assignment.
@@ -182,7 +218,13 @@ Because of the unique way that dates and datetimes are stored in R, we can also 
 In particular, `lubridate` has functions to calculate intervals between dates and datetimes.
 
 ```{r}
+start <- min(surveys$date, na.rm = TRUE)
+end <- max(surveys$date, na.rm = TRUE)
 
+date_interval <- interval(start, end)
+date_interval
+
+as.duration(date_interval)
 ```
 
 This lesson has really only scraped the surface of working with dates, but it should get you started if you need to do so in the future!

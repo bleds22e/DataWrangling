@@ -167,3 +167,86 @@ rodents <- rodents %>%
          Position = str_replace(Position, "\\?", NA_character_))
 rodents
 ```
+
+### 8. Challenge: What Do Kangaroo Rats Eat? (*Optional*)
+
+```{r}
+fecal <- read_csv("https://raw.githubusercontent.com/weecology/DNA_metabarcoding/master/data/collection_data/fecal_sample_collection.csv")
+
+reads <- read_csv("https://raw.githubusercontent.com/weecology/DNA_metabarcoding/master/data/sequenced_data/krat_fecal_its.csv") %>%
+  select(SampleID, OTU, Reads, ConsensusLineage)
+```
+
+8a. 
+
+```{r}
+fecal <- fecal %>%
+  mutate(collection_date = make_date(year, month, day),
+         month_name = month(collection_date, label = TRUE))
+fecal
+```
+
+8b. 
+
+```{r}
+plant_reads <- reads %>%
+  filter(str_detect(ConsensusLineage, "Streptophyta"),
+         !str_detect(ConsensusLineage, "Panicum miliaceum"))
+
+plant_reads
+```
+
+8c. 
+
+```{r}
+plant_reads <- plant_reads %>%
+  mutate(family = str_extract(ConsensusLineage, "(?<=f__)[^;]+"),
+         family = na_if(family, "None"), .before = ConsensusLineage) %>%
+  drop_na(family)
+
+plant_reads
+```
+
+8d. 
+
+```{r message=FALSE}
+family_by_month <- plant_reads %>%
+  inner_join(fecal, join_by(SampleID == vial_barcode)) %>%
+  group_by(month_name, family) %>%
+  summarize(total_reads = sum(Reads)) %>%
+  mutate(prop_reads = total_reads / sum(total_reads)) %>%
+  ungroup()
+
+family_by_month
+```
+
+8e.
+
+```{r}
+family_wide <- family_by_month %>%
+  select(month_name, family, prop_reads) %>%
+  pivot_wider(names_from = month_name,
+              values_from = prop_reads,
+              values_fill = 0) %>%
+  arrange(desc(Mar))
+
+family_wide
+```
+
+8f. 
+
+```{r}
+common_families <- family_wide %>%
+  filter(Mar >= 0.1 | Sep >= 0.1 | Oct >= 0.1) %>%
+  pivot_longer(Mar:Oct,
+               names_to = "month_name",
+               values_to = "prop_reads")
+
+ggplot(common_families, aes(x = family, y = prop_reads, color = month_name)) +
+  geom_point(size = 3) +
+  labs(x = "Plant family",
+       y = "Proportion of reads",
+       color = "Month") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
