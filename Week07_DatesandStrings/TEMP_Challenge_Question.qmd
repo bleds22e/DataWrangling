@@ -38,6 +38,7 @@ b.  The `reads` data frame contains more than plants: some sequences are bacteri
 c.  Use `mutate()` and `str_extract()` to create a `family` column in `plant_reads` containing the plant family from `ConsensusLineage` (the text after `f__` and before the next `;`). Use the regex pattern `"(?<=f__)[^;]+"`. Some sequences were not identified to a family and have the value "None"; convert those to `NA` and then drop those rows. Save the result as `plant_reads`.
 d.  Join `fecal` and `plant_reads`, keeping only the samples that are in both (the sample ID column has a different name in each data frame). Then calculate the total number of reads for each plant family in each month, and the proportion of each month's reads that came from each family. Save the result as `family_by_month`.
 e.  Reshape `family_by_month` so there is one row per family and one column per month, with the proportions in the cells. Fill any family-month combination with no reads with 0, and sort the rows so the family with the highest proportion in March is at the top.
+f.  Make a plot of the proportion of reads for each plant family, with the family on the x-axis, the proportion of reads on the y-axis, and the months shown in different colors. To keep the plot readable, include only the families that make up at least 10% of the reads in at least one month. Make the points size 3, label the axes clearly, and add a theme. *(Hint: `ggplot()` needs long data, so you can either filter `family_by_month` directly or filter `family_wide` and use `pivot_longer()` to get back to long format. Adding `theme(axis.text.x = element_text(angle = 45, hjust = 1))` makes the family names easier to read.)*
 
 ```{r}
 
@@ -108,4 +109,22 @@ family_wide <- family_by_month %>%
   arrange(desc(Mar))
 
 family_wide
+```
+
+8f. Seven families make up at least 10% of the reads in at least one month. Filtering the wide table is simple (`|` means "or"), and `pivot_longer()` then puts the data back into long format for `ggplot()`. (Alternatively, `family_by_month %>% group_by(family) %>% filter(max(prop_reads) >= 0.1) %>% ungroup()` gives the same families.)
+
+```{r}
+common_families <- family_wide %>%
+  filter(Mar >= 0.1 | Sep >= 0.1 | Oct >= 0.1) %>%
+  pivot_longer(Mar:Oct,
+               names_to = "month_name",
+               values_to = "prop_reads")
+
+ggplot(common_families, aes(x = family, y = prop_reads, color = month_name)) +
+  geom_point(size = 3) +
+  labs(x = "Plant family",
+       y = "Proportion of reads",
+       color = "Month") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
