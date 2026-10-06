@@ -144,6 +144,6 @@ While memorizing regular expressions is wildly daunting, there are thankfully nu
 
 [Here](https://regex101.com/) is a website where you can build and test regex.
 
-Honestly, though, I use ChatGPT to build my regex!
+Honestly, though, I use Gen AI to build my regex!
 
 To build the `"(?<=/).*"` expression from above, I asked ChatGPT to "use regex and `str_extract` to extract everything after a `/`, not including the `/`", and it produced exactly what I needed.
