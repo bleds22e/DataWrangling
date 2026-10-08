@@ -22,7 +22,7 @@ We’ll cover five `stringr` functions in this lesson. Each `stringr` function w
 Paying attention to the *output* of a `stringr` function is particularly useful in determining when and how to use that function, especially in `filter()` or `mutate()` functions.
 
 | Function | Use | Output |
-|:-----------------|:-----------------------------------|:-----------------|
+|:------------------|:-----------------------------------|:------------------|
 | `str_length()` | count the number of characters in the string | numeric vector |
 | `str_detect()` | determine if pattern is found within string | logical (T/F) vector |
 | `str_extract()` | return portion of each string that matches the pattern | character vector |
@@ -61,7 +61,7 @@ sampleID <- carbon$SampleID
 sampleID
 ```
 
-Now, let's demonstrate how each of the five `stringr` functions work. I've listed the *required* arguments in the parentheses for each funtion.
+Now, let's demonstrate how each of the five `stringr` functions work. I've listed the *required* arguments in the parentheses for each function.
 
 `str_length(string)`: count the number of characters in the string
 
@@ -100,7 +100,7 @@ str_replace(months, "/", "")
 
 Like we saw with the `lubridate` functions, you will often want to use `stringr` functions within other `tidyverse` functions, such as `filter` or `mutate`.
 
-Let's run through a few examples using the full `carbon` dataframe.
+Let's run through a few examples using the full `carbon` data frame.
 
 Perhaps we want only samples that were collected in August. We can use the `str_detect` function to set our condition in the `filter` function. This works because the output of `str_detect` is a logical vector (T/F), as with other conditional statements or `is.na()`.
 
@@ -147,3 +147,5 @@ While memorizing regular expressions is wildly daunting, there are thankfully nu
 Honestly, though, I use Gen AI to build my regex!
 
 To build the `"(?<=/).*"` expression from above, I asked ChatGPT to "use regex and `str_extract` to extract everything after a `/`, not including the `/`", and it produced exactly what I needed.
+
+That said, these days when I have coding questions for Gen AI, I use Claude–but most models should do well with regex.

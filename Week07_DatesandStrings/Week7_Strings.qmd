@@ -142,3 +142,5 @@ While memorizing regular expressions is wildly daunting, there are thankfully nu
 Honestly, though, I use Gen AI to build my regex!
 
 To build the `"(?<=/).*"` expression from above, I asked ChatGPT to "use regex and `str_extract` to extract everything after a `/`, not including the `/`," and it produced exactly what I needed.
+
+That said, these days when I have coding questions for Gen AI, I use Claude–but most models should do well with regex.
