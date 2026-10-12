@@ -115,6 +115,8 @@ Alternatively, perhaps we want to create a column with the month the sample was 
 
 Finally, we could create a column for whether or not the sample was taken from below the surface ("DEEP").
 
+Based on the `stringr` functions you have learned, how might we accomplish that task?
+
 ```{r}
 
 ```

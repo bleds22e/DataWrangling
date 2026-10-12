@@ -22,7 +22,7 @@ We’ll cover five `stringr` functions in this lesson. Each `stringr` function w
 Paying attention to the *output* of a `stringr` function is particularly useful in determining when and how to use that function, especially in `filter()` or `mutate()` functions.
 
 | Function | Use | Output |
-|:-----------------|:-----------------------------------|:-----------------|
+|:-----------------------|:-----------------------|:-----------------------|
 | `str_length()` | count the number of characters in the string | numeric vector |
 | `str_detect()` | determine if pattern is found within string | logical (T/F) vector |
 | `str_extract()` | return portion of each string that matches the pattern | character vector |
@@ -123,6 +123,17 @@ carbon %>%
   mutate(Month = str_extract(SampleID, "/(...)"),
          Month = str_remove(Month, "/"))
 ```
+
+Finally, we could create a column for whether or not the sample was taken from below the surface ("DEEP").
+
+Based on the `stringr` functions you have learned, how might we accomplish that task?
+
+```{r}
+carbon |> 
+  mutate(Deep = str_extract(SampleID, "DEEP"),
+         Deep_Alt = str_detect(SampleID, "DEEP"), .after = SampleID)
+```
+
 
 ## Regular Expressions
 
