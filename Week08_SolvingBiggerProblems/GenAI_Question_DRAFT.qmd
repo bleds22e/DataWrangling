@@ -9,20 +9,20 @@ editor: visual
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### 5. Working with Gen AI on a Bigger Problem (30 pts)
+### 5. Working with Gen AI on a Bigger Problem (Optional)
 
-In this question, you will use a Gen AI tool (e.g., ChatGPT, Claude, Gemini, Copilot) as a coding partner to solve a multi-step data wrangling problem using the practices from this week's lesson. The goal is not just working code. It is to show that you can plan a problem, guide the AI, and check its work.
+Let's practice using a Gen AI tool (e.g., ChatGPT, Claude, Gemini, Copilot) as a coding partner to work through a bigger data wrangling problem. The goal isn't just working code. It's practicing how to plan a problem, guide the AI, and check its work, using the ideas from this week's lesson.
 
-**Ground rules**
+A few ground rules:
 
--   Complete part (a) on your own, *before* you open a Gen AI tool.
--   Do not paste data files into an AI tool. Share the *structure* of the data (e.g., the output of `glimpse()`) instead.
--   Tell the AI to use only the tidyverse and the functions we have learned in class so far. If the AI uses a function you do not recognize, look it up and make sure you can explain it before you keep it.
--   You are responsible for the final code. You must be able to explain every line of it.
+-   Do part (a) on your own, *before* you open a Gen AI tool
+-   Don't paste data files into an AI tool; share the structure of the data (like the output of `glimpse()`) instead
+-   Tell the AI to use the tidyverse and only the functions we have learned in class so far. If it uses a function you don't recognize, look it up and make sure you can explain it before you keep it.
+-   You are responsible for the final code, so make sure you can explain every line
 
 #### The Request
 
-You get this message from a collaborator:
+A collaborator sends you this message:
 
 > Kangaroo rats (genus *Dipodomys*) are some of the largest and most abundant seed-eating rodents at Portal. The Long-term Krat Exclosure plots are fenced to keep kangaroo rats out while still letting smaller rodents come and go. I'd like to know whether the *other* rodents are caught more often on those plots than on the Control plots.
 >
@@ -34,17 +34,15 @@ You get this message from a collaborator:
 >
 > The Control and exclosure treatments don't have the same number of plots, so make sure the numbers are comparable between them.
 
-Use the `surveys`, `species`, and `plots` data frames from Question 2. Use `glimpse()` to look at the structure of each. You will use this output in your prompt.
+Use the `surveys`, `species`, and `plots` data frames from Question 2. Take a look at the structure of each one with `glimpse()`. You will want this information for your prompt.
 
 ```{r}
 
 ```
 
-#### a. Plan (4 pts)
+#### Planning
 
-*(graded for completion; do this before using AI)*
-
-In your own words, restate the problem, say what the inputs and the final outputs are, and break the problem into small steps. Write your steps as plain-language comments in the code chunk below. Do not write any R code yet.
+a.  Before you use Gen AI, restate the problem in your own words, say what the inputs and final outputs are, and break the problem into small steps. Write the steps as comments in the code chunk below. There is no need to write any R code yet.
 
 ```{r}
 # Restate the problem:
@@ -56,61 +54,49 @@ In your own words, restate the problem, say what the inputs and the final output
 # Steps:
 ```
 
-#### b. Prompt (6 pts)
+#### Working with Gen AI
 
-Write the prompt that you give to the Gen AI tool. Paste it in the space below. Your prompt should include:
+b.  Write the prompt you give to the Gen AI tool and paste it below this question. A good prompt includes:
 
--   the language and packages you are using
--   the structure of your data (from `glimpse()`), including anything that only you know, such as units or how missing values are coded
--   what you want the result to look like
--   your constraints (e.g., use only functions from class, comment each step)
--   your plan from part (a), so the AI works through the problem the way you decided to
+    -   the language and packages you are using
+    -   the structure of your data (from `glimpse()`) and anything only you know, like units or how missing values are coded
+    -   what you want the result to look like
+    -   any constraints, like only using functions from class or adding a comment to each step
+    -   your plan from (a), so the AI works through the problem the way you decided to
 
-> *Paste your prompt here.*
+c.  Paste the code you ended up with (after any follow-up prompts) into the code chunk below. Add comments in your own words to explain what each step does. Your code should:
 
-#### c. Code (8 pts)
+    -   save the long-format summary as a data frame called `krat_summary` with the columns `year`, `plot_type`, `total_captures`, `n_plots`, and `captures_per_plot`
+    -   save the table your collaborator asked for (one row per year, one column per plot type) as a data frame called `krat_table`
+    -   make the line plot, with good axis labels and a theme
 
-Paste the code you ended up with after working with the AI (including any follow-up prompts) in the chunk below. Add comments **in your own words** that explain what each step does. The code should:
+    Finally, report how many records in the full `surveys` table have impossible dates and write one sentence describing what your plot shows.
 
--   save the long-format summary as a data frame called `krat_summary`, with the columns `year`, `plot_type`, `total_captures`, `n_plots`, and `captures_per_plot`
--   save the table your collaborator asked for (one row per year, one column per plot type) as a data frame called `krat_table`
--   make the line plot, with good axis labels and a theme
-
-```{r}
-
-```
-
-Finally, report how many records in the full `surveys` table have impossible dates, and write one sentence describing what your plot shows.
-
-> *Answer here.*
-
-#### d. Check (8 pts)
-
-Gen AI can write code that runs without errors but does not do what you asked. Write code for **at least three checks** of the AI's work, including at least one row-count check and at least one spot check. After each check, write a sentence about what you found. Some ideas:
-
--   **Row counts.** How many rows are in `surveys` before and after joining the tables? Did any join add or drop rows? How many rows were removed by each filter?
--   **Contents.** Are there any kangaroo rats left in the data you used for the summary? Are only the two plot types you wanted included?
--   **Spot check.** Pick one year and one plot type and calculate the value in `krat_table` a different way (for example, one step at a time with your own code). Do the two results match?
--   **Plausibility.** Are there any missing years, `NA`s, or strange values? Does the plot look the way you expect?
+    *Hint: if the code the AI gives you is too long to follow, ask it to go one step at a time and explain each step.*
 
 ```{r}
 
 ```
 
-> *What did your checks show?*
+#### Checking the Results
 
-#### e. Reflect (4 pts)
+d.  Gen AI can write code that runs without errors but doesn't do what you asked, so we need to check its work. Write code for at least three checks, including at least one row-count check and one spot check. After each check, write a sentence about what you found. Here are some ideas:
 
-In about 4--6 sentences, answer the following:
+    -   Row counts: how many rows are in `surveys` before and after joining the tables? Did any join add or drop rows? How many rows did each filter remove?
+    -   Contents: are there any kangaroo rats left in the data you used for the summary? Are only the two plot types you wanted included?
+    -   Spot check: pick one year and one plot type and calculate the value in `krat_table` a different way (for example, one step at a time with your own code). Do the two results match?
+    -   Plausibility: are there any missing years, `NA`s, or strange values? Does the plot look the way you expect?
 
--   What did the AI do well, and what did it get wrong, miss, or do that you did not expect? Be specific. If you did not find any problems, explain what you checked and how you know the code is right.
--   What did you change yourself, or what follow-up prompt did you use to fix a problem?
--   What would you do differently next time you work on a problem like this with Gen AI?
+```{r}
 
-> *Reflection here.*
+```
 
-Finish with a one-line statement about your Gen AI use, like this:
+e.  Reflect on how working with Gen AI went in about 4--6 sentences. Here are some things to think about:
 
-> *I used \[tool name\] on \[date\] to \[what you used it for\].*
+    -   What did the AI do well, and what did it get wrong, miss, or do that you didn't expect? Be specific. If you didn't find any problems, explain what you checked and how you know the code is right.
+    -   What did you change yourself, or what follow-up prompt did you use to fix a problem?
+    -   What would you do differently next time you work on a problem like this with Gen AI?
 
-*Optional: include a shareable link to your conversation, if your tool supports it. It helps me give you feedback on your prompts.*
+    Finish with a one-line statement about your Gen AI use, like this: *I used \[tool name\] on \[date\] to \[what you used it for\].*
+
+    If your tool lets you, you can also include a shareable link to your conversation. That helps me give you feedback on your prompts.

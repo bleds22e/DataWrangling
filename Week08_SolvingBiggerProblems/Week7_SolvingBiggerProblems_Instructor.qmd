@@ -222,17 +222,25 @@ The practices below will help you get the benefits of Gen AI while avoiding the 
 
 An AI assistant can't see your computer, your files, or your data unless you show it. A good prompt usually includes:
 
-1.  **Language and packages.** "I'm using R and the tidyverse" keeps you from getting base R or Python code.
-2.  **Data structure.** Object names, column names and types, and a few example rows. Include what only you know: units, how missing values are coded, and what each row represents.
-3.  **Your goal.** What you want in plain language and what the result should look like (e.g., "a data frame with one row per species").
-4.  **What you've tried.** Your code and the *exact* error message (copy and paste it).
-5.  **Constraints.** For example, "use only `dplyr` functions" or "explain each change you make."
+1.  The language and packages you are using
+    -   "I'm using R and the tidyverse" keeps you from getting base R or Python code
+2.  The structure of your data
+    -   Object names, column names and types, and a few example rows
+    -   Anything only you know, like units, how missing values are coded, and what each row represents
+3.  Your goal
+    -   What you want in plain language and what the result should look like (e.g., "a data frame with one row per species")
+4.  What you have tried
+    -   Your code and the *exact* error message (copy and paste it)
+5.  Any constraints
+    -   For example, "use only `dplyr` functions" or "explain each change you make"
 
-Compare these two prompts for the broken code from our debugging example:
+Compare these two prompts for the broken code from our debugging example. First, a weak one:
 
-> **Weak prompt:** Fix this code. \[code\]
+> Fix this code. \[code\]
 
-> **Better prompt:** I'm using R and the tidyverse. `surveys` is a data frame with columns `record_id`, `month`, `day`, `year`, `plot_id`, `species_id`, `sex`, `hindfoot_length` (mm), and `weight` (g). I want to count how many records of species `DO` there are in each year and plot the counts over time as points connected by a line. The code below gives errors. Please explain what is wrong, then show me the corrected code. \[code\]
+And now a better one:
+
+> I'm using R and the tidyverse. `surveys` is a data frame with columns `record_id`, `month`, `day`, `year`, `plot_id`, `species_id`, `sex`, `hindfoot_length` (mm), and `weight` (g). I want to count how many records of species `DO` there are in each year and plot the counts over time as points connected by a line. The code below gives errors. Please explain what is wrong, then show me the corrected code. \[code\]
 
 Making sure the AI knows what your data look like doesn't mean sharing all of your data! `glimpse()` shows the column names and types, and `head()` shows a few rows. Pasting the output of those is usually enough.
 
@@ -281,10 +289,18 @@ The last one is the most dangerous when working with data, because there is no e
 
 Remember our iterative process: *Make sure it works -\> Make sure you understand it*. For AI-generated code, that means:
 
-1.  **Read it.** Can you explain what every line does? Look up any function you don't recognize (e.g., `?inner_join`).
-2.  **Run it in pieces.** Run a pipeline one step at a time, just like you would with your own code.
-3.  **Check the output against what you expect.** How many rows should there be? Are there unexpected `NA`s, zeros, or extreme values? Does the plot look right? Can you calculate one value another way and compare?
-4.  **Check it against your data.** The AI doesn't know your units, how missing values are coded, or the quirks of your dataset.
+1.  Read the code
+    -   Can you explain what every line does?
+    -   Look up any function you don't recognize (e.g., `?inner_join`)
+2.  Run it in pieces
+    -   Run a pipeline one step at a time, just like you would with your own code
+3.  Check the output against what you expect
+    -   How many rows should there be?
+    -   Are there unexpected `NA`s, zeros, or extreme values?
+    -   Does the plot look right?
+    -   Can you calculate one value another way and compare?
+4.  Check it against your data
+    -   The AI doesn't know your units, how missing values are coded, or the quirks of your dataset
 
 Suppose you asked an AI assistant to "calculate the mean weight of each species in the Portal data," and it gave you this code:
 
