@@ -1,5 +1,5 @@
 ---
-title: "Week 7 Assignment"
+title: "Week 8 Assignment"
 author: "Ellen Bledsoe"
 format: pdf
 editor: visual
@@ -33,7 +33,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-Oct 14 at 2pm
+Oct 20 before class
 
 # Assignment Exercises
 
@@ -45,7 +45,7 @@ Load in the `tidyverse` to get started. If you haven't yet downloaded the three 
 
 For this question, we are using the Portal data to review many of the `dplyr`, `tidyr`, and `ggplot2` functions we have learned so far.
 
-Load the three dataframes below from your `data` folder into R using `read_csv()`.
+Load the three data frames below from your `data` folder into R using `read_csv()`.
 
 - `surveys.csv`
 - `species.csv`
@@ -101,7 +101,7 @@ head(penguins)
 
 Now, read in the three original datasets (`adelie.csv`, `chinstrap.csv`, and `gentoo.csv`) that were used to create this cleaned version (`penguins`). They can be found in the `data` folder.
 
-Take a look at the three original dataframes and compare them to the `penguins` dataframe.
+Take a look at the three original data frames and compare them to the `penguins` data frame.
 
 #### Problem breakdown
 
@@ -121,7 +121,7 @@ Below are some tips (in no particular order) that will likely be helpful along t
 
     - Culmen is basically a fancy word for a bird's bill
 
-    - The regex for extracting the first word in a string using the `extract` function is `"(\\w*)"`
+    - The regex for extracting the first word in a string is `"(\\w*)"`
 
     - You do not need to match up most data types exactly (character and factors are mostly interchangeable; same with integer, numeric, and double). You might, however, run into the issue of character and integer data being incompatible. There are a number of different ways to address this, one of them being the `convert = TRUE` argument.
 
@@ -137,4 +137,4 @@ e.  Make the same plot as (d) above, except this time, both the points and the l
 
 This is not graded homework, but I want us to be as prepared for next week as we can be.
 
-That means that I would like you to have *both* R and RStudio downloaded on your own device. If you do not already have these downloaded, instructions for how to do so can be found in the description of "Weekly Materials \> 8. Reproducibility" on our D2L site.
+That means that I would like you to have *both* R and RStudio downloaded on your own device. If you do not already have these downloaded, instructions for how to do so can be found in the description of "Weekly Materials \> 9. Reproducibility" on our D2L site.
