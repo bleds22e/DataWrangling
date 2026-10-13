@@ -15,22 +15,22 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 Each part goes with a section of the "Using Generative AI Effectively" lesson:
 
--   a. Plan: Think Before You Prompt (breaking the problem down before involving the AI)
--   b. Prompt: Give the AI Context and Protect Your Data (context, data structure instead of data, goal, and constraints)
--   c. Code: Use AI to Learn (understanding the code well enough to comment it in their own words)
--   d. Check: Verify Everything (testing the output instead of trusting code that runs)
--   e. Reflect: Be Transparent and Keep Your Code as the Record (thinking about the AI's work and noting that they used it)
+- a. Plan: Think Before You Prompt (breaking the problem down before involving the AI)
+- b. Prompt: Give the AI Context and Protect Your Data (context, data structure instead of data, goal, and constraints)
+- c. Code: Use AI to Learn (understanding the code well enough to comment it in their own words)
+- d. Check: Verify Everything (testing the output instead of trusting code that runs)
+- e. Reflect: Be Transparent and Keep Your Code as the Record (thinking about the AI's work and noting that they used it)
 
 ## Scope check: everything is from weeks 2--7
 
 The reference solution below uses only these functions:
 
--   Week 2: `<-`, `==`, `!=`, `sum()`, `$`
--   Week 3: `read_csv()`, `glimpse()`, `mutate()`, `select()`, `filter()` (including "or" conditions), `is.na()`, `%>%`
--   Week 4: `left_join()`, `join_by()`, `group_by()`, `summarise()`, `n()`, `ungroup()`, `nrow()`
--   Week 5: `ggplot()`, `aes()`, `geom_point()`, `geom_line()`, `labs()`, `theme_bw()`
--   Week 6: `pivot_wider()`
--   Week 7: `make_date()`
+- Week 2: `<-`, `==`, `!=`, `sum()`, `$`
+- Week 3: `read_csv()`, `glimpse()`, `mutate()`, `select()`, `filter()` (including "or" conditions), `is.na()`, `%>%`
+- Week 4: `left_join()`, `join_by()`, `group_by()`, `summarise()`, `n()`, `ungroup()`, `nrow()`
+- Week 5: `ggplot()`, `aes()`, `geom_point()`, `geom_line()`, `labs()`, `theme_bw()`
+- Week 6: `pivot_wider()`
+- Week 7: `make_date()`
 
 Gen AI will probably suggest things we haven't covered (e.g., `%in%`, `case_when()`, `count()`, `distinct()`, `.groups = "drop"`, `across()`). The question tells students to look these up and be able to explain anything they keep.
 
@@ -47,17 +47,17 @@ Alternative approaches are fine if they give the same answer, e.g., computing th
 
 ## Things to expect
 
--   If a student's prompt includes all of the details, current Gen AI tools will often get everything right on the first try. That is a fine outcome and part of the lesson: a good prompt matters. Part (e) asks students to explain what they checked if they didn't find any problems, so this case still works.
--   I haven't tested this question with real student chats, so the amount of back-and-forth is a guess. I'd estimate 45--75 minutes, which is long compared to the other questions.
--   Captures are capture records, not unique individuals (the data have no animal ID), so recaptures are counted. The question says "captured," which is accurate.
+- If a student's prompt includes all of the details, current Gen AI tools will often get everything right on the first try. That is a fine outcome and part of the lesson: a good prompt matters. Part (e) asks students to explain what they checked if they didn't find any problems, so this case still works.
+- I haven't tested this question with real student chats, so the amount of back-and-forth is a guess. I'd estimate 45--75 minutes, which is long compared to the other questions.
+- Captures are capture records, not unique individuals (the data have no animal ID), so recaptures are counted. The question says "captured," which is accurate.
 
 ## Reference answers
 
--   Impossible dates in `surveys`: 136
--   `krat_summary`: 52 rows (26 years × 2 plot types), 1977--2002
--   Final number of rows after all filters: 10,237
--   `krat_table`: 26 rows with no `NA`s. For example, 1995 is 25.1 (Control) and 44.5 (Long-term Krat Exclosure).
--   Pattern: captures per plot are higher on the Long-term Krat Exclosure plots in 25 of 26 years (all but 1977).
+- Impossible dates in `surveys`: 136
+- `krat_summary`: 52 rows (26 years × 2 plot types), 1977--2002
+- Final number of rows after all filters: 10,237
+- `krat_table`: 26 rows with no `NA`s. For example, 1995 is 25.1 (Control) and 44.5 (Long-term Krat Exclosure).
+- Pattern: captures per plot are higher on the Long-term Krat Exclosure plots in 25 of 26 years (all but 1977).
 
 # Reference Solution
 

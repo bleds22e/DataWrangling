@@ -1,5 +1,5 @@
 ---
-title: "Week 7: Solving Bigger Problems"
+title: "Week 8: Solving Bigger Problems"
 author: "Ellen Bledsoe"
 format: pdf
 editor: visual
@@ -42,16 +42,16 @@ One great way to work through the steps of coding is to break down the problem i
 
 Here are some good guidelines:
 
-1.  Understand the problem
-    a.  Restate the problem in your own words
-    b.  Determine the inputs and outputs
-    c.  Ask for clarification
-2.  Break the problem down
-    a.  Write down the pieces, on paper or as comments in a file
-    b.  Break complicated pieces down until all pieces are small and manageable
-3.  Code one small piece at a time
-    a.  Test it on its own
-    b.  Fix any problems before proceeding
+1.  **Understand the problem**
+    - Restate the problem in your own words
+    - Determine the inputs and outputs
+    - Ask for clarification
+2.  **Break the problem down**
+    - Write down the pieces, on paper or as comments in a file
+    - Break complicated pieces down until all pieces are small and manageable
+3.  **Code one small piece at a time**
+    - Test it on its own
+    - Fix any problems before proceeding
 
 ### Let's Practice!
 
@@ -85,24 +85,23 @@ What do you notice?
 
 A major part of the iterative process of coding is fixing errors that come up! You've already had quite a bit of practice with this working on your assignments, but let's talk about some general strategies together.
 
-1.  Be a scientist. Develop hypotheses!
+1.  **Be a scientist. Develop hypotheses!**
 
--   Hypothesize about what is wrong.
--   Make one change that is expected to fix error.
--   Check if change worked/fixed error.
+    - Hypothesize about what is wrong.
+    - Make one change that is expected to fix error.
+    - Check if change worked/fixed error.
 
-2.  Do not change something without a reason.
+2.  **Do not change something without a reason.**
 
--   See where the code failed.
--   Read the error message.
--   Observe what the code is doing.
--   Look at the current state of the environment. This gives you a current snapshot of what is going on.
--   Talk through the code
--   [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
+    - See where the code failed.
+    - Read the error message.
+    - Observe what the code is doing.
+    - Look at the current state of the environment. This gives you a current snapshot of what is going on.
+    - Talk through the code out loud in plain language ([rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)).
 
-3.  Run the code line by line, checking each step individually.
+3.  **Run the code line by line, checking each step individually.**
 
-4.  Use generative AI (e.g., ChatGPT)--with caution. We'll talk about how to do this well in [Using Generative AI Effectively](#using-generative-ai-effectively) below.
+4.  **Use Gen AI (e.g., ChatGPT, Claude, Gemini)--with caution.** We'll talk about how to do this well in [Using Generative AI Effectively](#using-generative-ai-effectively) below.
 
 ### Example
 
@@ -115,12 +114,12 @@ First, copy the code into a new code chunk below. Spend a few minutes working th
 surveys <- read_csv('surveys.csv')
 species <- read_csv('species.csv')
 
-do_counts_by_year <- survey %>% 
-  filter(species = "DO") %>% 
+do_counts_by_year <- survey |> 
+  filter(species = "DO") |> 
   group_by(year)
   count()
 
-ggplot(do_count_by_year, aes(x = year, y = count) %>% 
+ggplot(do_count_by_year, aes(x = year, y = count) |> 
   geom_point() +
   geom_line()
   lab(x = "Year", y = "Count") +
@@ -129,46 +128,46 @@ ggplot(do_count_by_year, aes(x = year, y = count) %>%
 
 Insert a code chunk here. Copy the code from above and work to debug it.
 
-Now, let's copy the code into ChatGPT with a quick prompt like "fix this code" and see what it finds and what it gets wrong. We'll come back to this after we talk about how to write a better prompt.
+If you want to, you can also copy the code into your Gen AI of choice and see what it says. We'll come back to this after we talk about how to write a better prompt.
 
 ## Finding Help
 
 In this class, I've provided the instructor versions of the lessons in class for you to use as reference sheets. They are super helpful, but they won't always have exactly what you need, especially when you are working with your own datasets.
 
-The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly googling how to achieve certain tasks, including for the lessons and assignments in this class!
+The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly Googling how to achieve certain tasks, including for the lessons and assignments in this class!
 
 There is a bit of an art to learning how to search, read, and apply online help. Let's talk through a few tips that you might find helpful.
 
 ### In the Search:
 
--   Get the vocabulary right
--   Avoid extra words
--   Specify the programming language (and specify `tidyverse` if that matters to you)
--   These suggestions are also effective with generative AI.
+- Get the vocabulary right
+- Avoid extra words
+- Specify the programming language (and specify `tidyverse` if that matters to you)
+- These suggestions are also effective with generative AI.
 
 ### Results:
 
 **Help sites**
 
--   Read the question
--   Look at the setup
--   Check the age (when was it answered?)
--   Check the top 2-3 answers
--   Glance at the comments
--   Test & modify the example
-    -   Don't blindly paste things you don't understand
-    -   Reputation can help (e.g., StackOverflow answer with lots of positive votes)
+- Read the question
+- Look at the setup
+- Check the age (when was it answered?)
+- Check the top 2-3 answers
+- Glance at the comments
+- Test & modify the example
+  - Don't blindly paste things you don't understand
+  - Reputation can help (e.g., StackOverflow answer with lots of positive votes)
 
 **Blog posts**
 
--   Read the question
--   Look at the setup
--   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+- Read the question
+- Look at the setup
+- Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
 
 **Documentation**
 
--   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
--   Focus on the examples
+- Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+- Focus on the examples
 
 ### Testing and Modifying Answers
 
@@ -184,9 +183,9 @@ Generative AI tools (e.g., ChatGPT, Claude, Gemini, Copilot) can be a really use
 
 ### Think Before You Prompt
 
--   Gen AI works best on small, well-defined tasks. "Analyze my data" will get you generic code; "calculate the mean weight of each species" will get you something useful.
--   Break the problem down and try it yourself first, like we practiced earlier. Then hand over one small piece at a time.
--   Ask for code, not answers. If you ask an AI to analyze your data directly, it may give you numbers that look right but aren't. Ask it to write code, then run that code yourself.
+- Gen AI works best on small, well-defined tasks. "Analyze my data" will get you generic code; "calculate the mean weight of each species" will get you something useful.
+- Break the problem down and try it yourself first, like we practiced earlier. Then hand over one small piece at a time.
+- Ask for code, not answers. If you ask an AI to analyze your data directly, it may give you numbers that look right but aren't. Ask it to write code, then run that code yourself.
 
 ### Give the AI Context
 
@@ -222,15 +221,15 @@ Treat it like a conversation: follow up with new error messages, change one thin
 
 ### Use It Responsibly
 
--   Anything you paste into a Gen AI tool is sent to a company's server and may be stored or used for training. Don't paste unpublished, sensitive, or restricted data (e.g., human subjects data, exact locations of threatened species) or anything with passwords or API keys.
--   The chat isn't a reproducible record; your script is. Save the code you have checked, and note where AI helped:
+- Anything you paste into a Gen AI tool is sent to a company's server and may be stored or used for training. Don't paste unpublished, sensitive, or restricted data (e.g., human subjects data, exact locations of threatened species) or anything with passwords or API keys.
+- The chat isn't a reproducible record; your script is. Save the code you have checked, and note where AI helped:
 
-    ```r
-    # Drafted with help from Gen AI (tool name, date)
-    # Checked: row counts before/after join; compared one mean by hand
-    ```
+  ```r
+  # Drafted with help from Gen AI (tool name, date)
+  # Checked: row counts before/after join; compared one mean by hand
+  ```
 
--   Follow the rules in the syllabus. Many journals and funders also require you to disclose your use of Gen AI.
+- Follow the rules in the syllabus. Many journals and funders also require you to disclose your use of Gen AI.
 
 ### Verify Everything
 
@@ -262,12 +261,12 @@ It runs without errors and returns numbers. But can we trust them? What would yo
 
 Gen AI can be a patient tutor if you ask it to be. Try prompts like:
 
--   "Explain this code line by line. I'm new to R."
--   "Don't give me the solution yet. Give me a hint about what to try next."
--   "What is the difference between `inner_join()` and `left_join()`? Show me a small example."
+- "Explain this code line by line. I'm new to R."
+- "Don't give me the solution yet. Give me a hint about what to try next."
+- "What is the difference between `inner_join()` and `left_join()`? Show me a small example."
 
 A good test: could you write this code again without the AI?
 
 ### Let's Practice!
 
-Earlier, we pasted the broken code from the Debugging example into a Gen AI tool with a quick prompt. Now, start a new chat and write a better prompt using the tips above. Compare the two responses: which was more useful, and which explained *why* the code was broken? Then run the code and make sure you can explain every change the AI made.
+Go back to the broken code in the Debugging example and ask a Gen AI tool for help, this time with a better prompt using the tips above. If you already tried a quick prompt earlier, compare the two responses: which was more useful, and which explained *why* the code was broken? Then run the code and make sure you can explain every change the AI made.

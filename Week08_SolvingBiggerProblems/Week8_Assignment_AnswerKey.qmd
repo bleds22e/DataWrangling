@@ -1,8 +1,8 @@
 ---
-title: "Assignment 7"
+title: "Assignment 8 Answer Key"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
-output: pdf_document
+format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```{r message = FALSE}
 library(tidyverse)
 ```
+
 ### 2. Portal Data Review (25 points)
 
 ```{r message = FALSE}
@@ -85,12 +86,10 @@ ggplot(data = plot_data, aes(x = weight, fill = species_id)) +
 
 ### 3. Megafaunal Extinction (35 points)
 
-
-   
 ```{r}
 print("3a")
 mammal_sizes <- read_tsv("data/mammal-size-data-clean.txt", na = c("-999"))
-
+mammal_sizes
 
 # Figure 1
 print("3b")
@@ -150,13 +149,13 @@ mammal_sizes_cleaned
 ### 4. Palmer Penguins (35 points)
 
 Note: you don't need to worry about data types for each column matching up exactly (e.g., the Species and Island columns can be character data and don't need to be converted to factors). As long as setdiff() comes back with 0 rows, you're good to go.
+
 ```{r}
 library(palmerpenguins)
 
 # because the data is from a package, it doesn't automatically show up in our
 # environment unless with use the assignment arrow to place it there
 penguins <- penguins
-head(penguins)
 ```
 
 ```{r}
@@ -171,6 +170,7 @@ chinstrap <- read_csv("data/chinstrap.csv")
 ```
 
 4c
+
 ```{r}
 penguins_raw <- bind_rows(adelie, gentoo, chinstrap)
 
@@ -186,11 +186,13 @@ penguins_clean
 ```
 
 Result from the `setdiff()` function:
+
 ```{r}
 setdiff(penguins_clean, penguins)
 ```
 
 4d
+
 ```{r}
 ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
   geom_point() +
@@ -199,7 +201,9 @@ ggplot(penguins, aes(bill_length_mm, bill_depth_mm)) +
        y = "Bill Depth (mm)") +
   theme_classic()
 ```
+
 4e
+
 ```{r}
 ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = species)) +
   geom_point() +
@@ -209,4 +213,3 @@ ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = species)) +
        color = "Penguin Species") +
   theme_classic()
 ```
-

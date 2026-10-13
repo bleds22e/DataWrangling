@@ -1,5 +1,5 @@
 ---
-title: "Week 7: Solving Bigger Problems"
+title: "Week 8: Solving Bigger Problems"
 author: "Ellen Bledsoe"
 format: pdf
 editor: visual
@@ -105,18 +105,18 @@ A major part of the iterative process of coding is fixing errors that come up! Y
 
 1.  Be a scientist. Develop hypotheses!
 
--   Hypothesize about what is wrong.
--   Make one change that is expected to fix error.
--   Check if change worked/fixed error.
+- Hypothesize about what is wrong.
+- Make one change that is expected to fix error.
+- Check if change worked/fixed error.
 
 2.  Do not change something without a reason.
 
--   See where the code failed.
--   Read the error message.
--   Observe what the code is doing.
--   Look at the current state of the environment. This gives you a current snapshot of what is going on.
--   Talk through the code
--   [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
+- See where the code failed.
+- Read the error message.
+- Observe what the code is doing.
+- Look at the current state of the environment. This gives you a current snapshot of what is going on.
+- Talk through the code
+- [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
 
 3.  Run the code line by line, checking each step individually.
 
@@ -166,7 +166,7 @@ ggplot(do_counts_by_year, aes(x = year, y = n)) +
   theme_bw()
 ```
 
-Now, let's copy the code into ChatGPT with a quick prompt like "fix this code" and see what it finds and what it gets wrong. We'll come back to this after we talk about how to write a better prompt.
+If you want to, you can also copy the code into your Gen AI of choice and see what it says. We'll come back to this after we talk about how to write a better prompt.
 
 ## Finding Help
 
@@ -178,34 +178,34 @@ There is a bit of an art to learning how to search, read, and apply online help.
 
 ### In the Search:
 
--   Get the vocabulary right
--   Avoid extra words
--   Specify the programming language (and specify `tidyverse` if that matters to you)
--   These suggestions are also effective with generative AI.
+- Get the vocabulary right
+- Avoid extra words
+- Specify the programming language (and specify `tidyverse` if that matters to you)
+- These suggestions are also effective with generative AI.
 
 ### Results:
 
 **Help sites**
 
--   Read the question
--   Look at the setup
--   Check the age (when was it answered?)
--   Check the top 2-3 answers
--   Glance at the comments
--   Test & modify the example
-    -   Don't blindly paste things you don't understand
-    -   Reputation can help (e.g., StackOverflow answer with lots of positive votes)
+- Read the question
+- Look at the setup
+- Check the age (when was it answered?)
+- Check the top 2-3 answers
+- Glance at the comments
+- Test & modify the example
+  - Don't blindly paste things you don't understand
+  - Reputation can help (e.g., StackOverflow answer with lots of positive votes)
 
 **Blog posts**
 
--   Read the question
--   Look at the setup
--   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+- Read the question
+- Look at the setup
+- Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
 
 **Documentation**
 
--   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
--   Focus on the examples
+- Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+- Focus on the examples
 
 ### Testing and Modifying Answers
 
@@ -315,4 +315,4 @@ A good test: could you write this code again without the AI?
 
 ### Let's Practice!
 
-Earlier, we pasted the broken code from the Debugging example into a Gen AI tool with a quick prompt. Now, start a new chat and write a better prompt using the tips above. Compare the two responses: which was more useful, and which explained *why* the code was broken? Then run the code and make sure you can explain every change the AI made.
+Go back to the broken code in the Debugging example and ask a Gen AI tool for help, this time with a better prompt using the tips above. If you already tried a quick prompt earlier, compare the two responses: which was more useful, and which explained *why* the code was broken? Then run the code and make sure you can explain every change the AI made.
