@@ -208,12 +208,6 @@ And now a better one:
 You don't have to share all of your data. `glimpse()` and `head()` show its structure, and pasting that output is usually enough.
 
 ```{r}
-# make sure the data are loaded
-surveys <- read_csv("data/surveys.csv")
-species <- read_csv("data/species.csv")
-```
-
-```{r}
 
 ```
 
@@ -222,9 +216,10 @@ Treat it like a conversation: follow up with new error messages, change one thin
 ### Use It Responsibly
 
 - Anything you paste into a Gen AI tool is sent to a company's server and may be stored or used for training. Don't paste unpublished, sensitive, or restricted data (e.g., human subjects data, exact locations of threatened species) or anything with passwords or API keys.
+
 - The chat isn't a reproducible record; your script is. Save the code you have checked, and note where AI helped:
 
-  ```r
+  ``` r
   # Drafted with help from Gen AI (tool name, date)
   # Checked: row counts before/after join; compared one mean by hand
   ```

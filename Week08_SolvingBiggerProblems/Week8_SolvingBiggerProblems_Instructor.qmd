@@ -215,15 +215,15 @@ First, if given a reproducible example (reprex), meaning it has data and code yo
 
 From there, you can begin to modify the example to include your data and specific values.
 
-## Using Generative AI Effectively
+## Using Generative AI Effectively 
 
 Generative AI tools (e.g., ChatGPT, Claude, Gemini, Copilot) can be a really useful coding partner. I use them regularly to draft code, decode error messages, and remember how to do things I've done before. But they sound confident even when they are wrong, and they know nothing about your data beyond what you tell them. You are responsible for the code--and the science.
 
 ### Think Before You Prompt
 
--   Gen AI works best on small, well-defined tasks. "Analyze my data" will get you generic code; "calculate the mean weight of each species" will get you something useful.
--   Break the problem down and try it yourself first, like we practiced earlier. Then hand over one small piece at a time.
--   Ask for code, not answers. If you ask an AI to analyze your data directly, it may give you numbers that look right but aren't. Ask it to write code, then run that code yourself.
+- Gen AI works best on small, well-defined tasks. "Analyze my data" will get you generic code; "calculate the mean weight of each species" will get you something useful.
+- Break the problem down and try it yourself first, like we practiced earlier. Then hand over one small piece at a time.
+- Ask for code, not answers. If you ask an AI to analyze your data directly, it may give you numbers that look right but aren't. Ask it to write code, then run that code yourself.
 
 ### Give the AI Context
 
@@ -246,12 +246,6 @@ And now a better one:
 You don't have to share all of your data. `glimpse()` and `head()` show its structure, and pasting that output is usually enough.
 
 ```{r}
-# make sure the data are loaded
-surveys <- read_csv("data/surveys.csv")
-species <- read_csv("data/species.csv")
-```
-
-```{r}
 # column names and types
 glimpse(surveys)
 
@@ -263,15 +257,16 @@ Treat it like a conversation: follow up with new error messages, change one thin
 
 ### Use It Responsibly
 
--   Anything you paste into a Gen AI tool is sent to a company's server and may be stored or used for training. Don't paste unpublished, sensitive, or restricted data (e.g., human subjects data, exact locations of threatened species) or anything with passwords or API keys.
--   The chat isn't a reproducible record; your script is. Save the code you have checked, and note where AI helped:
+- Anything you paste into a Gen AI tool is sent to a company's server and may be stored or used for training. Don't paste unpublished, sensitive, or restricted data (e.g., human subjects data, exact locations of threatened species) or anything with passwords or API keys.
 
-    ```r
-    # Drafted with help from Gen AI (tool name, date)
-    # Checked: row counts before/after join; compared one mean by hand
-    ```
+- The chat isn't a reproducible record; your script is. Save the code you have checked, and note where AI helped:
 
--   Follow the rules in the syllabus. Many journals and funders also require you to disclose your use of Gen AI.
+  ``` r
+  # Drafted with help from Gen AI (tool name, date)
+  # Checked: row counts before/after join; compared one mean by hand
+  ```
+
+- Follow the rules in the syllabus. Many journals and funders also require you to disclose your use of Gen AI.
 
 ### Verify Everything
 
@@ -307,9 +302,9 @@ Many species (mostly birds and reptiles) have no weight measurements at all, so 
 
 Gen AI can be a patient tutor if you ask it to be. Try prompts like:
 
--   "Explain this code line by line. I'm new to R."
--   "Don't give me the solution yet. Give me a hint about what to try next."
--   "What is the difference between `inner_join()` and `left_join()`? Show me a small example."
+- "Explain this code line by line. I'm new to R."
+- "Don't give me the solution yet. Give me a hint about what to try next."
+- "What is the difference between `inner_join()` and `left_join()`? Show me a small example."
 
 A good test: could you write this code again without the AI?
 

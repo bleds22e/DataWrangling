@@ -213,3 +213,58 @@ ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = species)) +
        color = "Penguin Species") +
   theme_classic()
 ```
+
+### 5. OPTIONAL
+
+```{r}
+# join the species and plots information onto the surveys data
+portal <- surveys |>
+  left_join(species, join_by(species_id)) |>
+  left_join(plots, join_by(plot_id))
+
+# make a date column; impossible dates (e.g., April 31) become NA
+portal <- portal |>
+  mutate(date = make_date(year, month, day))
+
+# how many records in the full surveys data have impossible dates?
+sum(is.na(portal$date))
+
+# keep records with real dates, rodents only, the two plot types of interest,
+# and remove all kangaroo rats (by genus, so unidentified ones are removed too)
+krat_data <- portal |>
+  filter(!is.na(date)) |>
+  filter(taxa == "Rodent") |>
+  filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure") |>
+  filter(genus != "Dipodomys")
+
+# number of plots of each type, from the plots table
+plots_per_type <- plots |>
+  group_by(plot_type) |>
+  summarise(n_plots = n())
+
+# captures per year and plot type, then per plot
+krat_summary <- krat_data |>
+  group_by(year, plot_type) |>
+  summarise(total_captures = n()) |>
+  ungroup() |>
+  left_join(plots_per_type, join_by(plot_type)) |>
+  mutate(captures_per_plot = total_captures / n_plots)
+
+krat_summary
+
+# wide table: one row per year, one column per plot type
+krat_table <- krat_summary |>
+  select(year, plot_type, captures_per_plot) |>
+  pivot_wider(names_from = plot_type, values_from = captures_per_plot)
+
+krat_table
+
+# line plot
+ggplot(krat_summary, aes(x = year, y = captures_per_plot, color = plot_type)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Year",
+       y = "Rodents captured per plot",
+       color = "Plot type") +
+  theme_bw()
+```
