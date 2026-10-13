@@ -3,6 +3,7 @@ title: 'Week 8: Solving Bigger Problems'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 output: pdf_document
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -27,13 +28,13 @@ library(tidyverse)
 
 # data
 download.file("https://ndownloader.figshare.com/files/2292172",
-  "surveys.csv")
+  "data/surveys.csv")
 download.file("https://ndownloader.figshare.com/files/3299474",
-  "plots.csv")
+  "data/plots.csv")
 download.file("https://ndownloader.figshare.com/files/3299483",
-  "species.csv")
+  "data/species.csv")
 download.file("https://datacarpentry.org/semester-biology/data/mammal-size-data-clean.tsv",
-  "mammal-size-data-clean.txt")
+  "data/mammal-size-data-clean.txt")
 ```
 
 ## Problem Decomposition Steps
@@ -46,11 +47,9 @@ Here are some good guidelines:
     a.  Restate the problem in your own words
     b.  Determine the inputs and outputs
     c.  Ask for clarification
-    
 2.  Break the problem down
     a.  Write down the pieces, on paper or as comments in a file
     b.  Break complicated pieces down until all pieces are small and manageable
-    
 3.  Code one small piece at a time
     a.  Test it on it's own
     b.  Fix any problems before proceeding
@@ -81,18 +80,18 @@ A major part of the iterative process of coding is fixing errors that come up! Y
 
 1.  Be a scientist. Develop hypotheses!
 
--   Hypothesize about what is wrong.
--   Make one change that is expected to fix error.
--   Check if change worked/fixed error.
+- Hypothesize about what is wrong.
+- Make one change that is expected to fix error.
+- Check if change worked/fixed error.
 
 2.  Do not change something without a reason.
 
--   See where the code failed.
--   Read the error message.
--   Observe what the code is doing.
--   Look at the current state of the environment. This gives you a current snapshot of what is going on.
--   Talk through the code
--   [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
+- See where the code failed.
+- Read the error message.
+- Observe what the code is doing.
+- Look at the current state of the environment. This gives you a current snapshot of what is going on.
+- Talk through the code
+- [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
 
 3.  Run the code line by line, checking each step individually.
 
@@ -135,9 +134,9 @@ There is a bit of an art to learning how to search, read, and apply online help.
 
 ### In the Search:
 
--   Use the correct vocabulary
--   Avoid extra words
--   Specify the programming language (and specify `tidyverse` if that matters to you)
+- Use the correct vocabulary
+- Avoid extra words
+- Specify the programming language (and specify `tidyverse` if that matters to you)
 
 Note: The suggestions above are also effective when using generative AI.
 
@@ -145,25 +144,25 @@ Note: The suggestions above are also effective when using generative AI.
 
 **Help sites**
 
--   Read the question
--   Look at the setup
--   Check the age (when was it answered?)
--   Check the top 2-3 answers
--   Glance at the comments
--   Test & modify the example
-    -   Don't blindly paste things you don't understand
-    -   Reputation can help (e.g., StackOverflow answer with lots of positive votes)
+- Read the question
+- Look at the setup
+- Check the age (when was it answered?)
+- Check the top 2-3 answers
+- Glance at the comments
+- Test & modify the example
+  - Don't blindly paste things you don't understand
+  - Reputation can help (e.g., StackOverflow answer with lots of positive votes)
 
 **Blog posts**
 
--   Read the question
--   Look at the setup
--   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+- Read the question
+- Look at the setup
+- Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
 
 **Documentation**
 
--   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
--   Focus on the arguments and the examples
+- Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+- Focus on the arguments and the examples
 
 ### Testing and Modifying Answers
 

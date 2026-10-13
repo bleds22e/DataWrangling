@@ -93,18 +93,18 @@ A major part of the iterative process of coding is fixing errors that come up! Y
 
 1.  Be a scientist. Develop hypotheses!
 
--   Hypothesize about what is wrong.
--   Make one change that is expected to fix error.
--   Check if change worked/fixed error.
+- Hypothesize about what is wrong.
+- Make one change that is expected to fix error.
+- Check if change worked/fixed error.
 
 2.  Do not change something without a reason.
 
--   See where the code failed.
--   Read the error message.
--   Observe what the code is doing.
--   Look at the current state of the environment. This gives you a current snapshot of what is going on.
--   Talk through the code
--   [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
+- See where the code failed.
+- Read the error message.
+- Observe what the code is doing.
+- Look at the current state of the environment. This gives you a current snapshot of what is going on.
+- Talk through the code
+- [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
 
 3.  Run the code line by line, checking each step individually.
 
@@ -166,34 +166,34 @@ There is a bit of an art to learning how to search, read, and apply online help.
 
 ### In the Search:
 
--   Get the vocabulary right
--   Avoid extra words
--   Specify the programming language (and specify `tidyverse` if that matters to you)
--   These suggestions are also effective with generative AI.
+- Get the vocabulary right
+- Avoid extra words
+- Specify the programming language (and specify `tidyverse` if that matters to you)
+- These suggestions are also effective with generative AI.
 
 ### Results:
 
 **Help sites**
 
--   Read the question
--   Look at the setup
--   Check the age (when was it answered?)
--   Check the top 2-3 answers
--   Glance at the comments
--   Test & modify the example
-    -   Don't blindly paste things you don't understand
-    -   Reputation can help (e.g., StackOverflow answer with lots of positive votes)
+- Read the question
+- Look at the setup
+- Check the age (when was it answered?)
+- Check the top 2-3 answers
+- Glance at the comments
+- Test & modify the example
+  - Don't blindly paste things you don't understand
+  - Reputation can help (e.g., StackOverflow answer with lots of positive votes)
 
 **Blog posts**
 
--   Read the question
--   Look at the setup
--   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+- Read the question
+- Look at the setup
+- Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
 
 **Documentation**
 
--   Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
--   Focus on the examples
+- Use `Find` (`Ctrl` + `F` or `Cmd` + `F`)
+- Focus on the examples
 
 ### Testing and Modifying Answers
 

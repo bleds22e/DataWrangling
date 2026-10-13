@@ -21,23 +21,19 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
 Oct 14 at 2pm
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week7_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
 
 # Assignment Exercises
 
@@ -51,17 +47,17 @@ For this question, we are using the Portal data to review many of the `dplyr`, `
 
 Load the three dataframes below from your `data` folder into R using `read_csv()`.
 
--   `surveys.csv`
--   `species.csv`
--   `plots.csv`
+- `surveys.csv`
+- `species.csv`
+- `plots.csv`
 
 a.  Create a data frame with only data for the `species_id` `DO`, with the columns `year`, `month`, `day`, `species_id`, and `weight`.
 b.  Create a data frame with only data for species IDs `PP` and `PB` and for years starting in 1995, with the columns `year`, `species_id`, and `hindfoot_length`, with no null values for `hindfoot_length`.
 c.  Create a data frame with the average `hindfoot_length` for each `species_id` in each `year` with no null values.
-d.  Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the `genus` is `"Dipodomys"`.
+d.  Create a data frame with the `year`, `genus`, `species`, `weight` and `plot_type` for all cases where the `genus` is `Dipodomys`.
 e.  Make a scatter plot with `weight` on the x-axis and `hindfoot_length` on the y-axis. Use a `log10` scale on the x-axis. Color the points by `species_id`. Include good axis labels.
-f.  Make a histogram of weights with a separate subplot for each `species_id`. Do not include species with no weights. Set the `scales` argument in the `facet_wrap()` function to `"free_y"` so that the y-axes can vary. Include good axis labels.
-g.  (Challenge: optional) Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, colored by `species_id`, with a different facet (i.e., subplot) for each of three `plot_type`s: `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Include good axis labels, a good legend label, and a theme for the plot. Save the plot as a `png` file.
+f.  Make a histogram of weights with a separate subplot for each `species_id`. Do not include species without weights. Set the `scales` argument in the `facet_wrap()` function to `"free_y"` so that the y-axes can vary. Include good axis labels.
+g.  CHALLENGE (OPTIONAL): Make a plot with histograms of the weights of three species, `PP`, `PB`, and `DM`, colored by `species_id`, with a different facet (i.e., subplot) for each of three `plot_type`s: `Control`, `Long-term Krat Exclosure`, and `Short-term Krat Exclosure`. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Include good axis labels, a good legend label, and a theme for the plot. Save the plot as a `png` file.
 
 ```{r}
 
@@ -75,15 +71,15 @@ You will do this using a large dataset of mammalian body sizes (`mammal-size-dat
 
 a.  Read the data into R. As with most real world data there are a some things about the dataset that you'll need to identify and address during the import process. Pay particular attention to the `continent`.
 
-    You should do this *within* the `read_` function, not after you have read in the file.
+    You should address these issues *within* the `read_` function, not after you have read in the file. Fixing one will fix the other by default...
 
-    *Hint: take a look at the Week 5 lesson (Data Viz) and the `na` argument inside of `read_tsv()`.*
+    *Hint: take a look at the Week 5 lesson (Data Viz).*
 
 b.  Create a plot showing histograms of masses for mammal species that are still present and those that went extinct during the Pleistocene (`extant` and `extinct` in the `status` column). There should be one sub-plot for each continent and that sub-plot should show the histograms for both groups as a stacked histogram. To match the original analysis don't include islands (`Insular` and `Oceanic` in the `continent` column) and or the continent labeled `EA` (because `EA` had no species that went extinct in the Pleistocene). Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme.
 
 c.  The 2nd figure in the original paper looks in more detail at two orders, *Xenarthra* and *Carnivora*, which showed extinctions in North and South America. Create a figure similar to the one in Part 2, but that shows 4 sub-plots, one for each order on each of the two continents. Still scale the x-axis logarithmically, but use 19 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme.
 
-    *Hint: look at the help file for `facet_wrap` to figure out how to facet by more than one variable.*
+    *Hint: look at the help file for `facet_wrap` to figure out how to facet by more than one variable or explore using `facet_grid`.*
 
 d.  The 3rd figure in the original paper explores Australia as a case study. Australia is interesting because there is good data on both Pleistocene extinctions (`extinct` in the `status` column) and more modern extinctions occurring over the last 300 years (`historical` in the `status` column). Make a single stacked histogram that compares the sizes of `extinct`, `extant`, and `historical` statuses. Scale the x-axis logarithmically and use 25 bins to roughly match the original figure. The histogram should *not* be stacked, meaning each bin for each group should start at 0; modify the transparency so that any overlap is visible. Use good axis and legend labels and add a theme.
 
@@ -109,7 +105,7 @@ Take a look at the three original dataframes and compare them to the `penguins` 
 
 #### Problem breakdown
 
-(both a and b are graded for completion, not accuracy)
+(both a and b are graded for completion only)
 
 a.  Start by breaking down the problem into plain language. This stage shouldn't include any specific functions but is allowing you to talk through the steps conceptually.
 
@@ -117,25 +113,23 @@ b.  Make some predictions about the order in which you will want to accomplish t
 
 #### Coding
 
-c.  Recreate the clean dataset (`penguins`). Below are some tips (in no particular order) that will likely be helpful along the way
+c.  Recreate the clean dataset (`penguins`). I encourage you to challenge yourself and think about how you can use only the functions we have covered in class thus far to complete this question.
 
-    -   There is an instance in the sex column of one of the species where an unknown sex is marked with a `.` instead of `NA`
+Below are some tips (in no particular order) that will likely be helpful along the way
 
-    -   The year column is derived from the `Date Egg` column in the original dataframes
+    - The year column is derived from the `Date Egg` column in the original dataframes
 
-    -   Culmen is basically a fancy word for a bird's bill
+    - Culmen is basically a fancy word for a bird's bill
 
-    -   The regex for extracting the first word in a string using the `extract` function is `"(\\w*)"`
+    - The regex for extracting the first word in a string using the `extract` function is `"(\\w*)"`
 
-    -   You do not need to match up most data types exactly (character and factors are mostly interchangeable; same with integer, numeric, and double). You might, however, run into the issue of character and integer data being incompatible. There are a number of different ways to address this, one of them being the `convert = TRUE` argument.
+    - You do not need to match up most data types exactly (character and factors are mostly interchangeable; same with integer, numeric, and double). You might, however, run into the issue of character and integer data being incompatible. There are a number of different ways to address this, one of them being the `convert = TRUE` argument.
 
-    If you are already familiar with the `stringr` and/or `lubridate` packages, I encourage you to challenge yourself and think about how you can use only the functions we have covered in class thus far to complete this question.
+You will know that you have successfully completed the task at hand if you run the code `setdiff(your_clean_df, penguins)`, and the result has 0 rows.
 
-    You will know that you have successfully completed the task at hand if you run the code `setdiff(your_clean_df, penguins)`, and the result has 0 rows.
+The `setdiff()` function takes 2 data frames and looks for any differences. The output is a data frame with rows that do not match up. If you have 0 rows that don't match, that means all rows do match!
 
-    The `setdiff()` function takes 2 dataframes and looks for any differences. The output is a dataframe with rows that do not match up. If you have 0 rows that don't match, that means all rows do match!
-
-d.  Create a scatterplot with bill length on the x-axis and bill depth on the y-axis. Add a line of best fit using another geom (remember the argument `method = "lm"` to make it linear). Make the line of best fit black instead of the default blue. Add descriptive column names and a theme.
+d.  Create a scatter plot with bill length on the x-axis and bill depth on the y-axis. Add a line of best fit using another geom (remember the argument `method = "lm"` to make it linear). Make the line of best fit black instead of the default blue. Add descriptive column names and a theme.
 
 e.  Make the same plot as (d) above, except this time, both the points and the lines of best fit should be colored by species.
 
