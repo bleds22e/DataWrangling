@@ -79,11 +79,11 @@ Let's start by breaking down the problem. Then, we can add one piece of code at 
 surveys <- read_csv("data/surveys.csv")
 species <- read_csv("data/species.csv")
 
-avg_rodent_hf_cm <- surveys %>% 
-  inner_join(species, join_by(species_id)) %>% 
-  filter(taxa == "Rodent") %>% 
-  mutate(hindfoot_cm = hindfoot_length / 10) %>% 
-  group_by(species_id) %>% 
+avg_rodent_hf_cm <- surveys |> 
+  inner_join(species, join_by(species_id)) |> 
+  filter(taxa == "Rodent") |> 
+  mutate(hindfoot_cm = hindfoot_length / 10) |> 
+  group_by(species_id) |> 
   summarise(mean_hf = mean(hindfoot_cm, na.rm = TRUE))
 ```
 
@@ -133,12 +133,12 @@ First, copy the code into a new code chunk below. Spend a few minutes working th
 surveys <- read_csv('surveys.csv')
 species <- read_csv('species.csv')
 
-do_counts_by_year <- survey %>% 
-  filter(species = "DO") %>% 
+do_counts_by_year <- survey |> 
+  filter(species = "DO") |> 
   group_by(year)
   count()
 
-ggplot(do_count_by_year, aes(x = year, y = count) %>% 
+ggplot(do_count_by_year, aes(x = year, y = count) |> 
   geom_point() +
   geom_line()
   lab(x = "Year", y = "Count") +
@@ -153,9 +153,9 @@ surveys <- read_csv('data/surveys.csv')
 species <- read_csv('data/species.csv')
 
 # don't save as new object until the pipes run and produce expected result
-do_counts_by_year <- surveys %>% # correctly reference `surveys`
-  filter(species_id == "DO") %>% # correctly reference `species_id` and ==
-  group_by(year) %>%             # add a pipe
+do_counts_by_year <- surveys |> # correctly reference `surveys`
+  filter(species_id == "DO") |> # correctly reference `species_id` and ==
+  group_by(year) |>             # add a pipe
   count()
 
 # correctly reference object name and correct column name for y
@@ -287,9 +287,9 @@ Treat AI-generated code like your own: *Make sure it works -\> Make sure you und
 Suppose you asked an AI assistant to "calculate the mean weight of each species in the Portal data," and it gave you this code:
 
 ```{r}
-avg_weight <- surveys %>%
-  inner_join(species, join_by(species_id)) %>%
-  group_by(species_id) %>%
+avg_weight <- surveys |>
+  inner_join(species, join_by(species_id)) |>
+  group_by(species_id) |>
   summarise(mean_weight = mean(weight, na.rm = TRUE))
 ```
 
@@ -297,7 +297,7 @@ It runs without errors and returns numbers. But can we trust them? What would yo
 
 ```{r}
 # do the results look reasonable?
-avg_weight %>%
+avg_weight |>
   filter(is.nan(mean_weight))
 ```
 

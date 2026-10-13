@@ -245,9 +245,9 @@ Treat AI-generated code like your own: *Make sure it works -\> Make sure you und
 Suppose you asked an AI assistant to "calculate the mean weight of each species in the Portal data," and it gave you this code:
 
 ```{r}
-avg_weight <- surveys %>%
-  inner_join(species, join_by(species_id)) %>%
-  group_by(species_id) %>%
+avg_weight <- surveys |>
+  inner_join(species, join_by(species_id)) |>
+  group_by(species_id) |>
   summarise(mean_weight = mean(weight, na.rm = TRUE))
 ```
 
