@@ -143,7 +143,7 @@ species <- read_csv('data/species.csv')
 # don't save as new object until the pipes run and produce expected result
 do_counts_by_year <- surveys %>% # correctly reference `surveys`
   filter(species_id == "DO") %>% # correctly reference `species_id` and ==
-  group_by(year) |>              # add a pipe
+  group_by(year) %>%             # add a pipe
   count()
 
 # correctly reference object name and correct column name for y
