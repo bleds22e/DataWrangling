@@ -1,0 +1,210 @@
+---
+title: "DRAFT Key: Gen AI Question for the Solving Bigger Problems Assignment"
+author: "Ellen Bledsoe"
+format: pdf
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+# Instructor Notes (not for students)
+
+## What this question practices
+
+Each part goes with a section of the "Using Generative AI Effectively" lesson:
+
+- a. Plan: Think Before You Prompt (breaking the problem down before involving the AI)
+- b. Prompt: Give the AI Context and Protect Your Data (context, data structure instead of data, goal, and constraints)
+- c. Code: Use AI to Learn (understanding the code well enough to comment it in their own words)
+- d. Check: Verify Everything (testing the output instead of trusting code that runs)
+- e. Reflect: Be Transparent and Keep Your Code as the Record (thinking about the AI's work and noting that they used it)
+
+## Scope check: everything is from weeks 2--7
+
+The reference solution below uses only these functions:
+
+- Week 2: `<-`, `==`, `!=`, `sum()`, `$`
+- Week 3: `read_csv()`, `glimpse()`, `mutate()`, `select()`, `filter()` (including "or" conditions), `is.na()`, `|>`
+- Week 4: `left_join()`, `join_by()`, `group_by()`, `summarise()`, `n()`, `ungroup()`, `nrow()`
+- Week 5: `ggplot()`, `aes()`, `geom_point()`, `geom_line()`, `labs()`, `theme_bw()`
+- Week 6: `pivot_wider()`
+- Week 7: `make_date()`
+
+Gen AI will probably suggest things we haven't covered (e.g., `%in%`, `case_when()`, `count()`, `distinct()`, `.groups = "drop"`, `across()`). The question tells students to look these up and be able to explain anything they keep.
+
+## Built-in traps (verified against the Portal data)
+
+The request is written so that a good prompt produces correct code and a vague one does not. All numbers below come from running the reference solution.
+
+1.  The two plot types have different numbers of plots: 8 Control plots and 4 Long-term Krat Exclosure plots. Using raw totals instead of captures per plot says the exclosures had *more* captures than Control in only 6 of 26 years. Per plot, the exclosures are higher in 25 of 26 years (all but 1977). The conclusion flips in 19 of 26 years.
+2.  Excluding kangaroo rats by `species_id` (`DM`, `DO`, `DS`) misses `DX` (*Dipodomys sp.*), the kangaroo rats that were not identified to species. That leaves 29 kangaroo rat records in the data. Filtering on `genus != "Dipodomys"` is correct.
+3.  136 of the 35,549 records in `surveys` have impossible dates (e.g., April 31, 2000), so `make_date()` returns `NA`. If a student filters to rodents and the two plot types first and then drops bad dates, only 55 records are affected. This is why the question says to count them in the full `surveys` table. Skipping the date step leaves 10,292 rows instead of 10,237.
+4.  `left_join()` and `inner_join()` give the same final result here. The 763 records with no `species_id` are dropped by the `taxa == "Rodent"` filter either way, but a row-count check will show the difference between the join types.
+
+Alternative approaches are fine if they give the same answer, e.g., computing the mean of per-plot counts instead of dividing by the number of plots (same result here because every plot had captures every year), `inner_join()`, or building the date with `ymd(paste(...))`.
+
+## Things to expect
+
+- If a student's prompt includes all of the details, current Gen AI tools will often get everything right on the first try. That is a fine outcome and part of the lesson: a good prompt matters. Part (e) asks students to explain what they checked if they didn't find any problems, so this case still works.
+- I haven't tested this question with real student chats, so the amount of back-and-forth is a guess. I'd estimate 45--75 minutes, which is long compared to the other questions.
+- Captures are capture records, not unique individuals (the data have no animal ID), so recaptures are counted. The question says "captured," which is accurate.
+
+## Reference answers
+
+- Impossible dates in `surveys`: 136
+- `krat_summary`: 52 rows (26 years × 2 plot types), 1977--2002
+- Final number of rows after all filters: 10,237
+- `krat_table`: 26 rows with no `NA`s. For example, 1995 is 25.1 (Control) and 44.5 (Long-term Krat Exclosure).
+- Pattern: captures per plot are higher on the Long-term Krat Exclosure plots in 25 of 26 years (all but 1977).
+
+# Reference Solution
+
+## Set-up
+
+```{r}
+library(tidyverse)
+
+surveys <- read_csv("data/surveys.csv")
+species <- read_csv("data/species.csv")
+plots <- read_csv("data/plots.csv")
+
+glimpse(surveys)
+glimpse(species)
+glimpse(plots)
+```
+
+## a. Plan
+
+```{r}
+# Restate the problem:
+# Compare how many non-kangaroo-rat rodents are caught per plot each year on
+# Control vs. Long-term Krat Exclosure plots, leaving out records with
+# impossible dates.
+
+# Inputs: surveys, species, plots
+# Outputs: a long summary table, a wide table, a line plot, and the number
+# of records with impossible dates
+
+# Steps:
+# 1. Join species and plots info onto surveys
+# 2. Make a date column from year, month, day; count and drop the NA dates
+# 3. Keep only rodents
+# 4. Keep only Control and Long-term Krat Exclosure plots
+# 5. Remove kangaroo rats (genus Dipodomys, which includes unidentified)
+# 6. Count captures per year and plot type
+# 7. Count the number of plots of each type and join it to the counts
+# 8. Divide captures by number of plots
+# 9. Pivot to one column per plot type
+# 10. Plot
+```
+
+## b. Prompt (example)
+
+> I'm using R and the tidyverse (I'm a beginner, so please only use functions from `dplyr`, `tidyr`, `lubridate`, and `ggplot2`, and add a comment to each step). I have three data frames: `surveys` (columns `record_id`, `month`, `day`, `year`, `plot_id`, `species_id`, `sex`, `hindfoot_length`, `weight`), `species` (`species_id`, `genus`, `species`, `taxa`), and `plots` (`plot_id`, `plot_type`). \[`glimpse()` output pasted here.\]
+>
+> I want to compare how many rodents are captured per plot each year on "Control" plots and "Long-term Krat Exclosure" plots, *not counting any kangaroo rats* (genus Dipodomys, including unidentified ones). There are 8 Control plots and 4 Long-term Krat Exclosure plots in the `plots` table, so the numbers need to be per plot. Some records have impossible dates like April 31, so make a date column from `year`, `month`, and `day`, count how many records have an impossible date, and drop them.
+>
+> Please give me: (1) a long data frame with `year`, `plot_type`, `total_captures`, `n_plots`, and `captures_per_plot`; (2) a wide version with one row per year and one column per plot type; and (3) a line plot of captures per plot by year, colored by plot type. My plan is: join the three tables, make the date, filter to rodents and the two plot types, remove Dipodomys, count by year and plot type, divide by the number of plots, then pivot and plot. Please do this one step at a time.
+
+## c. Code
+
+```{r}
+# join the species and plots information onto the surveys data
+portal <- surveys |>
+  left_join(species, join_by(species_id)) |>
+  left_join(plots, join_by(plot_id))
+
+# make a date column; impossible dates (e.g., April 31) become NA
+portal <- portal |>
+  mutate(date = make_date(year, month, day))
+
+# how many records in the full surveys data have impossible dates?
+sum(is.na(portal$date))
+
+# keep records with real dates, rodents only, the two plot types of interest,
+# and remove all kangaroo rats (by genus, so unidentified ones are removed too)
+krat_data <- portal |>
+  filter(!is.na(date)) |>
+  filter(taxa == "Rodent") |>
+  filter(plot_type == "Control" | plot_type == "Long-term Krat Exclosure") |>
+  filter(genus != "Dipodomys")
+
+# number of plots of each type, from the plots table
+plots_per_type <- plots |>
+  group_by(plot_type) |>
+  summarise(n_plots = n())
+
+# captures per year and plot type, then per plot
+krat_summary <- krat_data |>
+  group_by(year, plot_type) |>
+  summarise(total_captures = n()) |>
+  ungroup() |>
+  left_join(plots_per_type, join_by(plot_type)) |>
+  mutate(captures_per_plot = total_captures / n_plots)
+
+krat_summary
+
+# wide table: one row per year, one column per plot type
+krat_table <- krat_summary |>
+  select(year, plot_type, captures_per_plot) |>
+  pivot_wider(names_from = plot_type, values_from = captures_per_plot)
+
+krat_table
+
+# line plot
+ggplot(krat_summary, aes(x = year, y = captures_per_plot, color = plot_type)) +
+  geom_point() +
+  geom_line() +
+  labs(x = "Year",
+       y = "Rodents captured per plot",
+       color = "Plot type") +
+  theme_bw()
+```
+
+Plot description: captures per plot are higher on the Long-term Krat Exclosure plots than on the Control plots in nearly every year after 1977, and both treatments rise and fall together over time.
+
+## d. Check (examples)
+
+```{r}
+# Row counts: the left joins should not add or drop any rows
+nrow(surveys)
+nrow(portal)
+
+# Row counts: how many rows are left after each filter?
+portal |> filter(!is.na(date)) |> nrow()
+portal |> filter(!is.na(date), taxa == "Rodent") |> nrow()
+nrow(krat_data)
+
+# Contents: any kangaroo rats left? (should be 0)
+sum(krat_data$genus == "Dipodomys")
+
+# Contents: do we have only the two plot types we wanted?
+krat_summary |>
+  group_by(plot_type) |>
+  summarise(n_years = n())
+
+# Spot check: 1995 Control captures per plot, calculated another way
+n_1995_control <- krat_data |>
+  filter(year == 1995, plot_type == "Control") |>
+  nrow()
+n_1995_control / 8
+
+# compare to the table
+krat_table |> filter(year == 1995)
+
+# What goes wrong without the checks:
+# excluding only the three named kangaroo rat species misses unidentified ones
+portal |>
+  filter(!is.na(date), taxa == "Rodent",
+         plot_type == "Control" | plot_type == "Long-term Krat Exclosure",
+         species_id != "DM", species_id != "DO", species_id != "DS") |>
+  nrow()
+```
+
+## e. Reflect (example)
+
+> My first prompt said to exclude the kangaroo rat species `DM`, `DO`, and `DS`, and the AI did exactly that. The code ran without errors and the plot looked fine, but my "no kangaroo rats left" check found 29 *Dipodomys* records. They were `DX`, the kangaroo rats that were not identified to species. I changed my prompt to exclude the whole genus, and the new code passed. The AI did a good job with the joins and the pivot (the joins kept all 35,549 rows, and my spot check of the 1995 Control plots, 201 captures / 8 plots = 25.1, matched the table). It also used `make_date()`, which I had to look up, and I learned that it turns impossible dates into `NA` instead of giving an error. Next time I will write my checks before I look at the AI's code, so I'm not just confirming what it did.
+>
+> *I used ChatGPT on Oct 9 to draft the pipeline and to explain `make_date()`.*

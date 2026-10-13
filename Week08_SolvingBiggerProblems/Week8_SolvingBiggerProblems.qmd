@@ -50,16 +50,16 @@ Here are some good guidelines:
     - Write down the pieces, on paper or as comments in a file
     - Break complicated pieces down until all pieces are small and manageable
 3.  **Code one small piece at a time**
-    - Test it on it's own
+    - Test it on its own
     - Fix any problems before proceeding
 
 ### Let's Practice!
 
-Take a look at Question 4 in the assignment. Spend a few minutes reading through the question, restate the question in your on words, and then break down the steps.
+Take a look at Question 4 in the assignment. Spend a few minutes reading through the question, restate the question in your own words, and then break down the steps.
 
 ### Iteration
 
-As you've probably discovered by now, programming requires a lot of iteration to get to code to do exactly what you want it to do and produce the output you are looking for.
+As you've probably discovered by now, programming requires a lot of iteration to get code to do exactly what you want it to do and produce the output you are looking for.
 
 When writing more and more complex code, it can help to start simple and build the code up.
 
@@ -72,6 +72,14 @@ Let's start by breaking down the problem. Then, we can add one piece of code at 
 ```{r}
 
 ```
+
+Along the way, it's a good idea to check that each step did what you expected. For example, did our join keep all of the rows in `surveys`? Let's check the number of rows before and after the join.
+
+```{r}
+
+```
+
+What do you notice?
 
 ## Debugging
 
@@ -93,11 +101,11 @@ A major part of the iterative process of coding is fixing errors that come up! Y
 
 3.  **Run the code line by line, checking each step individually.**
 
-4.  **Use Gen AI (e.g., ChatGPT, Claude, Gemini)--with caution.**
+4.  **Use Gen AI (e.g., ChatGPT, Claude, Gemini)--with caution.** We'll talk about how to do this well in [Using Generative AI Effectively](#using-generative-ai-effectively) below.
 
 ### Example
 
-Below, we have a code chunk with some code that is mean to summarize some of the Portal data and then plot it. However, as you'll see when you try to run the code, we have some errors.
+Below, we have a code chunk with some code that is meant to summarize some of the Portal data and then plot it. However, as you'll see when you try to run the code, we have some errors.
 
 First, copy the code into a new code chunk below. Spend a few minutes working through this code chunk to debug it. Utilize some of the strategies above.
 
@@ -120,11 +128,11 @@ ggplot(do_count_by_year, aes(x = year, y = count) |>
 
 Insert a code chunk here. Copy the code from above and work to debug it.
 
-If you want to, you can also copy the code into your Gen AI of choice and see what it says.
+If you want to, you can also copy the code into your Gen AI of choice and see what it says. We'll come back to this after we talk about how to write a better prompt.
 
 ## Finding Help
 
-In this class, I've provided the instructor versions of the lessons in class for you to have a reference sheets. They are super helpful, but they won't always have exactly what you need, especially when you are working with your own datasets.
+In this class, I've provided the instructor versions of the lessons in class for you to use as reference sheets. They are super helpful, but they won't always have exactly what you need, especially when you are working with your own datasets.
 
 The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly Googling how to achieve certain tasks, including for the lessons and assignments in this class!
 
@@ -165,6 +173,100 @@ There is a bit of an art to learning how to search, read, and apply online help.
 
 Often, we won't be able to tell right away if the code provided in the answer will work for our specific data or situation. We always need to test it out.
 
-First, if given a reproducible examples (reprex), meaning it has data and code you can copy and paste to run, do so! This can help with understanding what the code is doing and whether or not it will work in your case.
+First, if given a reproducible example (reprex), meaning it has data and code you can copy and paste to run, do so! This can help with understanding what the code is doing and whether or not it will work in your case.
 
 From there, you can begin to modify the example to include your data and specific values.
+
+## Using Generative AI Effectively
+
+Generative AI tools (e.g., ChatGPT, Claude, Gemini, Copilot) can be a really useful coding partner. I use them regularly to draft code, decode error messages, and remember how to do things I've done before. But they sound confident even when they are wrong, and they know nothing about your data beyond what you tell them. You are responsible for the code--and the science.
+
+### Think Before You Prompt
+
+- Gen AI works best on small, well-defined tasks. "Analyze my data" will get you generic code; "calculate the mean weight of each species" will get you something useful.
+- Break the problem down and try it yourself first, like we practiced earlier. Then hand over one small piece at a time.
+- Ask for code, not answers. If you ask an AI to analyze your data directly, it may give you numbers that look right but aren't. Ask it to write code, then run that code yourself.
+
+### Give the AI Context
+
+An AI assistant can't see your computer, your files, or your data unless you show it. A good prompt usually includes:
+
+1.  The language and packages you are using
+2.  The structure of your data, plus anything only you know (like units)
+3.  Your goal and what the result should look like
+4.  What you have tried, including the *exact* error message
+5.  Any constraints (e.g., "use only `dplyr` functions")
+
+Compare these two prompts for the broken code from our debugging example. First, a weak one:
+
+> Fix this code. \[code\]
+
+And now a better one:
+
+> I'm using R and the tidyverse. `surveys` is a data frame with one row per animal captured and columns including `year` and `species_id`. I want to count the records of species `DO` in each year and plot the counts over time as points connected by a line. The code below gives errors. Please explain what's wrong and show me the corrected code. \[code\]
+
+You don't have to share all of your data. `glimpse()` and `head()` show its structure, and pasting that output is usually enough.
+
+```{r}
+# make sure the data are loaded
+surveys <- read_csv("data/surveys.csv")
+species <- read_csv("data/species.csv")
+```
+
+```{r}
+
+```
+
+Treat it like a conversation: follow up with new error messages, change one thing at a time, and start a new chat if you are going in circles.
+
+### Use It Responsibly
+
+- Anything you paste into a Gen AI tool is sent to a company's server and may be stored or used for training. Don't paste unpublished, sensitive, or restricted data (e.g., human subjects data, exact locations of threatened species) or anything with passwords or API keys.
+- The chat isn't a reproducible record; your script is. Save the code you have checked, and note where AI helped:
+
+  ```r
+  # Drafted with help from Gen AI (tool name, date)
+  # Checked: row counts before/after join; compared one mean by hand
+  ```
+
+- Follow the rules in the syllabus. Many journals and funders also require you to disclose your use of Gen AI.
+
+### Verify Everything
+
+Gen AI tools generate responses that are likely to *sound* right, which isn't the same as *being* right. You might get functions that don't exist, outdated code, or code that runs without errors but doesn't do what you asked. That last one is the most dangerous with data, because there is no error message to warn you.
+
+Treat AI-generated code like your own: *Make sure it works -\> Make sure you understand it*.
+
+1.  Read it and make sure you can explain every line (look up what you don't recognize with `?`)
+2.  Run it in pieces, one step at a time
+3.  Check the output against what you expect, like we did with `nrow()` earlier (`NA`s? extreme values? does the plot look right?)
+4.  Check it against your data: the AI doesn't know your units or how missing values are coded
+
+Suppose you asked an AI assistant to "calculate the mean weight of each species in the Portal data," and it gave you this code:
+
+```{r}
+avg_weight <- surveys |>
+  inner_join(species, join_by(species_id)) |>
+  group_by(species_id) |>
+  summarise(mean_weight = mean(weight, na.rm = TRUE))
+```
+
+It runs without errors and returns numbers. But can we trust them? What would you want to know before using these results?
+
+```{r}
+
+```
+
+### Use AI to Learn, Not Just to Get Answers
+
+Gen AI can be a patient tutor if you ask it to be. Try prompts like:
+
+- "Explain this code line by line. I'm new to R."
+- "Don't give me the solution yet. Give me a hint about what to try next."
+- "What is the difference between `inner_join()` and `left_join()`? Show me a small example."
+
+A good test: could you write this code again without the AI?
+
+### Let's Practice!
+
+Go back to the broken code in the Debugging example and ask a Gen AI tool for help, this time with a better prompt using the tips above. If you already tried a quick prompt earlier, compare the two responses: which was more useful, and which explained *why* the code was broken? Then run the code and make sure you can explain every change the AI made.
