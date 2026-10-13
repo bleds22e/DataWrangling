@@ -1,0 +1,116 @@
+---
+title: "DRAFT: Gen AI Question for the Solving Bigger Problems Assignment"
+author: "Ellen Bledsoe"
+format: pdf
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 5. Working with Gen AI on a Bigger Problem (30 pts)
+
+In this question, you will use a Gen AI tool (e.g., ChatGPT, Claude, Gemini, Copilot) as a coding partner to solve a multi-step data wrangling problem using the practices from this week's lesson. The goal is not just working code. It is to show that you can plan a problem, guide the AI, and check its work.
+
+**Ground rules**
+
+-   Complete part (a) on your own, *before* you open a Gen AI tool.
+-   Do not paste data files into an AI tool. Share the *structure* of the data (e.g., the output of `glimpse()`) instead.
+-   Tell the AI to use only the tidyverse and the functions we have learned in class so far. If the AI uses a function you do not recognize, look it up and make sure you can explain it before you keep it.
+-   You are responsible for the final code. You must be able to explain every line of it.
+
+#### The Request
+
+You get this message from a collaborator:
+
+> Kangaroo rats (genus *Dipodomys*) are some of the largest and most abundant seed-eating rodents at Portal. The Long-term Krat Exclosure plots are fenced to keep kangaroo rats out while still letting smaller rodents come and go. I'd like to know whether the *other* rodents are caught more often on those plots than on the Control plots.
+>
+> Using the Portal `surveys`, `species`, and `plots` data, could you send me:
+>
+> 1.  A table with one row per year and one column for each plot type (Control and Long-term Krat Exclosure), showing the number of rodents captured per plot. Please leave out all kangaroo rats, including any that were not identified to species.
+> 2.  A line plot of the same information, with a separate colored line for each plot type.
+> 3.  The number of records in the full `surveys` table that have impossible dates (like April 31). I noticed a few of those, and they should be left out of your summary.
+>
+> The Control and exclosure treatments don't have the same number of plots, so make sure the numbers are comparable between them.
+
+Use the `surveys`, `species`, and `plots` data frames from Question 2. Use `glimpse()` to look at the structure of each. You will use this output in your prompt.
+
+```{r}
+
+```
+
+#### a. Plan (4 pts)
+
+*(graded for completion; do this before using AI)*
+
+In your own words, restate the problem, say what the inputs and the final outputs are, and break the problem into small steps. Write your steps as plain-language comments in the code chunk below. Do not write any R code yet.
+
+```{r}
+# Restate the problem:
+
+# Inputs:
+
+# Outputs:
+
+# Steps:
+```
+
+#### b. Prompt (6 pts)
+
+Write the prompt that you give to the Gen AI tool. Paste it in the space below. Your prompt should include:
+
+-   the language and packages you are using
+-   the structure of your data (from `glimpse()`), including anything that only you know, such as units or how missing values are coded
+-   what you want the result to look like
+-   your constraints (e.g., use only functions from class, comment each step)
+-   your plan from part (a), so the AI works through the problem the way you decided to
+
+> *Paste your prompt here.*
+
+#### c. Code (8 pts)
+
+Paste the code you ended up with after working with the AI (including any follow-up prompts) in the chunk below. Add comments **in your own words** that explain what each step does. The code should:
+
+-   save the long-format summary as a data frame called `krat_summary`, with the columns `year`, `plot_type`, `total_captures`, `n_plots`, and `captures_per_plot`
+-   save the table your collaborator asked for (one row per year, one column per plot type) as a data frame called `krat_table`
+-   make the line plot, with good axis labels and a theme
+
+```{r}
+
+```
+
+Finally, report how many records in the full `surveys` table have impossible dates, and write one sentence describing what your plot shows.
+
+> *Answer here.*
+
+#### d. Check (8 pts)
+
+Gen AI can write code that runs without errors but does not do what you asked. Write code for **at least three checks** of the AI's work, including at least one row-count check and at least one spot check. After each check, write a sentence about what you found. Some ideas:
+
+-   **Row counts.** How many rows are in `surveys` before and after joining the tables? Did any join add or drop rows? How many rows were removed by each filter?
+-   **Contents.** Are there any kangaroo rats left in the data you used for the summary? Are only the two plot types you wanted included?
+-   **Spot check.** Pick one year and one plot type and calculate the value in `krat_table` a different way (for example, one step at a time with your own code). Do the two results match?
+-   **Plausibility.** Are there any missing years, `NA`s, or strange values? Does the plot look the way you expect?
+
+```{r}
+
+```
+
+> *What did your checks show?*
+
+#### e. Reflect (4 pts)
+
+In about 4--6 sentences, answer the following:
+
+-   What did the AI do well, and what did it get wrong, miss, or do that you did not expect? Be specific. If you did not find any problems, explain what you checked and how you know the code is right.
+-   What did you change yourself, or what follow-up prompt did you use to fix a problem?
+-   What would you do differently next time you work on a problem like this with Gen AI?
+
+> *Reflection here.*
+
+Finish with a one-line statement about your Gen AI use, like this:
+
+> *I used \[tool name\] on \[date\] to \[what you used it for\].*
+
+*Optional: include a shareable link to your conversation, if your tool supports it. It helps me give you feedback on your prompts.*
