@@ -108,7 +108,7 @@ A major part of the iterative process of coding is fixing errors that come up! Y
 
 3.  Run the code line by line, checking each step individually.
 
-4.  Use generative AI (e.g., ChatGPT)--with caution.
+4.  Use generative AI (e.g., ChatGPT)--with caution. We'll talk about how to do this well in [Using Generative AI Effectively](#using-generative-ai-effectively) below.
 
 ### Example
 
@@ -202,3 +202,153 @@ Often, we won't be able to tell right away if the code provided in the answer wi
 First, if given a reproducible examples (reprex), meaning is has data and code you can copy and paste to run, do so! This can help with understanding what the code is doing and whether or not it will work in your case.
 
 From there, you can begin to modify the example to include your data and specific values.
+
+## Using Generative AI Effectively
+
+Generative AI tools (e.g., ChatGPT, Claude, Gemini, Copilot) can be a really useful coding partner. I use them regularly to draft code, decode error messages, and remind me how to do things I've done before.
+
+But these tools also sound confident when they are wrong, and they know nothing about your data beyond what you tell them. The responsibility for the code--and for the science--stays with you.
+
+The practices below will help you get the benefits of Gen AI while avoiding the pitfalls.
+
+### Think Before You Prompt
+
+-   Gen AI works best on small, well-defined tasks. "Analyze my data" will get you generic code; "calculate the mean weight of each species" will get you something useful.
+-   This is the same problem decomposition we practiced earlier! Break the problem down yourself, then hand over one small piece at a time.
+-   If you can't explain what you want in plain language, the AI can't write it for you. Go back and restate the problem in your own words.
+-   Try it yourself first. Even an attempt that doesn't work helps you write a better prompt and understand the answer when you get it.
+
+### Give the AI Context
+
+An AI assistant can't see your computer, your files, or your data unless you show it. A good prompt usually includes:
+
+1.  **Language and packages.** "I'm using R and the tidyverse" keeps you from getting base R or Python code.
+2.  **Data structure.** Object names, column names and types, and a few example rows. Include what only you know: units, how missing values are coded, and what each row represents.
+3.  **Your goal.** What you want in plain language and what the result should look like (e.g., "a data frame with one row per species").
+4.  **What you've tried.** Your code and the *exact* error message (copy and paste it).
+5.  **Constraints.** For example, "use only `dplyr` functions" or "explain each change you make."
+
+Compare these two prompts for the broken code from our debugging example:
+
+> **Weak prompt:** Fix this code. \[code\]
+
+> **Better prompt:** I'm using R and the tidyverse. `surveys` is a data frame with columns `record_id`, `month`, `day`, `year`, `plot_id`, `species_id`, `sex`, `hindfoot_length` (mm), and `weight` (g). I want to count how many records of species `DO` there are in each year and plot the counts over time as points connected by a line. The code below gives errors. Please explain what is wrong, then show me the corrected code. \[code\]
+
+Making sure the AI knows what your data look like doesn't mean sharing all of your data! `glimpse()` shows the column names and types, and `head()` shows a few rows. Pasting the output of those is usually enough.
+
+```{r}
+# make sure the data are loaded
+surveys <- read_csv("data/surveys.csv")
+species <- read_csv("data/species.csv")
+```
+
+```{r}
+# column names and types
+glimpse(surveys)
+
+# a few example rows
+head(surveys, 5)
+```
+
+Treat the interaction as a conversation, too:
+
+-   Follow up! Paste in new error messages and say what happened when you ran the suggestion.
+-   Change one thing at a time, just like when debugging on your own.
+-   If you are going in circles, start a new chat with a clean summary of the problem, your data, and what you have already tried.
+
+### Protect Your Data
+
+Anything you type or paste into a Gen AI tool is sent to a company's servers. Depending on the tool and your settings, it may be stored and even used to train future models.
+
+Do *not* paste:
+
+-   Unpublished, sensitive, or restricted data (e.g., human subjects data, exact locations of threatened or endangered species or culturally sensitive sites, landowner information, or data covered by a data-use agreement)
+-   Passwords, API keys, or tokens that might be hiding in your code
+
+Share the structure of your data (column names and types) or a few made-up rows instead.
+
+When in doubt, check the policies of your lab, university, funder, and data provider.
+
+### Verify Everything
+
+Gen AI tools generate responses that are likely to *sound* right, which isn't the same as *being* right. With code, you might get:
+
+-   Functions or arguments that don't exist
+-   Outdated or inconsistent code (e.g., old tidyverse functions like `gather()` or a mix of base R and tidyverse)
+-   Code that runs without errors but doesn't do what you asked
+
+The last one is the most dangerous when working with data, because there is no error message to warn you.
+
+Remember our iterative process: *Make sure it works -\> Make sure you understand it*. For AI-generated code, that means:
+
+1.  **Read it.** Can you explain what every line does? Look up any function you don't recognize (e.g., `?inner_join`).
+2.  **Run it in pieces.** Run a pipeline one step at a time, just like you would with your own code.
+3.  **Check the output against what you expect.** How many rows should there be? Are there unexpected `NA`s, zeros, or extreme values? Does the plot look right? Can you calculate one value another way and compare?
+4.  **Check it against your data.** The AI doesn't know your units, how missing values are coded, or the quirks of your dataset.
+
+Suppose you asked an AI assistant to "calculate the mean weight of each species in the Portal data," and it gave you this code:
+
+```{r}
+avg_weight <- surveys %>%
+  inner_join(species, join_by(species_id)) %>%
+  group_by(species_id) %>%
+  summarise(mean_weight = mean(weight, na.rm = TRUE))
+```
+
+It runs without errors and returns numbers. But can we trust them? Use the checks above to investigate. What would you want to know before using these results?
+
+```{r}
+# did the join change the number of rows?
+nrow(surveys)
+nrow(inner_join(surveys, species, join_by(species_id)))
+
+# which rows were lost?
+surveys %>%
+  filter(is.na(species_id)) %>%
+  nrow()
+
+# do the results look reasonable?
+avg_weight %>%
+  filter(is.nan(mean_weight))
+```
+
+What did the checks tell us?
+
+-   `inner_join()` dropped 763 rows: the records with no `species_id`, which can't match anything in the `species` table. That doesn't affect a per-species average, but it's something we should know about (and mention) rather than discover later.
+-   Many species (mostly birds and reptiles) have no weight measurements at all, so their "mean" is `NaN`. Setting `na.rm = TRUE` got rid of the `NA`s in the calculation, but it didn't make the missing data go away.
+
+The code wasn't "broken," but the checks showed us what these numbers do and don't represent. The AI didn't flag either issue, and it wouldn't have unless we asked.
+
+### Use AI to Learn, Not Just to Get Answers
+
+Gen AI can be a patient tutor if you ask it to be one. Try prompts like:
+
+-   "Explain this code line by line. I'm new to R."
+-   "Don't give me the solution yet. Give me a hint about what to try next."
+-   "What is the difference between `inner_join()` and `left_join()`? Show me a small example."
+-   "What are some other ways to do this using the tidyverse?"
+
+A good test: if you had to write this code again without the AI, could you? If you can't explain code, you can't debug it, adapt it to new data, or defend it to collaborators and reviewers.
+
+The better you understand R, the better you will be at using AI--you need the basics to write a good prompt and to spot a bad answer. That's why we're learning them!
+
+### Be Transparent and Keep Your Code as the Record
+
+-   Ask an AI the same question twice and you will probably get different code. The chat is *not* a reproducible record; your script is. Save the code you have checked and understand in your script or Quarto document (we'll dig into reproducibility next week).
+-   Leave a comment where AI helped, including what you did to check it. For example:
+
+    ```r
+    # Drafted with help from Gen AI (tool name, date)
+    # Checked: row counts before/after join; compared one species' mean by hand
+    ```
+
+-   Follow the rules. Check the syllabus and each assignment for what is allowed in this class. Many journals and funders also require you to disclose your use of Gen AI.
+
+### Let's Practice!
+
+Go back to the broken code in the Debugging example and try asking a Gen AI tool for help twice:
+
+1.  First, paste in the code with a short prompt, like "fix this code."
+2.  Then, start a new chat and write a better prompt using the tips above.
+3.  Compare the two responses. Which was more useful? Which one explained *why* the code was broken?
+4.  Run the code you got back and check the plot. Can you explain every change the AI made? Did it change anything you didn't ask it to?
