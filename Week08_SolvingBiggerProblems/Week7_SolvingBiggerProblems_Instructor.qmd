@@ -50,16 +50,16 @@ Here are some good guidelines:
     a.  Write down the pieces, on paper or as comments in a file
     b.  Break complicated pieces down until all pieces are small and manageable
 3.  Code one small piece at a time
-    a.  Test it on it's own
+    a.  Test it on its own
     b.  Fix any problems before proceeding
 
 ### Let's Practice!
 
-Take a look at Question 4 in the assignment. Spend a few minutes reading through the question, restate the question in your on words, and then break down the steps.
+Take a look at Question 4 in the assignment. Spend a few minutes reading through the question, restate the question in your own words, and then break down the steps.
 
 ### Iteration
 
-As you've probably discovered by now, programming requires a lot of iteration to get to code to do exactly what you want it to do and produce the output you are looking for.
+As you've probably discovered by now, programming requires a lot of iteration to get code to do exactly what you want it to do and produce the output you are looking for.
 
 When writing more and more complex code, it can help to start simple and build the code up.
 
@@ -112,7 +112,7 @@ A major part of the iterative process of coding is fixing errors that come up! Y
 
 ### Example
 
-Below, we have a code chunk with some code that is mean to summarize some of the Portal data and then plot it. However, as you'll see when you try to run the code, we have some errors.
+Below, we have a code chunk with some code that is meant to summarize some of the Portal data and then plot it. However, as you'll see when you try to run the code, we have some errors.
 
 First, copy the code into a new code chunk below. Spend a few minutes working through this code chunk to debug it. Utilize some of the strategies above.
 
@@ -141,7 +141,7 @@ surveys <- read_csv('data/surveys.csv')
 species <- read_csv('data/species.csv')
 
 # don't save as new object until the pipes run and produce expected result
-do_counts_by_year <- surveys %>% # correctly reference `survyes`
+do_counts_by_year <- surveys %>% # correctly reference `surveys`
   filter(species_id == "DO") %>% # correctly reference `species_id` and ==
   group_by(year) |>              # add a pipe
   count()
@@ -158,7 +158,7 @@ Now, let's copy the code into ChatGPT and see what it finds and what it gets wro
 
 ## Finding Help
 
-In this class, I've provided the instructor versions of the lessons in class for you to have a reference sheets. They are super helpful, but they won't always have exactly what you need, especially when you are working with your own datasets.
+In this class, I've provided the instructor versions of the lessons in class for you to use as reference sheets. They are super helpful, but they won't always have exactly what you need, especially when you are working with your own datasets.
 
 The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly googling how to achieve certain tasks, including for the lessons and assignments in this class!
 
@@ -199,7 +199,7 @@ There is a bit of an art to learning how to search, read, and apply online help.
 
 Often, we won't be able to tell right away if the code provided in the answer will work for our specific data or situation. We always need to test it out.
 
-First, if given a reproducible examples (reprex), meaning is has data and code you can copy and paste to run, do so! This can help with understanding what the code is doing and whether or not it will work in your case.
+First, if given a reproducible example (reprex), meaning it has data and code you can copy and paste to run, do so! This can help with understanding what the code is doing and whether or not it will work in your case.
 
 From there, you can begin to modify the example to include your data and specific values.
 
