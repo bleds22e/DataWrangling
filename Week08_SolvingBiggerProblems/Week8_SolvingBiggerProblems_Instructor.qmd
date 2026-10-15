@@ -103,24 +103,23 @@ We lost 763 rows! The `inner_join()` only keeps rows that have a match in both t
 
 A major part of the iterative process of coding is fixing errors that come up! You've already had quite a bit of practice with this working on your assignments, but let's talk about some general strategies together.
 
-1.  Be a scientist. Develop hypotheses!
+1.  **Be a scientist. Develop hypotheses!**
 
 - Hypothesize about what is wrong.
 - Make one change that is expected to fix error.
 - Check if change worked/fixed error.
 
-2.  Do not change something without a reason.
+2.  **Do not change something without a reason.**
 
 - See where the code failed.
 - Read the error message.
 - Observe what the code is doing.
 - Look at the current state of the environment. This gives you a current snapshot of what is going on.
-- Talk through the code
-- [Rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging)
+- Talk through the code ([rubber duck programming](https://en.wikipedia.org/wiki/Rubber_duck_debugging))
 
-3.  Run the code line by line, checking each step individually.
+3.  **Run the code line by line, checking each step individually.**
 
-4.  Use generative AI (e.g., ChatGPT)--with caution. We'll talk about how to do this well in [Using Generative AI Effectively](#using-generative-ai-effectively) below.
+4.  **Use generative AI (e.g., ChatGPT)--with caution.** We'll talk about how to do this well in [Using Generative AI Effectively](#using-generative-ai-effectively) below.
 
 ### Example
 
@@ -172,7 +171,7 @@ If you want to, you can also copy the code into your Gen AI of choice and see wh
 
 In this class, I've provided the instructor versions of the lessons in class for you to use as reference sheets. They are super helpful, but they won't always have exactly what you need, especially when you are working with your own datasets.
 
-The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly googling how to achieve certain tasks, including for the lessons and assignments in this class!
+The good news is that there is help! In fact, professional programmers use Google regularly; I am constantly Googling how to achieve certain tasks, including for the lessons and assignments in this class!
 
 There is a bit of an art to learning how to search, read, and apply online help. Let's talk through a few tips that you might find helpful.
 
@@ -215,7 +214,7 @@ First, if given a reproducible example (reprex), meaning it has data and code yo
 
 From there, you can begin to modify the example to include your data and specific values.
 
-## Using Generative AI Effectively 
+## Using Generative AI Effectively {#using-generative-ai-effectively}
 
 Generative AI tools (e.g., ChatGPT, Claude, Gemini, Copilot) can be a really useful coding partner. I use them regularly to draft code, decode error messages, and remember how to do things I've done before. But they sound confident even when they are wrong, and they know nothing about your data beyond what you tell them. You are responsible for the code--and the science.
 
