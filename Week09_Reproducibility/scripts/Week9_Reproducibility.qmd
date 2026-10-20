@@ -18,25 +18,25 @@ Today's lesson uses a folder that I have already set up for you. If you are read
 1.  Download the ZIP file from D2L.
 2.  **Unzip it.** On a Mac, double-click the ZIP file. On Windows, right-click it and choose `Extract All...`. (Windows will let you open files from inside a ZIP file without extracting it, but they won't work properly that way!)
 3.  Move the unzipped folder somewhere you will be able to find it again (your `Documents` folder is a good option).
-4.  Open RStudio and open this file, `lesson.qmd`, with `File` -\> `Open File...`
+4.  Open RStudio and open this file, `Week9_Reproducibility.qmd`, with `File` -\> `Open File...`
 
 The folder should look like this:
 
-```
+```         
 Week9_Project
-|-- lesson.qmd
+|-- Week9_Reproducibility.qmd
 |-- README.md
 |-- data_raw
 |   `-- shrub-dimensions-labeled.csv
 |-- data_clean
 |-- documents
 |-- figures
-`-- scripts
+`-- code
     |-- example.R
     `-- weight_function.R
 ```
 
-Notice that `lesson.qmd` is sitting at the top of the folder instead of in `scripts`, while everything else is already in its place. That is on purpose, and we will see why a little later!
+Notice that `Week9_Reproducibility.qmd` is sitting at the top of the folder instead of in `code`, while everything else is already in its place. That is on purpose, and we will see why a little later!
 
 ## R vs. RStudio
 
@@ -147,7 +147,7 @@ Right now, we have a folder with all of the right files in it, but it is not an 
 
 Look at the top of the `Console` pane (bottom left). Next to the R version, RStudio shows the working directory, which is the folder that R is currently using as home base. To see the full path, type `getwd()` into the `Console` (not in a code chunk--we'll see why later!).
 
-Chances are, this is *not* the folder that you just unzipped, which means R doesn't know where to find our data, our scripts, or anything else in our folder.
+Chances are, this is *not* the folder that you just unzipped, which means R doesn't know where to find our data, our code, or anything else in our folder.
 
 ## Creating a Project From an Existing Folder
 
@@ -159,9 +159,9 @@ Let's turn our folder into an RStudio Project.
 
 ![](https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week09_Reproducibility/images/rstudio-project-1.png){width="50%" fig-align="center"}
 
-2.  Use the "Browse..." button to find the folder that you unzipped (the one that contains `lesson.qmd`), then click "Create Project".
+2.  Use the "Browse..." button to find the folder that you unzipped (the one that contains `Week9_Reproducibility.qmd`), then click "Create Project".
 
-RStudio will restart R, which is normal. If `lesson.qmd` closes, reopen it from the `Files` pane (bottom right). Because R restarted, `tidyverse` is no longer loaded (restarting R unloads packages!), so run the `library(tidyverse)` code chunk above again.
+RStudio will restart R, which is normal. If `Week9_Reproducibility.qmd` closes, reopen it from the `Files` pane (bottom right). Because R restarted, `tidyverse` is no longer loaded (restarting R unloads packages!), so run the `library(tidyverse)` code chunk above again.
 
 ## What Just Happened?
 
@@ -330,7 +330,7 @@ From there, we can (and should...) have sub-folders. What exactly those sub-fold
   - calling this folder `docs` instead will result in odd issues down the road
 - `figures`
   - big analysis files, data visualizations, etc.
-- `scripts` or `files` or `code`
+- `code` or `scripts`
   - any files in the scripts folder (`.R`, `.Rmd`, or `.qmd`) should have relative file paths to read in and create files
   - lots of descriptive text and/or comments
   - good object names (and column names)
@@ -346,11 +346,11 @@ Using documents that combine code output and text in single document, such as wi
 
 There is an odd quirk that comes with using file paths in `.qmd` files, and we are about to see it in action.
 
-Right now, `lesson.qmd` is sitting in the main project folder, which is why our relative path, `data_raw/shrub-dimensions-labeled.csv`, works. But a Quarto file hanging out in the main project folder isn't very tidy! Let's move it into the `scripts` folder, where it belongs.
+Right now, `Week9_Reproducibility.qmd` is sitting in the main project folder, which is why our relative path, `data_raw/shrub-volume-data.csv`, works. But a Quarto file hanging out in the main project folder isn't very tidy! Let's move it into the `scripts` folder, where it belongs.
 
-Move the file: \> `Files` pane -\> check the box next to `lesson.qmd` -\> `More` -\> `Move...` -\> `scripts` -\> `Choose`
+Move the file: \> `Files` pane -\> check the box next to `Week9_Reproducibility.qmd` -\> `More` -\> `Move...` -\> `scripts` -\> `Choose`
 
-If `lesson.qmd` closes, reopen it from the `scripts` folder.
+If `Week9_Reproducibility.qmd` closes, reopen it from the `scripts` folder.
 
 Now, let's check our working directory again.
 
