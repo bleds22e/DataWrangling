@@ -309,11 +309,12 @@ From there, we can (and should...) have sub-folders. What exactly those sub-fold
   - keeping the raw data in a separate folder helps ensure that the original copy always exists
   - metadata about the included files can go in this folder as well
 - `data_clean`
-- `docs`
-- `outputs`
+- `documents`
+  - calling this folder `docs` instead will result in odd issues down the road
+- `figures`
   - big analysis files, data visualizations, etc.
 - `scripts` or `files` or `code`
-  - any files in the scripts folder (.R, .Rmd, or .qmd) should have relative file paths to read in and create files
+  - any files in the scripts folder (`.R`, `.Rmd`, or `.qmd`) should have relative file paths to read in and create files
   - lots of descriptive text and/or comments
   - good object names (and column names)
   - general order is packages, data, any functions we have created, everything else
