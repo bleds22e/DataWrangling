@@ -54,7 +54,7 @@ Once you've installed `palmerpenguins`, comment out that line of code.
 
 If you haven't already, make sure you are working in your RStudio Project!
 
-Your project should have sub-directories for raw data, clean data, output, documents, and code. The naming convention for these folders is up to you.
+Your project should have sub-directories for raw data, clean data, figures, documents, and scripts. These are the folders (`data_raw`, `data_clean`, `figures`, `documents`, and `scripts`) that were in the folder you downloaded for the lesson.
 
 Make sure that this Quarto file is in the appropriate sub-directory.
 :::
@@ -63,7 +63,7 @@ Make sure that this Quarto file is in the appropriate sub-directory.
 
 For this question, we are going to be using some of the code you've already written for Assignment 8, Question 2.
 
-Before you begin, ensure that this assignment file is in your `code` (or equivalent) folder.
+Before you begin, ensure that this assignment file is in your `scripts` folder.
 
 Now, let's code!
 
@@ -90,7 +90,7 @@ download.file(url = "https://ndownloader.figshare.com/files/3299474",
 b.  Load the 3 data frames (surveys, species, plots) from your raw data folder into R using `read_csv()`. Make sure your paths are *relative*, not absolute.
 c.  Copy the answers from Week 8 Assignment, Questions 2d-f, into the code chunk below.
 d.  Save the output of the code from `2d` as a new data frame. Then, save that resulting data frame as a CSV file *directly* into your clean data sub-directory using the `write_csv()` function.
-e.  Save the plots from `2e` and `2f` *directly* into your plots folder using the `ggsave()` function.
+e.  Save the plots from `2e` and `2f` *directly* into your `figures` folder using the `ggsave()` function.
 
 ### 3. Palmer Penguins and Path Files (20 points)
 
@@ -110,13 +110,13 @@ This time, however, you will NOT be doing so in this Quarto file. Instead, I wan
 a.  Create a new R script or use the one we used in class--either is fine. Make sure it is in the correct sub-directory of your RStudio project. If you create a new script, I highly recommend saving it before you continue with this question (unsaved files can lead to wonky file path issues).
 b.  Ensure that the `mammal-size-data-clean` text file is in the appropriate sub-directory in your RStudio Project.
 c.  Now, using the code you wrote for the last assignment, modify the code so that it runs in your R script file.
-d.  Again, use the `ggsave()` function to save the figures from `3b`, `3c`, and `3d` into your `output` sub-directory.
+d.  Again, use the `ggsave()` function to save the figures from `3b`, `3c`, and `3d` into your `figures` sub-directory.
 
 ### 5. Final Project Proposal (20 points)
 
-In the `code` folder, you will find a file with a few questions about what dataset you are planning to use. If you don't have one in mind yet, don't worry! I'll provide a list with some options for you to explore.
+In the `scripts` folder, you will find a file with a few questions about what dataset you are planning to use. If you don't have one in mind yet, don't worry! I'll provide a list with some options for you to explore.
 
-Download the file from D2L, answer the questions, and place it in the code or documents folder of your RStudio Project.
+Download the file from D2L, answer the questions, and place it in the `scripts` or `documents` folder of your RStudio Project.
 
 ## Turning in Your Assignment
 

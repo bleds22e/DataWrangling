@@ -59,7 +59,7 @@ Once you've installed `palmerpenguins`, comment out that line of code.
 
 If you haven't already, make sure you are working in an RStudio Project!
 
-Your project should have sub-directories for raw data, clean data, output, documents, and code. The naming convention for these folders is up to you.
+Your project should have sub-directories for raw data, clean data, figures, documents, and scripts. These are the folders (`data_raw`, `data_clean`, `figures`, `documents`, and `scripts`) that were in the folder you downloaded for the lesson.
 
 Make sure that this Quarto file is in the appropriate sub-directory.
 :::
@@ -76,14 +76,14 @@ Click on the links below to download all 3 of the Portal files--surveys, species
 
 Then, move those three files from your Downloads folder into your equivalent of the raw data folder.
 
-Before you begin, ensure that this assignment file is in your `code` (or equivalent) folder.
+Before you begin, ensure that this assignment file is in your `scripts` folder.
 
 Now, let's begin to code!
 
 a.  Load the 3 data frames (surveys, species, plots) from your raw data folder into R using `read_csv()`. Make sure your paths are *relative*, not absolute.
 b.  Copy the answers from Week 8 Assignment, Questions 2d-f, into the code chunk below.
 c.  Save the output of the code from `2d` as a new data frame. Then, save that resulting data frame as a CSV file in your clean data sub-directory using the `write_csv()` function.
-d.  Save the ggplots from `2e` and `2f` into your outputs folder using the `ggsave()` function.
+d.  Save the ggplots from `2e` and `2f` into your `figures` folder using the `ggsave()` function.
 
 ```{r message=FALSE}
 # read in the data
@@ -149,7 +149,7 @@ chinstrap <- read_csv("../data_raw/chinstrap.csv")
 b.  Copy, modify, and then run the code from last week's assignment that you wrote to combine the three above datasets and have the output match the `penguins` dataframe from the `palmerpenguins` dataframe.
 c.  Run the `setdiff()` function to make sure that your code worked (it shouldn't have any issues, but it is good to check!)
 d.  Save your version of the cleaned penguins data directly into your clean data folder using relative file paths.
-e.  Recreate and save the two plots into your output folder using relative files paths in the `ggsave()` function.
+e.  Recreate and save the two plots into your `figures` folder using relative files paths in the `ggsave()` function.
 
 ```{r}
 penguins_raw <- bind_rows(adelie, gentoo, chinstrap)
@@ -195,13 +195,13 @@ This time, however, you will not be doing so in this Quarto file. Instead, I wan
 a.  Create a new R script or use the one we used in class--either is fine. Make sure it is in the correct sub-directory of your RStudio project. If you create a new script, I highly recommend saving it before you continue with this question (unsaved files can lead to wonky file path issues).
 b.  Ensure that the `mammal-size-data-clean` text file (download from D2L) is in the appropriate sub-directory in your RStudio Project.
 c.  Now, using the code you wrote for the last assignment, modify the code so that it runs in your R script file. Use the appropriate relative file path.
-d.  Again, use the `ggsave()` function to save the figures from `3b`, `3c`, and `3d` into your `output` sub-directory.
+d.  Again, use the `ggsave()` function to save the figures from `3b`, `3c`, and `3d` into your `figures` sub-directory.
 
 ### 5. Final Project Proposal (20 points)
 
 In D2L, you will find a file with a few questions about what dataset you are planning to use. If you don't have one in mind yet, don't worry! I'll provide a list with some options for you to explore.
 
-Download the file from D2L, answer the questions, and place it in either the code or documents folder of your RStudio Project.
+Download the file from D2L, answer the questions, and place it in either the `scripts` or `documents` folder of your RStudio Project.
 
 ## Turning in Your Assignment
 

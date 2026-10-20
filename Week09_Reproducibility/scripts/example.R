@@ -18,3 +18,18 @@
 # You can still run lines of code with `Ctrl` + `Enter` or `Cmd` + `Return`
 
 getwd()
+
+## What about sourcing code? ##
+
+# Sometimes we write code, like our own functions, in one file and want to use it
+# in another. The source() function reads and runs all of the code in a file, so
+# anything that file creates (like a function) shows up in our environment.
+
+# weight_function.R is in the scripts folder, and R scripts start from the
+# project folder (see getwd() above), so we need to include the folder in the path.
+# (In a Quarto file that is also in scripts, the file name alone would be enough!)
+source("scripts/weight_function.R")
+
+# Now we can use the function that weight_function.R created!
+convert_lb_to_kg(150)
+convert_lb_to_kg(c(10, 20, 30))
