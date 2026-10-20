@@ -62,13 +62,13 @@ When you use `read_csv` to read in the data and save the output, you will want t
 forest <- read_csv("data/forest_per_country.csv", skip = 4, col_names = TRUE)
 ```
 
-a.  Currently, this data is in a wide format. We want to convert this to a longer format and make it tidy. Use the `pivot_longer` function to do so. Overwrite the `forest` dataframe so that it contains the long version of the data.
+a.  Currently, this data is in a wide format. We want to convert this to a longer format and make it tidy. Use the `pivot_longer` function to do so. Overwrite the `forest` data frame so that it contains the long version of the data.
 
-    Because the column names start with numbers, which R does not like, we need to put the column names either in backticks or quotation marks (e.g., "1990":"2022").
+    Because the column names start with numbers, which R does not like, we need to put the column names either in back ticks or quotation marks (e.g., "1990":"2022").
 
 b.  Remove any rows that have `NA` in the forest area column using the `drop_na()` function.
 
-c.  Let's remind ourselves how to plot the data. Make a scatterplot of the data with year on the x-axis and forest area on the y-axis. Make the points partially tranparent and the color "forestgreen." Add more descriptive axes labels and a theme.
+c.  Let's remind ourselves how to plot the data. Make a scatter plot of the data with year on the x-axis and forest area on the y-axis. Make the points partially transparent and the color "forestgreen." Add more descriptive axes labels and a theme.
 
     Add the following line of code to the end of your ggplot code so we can see the years along the x-axis: `theme(axis.text.x = element_text(angle = 45, vjust = 0.5))`.
 

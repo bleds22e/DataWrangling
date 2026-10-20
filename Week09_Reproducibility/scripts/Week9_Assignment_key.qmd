@@ -18,7 +18,7 @@ library(palmerpenguins)
 
 ### Purpose
 
-The goal of this assignment is to practice problem decomposition and some best practices in reproducibility .
+The goal of this assignment is to practice problem decomposition and some best practices in reproducibility.
 
 ### Task
 
@@ -26,15 +26,15 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
@@ -66,13 +66,13 @@ Make sure that this Quarto file is in the appropriate sub-directory.
 
 ### 2. Portal Data Paths Review (20 points)
 
-For this question, we are going to be using some of the code you've already written for Assignment 7, Question 2.
+For this question, we are going to be using some of the code you've already written for Assignment 8, Question 2.
 
 Click on the links below to download all 3 of the Portal files--surveys, species, and plots--from the internet onto your computer. They will likely end up in your Downloads folder, although your computer may have a different default location for downloaded files.
 
--   [`surveys.csv`](https://ndownloader.figshare.com/files/2292172)
--   [`species.csv`](https://ndownloader.figshare.com/files/3299483)
--   [`plots.csv`](https://ndownloader.figshare.com/files/3299474)
+- [`surveys.csv`](https://ndownloader.figshare.com/files/2292172)
+- [`species.csv`](https://ndownloader.figshare.com/files/3299483)
+- [`plots.csv`](https://ndownloader.figshare.com/files/3299474)
 
 Then, move those three files from your Downloads folder into your equivalent of the raw data folder.
 
@@ -81,7 +81,7 @@ Before you begin, ensure that this assignment file is in your `code` (or equival
 Now, let's begin to code!
 
 a.  Load the 3 data frames (surveys, species, plots) from your raw data folder into R using `read_csv()`. Make sure your paths are *relative*, not absolute.
-b.  Copy the answers from Week 7 Assignment, Questions 2d-f, into the code chunk below.
+b.  Copy the answers from Week 8 Assignment, Questions 2d-f, into the code chunk below.
 c.  Save the output of the code from `2d` as a new data frame. Then, save that resulting data frame as a CSV file in your clean data sub-directory using the `write_csv()` function.
 d.  Save the ggplots from `2e` and `2f` into your outputs folder using the `ggsave()` function.
 
@@ -122,7 +122,7 @@ ggplot(data = surveys_with_weights, mapping = aes(x = weight)) +
 
 ### 3. Palmer Penguins and Path Files (20 points)
 
-Like in Question 2 above, we will be recreating Question 4 from Week 7's assignment but within our own RStudio Project. As a reminder, this is the question that used the `palmerpenguins` data.
+Like in Question 2 above, we will be recreating Question 4 from Week 8's assignment but within our own RStudio Project. As a reminder, this is the question that used the `palmerpenguins` data.
 
 a.  The code chunk below uses the `download.file()` function to go to a specific URL and then download the data at that URL. The location where the file is downloaded to is set by the `destfile` argument.
 
@@ -188,7 +188,7 @@ ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = species)) +
 
 ### 4. Using R Scripts (20 points)
 
-Here, we will be recreating Question 3 from Week 7's Assignment.
+Here, we will be recreating Question 3 from Week 8's Assignment.
 
 This time, however, you will not be doing so in this Quarto file. Instead, I want you to make and use an R script!
 
