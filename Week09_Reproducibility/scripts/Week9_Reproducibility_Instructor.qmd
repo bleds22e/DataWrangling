@@ -11,11 +11,37 @@ In this week's lesson, we will be talking broadly about how to make our data ana
 
 For today's lesson, we will focus on how we can increase reproducibility within RStudio.
 
+## Getting Started
+
+Today's lesson uses a folder that I have already set up for you. If you are reading this file in RStudio, you have already downloaded and unzipped it! As a reminder, here are the steps:
+
+1.  Download the ZIP file from D2L.
+2.  **Unzip it.** On a Mac, double-click the ZIP file. On Windows, right-click it and choose `Extract All...`. (Windows will let you open files from inside a ZIP file without extracting it, but they won't work properly that way!)
+3.  Move the unzipped folder somewhere you will be able to find it again (your `Documents` folder is a good option).
+4.  Open RStudio and open this file, `Week9_Reproducibility.qmd`.
+
+The folder should look like this:
+
+```         
+Week9_Project
+|-- Week9_Reproducibility.qmd
+|-- README.md
+|-- data_raw
+|   `-- shrub-dimensions-labeled.csv
+|-- data_clean
+|-- figures
+`-- code
+    |-- example.R
+    `-- weight_function.R
+```
+
+Notice that `Week9_Reproducibility.qmd` is sitting at the top of the folder instead of in `code`, while everything else is already in its place. That is on purpose, and we will see why a little later!
+
 ## R vs. RStudio
 
 Before we begin, it is worth reminding ourselves of the difference between R and RStudio.
 
-![](../images/01-01-rstudio-and-r.png){width="75%" fig-align="center"}
+![](https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week09_Reproducibility/images/01-01-rstudio-and-r.png){width="75%" fig-align="center"}
 
 We are making the shift from working in Posit Cloud to using R and RStudio on your own device, meaning you should have both R and RStudio downloaded on your computer.
 
@@ -29,7 +55,7 @@ Throughout the course, we have talked about many of our topics in the context of
 
 When something is *reproducible*, it means we have the ability to recreate the same results (including cleaned data, tables, figures, and quantitative findings), using the same input data, computational methods, and conditions of analysis.
 
-Our ultimate goal is to be able to rerun a fully analysis with a single click (or command).
+Our ultimate goal is to be able to rerun a full analysis with a single click (or command).
 
 Our first step is to make sure our code runs anytime and anywhere. That includes the next day or 5 years from now, on a desktop or a laptop, a Windows or a Mac, or on a collaborator or advisor's computer.
 
@@ -52,7 +78,7 @@ We can check that our code runs without having to knit, though. We have a few op
   - Doesn't unload packages
   - Useful when developing code
 
-![](../images/ClearEnvironment.png){width="50%"}
+![](https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week09_Reproducibility/images/ClearEnvironment.png){width="50%"}
 
 - Restart R to get a clean environment
 
@@ -75,14 +101,14 @@ To set the default in RStudio to not save the workspace, we want to do the follo
 
 Uncheck `Restore .RData into workspace at startup`.
 
-![](../images/rstudio-workspace.png)
+![](https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week09_Reproducibility/images/rstudio-workspace.png)
 
 ### 4. Make sure code works on other computers
 
 We will talk a lot more in-depth about this in a few minutes, but generally speaking, we want to do the following things to increase the likelihood that our code will run on another computer:
 
 - Avoid using `setwd()` and absolute file paths (e.g., `C:\Users\Batman\DataCarp\data\mydata.csv`)
-- Instead, use RStudio Projects and relative paths (e.g, `data/mydata.csv`)
+- Instead, use RStudio Projects and relative paths (e.g, `data_raw/mydata.csv`)
 - Write code that will work on all operating systems
   - Filenames in code should match actual names exactly, including capitalization
   - Use `/` instead of `\` or `\\` in paths
@@ -106,6 +132,56 @@ For example, now that we are using our own computers, we need to ensure that we 
 library(tidyverse)
 ```
 
+# RStudio Projects
+
+The simplest way to ensure that we are always using relative paths is to use RStudio Projects (or R Projects, same thing).
+
+In fact, we've already been using them! Every time you click on an assignment in Posit Cloud, this was actually creating a new RStudio Project. Now we need to learn how to do this on our own computers.
+
+Each project is a self-contained unit of work in a specific folder/directory. When we open a project, RStudio treats that folder as "home base" (what we call the *working directory*) and treats all locations as relative to that specific directory.
+
+## Before the Project
+
+Right now, we have a folder with all of the right files in it, but it is not an RStudio Project yet.
+
+Look at the top of the `Console` pane (bottom left). Next to the R version, RStudio shows the working directory, which is the folder that R is currently using as home base. To see the full path, type `getwd()` into the `Console` (not in a code chunk--we'll see why later!).
+
+Chances are, this is *not* the folder that you just unzipped, which means R doesn't know where to find our data, our scripts, or anything else in our folder.
+
+## Creating a Project From an Existing Folder
+
+Let's turn our folder into an RStudio Project.
+
+| \> `File` -\> `New Project...` -\> `Existing Directory`
+
+1.  Select "Existing Directory"
+
+![](https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week09_Reproducibility/images/rstudio-project-1.png){width="50%" fig-align="center"}
+
+2.  Use the "Browse..." button to find the folder that you unzipped (the one that contains `Week9_Reproducibility.qmd`), then click "Create Project".
+
+RStudio will restart R, which is normal. If `Week9_Reproducibility.qmd` closes, reopen it from the `Files` pane (bottom right). Because R restarted, `tidyverse` is no longer loaded (restarting R unloads packages!), so run the `library(tidyverse)` code chunk above again.
+
+## What Just Happened?
+
+Look around RStudio. A few things have changed:
+
+- The name of the project is now shown in the upper right-hand corner of RStudio.
+- The `Files` pane now starts in our project folder, and there is a new file in that folder: a `.Rproj` file.
+- The working directory at the top of the `Console` is now the project folder. Type `getwd()` into the `Console` again to check.
+
+The `.Rproj` file is not the project itself, but it does contain information about the project. We do not manually change this file.
+
+To open an RStudio Project in the future, you will want to open the `.Rproj` file.
+
+![](https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week09_Reproducibility/images/rproj_file.png){width="50%" fig-align="center"}
+
+### Changing Projects
+
+If you want to switch between projects, you can do so: \> `File` -\> `Recent Projects` or `Open Project`
+
+Alternatively, you can click on the arrow next to the name of the project in the upper right-hand corner, which will provide the same options.
+
 # File Paths
 
 In the course so far, we've been using Posit Cloud and placing data files where R knows to find them for you without any fuss. Working with data files on your own computer is a little more complicated, but in this lesson we'll learn how to do this effectively.
@@ -114,16 +190,14 @@ In order to use data (or other files) stored on a computer, we need to be able t
 
 This is done using file paths. They are a description of the directories where our files are stored.
 
-If you click [here](http://www.datacarpentry.org/semester-biology/data/shrub-dimensions-labeled.csv), this should download the "Shrub Dimensions" dataset that we have used before; it is called `shrub-dimensions-labeled.csv`. But where does it get placed in our computer once it is downloaded?
-
-If we try to load this dataset just using its filename, as we have been doing in Posit Cloud, it probably won't work.
+The "Shrub Dimensions" dataset that we have used before is in our project folder; it is called `shrub-dimensions-labeled.csv`. But where, exactly? If we try to load this dataset just using its filename, as we have been doing in Posit Cloud, it probably won't work.
 
 ```{r eval = FALSE}
 # should not run
 shrubs <- read_csv("shrub-dimensions-labeled.csv")
 ```
 
-This doesn't work because R cannot find the file located in the folder where we've tried to load it from.
+This doesn't work because R cannot find the file in the folder where we've asked it to look (our working directory). Our data file is not directly in the main project folder; it is tucked away in a sub-folder called `data_raw`.
 
 ## Absolute vs. Relative Paths
 
@@ -133,21 +207,19 @@ File paths can be either *absolute* or *relative*. Spoiler alert: we prefer rela
 
 Absolute file paths describe exactly where something is on the computer.
 
-The data file that we downloaded is now being stored in the `Downloads` sub-directory of our `Home` directory on our computer. The `Home` directory will vary a little bit by operating system.
-
-For example, on a Mac or Linux computer, the `Home` directory is `/home/username`. Within the `username` directory is the `Downloads` directory (or folder).
+For example, I put my project folder inside the `Documents` folder, which is inside my `Home` directory. The `Home` directory will vary a little bit by operating system: on a Mac, it is `/Users/username`; on Linux, it is `/home/username`; and on Windows, it is `C:/Users/username`.
 
 ```{r eval = FALSE}
-# Example of an absolute file path on OSX/Linux
-data <- read_csv('/home/ebledsoe/Downloads/shrub-dimensions-labeled.csv')
+# Example of an absolute file path on a Mac
+shrub_dim <- read_csv("/Users/ebledsoe/Documents/Week9_Project/data_raw/shrub-dimensions-labeled.csv")
 ```
-
-On a Windows machine, change `home` to `Users`.
 
 ```{r eval = FALSE}
 # Example of an absolute file path on Windows
-data <- read_csv('/Users/ebledsoe/Downloads/shrub-dimensions-labeled.csv')
+shrub_dim <- read_csv("C:/Users/ebledsoe/Documents/Week9_Project/data_raw/shrub-dimensions-labeled.csv")
 ```
+
+Those paths work on my computer, but they will *not* work on yours: your username is different and you might have put your folder in `Documents`, on your `Desktop`, or somewhere else entirely.
 
 Folders (another name for directories) are separated by `/`, a forward slash. We then have the file name at the end.
 
@@ -163,7 +235,7 @@ For example, in Posit Cloud, the default "working directory" was the "project" f
 
 #### Find Out Where You Are with `getwd()`
 
-So how do we find out which directory R thinks that we are in? We can use a function called `getwd()`.
+We've already used `getwd()` in the `Console`, but let's try it in our Quarto file.
 
 ```{r}
 getwd()
@@ -171,38 +243,41 @@ getwd()
 
 This function stands for "get working directory." Again, the "working directory" is the location from where the program is going to start files paths; any relative paths will need to start from this directory (folder).
 
+Compare your answer to someone sitting near you. They are probably different, because you put your folders in different places! This is exactly why we want to use relative paths. No matter where the project folder lives, the working directory is the project folder, and everything inside of it is in the same spot *relative* to it.
+
 Now we can build a path to our shrub data relative to our working directory.
 
 ```{r eval = FALSE}
 # example relative path; will not run
-"Downloads/shrub-dimensions-labeled.csv"
+"data_raw/shrub-dimensions-labeled.csv"
 ```
 
-The relative file path above is saying "From where I am currently, the shrub-dimensions file is in the `Downloads` sub-directory."
+The relative file path above is saying "From where I am currently (the project folder), the shrub-dimensions file is in the `data_raw` sub-directory."
 
 ### Absolute vs. Relative File Path Example
 
 Here is an example of the difference between the two file path structures from my office computer.
 
-![](../images/absolute_vs_relative_example.png)
+![](https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week09_Reproducibility/images/absolute_vs_relative_example.png)
 
 ## Loading Data
 
-Let's assume that our Quarto file is located in our current working directory.
+Right now, our Quarto file is in our working directory (the project folder), so we can start our path from there.
 
-If we have data that is also in our working directory and not inside of any other folders, we can use the file name alone to read in the data.
+If our data were in the same folder as our Quarto file, we could use the file name alone to read in the data. Because our data is in the `data_raw` sub-directory, we need to point R into the `data_raw` directory first before we specify the file name.
 
 ```{r eval = FALSE}
-# if our Quarto file (or R script) and our data are in the same working directory,
-# loading data by specifying only the file name will run successfully
-shrub_data <- read_csv('shrub-dimensions-labeled.csv')
+# first point to the data_raw folder, then to the shrub data file
+shrub_dim <- read_csv("data_raw/shrub-dimensions-labeled.csv")
 ```
 
-This is considered a relative path, because both our Quarto file and the data file in the working directory. To point R to the data file, the only remaining piece of the path that we need to specify is the name of the file itself.
+This is considered a relative path, because it starts from our working directory and describes how to get to the file from there.
 
-When we have data that is not located in the working directory, we have two options:
+Storing data in a sub-directory, such as a `data_raw` folder, is very common. We'll talk more about why shortly.
 
-- tell R where it is
+When we have data that is not in the working directory, we have two options:
+
+- tell R where it is (which is what we just did)
 - change the working directory to where it is
 
 ### Should I use `setwd()`?
@@ -215,64 +290,11 @@ This, however, can cause a number of issues.
 
 If you are working with someone else's files or on another computer, the directory that you want to be working from is likely different from the file path that has been put in the `setwd()` function. In general, using `setwd()` means that your code will only work on a single computer. This breaks a core tenet of reproducibility, so we want to avoid doing this.
 
-Ideally, we want to have the working directory set automatically, regardless of what computer we are using, and we want to use paths relative to that working directory.
+Ideally, we want to have the working directory set automatically, regardless of what computer we are using, and we want to use paths relative to that working directory. That is exactly what an RStudio Project does for us!
 
-# RStudio Projects
+## Writing Data
 
-The simplest way to ensure that we are always using relative paths is to use RStudio Projects (or R Projects, same thing).
-
-In fact, we've already been using them! Every time you click on an assignment in Posit Cloud, this was actually creating a new RStudio Project. Now we need to learn how to do this on our own computers.
-
-Each project is a self-contained unit of work in a specific folder/directory. It treats all locations as relative to that specific directory.
-
-Let's set up an RStudio Project on our own computers.
-
-| \> `File` -\> `New Project` -\> `New Directory` -\> `New Project` -\> \[insert_name_here\]
-
-1.  Select "New Directory"
-
-![](../images/rstudio-project-1.png){width="50%" fig-align="center"}
-
-2.  Select "Empty Project"
-
-![](../images/rstudio-project-2.png){width="50%" fig-align="center"}
-
-3.  Use the "Browse" button to find a location for your project folder and name it appropriately.
-
-![](../images/rstudio-project-3.png){width="50%" fig-align="center"}
-
-Once we create our new project, RStudio will create a `.Rproj` file in that directory. This file is not the project itself, but it does contain information about the project. We do not manually change this file.
-
-To open an RStudio Project, you will want to open the `.Rproj` file.
-
-![](../images/rproj_file.png){width="50%" fig-align="center"}
-
-We probably want to move this Quarto file into our project directory! We can also add our shrub dimensions data into the project directory as well. I will demonstrate how to do this manually.
-
-As long as our Quarto file and shrub dimensions CSV are in the same folder as our .Rproj file, when we try to run the line of code that we are familiar with when reading in datasets, we should have success!
-
-```{r eval = FALSE}
-shrub_dim <- read_csv("shrub-dimensions-labeled.csv")
-```
-
-### Sub-directories
-
-As we will discuss shortly, it is common to store data in a sub-directory, such as a `data` folder. Let's create a new folder in our project.
-
-Create the new folder: \> `New Folder` -\> `data_raw` -\> `OK`
-
-Move the data file into the new folder: \> `File checkbox` -\> `More` -\> `Move` -\> `data_raw`
-
-Now, in order to successfully read in the shrub data file, we need to point R into the `data_raw` directory first before we specify the file name.
-
-```{r eval = FALSE}
-# first point to the data raw folder, then to the shrub data file
-shrub_dim <- read_csv("data_raw/shrub-dimensions-labeled.csv")
-```
-
-### Writing Data
-
-We we have made some kind of change to our dataset and want to save that resulting dataset, we can use a function called `write_csv()` to do so.
+When we have made some kind of change to our dataset and want to save that resulting dataset, we can use a function called `write_csv()` to do so.
 
 Let's pretend we've made some type of change to our shrub dataset and want to save it.
 
@@ -282,17 +304,10 @@ The arguments for `write_csv()` are:
 - the file path for where you want the new file to end up (`file`). This should include the name of the file you want to create, also with the file extension (`.csv`, in this case)
 
 ```{r eval = FALSE}
-w
-write_csv(data, "data_clean/shrubs_modified.csv")
+write_csv(shrub_dim, "data_clean/shrubs_modified.csv")
 ```
 
-### Changing Projects
-
-If you want to switch between projects, you can do so: \> `File` -\> `Recent Projects` or `Open Project`
-
-Alternatively, you can click on the arrow next to the name of the project in the upper right-hand corner, which will provide the same options.
-
-## Project Structure
+# Project Structure
 
 Next in our journey of reproducibility is project structure.
 
@@ -300,71 +315,75 @@ There are a lot of potential benefits to creating a good organizational structur
 
 Setting up a good structure will save you a lot of frustration in long run, even if it might be a bit time-consuming and frustrating to do it right initially.
 
-### File Structure
+## File Structure
 
-![](../images/rproj-basic-organization.png){width="50%"}
+![](https://raw.githubusercontent.com/bleds22e/DataWrangling/main/Week09_Reproducibility/images/rproj-basic-organization.png){width="50%"}
 
-If possible, we want to have all file associated with the project in one main folder. This main folder should be the RStudio Project folder.
+If possible, we want to have all files associated with the project in one main folder. This main folder should be the RStudio Project folder.
 
-From there, we can (and should...) have sub-folders. What exactly those sub-folders are is up to you. A good starting place is to have something like this (or like the image above):
+From there, we can (and should...) have sub-folders. What exactly those sub-folders are is up to you. The folder we have been working in has a good starting place (it is also similar to the image above):
 
 - `data_raw`
   - keeping the raw data in a separate folder helps ensure that the original copy always exists
   - metadata about the included files can go in this folder as well
 - `data_clean`
-- `docs`
-- `outputs`
+- `documents`
+  - calling this folder `docs` instead will result in odd issues down the road
+- `figures`
   - big analysis files, data visualizations, etc.
-- `scripts` or `files` or `code`
-  - any files in the scripts folder (.R, .Rmd, .qmd) should have relative file paths to read and write files
+- `code` or `scripts`
+  - any files in the scripts folder (`.R`, `.Rmd`, or `.qmd`) should have relative file paths to read in and create files
   - lots of descriptive text and/or comments
   - good object names (and column names)
   - general order is packages, data, any functions we have created, everything else
 
 Both folder and file names should follow good naming conventions. They should be descriptive but not too long, have a consistent formatting, and include no spaces or special characters.
 
-The R Project folder should also contain a README file with descriptions of the file structure, the files in the project, and any other relevant information for how to reproduce analyses or outputs.
-
-### File Paths in Quarto
+The R Project folder should also contain a README file with descriptions of the file structure, the files in the project, and any other relevant information for how to reproduce analyses or outputs. (Our folder has one!)
 
 Using documents that combine code output and text in single document, such as with Quarto files (which we are already doing!), is another great way to promote reproducibility.
 
-There is an odd quirk that comes with using file paths in `.qmd` files, however.
+## File Paths in Quarto
 
-For reasons I haven't quite been able to nail down, file paths work a little bit different in R scripts (.R file that only understand the R language) and Quarto files (.qmd files, like we use, and also .Rmd files) in RStudio Projects.
+There is an odd quirk that comes with using file paths in `.qmd` files, and we are about to see it in action.
+
+Right now, `Week9_Reproducibility.qmd` is sitting in the main project folder, which is why our relative path, `data_raw/shrub-dimensions-labeled.csv`, works. But a Quarto file hanging out in the main project folder isn't very tidy! Let's move it into the `scripts` folder, where it belongs.
+
+Move the file: \> `Files` pane -\> check the box next to `Week9_Reproducibility.qmd` -\> `More` -\> `Move...` -\> `scripts` -\> `Choose`
+
+If `Week9_Reproducibility.qmd` closes, reopen it from the `scripts` folder.
+
+Now, let's check our working directory again.
+
+```{r}
+getwd()
+```
+
+Our working directory has changed, even though we haven't changed anything about our project! Scroll up to the "Loading Data" section and run the code chunk that reads in the shrub data. We get an error!
+
+The data didn't move, but our Quarto file did. File paths work a little bit different in R scripts (`.R` files that only understand the R language) and Quarto files (`.qmd` and `.Rmd` files) in RStudio Projects.
 
 - For scripts, the R Project folder is the working directory, which is standard.
 
 - For Quarto (and RMarkdown) files, the folder in which the file is located is the file's working directory.
 
-What this means is that if your Quarto file is in a sub-directory, that sub-directory is the file's reference point. To read in data from another sub-directory, we have to tell R that we want to go up one level in directory structure (to the project folder) and then into the other sub-directory.
+This is on purpose: Quarto runs a document from the folder it lives in so that rendering gives the same result no matter where R was started.
+
+What this means is that now that our Quarto file is in a sub-directory, that sub-directory is the file's reference point. To read in data from another sub-directory, we have to tell R that we want to go up one level in directory structure (to the project folder) and then into the other sub-directory.
 
 To move "up" in your folder structure (or back to the larger folder), we use ".."
 
 ```{r eval = FALSE}
-shrub_dims <- read_csv("../data_raw/shrub-dimensions-labeled.csv")
+# go up one level to the project folder (..), then into data_raw
+shrub_dim <- read_csv("../data_raw/shrub-dimensions-labeled.csv")
+
+# the same goes for writing files
+write_csv(shrub_dim, "../data_clean/shrubs_modified.csv")
 ```
 
-#### Why do I need a whole folder for my code?
+Go back and update the paths in the earlier chunks to match so that the whole document runs from top to bottom.
 
-Often, projects end up requiring us to write A LOT of code to do A LOT of different tasks: data wrangling, analyzing, plotting, etc. Before we get to the final version, we often do a lot of experimentation to see what works and what doesn't.
-
-While you *can* put all of your code in one giant file, it is often considered best practice to separate your code into "manageable" amounts and at logical breaks. What constitutes a manageable amount or a logical break, however, is up to you!
-
-Sometimes, you might have some pieces of code that are stored in a separate file that you want to use in another file. One example of this is if you've written your own functions for use.
-
-The `source()` function will read and execute all of the code in a file and put the outputs in the environment.
-
-```{r}
-# bring the objects in the source file into our environment
-# because both files are in the code folder and Quarto files interpret the folder
-# where they are located to be their working directory, we need only the file name
-source("weight_function.R")
-```
-
-We can now see the function `convert_lb_to_kg()` appear in our environment.
-
-If you are going to "source" a file in a document, it is best practice to do so near the beginning of the document where you load packages and read in any data you will need.
+To see the difference with an R script, open `example.R` in the `scripts` folder and run the `getwd()` line (`Ctrl + Enter` or `Cmd + Return`). Even though `example.R` is also in `scripts`, the working directory is the project folder!
 
 ## Goal of Good Project Structure
 
@@ -372,7 +391,7 @@ Ultimately, the goal of setting up a good project structure is reproducibility. 
 
 It also has important implications for how we share code with others.
 
-For example, we can zip/compress the project folder and send it to someone else. When they work with the files in the project folder, as long as all of the paths are relative instead of absolute, they will work seamlessly.
+For example, we can zip/compress the project folder and send it to someone else. When they work with the files in the project folder, as long as all of the paths are relative instead of absolute, they will work seamlessly. That is exactly what happened at the start of today's lesson: you downloaded a zipped folder, put it wherever you wanted on your computer, and our relative paths worked anyway.
 
 When we start talking about version control using git and GitHub, they are nicely integrated into the RStudio Project structure.
 
