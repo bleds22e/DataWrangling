@@ -5,6 +5,21 @@ format: pdf
 editor: visual
 ---
 
+```{r}
+## TO DO ##
+
+# 1. This is WAY too long! Cut so much!
+
+# 2. ZIP file with file structure set up was a good idea...BUT...
+# When (some) people open the ZIP file, it opens a folder within a folder,
+# which makes the project structure even more confusing
+
+# 3. Fix images for making an RProj for "Existing Directory"
+
+# 4. Add section to point directly to using R script and sourcing code.
+```
+
+
 # Reproducibility in RStudio
 
 In this week's lesson, we will be talking broadly about how to make our data analyses reproducible and how to start tackling larger projects.
