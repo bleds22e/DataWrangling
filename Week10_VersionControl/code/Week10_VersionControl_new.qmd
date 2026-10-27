@@ -1,7 +1,9 @@
 ---
 title: "Week 10: Version Control"
 author: "Ellen Bledsoe"
-format: gfm
+format: 
+  gfm: default
+  pdf: default
 editor: visual
 ---
 
@@ -19,9 +21,7 @@ Last week, we focused on making our code run anywhere. This week, we are adding 
 
 We have all ended up with a folder that looks something like this.
 
-![](../images/phd052810s.png){width="40%" fig-align="center"}
-
-"PHD Comics" by Jorge Cham: <https://phdcomics.com>
+!["PHD Comics" by Jorge Cham: <https://phdcomics.com>](../images/phd052810s.png){width="40%" fig-align="center"}
 
 Version control is a system that records changes to documents, code, data, etc. through time. It lets us take snapshots of our files (called *commits*) and go back to any earlier snapshot if we want to. We never have to save a copy called `analysis_FINAL_v2` again.
 
@@ -58,7 +58,8 @@ We only need to do the steps in this section once per computer.
 
 First, we need to tell `git` who we are. Use the same email address that you used for your GitHub account.
 
-```{r}
+```{r eval = FALSE}
+#install.packages(usethis)
 library(usethis)
 
 use_git_config(user.name = "Your Name", user.email = "your_email@arizona.edu")
@@ -83,7 +84,7 @@ usethis::create_github_token()
 This opens a page on GitHub.
 
 1.  Leave the pre-selected scopes as they are.
-2.  Choose an expiration date. I suggest one that is after the end of the semester.
+2.  Choose no expiration date. GitHub will try to convince you otherwise, but ignore it!
 3.  Click `Generate token`.
 4.  Copy the token. You will not be able to see it again!
 
@@ -93,7 +94,9 @@ Now we give the token to `git` so it can use it for us.
 gitcreds::gitcreds_set()
 ```
 
-When R asks for your password, paste in the *token* (not your GitHub password). If RStudio ever asks for a password later or tells you that authentication failed, repeat these steps with a new token.
+When R asks for your password, paste in the *token* (not your GitHub password). 
+
+If RStudio ever asks for a password later or tells you that authentication failed, repeat these steps with a new token.
 
 Think of the token like a password: don't share it or put it in a file that you commit!
 
@@ -108,13 +111,15 @@ The repo that we create on GitHub will have two files already in it:
 
 > Work on Question 1 in the Assignment
 
-When your project opens, you should have a new `Git` tab in the upper right pane. If it is missing, `usethis::git_sitrep()` will print a report of your `git` and GitHub setup that can help us figure out what went wrong.
+When your project opens, you should have a new `Git` tab in the upper right pane. 
+
+If it is missing, `usethis::git_sitrep()` will print a report of your `git` and GitHub setup that can help us figure out what went wrong.
 
 # Our First Commits
 
 ## Commit the Data
 
-Download `Gaeta_etal_CLC_data.csv` from D2L and move it into your new project folder. This file has measurements of fish length and scale length from several lakes.
+Download `Gaeta_etal_CLC_data.csv` from Brightspace and move it into your new project folder. This file has measurements of fish length and scale length from several lakes.
 
 Look at the `Git` tab. The data file is listed with a yellow `?`, which means that it is in our project folder but `git` is not tracking it yet. (You might also see a `.Rproj` file. Commit that on its own first, with a message like `Add RStudio Project file`, so that anyone who clones your repo can open it as an RStudio Project.)
 
@@ -127,13 +132,13 @@ To commit a file, we first need to *stage* it, which tells `git` that we want it
 
 We want the message to be short but descriptive, written as if completing the sentence "This commit will...". Something like `Add fish size and growth rate data` is perfect. Messages like `update` or `stuff` will not help you at all when you look through your history in six months.
 
-Click the `History` button. We now have one commit with our data file. Changes to a data file like this are too large to be useful to look at, but the history is there!
+Click the `History` button (the clock). We now have one commit with our data file. Changes to a data file like this are too large to be useful to look at, but the history is there!
 
 ## Commit Some Code
 
 Let's start a Quarto file to work with our data. Create a new Quarto document, save it as `fish_analysis.qmd` in the main project folder, and add a code chunk to read in the data.
 
-```{r}
+```{r eval=FALSE}
 library(tidyverse)
 
 fish_data <- read_csv("Gaeta_etal_CLC_data.csv")
