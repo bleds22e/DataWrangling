@@ -139,7 +139,7 @@ library(tidyverse)
 fish_data <- read_csv("Gaeta_etal_CLC_data.csv")
 ```
 
-Save the file and it will show up in the `Git` tab. Stage it, and commit it with the message `Start script comparing fish length and scale size`.
+Save the file and it will show up in the `Git` tab. Stage it, and commit it with the message `Start fish analysis script`.
 
 If you click on the file in the commit window, you can see the `Diff`, which shows exactly what has changed since the last commit. Here, the whole file is new, so every line is added.
 
@@ -147,23 +147,36 @@ If you click on the file in the commit window, you can see the `Diff`, which sho
 
 Once a file has been committed and we haven't changed it since, it disappears from the `Git` tab. As soon as we make a change and save, it shows up again with an `M` for "modified".
 
-Let's add a new column that sorts the fish into two size categories.
+Let's take a look at our data. Add a new code chunk to `fish_analysis.qmd`.
 
 ```{r}
-fish_data_cat <- fish_data |>
-  mutate(length_cat = if_else(length > 200, "big", "small"))
+glimpse(fish_data)
 ```
 
-Save the file, stage it, and commit it with the message `Add categorical fish length column`. In the `History`, we now have three commits, and each commit of `fish_analysis.qmd` shows only what we changed.
+Save the file, stage it, and commit it with the message `Look at the fish data`. In the `History`, each commit of `fish_analysis.qmd` shows only what we changed in that commit.
 
-Now let's change our mind about the cutoff between "big" and "small".
+Next, let's find the smallest and largest scale length in each lake.
 
 ```{r}
-fish_data_cat <- fish_data |>
-  mutate(length_cat = if_else(length > 300, "big", "small"))
+fish_data |>
+  group_by(lakeid) |>
+  summarize(min_scale_length = min(scalelength, na.rm = TRUE),
+            max_scale_length = max(scalelength, na.rm = TRUE))
 ```
 
-Save, stage, and commit with `Change size cutoff for new column`. This time, the diff has green lines for what we added and red lines for what we removed. `git` works line by line, so a changed line shows up as the old version deleted and the new version added.
+Save, stage, and commit with `Add scale length range by lake`.
+
+Now let's add the average scale length, too.
+
+```{r}
+fish_data |>
+  group_by(lakeid) |>
+  summarize(min_scale_length = min(scalelength, na.rm = TRUE),
+            max_scale_length = max(scalelength, na.rm = TRUE),
+            mean_scale_length = mean(scalelength, na.rm = TRUE))
+```
+
+Save, stage, and commit with `Add mean scale length by lake`. This time, the diff has green lines for what we added and red lines for what we removed. Notice that the `max_scale_length` line shows up as both, even though all we did to it was add a comma! `git` works line by line, so a changed line shows up as the old version deleted and the new version added.
 
 > Work on Question 2 in the Assignment
 
@@ -183,11 +196,10 @@ Stage both the old and the new data files, and `git` figures out what really hap
 
 # Git as a Time Machine
 
-Because every commit is saved, we can try things without worrying about breaking anything. Let's make a change that we don't like.
+Because every commit is saved, we can try things without worrying about breaking anything. Let's make a change that we don't like. What if we group by individual fish instead of by lake?
 
 ```{r}
-fish_data_cat <- fish_data |>
-  mutate(length_cat = if_else(length > 300, "large", "tiny"))
+  group_by(fish_id) |>
 ```
 
 Save the file. We have not committed this change, so we can throw it away: in the `Git` tab, select `fish_analysis.qmd` -> `More` -> `Revert` -> `Yes`. The file goes right back to how it was in our last commit.
@@ -212,11 +224,11 @@ Go to your repo in your web browser and refresh it. You should see all of your f
 
 The big advantage of a remote is easy collaboration. No more emailing files back and forth, wondering whether you have the most recent version!
 
-While we've been talking, a collaborator has added a plot to `fish_analysis.qmd` on GitHub.
+While we've been talking, a collaborator has added a plot of fish length and scale length to `fish_analysis.qmd` on GitHub.
 
 ```{r}
-ggplot(fish_data_cat, aes(x = scalelength, fill = length_cat)) +
-  geom_histogram()
+ggplot(fish_data, aes(x = length, y = scalelength)) +
+  geom_point()
 ```
 
 To get their changes, click the `Pull` button (blue arrow pointing down) in the `Git` tab. The new code now appears in your file!
@@ -227,18 +239,21 @@ To get their changes, click the `Pull` button (blue arrow pointing down) in the 
 
 What happens if two people make changes at the same time? If you and your collaborator edit *different* parts of a file, `git` can combine the changes on its own.
 
-Let's say you decide to change the number of bins in your histogram to 10. You save, stage, and commit.
+Let's say you decide that the points on the plot overlap too much, so you make them partly transparent. You save, stage, and commit.
 
 ```{r}
-geom_histogram(bins = 10)
+  geom_point(alpha = 0.3)
 ```
 
-Meanwhile, your collaborator reassesses the measuring device and decides that it is only accurate down to 0.5 mm. They add a line to the data code and push it to GitHub.
+Meanwhile, your collaborator reassesses the measuring device and decides that it is only accurate down to 0.5 mm. They add a line to the summary code and push it to GitHub.
 
 ```{r}
-fish_data_cat <- fish_data |>
+fish_data |>
   filter(scalelength >= 0.5) |>
-  mutate(length_cat = if_else(length > 300, "big", "small"))
+  group_by(lakeid) |>
+  summarize(min_scale_length = min(scalelength, na.rm = TRUE),
+            max_scale_length = max(scalelength, na.rm = TRUE),
+            mean_scale_length = mean(scalelength, na.rm = TRUE))
 ```
 
 When you try to push, you get an error: the remote contains work that you do not have locally. That is `git` stopping us from overwriting our collaborator's work. The fix is to `Pull` first. The merge happens automatically, and we now have both sets of changes. The remote doesn't have our version yet, so we `Push` one more time.
@@ -247,25 +262,25 @@ When you try to push, you get an error: the remote contains work that you do not
 
 If you and your collaborator edit the *same* line, `git` cannot know whose change to keep. A human has to decide.
 
-Let's say you change `"big"` to `"large"` and commit.
+Let's say the points still overlap too much, so you change `alpha` to 0.1 and commit.
 
 ```{r}
-  mutate(length_cat = if_else(length > 300, "large", "small"))
+  geom_point(alpha = 0.1)
 ```
 
-Meanwhile, your collaborator changes the cutoff to 250 on that very same line and pushes it first.
+Meanwhile, your collaborator colors the points on that very same line and pushes it first.
 
 ```{r}
-  mutate(length_cat = if_else(length > 250, "big", "small"))
+  geom_point(alpha = 0.3, color = "darkblue")
 ```
 
 When you push, you get the same error as before. When you pull, though, we get a merge conflict. In the `Git` tab, the file is marked with a `U` for "unmerged". When we open the file, `git` has marked the problem for us.
 
 ```
 <<<<<<< HEAD
-  mutate(length_cat = if_else(length > 300, "large", "small"))
+  geom_point(alpha = 0.1)
 =======
-  mutate(length_cat = if_else(length > 250, "big", "small"))
+  geom_point(alpha = 0.3, color = "darkblue")
 >>>>>>> 8d7ed087a1abeb59d5b896416a625048654e03f4
 ```
 
@@ -274,7 +289,7 @@ The first block (between `<<<<<<<` and `=======`) is your version, and the secon
 To fix it, edit the file so that only the code you want is left, and delete all of the marker lines. Here, we want to keep both changes.
 
 ```{r}
-  mutate(length_cat = if_else(length > 250, "large", "small"))
+  geom_point(alpha = 0.1, color = "darkblue")
 ```
 
 Save the file, stage it, and commit with a message that says this was a merge. The fixed version still isn't on GitHub, so finish up by pushing.
