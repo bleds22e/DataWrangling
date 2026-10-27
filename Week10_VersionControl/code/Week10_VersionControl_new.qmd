@@ -1,7 +1,9 @@
 ---
 title: "Week 10: Version Control"
 author: "Ellen Bledsoe"
-format: gfm
+format: 
+  gfm: default
+  pdf: default
 editor: visual
 ---
 
@@ -19,9 +21,7 @@ Last week, we focused on making our code run anywhere. This week, we are adding 
 
 We have all ended up with a folder that looks something like this.
 
-![](../images/phd052810s.png){width="40%" fig-align="center"}
-
-"PHD Comics" by Jorge Cham: <https://phdcomics.com>
+!["PHD Comics" by Jorge Cham: <https://phdcomics.com>](../images/phd052810s.png){width="40%" fig-align="center"}
 
 Version control is a system that records changes to documents, code, data, etc. through time. It lets us take snapshots of our files (called *commits*) and go back to any earlier snapshot if we want to. We never have to save a copy called `analysis_FINAL_v2` again.
 
@@ -35,12 +35,12 @@ These two names get used almost interchangeably, but they are different things.
 
 Because there are two places where a repo lives, we need words for each:
 
--   *Local*: the copy on your computer
--   *Remote*: the copy on GitHub
+- *Local*: the copy on your computer
+- *Remote*: the copy on GitHub
 
 Everything we do takes place in a short cycle. On our own computer, we save our files, *add* (or "stage") the ones we want to record, and *commit* them with a short message describing what we did. Then we sync with GitHub. We *push* our commits up to the remote and *pull* down any commits that someone else (or another computer of ours) has pushed.
 
-```
+```         
 Remote (GitHub)
       ^   |
  push |   | pull
@@ -58,7 +58,8 @@ We only need to do the steps in this section once per computer.
 
 First, we need to tell `git` who we are. Use the same email address that you used for your GitHub account.
 
-```{r}
+```{r eval = FALSE}
+#install.packages(usethis)
 library(usethis)
 
 use_git_config(user.name = "Your Name", user.email = "your_email@arizona.edu")
@@ -66,7 +67,7 @@ use_git_config(user.name = "Your Name", user.email = "your_email@arizona.edu")
 
 We also need to change one `git` setting so that merging works smoothly later in the lesson. Open the `Terminal` tab (next to the `Console`) and run the line below. Without it, newer versions of `git` will refuse to pull when two people have changed the same repo, with an error about "divergent branches."
 
-```
+```         
 git config --global pull.rebase false
 ```
 
@@ -83,7 +84,7 @@ usethis::create_github_token()
 This opens a page on GitHub.
 
 1.  Leave the pre-selected scopes as they are.
-2.  Choose an expiration date. I suggest one that is after the end of the semester.
+2.  Choose no expiration date. GitHub will try to convince you otherwise, but ignore it!
 3.  Click `Generate token`.
 4.  Copy the token. You will not be able to see it again!
 
@@ -93,7 +94,9 @@ Now we give the token to `git` so it can use it for us.
 gitcreds::gitcreds_set()
 ```
 
-When R asks for your password, paste in the *token* (not your GitHub password). If RStudio ever asks for a password later or tells you that authentication failed, repeat these steps with a new token.
+When R asks for your password, paste in the *token* (not your GitHub password).
+
+If RStudio ever asks for a password later or tells you that authentication failed, repeat these steps with a new token.
 
 Think of the token like a password: don't share it or put it in a file that you commit!
 
@@ -103,18 +106,20 @@ Now we need a repo. We will create it on GitHub, and then *clone* it, which make
 
 The repo that we create on GitHub will have two files already in it:
 
--   a `README` file, which is the "front page" of your repo on GitHub
--   a `.gitignore` file, which lists files that `git` should *not* keep track of. The R template includes things like `.Rhistory` and `.RData`, which you may remember from our Week 9 conversation about not saving your workspace.
+- a `README` file, which is the "front page" of your repo on GitHub
+- a `.gitignore` file, which lists files that `git` should *not* keep track of. The R template includes things like `.Rhistory` and `.RData`, which you may remember from our Week 9 conversation about not saving your workspace.
 
 > Work on Question 1 in the Assignment
 
-When your project opens, you should have a new `Git` tab in the upper right pane. If it is missing, `usethis::git_sitrep()` will print a report of your `git` and GitHub setup that can help us figure out what went wrong.
+When your project opens, you should have a new `Git` tab in the upper right pane.
+
+If it is missing, `usethis::git_sitrep()` will print a report of your `git` and GitHub setup that can help us figure out what went wrong.
 
 # Our First Commits
 
 ## Commit the Data
 
-Download `Gaeta_etal_CLC_data.csv` from D2L and move it into your new project folder. This file has measurements of fish length and scale length from several lakes.
+Download `Gaeta_etal_CLC_data.csv` from Brightspace and move it into your new project folder. This file has measurements of fish length and scale length from several lakes.
 
 Look at the `Git` tab. The data file is listed with a yellow `?`, which means that it is in our project folder but `git` is not tracking it yet. (You might also see a `.Rproj` file. Commit that on its own first, with a message like `Add RStudio Project file`, so that anyone who clones your repo can open it as an RStudio Project.)
 
@@ -127,13 +132,13 @@ To commit a file, we first need to *stage* it, which tells `git` that we want it
 
 We want the message to be short but descriptive, written as if completing the sentence "This commit will...". Something like `Add fish size and growth rate data` is perfect. Messages like `update` or `stuff` will not help you at all when you look through your history in six months.
 
-Click the `History` button. We now have one commit with our data file. Changes to a data file like this are too large to be useful to look at, but the history is there!
+Click the `History` button (the clock). We now have one commit with our data file. Changes to a data file like this are too large to be useful to look at, but the history is there!
 
 ## Commit Some Code
 
 Let's start a Quarto file to work with our data. Create a new Quarto document, save it as `fish_analysis.qmd` in the main project folder, and add a code chunk to read in the data.
 
-```{r}
+```{r eval=FALSE}
 library(tidyverse)
 
 fish_data <- read_csv("Gaeta_etal_CLC_data.csv")
@@ -184,7 +189,7 @@ Save, stage, and commit with `Add mean scale length by lake`. This time, the dif
 
 A commit can include as many files as we want. Let's use that to tidy up. Last week, we learned that raw data belongs in a `data_raw` folder, so let's move our data file there.
 
-In the `Files` pane, create a new folder called `data_raw`. Then check the box next to `Gaeta_etal_CLC_data.csv` -> `More` -> `Move...` -> `data_raw`. Our code needs to know about the move, too.
+In the `Files` pane, create a new folder called `data_raw`. Then check the box next to `Gaeta_etal_CLC_data.csv` -\> `More` -\> `Move...` -\> `data_raw`. Our code needs to know about the move, too.
 
 ```{r}
 fish_data <- read_csv("data_raw/Gaeta_etal_CLC_data.csv")
@@ -202,7 +207,7 @@ Because every commit is saved, we can try things without worrying about breaking
   group_by(fish_id) |>
 ```
 
-Save the file. We have not committed this change, so we can throw it away: in the `Git` tab, select `fish_analysis.qmd` -> `More` -> `Revert` -> `Yes`. The file goes right back to how it was in our last commit.
+Save the file. We have not committed this change, so we can throw it away: in the `Git` tab, select `fish_analysis.qmd` -\> `More` -\> `Revert` -\> `Yes`. The file goes right back to how it was in our last commit.
 
 What if we already committed the change, or we want an older version of the code? In the `History`, select the commit that you want, then choose `View file @ ...` to see the file as it was at that point. From there, you can copy and paste the piece you need or save that version over your current file.
 
@@ -228,7 +233,7 @@ While we've been talking, a collaborator has added a short description to the `R
 
 To play the collaborator yourself, go to your repo on GitHub, open `README.md`, and click the pencil icon. Add a description under the title, then click `Commit changes...` and commit directly to the `main` branch.
 
-```
+```         
 # FirstnameLastname_DataWrangling
 
 This repo holds my work for Data Wrangling in R.
@@ -244,7 +249,7 @@ What happens if two people make changes at the same time? If you and your collab
 
 Let's say you add a section about the data to the bottom of your `README` in RStudio. You save, stage, and commit.
 
-```
+```         
 ## Data
 
 Fish length and scale length data from Gaeta et al.
@@ -252,7 +257,7 @@ Fish length and scale length data from Gaeta et al.
 
 Meanwhile, your collaborator decides that the title should be friendlier. They change the first line on GitHub and commit it.
 
-```
+```         
 # Data Wrangling in R
 ```
 
@@ -264,31 +269,31 @@ If you and your collaborator edit the *same* line, `git` cannot know whose chang
 
 Let's say you decide to reword the description in your `README`, and you commit the change.
 
-```
+```         
 This repo holds my code and data for Data Wrangling in R.
 ```
 
 Meanwhile, your collaborator changes that very same line on GitHub and commits it first.
 
-```
+```         
 This repo holds my work for Data Wrangling in R for Ecologists.
 ```
 
 When you push, you get the same error as before. When you pull, though, we get a merge conflict. In the `Git` tab, the file is marked with a `U` for "unmerged". When we open the file, `git` has marked the problem for us.
 
-```
-<<<<<<< HEAD
-This repo holds my code and data for Data Wrangling in R.
-=======
-This repo holds my work for Data Wrangling in R for Ecologists.
->>>>>>> 8d7ed087a1abeb59d5b896416a625048654e03f4
+```         
+ <<<<<<< HEAD
+ This repo holds my code and data for Data Wrangling in R.
+ =======
+ This repo holds my work for Data Wrangling in R for Ecologists.
+ >>>>>>> 8d7ed087a1abeb59d5b896416a625048654e03f4
 ```
 
 The first block (between `<<<<<<<` and `=======`) is your version, and the second block (between `=======` and `>>>>>>>`) is the version from the remote.
 
 To fix it, edit the file so that only the text you want is left, and delete all of the marker lines. Here, we want to keep both changes.
 
-```
+```         
 This repo holds my code and data for Data Wrangling in R for Ecologists.
 ```
 
@@ -304,6 +309,6 @@ In the rest of the assignment, you will repeat this process for your final proje
 
 Below are some resources that you might find helpful as you get comfortable with `git` and GitHub.
 
--   [Happy Git with R](https://happygitwithr.com/): the resource I find most helpful
--   [GitHub Docs](https://docs.github.com/)
--   Jenny Bryan: [Excuse me, do you have a moment to talk about version control?](https://doi.org/10.7287/peerj.preprints.3159v2)
+- [Happy Git with R](https://happygitwithr.com/): the resource I find most helpful
+- [GitHub Docs](https://docs.github.com/)
+- Jenny Bryan: [Excuse me, do you have a moment to talk about version control?](https://doi.org/10.7287/peerj.preprints.3159v2)
