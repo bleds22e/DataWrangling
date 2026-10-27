@@ -21,23 +21,19 @@ Write R code to successfully answer each question below. Use an RStudio Project 
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
-Nov 4 before class
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week10_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
+Nov 2 before class
 
 # Assignment Exercises
 
@@ -90,9 +86,15 @@ Use the `write_csv()` function to save this new data frame as a CSV file. It sho
 
 Commit this change to version control with a good commit message.
 
-Once you've made the commit, push the commit to your repo. Pop over to GitHub to ensure that the .qmd file and the new dataset are there.
+Once you've made the commit, push the commit to your repo. Pop over to GitHub to ensure that the `.qmd` file and the new dataset are there.
 
-**NOTE:** Send your instructor an email letting them know you have completed Questions 1-3. Include a link to your repo. Wait until you have received confirmation from the instructor to move onto Question 4.
+::: callout-note
+## Note!
+
+Send your instructor an email letting them know you have completed Questions 1-3. 
+
+Include a link to your repo. Wait until you have received confirmation from the instructor to move onto Question 4.
+:::
 
 ### 4. Pulling and Pushing (20 points)
 
@@ -147,9 +149,9 @@ It doesn't have to be a lot ([here](https://github.com/Big-Biodiversity-Collabor
 
 Some suggestions for what to include:
 
--   a 1-2 sentence of what the repo is for
--   a few sentences about your dataset
--   a quick overview of your current (or expected) sub-directory structure
+- a 1-2 sentence of what the repo is for
+- a few sentences about your dataset
+- a quick overview of your current (or expected) sub-directory structure
 
 This is also an opportunity for you to get a bit more familiar with using Markdown, if you are interested; that said, this question *will not be graded on aesthetics or style* but on completion.
 
@@ -177,5 +179,5 @@ To successfully "submit" your assignments for the rest of the semester, you will
 
 For this week, you will need to submit two URLS:
 
--   one for the repo you created in class (for Question 1)
--   one for your Final Project repo.
+- one for the repo you created in class (for Question 1)
+- one for your Final Project repo.

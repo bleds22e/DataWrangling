@@ -15,17 +15,20 @@ Analysis fish length data from Gaeta et al.
 
 ### Set-Up
 
+Load in the `tidyverse` package and the fish scale length data.
 ```{r}
 library(tidyverse)
-fish <- read_csv("data_raw/Gaeta_etal_CLC_data.csv")
+fish_data <- read_csv("data_raw/Gaeta_etal_CLC_data.csv")
 ```
 
+Look at the dataset
 ```{r}
-glimpse(fish)
+glimpse(fish_data)
 ```
 
+Calculate the minimum and maximum scale length data in each lake.
 ```{r}
-fish %>% 
+fish_data %>% 
   group_by(lakeid) %>% 
   summarize(min_scale_length = min(scalelength, na.rm = T),
             max_scale_length = max(scalelength, na.rm = T))

@@ -1,8 +1,10 @@
 ---
-title: 'Week 9: Version Control'
+title: 'Week 10: Version Control'
 author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
-format: pdf
+format: 
+  pdf: default
+  gfm: default
 ---
 
 ```{r setup, include=FALSE}
