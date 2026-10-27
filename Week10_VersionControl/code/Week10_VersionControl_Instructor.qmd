@@ -19,10 +19,6 @@ Last week, we focused on making our code run anywhere. This week, we are adding 
 
 ## What Is Version Control?
 
-We have all ended up with a folder that looks something like this.
-
-!["PHD Comics" by Jorge Cham: <https://phdcomics.com>](../images/phd052810s.png){width="40%" fig-align="center"}
-
 Version control is a system that records changes to documents, code, data, etc. through time. It lets us take snapshots of our files (called *commits*) and go back to any earlier snapshot if we want to. We never have to save a copy called `analysis_FINAL_v2` again.
 
 Version control also helps us work *collaboratively*. It keeps track of who changed what and notices when two people have changed the same line of code.
