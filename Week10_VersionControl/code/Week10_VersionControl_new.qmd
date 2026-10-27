@@ -23,7 +23,7 @@ We have all ended up with a folder that looks something like this.
 
 "PHD Comics" by Jorge Cham: <https://phdcomics.com>
 
-Version control is a system that records changes to documents, code, data, etc. through time. It lets us take snapshots of our files (called **commits**) and go back to any earlier snapshot if we want to. We never have to save a copy called `analysis_FINAL_v2` again.
+Version control is a system that records changes to documents, code, data, etc. through time. It lets us take snapshots of our files (called *commits*) and go back to any earlier snapshot if we want to. We never have to save a copy called `analysis_FINAL_v2` again.
 
 Version control also helps us work *collaboratively*. It keeps track of who changed what and notices when two people have changed the same line of code.
 
@@ -31,14 +31,14 @@ Version control also helps us work *collaboratively*. It keeps track of who chan
 
 These two names get used almost interchangeably, but they are different things.
 
-`git` is the software that lives on your computer and does the tracking. GitHub is a website that stores a copy of your project in the cloud. A project that is tracked by `git` is called a **repository** (or "repo" for short).
+`git` is the software that lives on your computer and does the tracking. GitHub is a website that stores a copy of your project in the cloud. A project that is tracked by `git` is called a *repository* (or "repo" for short).
 
 Because there are two places where a repo lives, we need words for each:
 
--   **Local**: the copy on your computer
--   **Remote**: the copy on GitHub
+-   *Local*: the copy on your computer
+-   *Remote*: the copy on GitHub
 
-Everything we do takes place in a short cycle. On our own computer, we **save** our files, **add** (or "stage") the ones we want to record, and **commit** them with a short message describing what we did. Then we sync with GitHub. We **push** our commits up to the remote and **pull** down any commits that someone else (or another computer of ours) has pushed.
+Everything we do takes place in a short cycle. On our own computer, we save our files, *add* (or "stage") the ones we want to record, and *commit* them with a short message describing what we did. Then we sync with GitHub. We *push* our commits up to the remote and *pull* down any commits that someone else (or another computer of ours) has pushed.
 
 ```
 Remote (GitHub)
@@ -93,7 +93,7 @@ Now we give the token to `git` so it can use it for us.
 gitcreds::gitcreds_set()
 ```
 
-When R asks for your password, paste in the **token** (not your GitHub password). If RStudio ever asks for a password later or tells you that authentication failed, repeat these steps with a new token.
+When R asks for your password, paste in the *token* (not your GitHub password). If RStudio ever asks for a password later or tells you that authentication failed, repeat these steps with a new token.
 
 Think of the token like a password: don't share it or put it in a file that you commit!
 
