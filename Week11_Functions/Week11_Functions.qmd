@@ -87,33 +87,50 @@ So, in the function above, we can't "access" variables or arguments that are cre
 
 Work on Question 2 in the Assignment.
 
-## Default arguments
+## Default Arguments
 
-As with many of the functions that we have already used in this class, we can set defaults for the arguments in the functions that we create.
+Sometimes an argument has a value we would use most of the time. We can set that value as a default, and then only specify the argument when we want something different.
 
-For example, if many of our shrubs are the same height, we could specify that the default height should be 1.
-
-```{r}
-
-```
-
-### When do we use argument names?
-
-While you don't always have to name the arguments you are specifying, there are some general suggestions for best practices.
-
-As we saw above, as long as you specify arguments in the correct order, they do not need to be named. On the other hand, if you specify arguments out of the order in which they are written into the function or you are skipping some arguments (using the default) and then specifying later arguments, it is necessary to name them.
+We can estimate the mass of a shrub from its volume with `mass = a * volume^b`. The values of `a` and `b` are often the same from shrub to shrub, so we will make them defaults.
 
 ```{r}
+est_shrub_mass <- function(volume, a = 2.65, b = 0.9) {
+  mass <- a * volume^b
+  return(mass)
+}
 
+est_shrub_mass(2.56)
 ```
 
-With some complicated functions, the order of the arguments is often challenging to remember, so using names by default is a good idea.
+Notice that `volume` has no default and comes first. Arguments without defaults should go first, followed by the arguments with defaults.
 
-Similarly, when there are lots of optional arguments, you will often need to name them if you are using something other than the default. This is standard convention.
+### Matching arguments: names and order
+
+When we call a function, R matches the arguments we give it in two steps. It matches the named arguments first, and then it matches the unnamed arguments by position, in the order the function lists them.
+
+If we do not use names, the order matters.
 
 ```{r}
+# volume = 2.56, a = 2.65, b = 0.9
+est_shrub_mass(2.56, 2.65, 0.9)
 
+# the 0.85 goes to a, not b!
+est_shrub_mass(2.56, 0.85)
 ```
+
+R does not give us an error in the second call; it just gives us a different answer. If we want to change `b` and leave `a` as the default, we need to use the name.
+
+```{r}
+est_shrub_mass(2.56, b = 0.85)
+```
+
+When we name arguments, the order no longer matters.
+
+```{r}
+est_shrub_mass(b = 0.85, volume = 2.56)
+```
+
+A common convention is to leave off the name of the first argument (usually the data), and to name the rest, especially optional ones.
 
 ## Vectors and Data Frames
 
