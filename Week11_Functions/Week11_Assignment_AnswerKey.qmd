@@ -1,8 +1,8 @@
 ---
 title: "Assignment 11"
 author: "Ellen Bledsoe"
-date: "`r Sys.Date()`"
 format: pdf
+editor: visual
 ---
 
 ```{r setup, include=FALSE}
@@ -11,42 +11,43 @@ knitr::opts_chunk$set(echo = FALSE)
 
 
 
-### 1. Writing Functions (15 points)
+### 1. Writing Functions: Part 1 (15 points)
 
-
-
+1a.
 ```{r}
-###Code solution for Writing Functions
-
-print("1a")
 pounds_to_grams <- function(weight_lbs){
   weight_g <- weight_lbs * 453.6
   return(weight_g)
 }
 pounds_to_grams(3.75)
+```
 
-print("1b")
+1b.
+```{r}
 convert_fahrenheit_to_celsius <- function(fahrenheit) {
     celsius = (fahrenheit - 32) * 5 / 9
     return(celsius)
 }
 convert_fahrenheit_to_celsius(80)
+```
 
-print('1c')
+1c.
+```{r}
 double <- function(number){
   doubled <- number * 2
   return(doubled)
 }
 
 double(512)
+```
 
-print("1d")
+1d.
+```{r}
 prediction <- function(a, b, x){
   y <- a + b * x
   return(y)
 }
 prediction(6, 0.8, 12)
-
 ```
 
 ### 2. Use and Modify (15 points)
@@ -60,28 +61,27 @@ get_mass_from_length_theropoda <- function(length){
 ```
 
 
-
+2a.
 ```{r}
-###Code solution for Use and Modify
-
-print("2a")
 get_mass_from_length_theropoda <- function(length){
-  mass = 0.73 * length ** 3.63
-  return (mass)
+  mass <- 0.73 * length ^ 3.63
+  return(mass)
 }
 
 get_mass_from_length_theropoda(16)
+```
 
-print("2b")
+2b.
+```{r}
 get_mass_from_length <- function(a, b, length){
-  mass = a * length ** b
-  return (mass)
+  mass <- a * length ^ b
+  return(mass)
 }
 
 get_mass_from_length(214.44, 1.46, 26)
 ```
 
-### Writing Functions, 2 (15 points)
+### Writing Functions: Part 2 (15 points)
 
 
 ```{r}
@@ -91,11 +91,9 @@ get_mass_from_length(214.44, 1.46, 26)
 #   return(________)
 # }
 ```
+3a.
 
 ```{r}
-### Code solution for Writing Functions 2
-
-print("3a")
 convert_pounds_to_grams <- function(pounds, numdigits = 1) {
   grams <- 453.6 * pounds
   rounded <- round(grams, digits = numdigits)
@@ -103,33 +101,37 @@ convert_pounds_to_grams <- function(pounds, numdigits = 1) {
 }
 
 convert_pounds_to_grams(4.3)
+```
 
-print("3b")
+3b.
+```{r}
 get_height_from_weight <- function(weight, a = 12, b = 0.38){
   height <- a * weight ^ b
   return(height)
 }
 
 get_height_from_weight(42)
+```
 
-print("3c")
+3c.
+```{r}
 convert_pounds_to_grams(2) |>
   get_height_from_weight(b = 0.32)
 ```
 
 ### 4. Default Arguments (15 points)
 
-
+4b.
 ```{r}
-print("4a")
-
 get_mass_from_length <- function(a = 39.9, b = 2.6, length){
-  mass = a * length ** b
-  return (mass)
+  mass <- a * length ^ b
+  return(mass)
 }
 get_mass_from_length(a = 214.44, b = 1.46, length = 22)
+```
 
-print("4b")
+4c.
+```{r}
 get_mass_from_length(length = 16)
 ```
 
@@ -139,7 +141,7 @@ get_mass_from_length(length = 16)
 
 ```{r}
 convert_kg_to_pounds <- function(kg){
-  pounds = 2.205 * kg
+  pounds <- 2.205 * kg
   return(pounds)
 }
 
@@ -149,16 +151,6 @@ get_mass_from_length(a = 10.95, b = 2.64, length = 12) |>
 
 
 ### 6. Writing Tidyverse Functions (20 points)
-
-
-```{r}
-state_vector <- c("FL", "FL", "FL", "FL", "GA", "GA", "GA", "GA", "SC", "SC", "SC", "SC")
-site_vector <- c("A", "B", "C", "D", "A", "B", "C", "D", "A", "B", "C", "D")
-count_vector <- c(9, 16, 3, 10, 2, 26, 5, 8, 17, 8, 2, 6)
-area_vector <- c(3, 5, 1.9, 2.7, 2, 2.6, 6.2, 4.5, 8, 4, 1, 3)
-```
-
-
 
 ```{r message=FALSE}
 # Solutions to Writing Tidyverse Functions
@@ -170,8 +162,10 @@ count_data <- data.frame(
   count = c(9, 16, 3, 10, 2, 26, 5, 8, 17, 8, 2, 6),
   area = c(3, 5, 1.9, 2.7, 2, 2.6, 6.2, 4.5, 8, 4, 1, 3)
   )
+```
 
-print("6a")
+6a.
+```{r}
 make_plot <- function(df, color_col) {
   ggplot(data = df, mapping = aes(x = area,
                                   y = count,
@@ -181,13 +175,15 @@ make_plot <- function(df, color_col) {
 }
 
 make_plot(count_data, state)
+```
 
-print("6b")
-
+6b.
+```{r}
 make_plot(count_data, site)
+```
 
-print("6c")
-
+6c.
+```{r}
 make_plot2 <- function(df, x_axis, y_axis, color_col) {
   ggplot(data = df, mapping = aes(x = {{ x_axis }},
                                   y = {{ y_axis }},
@@ -195,6 +191,7 @@ make_plot2 <- function(df, x_axis, y_axis, color_col) {
     geom_point(size = 3) +
     labs(x = "Area [ha]", y = "Number of Individuals")
 }
+
 make_plot2(count_data, area, count, site)
 ```
 
