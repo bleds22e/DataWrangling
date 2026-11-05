@@ -27,7 +27,7 @@ If you find yourself needing to run the same calculations or make the same plot 
 
 When we create a function, the structure of the function generally looks like this:
 
-![](r-function-syntax.png){width="75%" fig-align="center"}
+![](images/r-function-syntax.png){width="75%" fig-align="center"}
 
 A slightly different way to think about this is through inputs and outputs.
 
@@ -40,8 +40,8 @@ A slightly different way to think about this is through inputs and outputs.
 
 The braces indicate that the lines of code are a group that gets run together.
 
--   A function will run all of the lines of code in the braces using the arguments provided.
--   We then need to return the output using the `return()` function.
+- A function will run all of the lines of code in the braces using the arguments provided.
+- We then need to return the output using the `return()` function.
 
 Let's write out our first function. We want to calculate shrub volumes.
 
@@ -75,9 +75,9 @@ It is important to remember a few things about functions. In many ways, we need 
 
 What we mean by this is that the only thing that the function knows about are the inputs we give it.
 
-Similarly, the only thing our environment know about the function is the output that we ask the function to return to us.
+Similarly, the only thing our environment knows about the function is the output that we ask the function to return to us.
 
-So, in the function above, we can't "access" variables or arguments that are created within the function. The function exists within it's own environment, so to speak.
+So, in the function above, we can't "access" variables or arguments that are created within the function. The function exists within its own environment, so to speak.
 
 ```{r eval=FALSE}
 
@@ -87,38 +87,56 @@ So, in the function above, we can't "access" variables or arguments that are cre
 
 Work on Question 2 in the Assignment.
 
-## Default arguments
+## Default Arguments
 
-As with many of the functions that we have already used in this class, we can set defaults for the arguments in the functions that we create.
+Sometimes an argument has a value we would use most of the time. We can set that value as a default, and then only specify the argument when we want something different.
 
-For example, if many of our shrubs are the same height, we could specify that the default height should be 1.
-
-```{r}
-
-```
-
-### When do we use argument names?
-
-While you don't always have to name the arguments you are specifying, there are some general suggestions for best practices.
-
-As we saw above, as long as you specify arguments in the correct order, they do not need to be named. On the other hand, if you specify arguments out of the order in which they are written into the function or you are skipping some arguments (using the default) and then specifying later arguments, it is necessary to name them.
+We can estimate the mass of a shrub from its volume with `mass = a * volume^b`. The values of `a` and `b` are often the same from shrub to shrub, so we will make them defaults.
 
 ```{r}
+est_shrub_mass <- function(volume, a = 2.65, b = 0.9) {
+  mass <- a * volume^b
+  return(mass)
+}
 
+est_shrub_mass(2.56)
 ```
 
-With some complicated functions, the order of the arguments is often challenging to remember, so using names by default is a good idea.
+Notice that `volume` has no default and comes first. Arguments without defaults should go first, followed by the arguments with defaults.
 
-Similarly, when there are lots of optional arguments, you will often need to name them if you are using something other than the default. This is standard convention.
+### Matching arguments: names and order
+
+When we call a function, R matches the arguments we give it in two steps. It matches the named arguments first, and then it matches the unnamed arguments by position, in the order the function lists them.
+
+If we do not use names, the order matters.
 
 ```{r}
+# volume = 2.56, a = 2.65, b = 0.9
+est_shrub_mass(2.56, 2.65, 0.9)
 
+# the 0.85 goes to a, not b!
+est_shrub_mass(2.56, 0.85)
 ```
+
+R does not give us an error in the second call; it just gives us a different answer. If we want to change `b` and leave `a` as the default, we need to use the name.
+
+```{r}
+est_shrub_mass(2.56, b = 0.85)
+```
+
+When we name arguments, the order no longer matters.
+
+```{r}
+est_shrub_mass(b = 0.85, volume = 2.56)
+```
+
+A common convention is to leave off the name of the first argument (usually the data), and to name the rest, especially optional ones.
 
 ## Vectors and Data Frames
 
 What if, instead of single values, we have a series of vectors or columns in data frame? Those will work!
 
+Often, the functions we write are *vectorized*, meaning they will work on vectors. We will explore some examples next week where that is not the case.
 ```{r}
 # vectors
 lengths <- c(1.2, 3, 4.7, 0.3)
@@ -128,18 +146,27 @@ heights <- c(1.1, 2.2, 3.0, 0.7)
 calc_shrub_vol(lengths, widths, heights)
 
 # data frame
-shrub_dimensions <- data.frame(length = lengths, width = widths, height = heights)
+shrub_dimensions <- data.frame(length = lengths, 
+                               width = widths, 
+                               height = heights)
+
 calc_shrub_vol(shrub_dimensions$length,
                shrub_dimensions$width,
                shrub_dimensions$height)
 ```
 
-We can even use our function inside of a mutate function to create a new column in our dataframe.
+We can even use our function inside of a mutate function to create a new column in our data frame.
 
 ```{r}
+# use the mutate function from dplyr without loading the package
+# we can use an fully qualified function call, e.g., pkg::function() 
 shrub_dimensions |> 
-  mutate(volume = calc_shrub_vol(length, width, height))
+  dplyr::mutate(volume = calc_shrub_vol(length, width, height))
 ```
+
+### Let's Practice
+
+Work on Questions 3 and 4 in the assignment.
 
 ## Combining Functions
 
@@ -155,7 +182,7 @@ We can also use pipes with our own functions. The output from the first function
 
 ```
 
-## Using the `tidyverse` in Functions
+## Using the `tidyverse` within Functions
 
 One of the really nice things about the `tidyverse` is that we usually don't need to put columns in quotes.
 
@@ -165,7 +192,7 @@ This is useful for when *using* functions from the `tidyverse`, but it means tha
 
 If we try to use `tidyverse` functions the way we normally would within our functions, they won't work.
 
-First, let's load our packages and get some data from Palmer Penguins.
+First, let's load our packages and get some data from `palmerpenguins`.
 
 ```{r}
 
@@ -177,6 +204,8 @@ Now, let's write some code for a ggplot within a function as we normally would.
 
 ```
 
+Surprisingly, we get an error saying that the object `body_mass_g` is not found.
+
 To fix this issue, we have to tell our code which inputs/arguments are this special type of data variable.
 
 We can do this by "embracing" them in double braces (e.g., `{{ var }}`). This tells the function to treat them in the "tidy evaluation" method.
@@ -184,6 +213,10 @@ We can do this by "embracing" them in double braces (e.g., `{{ var }}`). This te
 ```{r}
 
 ```
+
+### Let's Practice!
+
+Work on Question 6 in the assignment.
 
 ## Code Design with Functions
 
@@ -195,30 +228,38 @@ The functions hold the details. You can heavily comment the code of your functio
 
 ### Example Structure
 
+The code chunks will not run successfully; there are here to demonstrate.
+
 Functions (at or near the top of the document)
 
 ```{r eval = FALSE}
+# example only 
 
 clean_data <- function(data){
   # this function does stuff
-  do_stuff(data)
+  output <- do_stuff(data)
+  return(output)
 }
 
 process_data <- function(cleaned_data){
   # this function does dplyr stuff
-  do_dplyr_stuff(cleaned_data)
+  output <- do_dplyr_stuff(cleaned_data)
+  return(output)
 }
 
 make_graph <- function(processed_data){
   # this function plots stuff
-  do_ggplot_stuff(processed_data)
+  output <- do_ggplot_stuff(processed_data)
+  return(output)
 }
 ```
 
 Using the functions in a different code chunk.
 
-```{r}
-raw_data <- read.csv('mydata.csv')
+```{r eval = FALSE}
+# example only
+
+raw_data <- read.csv("mydata.csv")
 cleaned_data <- clean_data(raw_data)
 processed_data <- process_data(cleaned_data)
 make_graph(processed_data)
@@ -230,7 +271,7 @@ Alternatively, if you have a lot of custom functions, you might consider saving 
 
 You can then use the `source()` function at the beginning of your document to point to that file, read the file, and then the functions will be available for you to use in your current document.
 
-```{r}
-# Example
+```{r eval = FALSE}
+# example only
 source("functions.R")
 ```

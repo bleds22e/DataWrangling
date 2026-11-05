@@ -22,7 +22,7 @@ Version control also helps us work *collaboratively*. It keeps track of
 who changed what and notices when two people have changed the same line
 of code.
 
-## git vs. GitHub
+## git vs. GitHub
 
 These two names get used almost interchangeably, but they are different
 things.

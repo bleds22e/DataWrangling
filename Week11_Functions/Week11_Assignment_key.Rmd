@@ -21,15 +21,15 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
@@ -103,7 +103,6 @@ prediction <- function(a, b, x){
   return(y)
 }
 prediction(6, 0.8, 12)
-
 ```
 
 ### 2. Use and Modify (15 points)
@@ -205,7 +204,7 @@ b.  Use this function to estimate the mass of a dinosaur from an unknown taxonom
 print("4a")
 
 get_mass_from_length <- function(a = 39.9, b = 2.6, length){
-  mass = a * length ** b
+  mass <- a * length ^ b
   return (mass)
 }
 get_mass_from_length(a = 214.44, b = 1.46, length = 22)
@@ -308,14 +307,14 @@ download.file(url = "https://ndownloader.figshare.com/files/3299483",
 
 a.  Write a function that does the following:
 
--   Takes the following four arguments:
+- Takes the following four arguments:
 
-    (1) a data frame (where each row is one individual and there is a genus and a species column)
-    (2) a column to use as a `time` column (e.g., year)
-    (3) a `genus_name` argument for choosing which genus to plot
-    (4) a `species_name` argument for choosing which species to plot
+  (1) a data frame (where each row is one individual and there is a genus and a species column)
+  (2) a column to use as a `time` column (e.g., year)
+  (3) a `genus_name` argument for choosing which genus to plot
+  (4) a `species_name` argument for choosing which species to plot
 
--   Makes a plot using `ggplot2` with the time on the y-axis and the count of the number of individuals (i.e., the number of rows) observed for that time for the species indicated by the genus_name and species_name arguments. The plot should display the data as blue points (with `size = 2`) connected by blue lines (with `linewidth = 1`). The y-axis label should read "Number of Individuals." The theme should be "classic."
+- Makes a plot using `ggplot2` with the time on the y-axis and the count of the number of individuals (i.e., the number of rows) observed for that time for the species indicated by the genus_name and species_name arguments. The plot should display the data as blue points (with `size = 2`) connected by blue lines (with `linewidth = 1`). The y-axis label should read "Number of Individuals." The theme should be "classic."
 
 b.  Use your function, and the data in `surveys.csv` and `species.csv`, to plot the time-series for `time = year`, `genus_name = "Dipodomys"` and `species_name = "merriami"`.
 
@@ -344,18 +343,100 @@ make_sp_time_series_plot <- function(data, timestep, genus_name, species_name){
     theme_classic()
   
 }
+```
 
+7b.
+```{r}
 combined <- inner_join(surveys, species, by = "species_id")
 
 make_sp_time_series_plot(combined, year, "Dipodomys", "merriami")
-ggsave("output/Functions-portal-species-time-series-R-1.png")
+#ggsave("output/Functions-portal-species-time-series-R-1.png")
+```
 
+7c.
+```{r}
 make_sp_time_series_plot(combined, month, "Chaetodipus", "penicillatus")
-ggsave("output/Functions-portal-species-time-series-R-2.png")
+#ggsave("output/Functions-portal-species-time-series-R-2.png")
+```
 
+7d.
+```{r}
 combined |>
   left_join(plots) |>
   filter(plot_type == "Control") |>
   make_sp_time_series_plot(year, "Chaetodipus", "baileyi")
-ggsave("output/Functions-portal-species-time-series-R-3.png")
+#ggsave("output/Functions-portal-species-time-series-R-3.png")
 ```
+
+### 8. Documenting Your Functions (OPTIONAL)
+
+Well-written functions are easier to reuse if they are documented. In R, the standard way to document a function is with `roxygen2`-style comments. These are lines that begin with `#'` and are placed directly above the function. They are plain comments in a regular script, so they do not change how your code runs.
+
+Why document your functions?
+
+-   You (and others) won't have to read the code to use it. Good documentation says what each argument is, what units it uses, and what comes back, so nobody has to guess.
+-   The documentation lives next to the code. When you change the function, the description is right there to update, which makes it less likely to go out of date.
+-   It is the same format used in R packages. When functions are put into a package, `roxygen2` turns these comments into the help pages you see with `?function_name`. 
+
+Read more in the [roxygen2 documentation](https://roxygen2.r-lib.org).
+
+The most common tags are:
+
+-   the first line: a one-line title
+-   `@param`: one for each argument, giving its name, what it is, and its units
+-   `@return`: what the function returns, including units
+-   `@examples`: one or more example calls
+
+Here is an example for `convert_kg_to_pounds()` from Question 5:
+
+```{r}
+#' Convert kilograms to pounds
+#'
+#' @param kg Mass in kilograms (numeric).
+#'
+#' @return Mass in pounds (numeric).
+#'
+#' @examples
+#' convert_kg_to_pounds(10)
+convert_kg_to_pounds <- function(kg) {
+  pounds <- 2.205 * kg
+  return(pounds)
+}
+```
+
+Copy your `get_mass_from_length()` function from Question 4 and add roxygen comments above it. (Tip: In RStudio, click inside a function and choose `Code > Insert Roxygen Skeleton` to generate the comment template for you.) 
+
+Include a title, a `@param` line for each of `length`, `a`, and `b` (state the units for `length` and the default values for `a` and `b`), a `@return` line (with units), and at least two `@examples`. Run the code to make sure the function still works.
+
+```{r}
+#' Estimate body mass from body length
+#'
+#' Uses the allometric relationship mass = a * length^b.
+#'
+#' @param length Body length in meters (numeric).
+#' @param a Scaling coefficient (numeric). Default is 39.9, the average value from Seebacher (2001).
+#' @param b Scaling exponent (numeric). Default is 2.6, the average value from Seebacher (2001).
+#'
+#' @return Estimated body mass in kilograms (numeric).
+#'
+#' @examples
+#' get_mass_from_length(16)
+#' get_mass_from_length(26, a = 214.44, b = 1.46)
+#' 
+get_mass_from_length <- function(a = 39.9, b = 2.6, length){
+  mass <- a * length ^ b
+  return (mass)
+}
+```
+
+## Turning in Your Assignment
+
+As a reminder, the way that you will be turning in assignments has changed. Instead of turning in a PDF of your assignment, you will now be giving me a link to your GitHub repository.
+
+Before you submit, make sure you've done the following:
+
+1. Saved all of your code and changes and rendered to `gfm`.
+2. Committed all of your changes and files.
+3. Pushed your commit up to GitHub.
+
+If you haven't already, add a bit of information in your README file for the GitHub repo to tell me where to look to find your assignment for any given week.

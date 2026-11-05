@@ -2,8 +2,8 @@
 title: "Week 10: Version Control"
 author: "Ellen Bledsoe"
 format: 
-  gfm: default
   pdf: default
+  gfm: default
 editor: visual
 ---
 
