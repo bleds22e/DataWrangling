@@ -1,0 +1,172 @@
+---
+title: "Final Project Guidelines"
+author: "Ellen Bledsoe"
+format: pdf
+editor: visual
+---
+
+# Final Project
+
+### Purpose
+
+The purpose of the final project is to synthesize material across the semester.
+
+### Task
+
+Create a fully computationally reproducible project that uses the skills we have learned in the class. Apply them to a dataset of your choosing.
+
+### Criteria for Success
+
+- Project is in a GitHub repository with effective project structure.
+- Project is fully computationally reproducible, meaning your instructor can clone your GitHub repo, open the RStudio Project, and successfully recreate your project without having to make any changes to the code.
+- Project contains code or material from the appropriate number of weeks, as described below.
+- Quarto file contains written descriptions of the tasks being performed and reaches the minimum code length.
+
+### Due Date
+
+December 15 at midnight MST
+
+# Final Project Guidelines
+
+For your final project in Data Wrangling in R, you will be synthesizing the concepts we have learned throughout the semester and applying them to a dataset of your choosing.
+
+In many ways, the content of the final project is up to you. However, there are a few guidelines that need to be met for your project to be considered complete.
+
+The guidelines differ based on whether you are in **RNR 437** or **RNR 537**, so be sure you are looking at the correct section.
+
+## General Requirements 
+
+You will be using material from a certain number of weeks (see the "Section-Specific Guidelines" section below).
+
+These guidelines apply to everyone, regardless of class section.
+
+Based on what I am asking for your project to be, your project will cover content from Weeks 8, 9, and 10 by default.
+
+**1. Your project should accomplish a larger task with your dataset. (Week 8)**
+
+In your project's Quarto file, you should include text:
+
+- At the beginning of the document to introduce your dataset and the general tasks that you will be completing in the following code chunks (problem decomposition).
+- Between the code chunks outlining the tasks that each code chunk is performing.
+
+**2. Your project should exist within an RStudio Project. (Week 9)**
+
+The RStudio Project should have sub-directories (`data`, `code`, and `figures` or `outputs` folders at a minimum).
+
+All file paths in your project should be *relative* file paths (not absolute).
+
+**3. Your RStudio Project should use version control. (Week 10)**
+
+Create a GitHub repo for your final project (preferably in the [class GitHub organization](https://github.com/RNR-DataWrangling-Fall2026)), and make sure it is connected to your RStudio Project.
+
+You will submit the link to this repo as your submission for the final project.
+
+The `README.md` file should give a brief description of the data, project, and file structure. If there are multiple Quarto files, explain what they each contain and the order in which they should be run.
+
+## Demonstrating You've Met the Requirements
+
+You will need to explicitly note somewhere in the final project where content from your required number of weeks is present in your project.
+
+This could take a few forms:
+
+- in the `README.md` file, outlining the weeks covered and where to find each week's material in your Quarto file (*hint: the source code has line numbers*)
+- within your Quarto file and the text accompanying your code, explicitly stating the weeks included in the following code chunk
+- another way that makes the most sense for you!
+
+### Weekly Content Overview
+
+As a reminder, this is the content that was covered each week during the class.
+
+Week 1: Spreadsheets\
+Week 2: Intro to R\
+Week 3: Data Tables\
+Week 4: Groups and Joins\
+Week 5: Data Visualization\
+Week 6: Tidy Data\
+Week 7: Dates and Strings\
+Week 8: Problem Decomposition\
+Week 9: Reproducibility in RStudio\
+Week 10: Version Control\
+Week 11: Functions\
+Week 12: Making Choices\
+Week 13: Iteration\
+Week 14: Geospatial Data
+
+::: callout-important
+**Note regarding `Week 1: Spreadsheets`**
+
+If you choose to include content from `Week 1: Spreadsheets`, it should be in the context of (a) creating your own spreadsheet for future data entry that includes data validation and/or (b) discussion of why you have chosen to save your cleaned data in multiple different "tidy" tables. Reading a spreadsheet file into R does not count.
+
+If you have questions, feel free to ask!
+:::
+
+## Section-Specific Requirements
+
+### RNR 437 
+
+Your final project is worth a total of 300 points and should contain content from at least **6 different weeks**. Each week of content included is worth 50 points.
+
+In addition to including content from Weeks 8, 9, and 10, as stated above, your final project should include content we learned in at least 3 other weeks, with the following guidelines.
+
+1.  You must include some type of data visualization in your project (Week 5)
+
+2.  You must include content from at least **one** of the following weeks:
+
+    - Week 11: Functions (writing your own)
+    - Week 12: Making Choices (if/else statements)
+      - this *excludes* `if_else()` and `case_when()`
+    - Week 13: Iteration (for loops)
+      - must a be `for` loop, not another form of iteration
+
+3.  Your Quarto file should have a minimum 150 lines. This includes everything in the document: the YAML, any text, lines of code, lines creating code chunks, etc. (For context, assignment answer keys with little to no text range between about 100 and 300 lines of code.)
+
+4.  Your Quarto file should have `gfm` as the output, and the knitted and updated `.md` file should be in your GitHub repo.
+
+### RNR 537 
+
+Your final project is worth a total of 500 points and should contain content from **10 different weeks** throughout the semester. Each week of content included is worth 50 points.
+
+In addition to including content from Weeks 8, 9, and 10, as stated above, your final project should include content we learned in at least 7 other weeks, with the following guidelines.
+
+1.  You must include some type of data visualization in your project (Week 5).
+
+2.  You must include content from at least **two** of the following weeks:
+
+    - Week 11: Functions (writing your own)
+    - Week 12: Making Choices (if/else statements)
+      - this *excludes* `if_else()` and `case_when()`
+    - Week 13: Iteration (for loops)
+      - must a be `for` loop, not another form of iteration
+
+3.  Your Quarto file should have a minimum 200 lines. This includes everything in the document: the YAML, any text, lines of code, lines creating code chunks, etc. (For context, assignment answer keys with little to no text range between about 100 and 300 lines of code.)
+
+4.  Your Quarto file should have `gfm` as the output, and the fully updated and rendered `.md` file should be in your GitHub repo.
+
+#### RNR 537 Deadlines
+
+We will be performing a peer code review as part of the final project process, so you will need to have a "draft" ready a bit earlier to give each other time to conduct the peer code review.
+
+- Tuesday, **December 1** before class: \>50% of project due
+- Tuesday, **December 8** before class: Peer code review due
+- Tuesday, **December 15** at midnight: Completed final project due
+
+The more you have done by the draft due date, the more helpful feedback you can receive!
+
+You can continue to work on your project and push changes up to your repo during the week that the code review is occurring; you do not have to halt work on it!
+
+### Reminder: How to Make a New Quarto File
+
+For this project, you'll need to create (at least) one new Quarto file.
+
+As a reminder, here are the steps to create a new Quarto file:
+
+1.  Go to File \> New File \> Quarto Document
+2.  From the option list on the left-hand side, make sure Document is selected.
+3.  Add a title and put your name in the "Author" section.
+4.  Choose any output (you are going to change it to `gfm`, anyway).
+5.  Click "Create."
+6.  You should now have a Quarto file with some stuff in it. The content is giving you a brief rundown on how Quarto files work. You can delete everything from \``## Quarto`\` and below; you should leave the YAML (the stuff between the `---` lines at the beginning).
+
+You should be good to go!
+
+*Hint: I recommend saving your new Quarto file to the correct location in your project as soon as you create it to reduce current (and future) file path confusion.*
