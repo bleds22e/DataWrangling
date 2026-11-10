@@ -16,23 +16,19 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
-November 18 before class
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week12_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
+November 17 before class
 
 # Assignment Exercises
 
@@ -89,7 +85,7 @@ y
 
 b.  Convert your conditional statement from (a) into a function that takes `age_class` as an argument and returns `y`. Call this function 5 times, once with each of the following values for `age_class`: "sapling", "seedling", "adult", "mature", "established".
 
-c.  Write a function called `prediction` that takes a single argument `x`. If `x` is greater than 0 and less than 15, return `y = 6 + 0.8 * x`. If `x` is greater than or equal to 15 and less than 30, return `y = 5 + 0.75 * x`. In all other cases, return `y = NA`. Call the function three times, with `5`, `26`, and `-2` as the input.
+c.  Write a function called `predict_value` that takes a single argument `x`. If `x` is greater than 0 and less than 15, return `y = 6 + 0.8 * x`. If `x` is greater than or equal to 15 and less than 30, return `y = 5 + 0.75 * x`. In all other cases, return `y = NA`. Call the function three times, with `5`, `26`, and `-2` as the input.
 
 ### 4. Size Estimates by Name (20 points)
 
@@ -105,9 +101,9 @@ Create a new function `get_mass_from_length_by_name()` that takes two arguments:
 
 Inside this function use `if`/`else if`/`else` statements to check to see if the name is one of the following values and if so use the associated `a` and `b` values to estimate the species mass using these equations:
 
--   *Stegosauria*: `mass = 10.95 * length ^ 2.64` ([Seebacher 2001](http://www.jstor.org/stable/4524171))
--   *Theropoda*: `mass = 0.73 * length ^ 3.63` ([Seebacher 2001](http://www.jstor.org/stable/4524171))
--   *Sauropoda*: `mass = 214.44 * length ^ 1.46` ([Seebacher 2001](http://www.jstor.org/stable/4524171))
+- *Stegosauria*: `mass = 10.95 * length ^ 2.64` 
+- *Theropoda*: `mass = 0.73 * length ^ 3.63` 
+- *Sauropoda*: `mass = 214.44 * length ^ 1.46` 
 
 If the name is not any of these values the function should return `NA`.
 
@@ -138,7 +134,7 @@ if (name == "Stegosauria") {
 
 In this question, you will combine choice functions with joins, strings, and plotting. Load the `tidyverse` if you haven't already.
 
-Read `surveys.csv` and `species.csv` (the Portal data we used in Week 4) into R. If you don't have them, you can download them by un-commenting the code below (modify the `destfile` arguments to point to the correct sub-directory).
+Download the following Portal data tables using code below (modify the `destfile` arguments to point to the correct sub-directory) to get started.
 
 ```{r}
 # download.file(url = "https://ndownloader.figshare.com/files/2292172",
@@ -157,10 +153,10 @@ c.  Use `if_else` and the `%in%` operator inside a `mutate` to add a column call
 
 d.  Use `case_when` inside a `mutate` to add a column called `weight_class` with the following categories:
 
-    -   "unknown" if `weight` is `NA`
-    -   "small" if `weight` is less than 20
-    -   "medium" if `weight` is greater than or equal to 20 and less than 50
-    -   "large" for everything else (use the `.default` argument)
+    - "unknown" if `weight` is `NA`
+    - "small" if `weight` is less than 20
+    - "medium" if `weight` is greater than or equal to 20 and less than 50
+    - "large" for everything else (use the `.default` argument)
 
     Save the results of (b), (c), and (d) back into your `rodents` object.
 
@@ -178,9 +174,9 @@ Write a function called `categorize_by_threshold()` that takes three arguments: 
 
 The function should:
 
--   Use an `if` statement to check whether the column is numeric. If it is not, use `stop()` to end the function with the error message "Column must be numeric."
--   Use an `else if` statement to check whether `threshold` is outside the range of values in the column (ignoring `NA`s). If it is, use `stop()` and `paste()` to end the function with an error message that includes the minimum and maximum values of the column, like "Threshold must be between 4 and 280."
--   Otherwise, use `mutate()` and `if_else()` to add a new column called `category` that is "above" when the column value is greater than or equal to `threshold` and "below" when it is less than `threshold`.
+- Use an `if` statement to check whether the column is numeric. If it is not, use `stop()` to end the function with the error message "Column must be numeric."
+- Use an `else if` statement to check whether `threshold` is outside the range of values in the column (ignoring `NA`s). If it is, use `stop()` and `paste()` to end the function with an error message that includes the minimum and maximum values of the column, like "Threshold must be between 4 and 280."
+- Otherwise, use `mutate()` and `if_else()` to add a new column called `category` that is "above" when the column value is greater than or equal to `threshold` and "below" when it is less than `threshold`.
 
 Hint: `pull(df, {{ col }})` will pull out a column as a vector, which you can then use with functions like `is.numeric()` and `range()`.
 

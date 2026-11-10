@@ -21,8 +21,8 @@ Here are some examples below.
 
 When we run these lines of code, these statements produce an output that is a `"logical"` data type.
 
--   `TRUE` if the condition is satisfied
--   `FALSE` if the condition is not satisfied
+- `TRUE` if the condition is satisfied
+- `FALSE` if the condition is not satisfied
 
 As a reminder, these are not the same as strings "TRUE" and "FALSE." These are a special type of value called "boolean."
 
@@ -34,10 +34,10 @@ As we've seen in previous classes, conditional statements can be created with a 
 
 We have the "traditional" operators:
 
--   `==` for equals
--   `!=` for not equals
--   `<` and `>` for less than or greater than
--   `<=`, `>=` for less than or equal to or greater than or equal to
+- `==` for equals
+- `!=` for not equals
+- `<` and `>` for less than or greater than
+- `<=`, `>=` for less than or equal to or greater than or equal to
 
 There are other operators that we have not yet used, such as `%in%`. This is a very handy little operator!
 
@@ -89,9 +89,9 @@ When the choice is binary (choose one of two outcomes), we can use the `if_else`
 
 The arguments for an `if_else` function are:
 
--   the conditional statement (`condition` argument)
--   the outcome if the statement is `TRUE` (`true` argument)
--   the outcome if the statement is `FALSE` (`false` argument)
+- the conditional statement (`condition` argument)
+- the outcome if the statement is `TRUE` (`true` argument)
+- the outcome if the statement is `FALSE` (`false` argument)
 
 ```{r}
 
@@ -157,9 +157,9 @@ Let's make a new column in the data frame that has "Clear Cut" when the value is
 
 ## Testing One Condition with an `if` Statement
 
-So far, we've been using `if_else` and `case_when` to make choices. Remember from the beginning of the lesson that when we use a conditional statement on a vector, we get a `TRUE` or `FALSE` for each value in the vector. `if_else` and `case_when` work the same way: they check the condition for each value and return a new value for each one. That is why they work so nicely inside `mutate`.
+So far, we've been using `if_else` and `case_when` to make choices. Remember from the beginning of the lesson that when we use a conditional statement on a vector, we get a `TRUE` or `FALSE` for each value in the vector. The `if_else` and `case_when` functions work the same way: they check the condition for each value and return a new value for each one. That is why they work so nicely inside `mutate`.
 
-Sometimes, though, we don't want to make a choice about each value in a column. Instead, we want to choose which code to run. For example, we might want to use a different equation depending on the type of vegetation, or only run a chunk of code if a data frame has the columns we need. For these situations, we use `if` statements.
+Sometimes, though, we don't want to make a choice about each value in a column. Instead, we want to choose which code to run. For example, we might want to use a different equation depending on the type of vegetation, or only run a chunk of code if a data frame has the columns we need. For these situations, we use `if` / `else` statements.
 
 Note that the conditional statement to be tested goes inside a parenthetical. Then, whatever action is to be taken if that condition is met goes inside curly braces (`{}`), similar to how we write a function.
 
@@ -235,7 +235,7 @@ Now, we can run this function with different vegetation types and get different 
 
 > Work on Questions 3b-3c and Question 4
 
-## Why `if`-`else if`?
+## Why Use `if`/ `else if`?
 
 If `dplyr` has such nice functions for making choices, why did I teach you about the seemingly more complicated `if`-`else if` structures?
 

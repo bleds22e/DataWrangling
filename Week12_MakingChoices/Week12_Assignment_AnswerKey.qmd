@@ -243,8 +243,8 @@ get_mass_from_length_by_name(6, "Stegosauria")
 #| message: false
 library(tidyverse)
 
-surveys <- read_csv("surveys.csv")
-species <- read_csv("species.csv")
+surveys <- read_csv("data/surveys.csv")
+species <- read_csv("data/species.csv")
 ```
 
 5a
