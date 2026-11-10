@@ -99,7 +99,7 @@ The arguments for an `if_else` function are:
 
 ### Multiple Choices
 
-We can also nest the `if_else` functions.
+What if we have more than two options? We can also nest the `if_else` functions.
 
 ```{r}
 
@@ -117,13 +117,7 @@ The `case_when` function uses the `~` to set expressions.
 
 `case_when` checks each condition in order and uses the first one that is `TRUE`.
 
-When the input does not match any of the options, the default value that is returned is `NA`.
-
-```{r}
-
-```
-
-In a circumstance where you want something other than this returned, you can modify the `.default` argument.
+When the input does not match any of the options, the default value that is returned is `NA`. In a circumstance where you want something other than this returned, you can modify the `.default` argument.
 
 ```{r}
 
@@ -163,15 +157,9 @@ Let's make a new column in the data frame that has "Clear Cut" when the value is
 
 ## Testing One Condition with an `if` Statement
 
-Conditional statements generate logical values. Another type of statement that we can write that uses conditional statements are `if` statements. We can use these to control the flow of our program.
+So far, we've been using `if_else` and `case_when` to make choices. Remember from the beginning of the lesson that when we use a conditional statement on a vector, we get a `TRUE` or `FALSE` for each value in the vector. `if_else` and `case_when` work the same way: they check the condition for each value and return a new value for each one. That is why they work so nicely inside `mutate`.
 
-Unlike `if_else` and `case_when`, which make a choice for each value in a vector, an `if` statement makes a single choice. Let's see what happens if we try to use an `if` statement on a whole column.
-
-```{r}
-#| error: true
-```
-
-We get an error because an `if` statement can only check one `TRUE` or `FALSE` value at a time, not a whole vector of them. This is why we use `if_else` and `case_when` when we are working with columns in a data frame.
+Sometimes, though, we don't want to make a choice about each value in a column. Instead, we want to choose which code to run. For example, we might want to use a different equation depending on the type of vegetation, or only run a chunk of code if a data frame has the columns we need. For these situations, we use `if` statements.
 
 Note that the conditional statement to be tested goes inside a parenthetical. Then, whatever action is to be taken if that condition is met goes inside curly braces (`{}`), similar to how we write a function.
 
@@ -192,6 +180,14 @@ What happens when the conditional statement is `FALSE`?
 ```{r}
 
 ```
+
+One important difference: because an `if` statement makes a single choice, it can only check one `TRUE` or `FALSE` value at a time. Let's see what happens if we give it a whole column.
+
+```{r}
+#| error: true
+```
+
+We get an error! If you want to make a choice for each value in a column, stick with `if_else` and `case_when`.
 
 As a reminder, this `if` statement is *not* a function, so everything that happens in the `if` statement influences the global environment.
 
