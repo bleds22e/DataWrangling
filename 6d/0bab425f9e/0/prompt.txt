@@ -1,0 +1,101 @@
+Please read through all of the content in week 12 about if/else statements. There are a few changes I want to make, but do not make them for me yet. (1) I want the if_else and case_when functions first in the lesson, not last. (2) I think the lesson is a little bit too long. What would you recommend cutting? (3) I would like to integrate more of what we have covered in the past weeks into the assignment (e.g., plotting, working with strings, joins). I think there is more of that in next week's lesson, which uses for loops, but I would like at least something in this week's assignment. (4) Also, I would like an additional optional challenge question in the assignment.
+
+---
+
+Go ahead with those changes, just update the .qmd files. Do not commit and push the changes, though
+
+---
+
+In the lesson, did you change a lot of text or mostly just rearrange it
+
+---
+
+ok, commit and push changes on your branch
+
+---
+
+You know I don't use bold often. It is ok to reword and condense, but keep my voice and style more
+
+---
+
+yes
+
+---
+
+Can you help with me the transition from dplyr to the other if else statements
+
+---
+
+Do you think the dplyr section is too long?
+
+---
+
+yes, both
+
+---
+
+go ahead
+
+---
+
+Is it true that if else statements are not vectorized
+
+---
+
+Can you also create the full answer key qmd file
+
+---
+
+go ahead
+
+---
+
+how do i merge with main
+
+---
+
+I am able to type directly into the command line here?
+
+---
+
+Actually, this is unrelated to that. I want to use entire when I'm using Claude code to make changes. How do I tell you to use the entire software?
+
+---
+
+Option 2 would only happen in Claude Code, correct?
+
+---
+
+yes, I would like that
+
+---
+
+Can we try the setup where we work in a personal environment called "Git" or something like that every time I work in a git repo?
+
+---
+
+How do I ensure it gets enabled every time?
+
+---
+
+yes
+
+---
+
+ok, I switched modes, try again
+
+---
+
+Is there a way for entire to capture this whole discussion?
+
+---
+
+do both
+
+---
+
+Do I still need to run `entire doctor`
+
+---
+
+I ran `entire doctor`. You can do the rest
