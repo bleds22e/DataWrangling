@@ -122,7 +122,7 @@ d.  An *Ankylosauria* that is 13 meters long.
 
 *Challenge 2 (optional)*: Change your function so that it uses two different values of `a` and `b` for *Stegosauria*. When *Stegosauria* is greater than 8 meters long use the equation above. When it is 8 meters long or less, use `a = 8.5` and `b = 2.8`. Run the function for a *Stegosauria* that is 6 meters long.
 
-Hint: you can put an `if`-`else` statement *inside* another `if` statement, like this:
+Hint: you can put an `if`-`else` statement inside another `if` statement, like this:
 
 ```{r eval=FALSE}
 if (name == "Stegosauria") {
