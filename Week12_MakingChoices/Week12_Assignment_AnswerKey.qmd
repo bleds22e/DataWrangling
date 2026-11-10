@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Assignment
 
-### 1. Choice Operators (20 pts)
+### 1. Choice Operators (10 pts)
 
 ```{r}
 w <- 10.2
@@ -20,87 +20,81 @@ y <- 2.8
 z <- 17.5
 colors <- c("red", "blue", "green")
 masses <- c(45.2, 36.1, 27.8, 81.6, 42.4)
-dna1 <- "attattaggaccaca"
-dna2 <- "attattaggaacaca"
 ```
 
 1a
 ```{r}
-# a.  `w` is greater than 10
-w > 10
+# a. "green" is in `colors`
+"green" %in% colors
 ```
 
 1b
 ```{r}
-# b.  "green" is in `colors`
-colors == "green"
+# b. "purple" is not in `colors`
+!("purple" %in% colors)
 ```
 
 1c
 ```{r}
-# c.  `x` is greater than `y`
-x > y
+# c. Each value in `masses` is greater than 40.
+masses > 40
 ```
 
 1d
 ```{r}
-# d. Each value in `masses` is greater than 50.
-masses > 40
-```
-1e
-```{r}
-# e.  `dna1` is the same as `dna2`
-dna1 == dna2
-```
-1f
-```{r}
-# f.  `dna1` is not the same as `dna2`
-dna1 != dna2
-```
-1g
-```{r}
-# g. `w` is greater than `x`, or `y` is greater than `z`
+# d. `w` is greater than `x`, or `y` is greater than `z`
 w > x | y > z
 ```
-1h
+
+1e
 ```{r}
-# h.  `x` times `w` is between 13.2 and 13.5
+# e.  `x` times `w` is between 13.2 and 13.5
 13.2 < x * w & x * w < 13.5
 ```
 
-1i
-```{r}
-# i. Each mass in `masses` is between 30 and 50.
-masses > 30 & masses < 50
-```
+### 2. Using `dplyr` Choice Functions (20 points)
 
-### 2. If Statements (20 points)
+```{r}
+#| message: false
+library(dplyr)
+library(lterdatasampler)
+```
 
 2a
 ```{r}
-age_class = "sapling"
-if (age_class == "sapling"){
-  y <-10
-}
-y
+crab_size <- 17
+
+if_else(crab_size >= 20, "large", "small")
 ```
 
 2b
 ```{r}
-age_class = "seedling"
-if (age_class == "sapling"){
-  y <-10
-} else if (age_class == "seedling"){
-  y <- 5
-}
-y
+case_when(crab_size >= 20 ~ "large",
+          crab_size >= 10 ~ "medium",
+          .default = "small")
 ```
 
 2c
 ```{r}
-age_class = "adult"
+pie_crab %>%
+  mutate(size_category = if_else(size >= 20, "large", "small"), .after = size)
+```
+
+2d
+```{r}
+pie_crab %>%
+  mutate(size_category3 = case_when(size >= 20 ~ "large",
+                                    size >= 10 ~ "medium",
+                                    .default = "small"), .after = size)
+```
+
+### 3. If/Else Statements (20 points)
+
+3a
+```{r}
+age_class <- "adult"
 if (age_class == "sapling"){
-  y <-10
+  y <- 10
 } else if (age_class == "seedling") {
   y <- 5
 } else {
@@ -109,11 +103,11 @@ if (age_class == "sapling"){
 y
 ```
 
-2d
+3b
 ```{r}
 get_y_from_age_class <- function(age_class){
   if (age_class == "sapling"){
-    y <-10
+    y <- 10
   } else if (age_class == "seedling") {
     y <- 5
   } else {
@@ -129,56 +123,21 @@ get_y_from_age_class("mature")
 get_y_from_age_class("established")
 ```
 
-### 3. If Statements in Functions (20 points)
-
-3a
-```{r}
-double_if_small <- function(number){
-  if (number < 26){
-    output = number * 2
-  } else {
-    output = number
-  }
-  return(output)
-}
-```
-
-3b
-```{r}
-double_if_small(10)
-```
-
 3c
-```{r}
-double_if_small(30)
-```
-
-3d
 ```{r}
 prediction <- function(x){
   if (x > 0 & x < 15){
-      y = 6 + 0.8 * x
-  } else if (x > 15 & x < 30) {
-      y = 5 + 0.75 * x
+    y <- 6 + 0.8 * x
+  } else if (x >= 15 & x < 30) {
+    y <- 5 + 0.75 * x
   } else {
-      y = NA
+    y <- NA
   }
-  return (y)
+  return(y)
 }
-```
 
-3e
-```{r}
 prediction(5)
-```
-
-3f
-```{r}
 prediction(26)
-```
-
-3g
-```{r}
 prediction(-2)
 ```
 
@@ -186,29 +145,21 @@ prediction(-2)
 
 ```{r}
 get_mass_from_length <- function(a, b, length){
-  mass = a * length ** b
-  return (mass)
+  mass <- a * length ^ b
+  return(mass)
 }
 
 get_mass_from_length_by_name <- function(length, name){
   if (name == "Stegosauria"){
-    if (length > 8){
-      a = 10.95
-      b = 2.64
-    } else {
-      a = 8.5
-      b = 2.8
-    }
-  }
-  else if (name == "Theropoda"){
-    a = 0.73
-    b = 3.63
-  }
-  else if (name == "Sauropoda"){
-    a = 214.44
-    b = 1.46
-  }
-  else {
+    a <- 10.95
+    b <- 2.64
+  } else if (name == "Theropoda"){
+    a <- 0.73
+    b <- 3.63
+  } else if (name == "Sauropoda"){
+    a <- 214.44
+    b <- 1.46
+  } else {
     return(NA)
   }
   get_mass_from_length(a, b, length)
@@ -232,81 +183,167 @@ get_mass_from_length_by_name(12, "Sauropoda")
 
 4d
 ```{r}
-get_mass_from_length_by_name(13, 'Ankylosauria')
+get_mass_from_length_by_name(13, "Ankylosauria")
 ```
 
 Challenge 1 (optional)
 ```{r}
 get_mass_from_length_by_name <- function(length, name){
   if (name == "Stegosauria"){
-    if (length > 8){
-      a = 10.95
-      b = 2.64
-    } else {
-      a = 8.5
-      b = 2.8
-    }
-  }
-  else if (name == "Theropoda"){
-    a = 0.73
-    b = 3.63
-  }
-  else if (name == "Sauropoda"){
-    a = 214.44
-    b = 1.46
-  }
-  else {
-    return(warning(paste("No known estimation for", name)))
+    a <- 10.95
+    b <- 2.64
+  } else if (name == "Theropoda"){
+    a <- 0.73
+    b <- 3.63
+  } else if (name == "Sauropoda"){
+    a <- 214.44
+    b <- 1.46
+  } else {
+    warning(paste("No known estimation for", name))
+    return(NA)
   }
   get_mass_from_length(a, b, length)
 }
 
-get_mass_from_length_by_name(13, 'Ankylosauria')
+get_mass_from_length_by_name(13, "Ankylosauria")
 ```
 
 Challenge 2 (optional)
 
 ```{r}
+get_mass_from_length_by_name <- function(length, name){
+  if (name == "Stegosauria"){
+    # nested if-else: equation depends on length
+    if (length > 8){
+      a <- 10.95
+      b <- 2.64
+    } else {
+      a <- 8.5
+      b <- 2.8
+    }
+  } else if (name == "Theropoda"){
+    a <- 0.73
+    b <- 3.63
+  } else if (name == "Sauropoda"){
+    a <- 214.44
+    b <- 1.46
+  } else {
+    warning(paste("No known estimation for", name))
+    return(NA)
+  }
+  get_mass_from_length(a, b, length)
+}
+
 get_mass_from_length_by_name(6, "Stegosauria")
 ```
 
-### 5. Using `dplyr` Choice Functions (20 points)
+### 5. Putting It All Together: Portal Rodents (30 points)
 
 ```{r}
-library(dplyr)
-library(lterdatasampler)
+#| message: false
+library(tidyverse)
+
+surveys <- read_csv("surveys.csv")
+species <- read_csv("species.csv")
 ```
 
 5a
 ```{r}
-crab_size <- 17
+rodents <- surveys %>%
+  left_join(species, by = "species_id") %>%
+  filter(taxa == "Rodent") %>%
+  mutate(scientific_name = str_c(genus, species, sep = " "))
 
-if_else(crab_size >= 20, "large", "small")
+head(rodents)
 ```
 
 5b
 ```{r}
-if_else(crab_size > 20, "large",
-        if_else(crab_size > 10, "medium", "small"))
+# the . needs to be escaped (or use fixed("sp.")); otherwise "sp." matches
+# any "sp" followed by any character, such as "spectabilis" or "spilosoma"
+rodents <- rodents %>%
+  mutate(id_level = if_else(str_detect(scientific_name, "sp\\."),
+                            "genus only", "species"))
+
+rodents %>%
+  count(id_level)
 ```
 
 5c
 ```{r}
-case_when(crab_size > 20 ~ "large",
-          crab_size > 10 ~ "medium",
-          TRUE ~ "small")
+rodents <- rodents %>%
+  mutate(season = if_else(month %in% 4:9, "warm", "cool"))
 ```
 
 5d
 ```{r}
-pie_crab %>%
-  mutate(size_category = if_else(size > 20, "large", "small"), .after = size)
+rodents <- rodents %>%
+  mutate(weight_class = case_when(is.na(weight) ~ "unknown",
+                                  weight < 20 ~ "small",
+                                  weight < 50 ~ "medium",
+                                  .default = "large"))
+
+rodents %>%
+  count(weight_class)
 ```
+
+Without the "unknown" line, individuals with missing weights would be classified as "large." `weight < 20` and `weight < 50` both return `NA` when `weight` is `NA`, and `case_when` treats `NA` like `FALSE`, so those rows fall all the way through to the `.default` value.
 
 5e
 ```{r}
-pie_crab %>%
-  mutate(size_category3 = case_when(size > 20 ~ "large",
-                                    size > 10 ~ "medium",
-                                    TRUE ~ "small"), .after = size)
+rodents %>%
+  filter(weight_class != "unknown") %>%
+  count(year, season, weight_class) %>%
+  ggplot(aes(x = year, y = n, color = weight_class)) +
+  geom_line() +
+  facet_wrap(~ season) +
+  labs(x = "Year",
+       y = "Number of Individuals",
+       color = "Weight Class") +
+  theme_classic()
+```
+
+Answers will vary. Any accurate description of a pattern in the plot (e.g., which weight class is most common, how counts change over time, or differences between seasons) is acceptable.
+
+### 6. Challenge: A "Safe" Tidyverse Function (OPTIONAL)
+
+```{r}
+categorize_by_threshold <- function(df, col, threshold){
+  values <- pull(df, {{ col }})
+
+  if (!is.numeric(values)) {
+    stop("Column must be numeric.")
+  } else if (threshold < min(values, na.rm = TRUE) |
+             threshold > max(values, na.rm = TRUE)) {
+    stop(paste("Threshold must be between",
+               min(values, na.rm = TRUE), "and", max(values, na.rm = TRUE)))
+  } else {
+    df %>%
+      mutate(category = if_else({{ col }} >= threshold, "above", "below"))
+  }
+}
+```
+
+6a
+```{r}
+categorize_by_threshold(rodents, weight, 50) %>%
+  select(species_id, weight, category)
+```
+
+6b
+```{r}
+categorize_by_threshold(rodents, hindfoot_length, 30) %>%
+  select(species_id, hindfoot_length, category)
+```
+
+6c
+```{r}
+#| error: true
+categorize_by_threshold(rodents, genus, 50)
+```
+
+6d
+```{r}
+#| error: true
+categorize_by_threshold(rodents, weight, 500)
 ```
