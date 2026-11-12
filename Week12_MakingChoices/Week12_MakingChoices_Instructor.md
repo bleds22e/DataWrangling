@@ -436,9 +436,19 @@ conditions are `TRUE` using `else` on its own.
 
 ``` r
 # set objects
-veg_type <- "tree"
+veg_type <- "grass"
 volume <- 16.08
 
+# if - else
+if (veg_type == "shrub"){
+  # if veg_type is shrub, use this equation
+  biomass <- 2.65 * volume^0.9
+} else {
+  biomass <- NA
+}
+
+  
+# if - else if
 if (veg_type == "shrub") {
   # if veg_type is shrub, use this equation
   biomass <- 2.65 * volume^0.9
@@ -453,7 +463,7 @@ if (veg_type == "shrub") {
 biomass
 ```
 
-    [1] NA
+    [1] 18.21615
 
 The code above checks the first condition. If `TRUE`, it will run that
 condition’s code and skip the rest. If `FALSE`, it will check the next
