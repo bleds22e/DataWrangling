@@ -1,7 +1,9 @@
 ---
 title: "Week 12: Making Choices"
 author: "Ellen Bledsoe"
-format: gfm
+format: 
+  pdf: default
+  gfm: default
 editor: visual
 ---
 
@@ -271,9 +273,19 @@ To do this, we can add more conditions and associated actions with `else if`. We
 
 ```{r}
 # set objects
-veg_type <- "tree"
+veg_type <- "grass"
 volume <- 16.08
 
+# if - else
+if (veg_type == "shrub"){
+  # if veg_type is shrub, use this equation
+  biomass <- 2.65 * volume^0.9
+} else {
+  biomass <- NA
+}
+
+  
+# if - else if
 if (veg_type == "shrub") {
   # if veg_type is shrub, use this equation
   biomass <- 2.65 * volume^0.9
