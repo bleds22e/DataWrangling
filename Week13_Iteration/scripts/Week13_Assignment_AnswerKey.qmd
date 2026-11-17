@@ -184,19 +184,25 @@ output
 ### 4. DNA or RNA (20 points)
 
 4a.
-```{r}
 
+```{r}
 dna_or_rna <- function(sequence){
-  if (stringr::str_count(sequence, "t") > 0){
-    type = "DNA"
-  } else if (stringr::str_count(sequence, "u") > 0){
-    type = "RNA"
+  # str_detect() returns TRUE if the pattern is found in the string
+  # (str_count(sequence, "t") > 0 also works)
+  if (stringr::str_detect(sequence, "t")){
+    type <- "DNA"
+  } else if (stringr::str_detect(sequence, "u")){
+    type <- "RNA"
   } else {
-    type = "UNKNOWN"
+    type <- "UNKNOWN"
   }
   return(type)
 }
+```
 
+4b.
+
+```{r}
 seq1 <- "ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatgcaggcg"
 seq2 <- "gauuauuccccacaaagggagugggauuaggagcugcaucauuuacaagagcagaauguuucaaaugcau"
 seq3 <- "gaaagcaagaaaaggcaggcgaggaagggaagaagggggggaaacc"
@@ -214,15 +220,20 @@ sequences <- c("ttgaatgccttacaactgatcattacacaggcggcatgaagcaaaaatatactgtgaaccaatg
               "gauaaggaagaugaagacuuucaggaaucuaauaaaaugcacuccaugaauggauucauguaugggaaucagccggguc")
 ```
 
-4b.
+4c.
 
 ```{r}
-for (sequence in sequences){
-  print(dna_or_rna(sequence))
+types <- vector(mode = "character", length = length(sequences))
+
+for (i in 1:length(sequences)){
+  types[i] <- dna_or_rna(sequences[i])
 }
+
+types
 ```
 
-4c.
+4d.
+
 ```{r}
 df <- data.frame(type = vector(mode = "character", length = length(sequences)),
                  sequence = vector(mode = "character", length = length(sequences)))
@@ -235,7 +246,7 @@ for (i in 1:nrow(df)) {
 df
 ```
 
-4d.
+4e.
 
 ```{r}
 df <- data.frame(type = vector(mode = "character", length = length(sequences)),
@@ -245,9 +256,9 @@ for (i in 1:nrow(df)) {
 
   df$sequence[i] <- sequences[i]
 
-  if (stringr::str_count(sequences[i], "t") > 0){
+  if (stringr::str_detect(sequences[i], "t")){
     df$type[i] <- "DNA"
-  } else if (stringr::str_count(sequences[i], "u") > 0){
+  } else if (stringr::str_detect(sequences[i], "u")){
     df$type[i] <- "RNA"
   } else {
     df$type[i] <- "UNKNOWN"
@@ -258,13 +269,13 @@ for (i in 1:nrow(df)) {
 df
 ```
 
-4e. OPTIONAL
+4f. OPTIONAL
 
 ```{r}
 sapply(sequences, dna_or_rna)
 ```
 
-4f. OPTIONAL
+4g. OPTIONAL
 
 ```{r}
 seq_df <- as.data.frame(sequences)
