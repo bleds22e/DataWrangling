@@ -36,14 +36,7 @@ To see an example of this, let's calculate biomasses from volumes using a loop. 
 In this loop, we are going to use a `print()` function to display our results for each mass.
 
 ```{r}
-# vector of volumes
-volumes <- c(1.6, 3, 8)
 
-# for each volume value in a vector of volumes
-for (vol in volumes){           # perform some task inside the {}
-  biomass <- 2.65 * vol ^ 0.9   # calculate a mass
-  print(biomass)                # print out the mass
-}
 ```
 
 The code that is inside of the curly brackets will run once for each value in `volumes`. The `vol` object is a placeholder, representing one value from `volumes` at a time.
@@ -85,12 +78,7 @@ There is another way to loop: *looping by index*
 - We use `1:length(volumes)` so the loop works no matter how many values there are. (For a data frame, we use `nrow()`.)
 
 ```{r}
-volumes <- c(1.6, 3, 8)
 
-for (i in 1:length(volumes)){          # i will be 1, then 2, then 3
-   biomass <- 2.65 * volumes[i] ^ 0.9  # volumes[i] is the ith volume
-   print(biomass)
-}
 ```
 
 This new version of the loop gives us the same result as our original loop, but it's more complicated to understand. So why would we want to loop by index?
@@ -105,19 +93,13 @@ To store results, we create an empty object *before* the loop starts. The `vecto
 - `length` is the number of items in the vector
 
 ```{r}
-biomasses <- vector(mode = "numeric", length = length(volumes))
-biomasses
+
 ```
 
 For each trip through the loop, we put the output into the `i`th position in the empty vector.
 
 ```{r}
-for (i in 1:length(volumes)){
-   biomass <- 2.65 * volumes[i] ^ 0.9
-   biomasses[i] <- biomass
-}
 
-biomasses
 ```
 
 So far, we've talked about looping through one group of values (in a vector).
@@ -125,21 +107,7 @@ So far, we've talked about looping through one group of values (in a vector).
 Looping with an index also allows us to access values from multiple vectors.
 
 ```{r}
-# vectors
-a_values <- c(2.65, 1.28, 3.29)
-b_values <- c(0.9, 1.1, 1.2)
-volumes <- c(1.6, 3, 8)
 
-# empty vector for results
-biomasses <- vector(mode = "numeric", length = length(volumes))
-
-# for loop
-for (i in 1:length(volumes)){
-   biomass <- a_values[i] * volumes[i] ^ b_values[i]
-   biomasses[i] <- biomass
-}
-
-biomasses
 ```
 
 ### Let's Practice!
@@ -153,11 +121,7 @@ Several vectors of the same length, lined up by position...that is exactly what 
 Most of the time, the values we want to loop over will be in a data frame.
 
 ```{r}
-# create a data frame
-data <- data.frame(a = a_values, # column_name = values to fill
-                   b = b_values, 
-                   volume = volumes)
-data
+
 ```
 
 To loop over rows, we loop by index from 1 to `nrow()`, and use `$` with `[i]` to grab the value in a specific column for the i-th row.
@@ -167,20 +131,7 @@ To store the resulting values, we can create a new, empty column first.
 This is also where loops really shine: we can put an `if`-`else` statement directly inside a loop. Let's say we only want to calculate a biomass if the volume is less than 5.
 
 ```{r}
-# new, empty column
-data$biomass <- NA
 
-for (i in 1:nrow(data)){
-  # calculate biomass if volume is less than 5
-  if (data$volume[i] < 5) {
-    biomass <- data$a[i] * data$volume[i] ^ data$b[i]
-  } else {
-    biomass <- NA
-  }
-  data$biomass[i] <- biomass
-}
-
-data
 ```
 
 Realistically, I find myself putting `if`-`else` statements inside `for` loops, like the structure above, rather frequently.
@@ -192,37 +143,19 @@ We can also call functions inside of loops.
 Remember that functions containing `if`-`else` statements are not vectorized, so we can't just give them a whole column; a loop solves that.
 
 ```{r}
-# write est_biomass function
-est_biomass <- function(volume, a, b){
-  # estimate biomass when volume is less than 5
-  if (volume < 5) {
-    biomass <- a * volume ^ b
-  } else {
-    biomass <- NA
-  }
-  return(biomass)
-}
+
 ```
 
 We can't pass the vector to the function and get back a vector of results because `if`-`else` statements are not vectorized.
 
-```{r}
-#| eval: false
-est_biomass(volume = data$volume,
-            a = data$a,
-            b = data$b)
+```{r eval=F}
+
 ```
 
 Instead, we can loop over the values.
 
 ```{r}
-# loop through values in est_biomass
-for (i in 1:nrow(data)){
-  # save output into correct position in new column
-  data$biomass[i] <- est_biomass(data$volume[i], data$a[i], data$b[i])
-}
 
-data
 ```
 
 ::: callout-note
@@ -266,10 +199,6 @@ for (i in 1:nrow(data)){
 }
 
 data
-
-# in the console, set i = to a number; run the entire code chunk line by line
-# i = 2
-# i = 3
 ```
 
 If part of your loop is working but another part isn't, find a value (or row) that should trigger the part that isn't working and set the index to that value.
@@ -283,13 +212,8 @@ For example, if we have many similar files, we might want to repeat the same tas
 To demonstrate, let's download some simulated satellite collar data. Make sure you change the file paths accordingly to match the sub-directories in your RStudio Project, as needed.
 
 ```{r}
-download.file(url = "http://www.datacarpentry.org/semester-biology/data/locations.zip",
+download.file("http://www.datacarpentry.org/semester-biology/data/locations.zip",
               destfile = "../data_raw/locations.zip") # where to put the zip file
-
-# unzip() function to open the zip file
-# zipfile argument is the location of the file to be unzipped
-# exdir argument is the location where the "extracted" files should be placed
-unzip(zipfile = "../data_raw/locations.zip", exdir = "../data_raw/")
 ```
 
 Before we can loop through these files, we need to get the names of all of these files. The `list.files()` function will, well, list the files in the directory.
@@ -299,11 +223,7 @@ We want only the data files we downloaded, so we'll add the optional `pattern` a
 The pattern argument can also take regular expressions if you need to be more nuanced about which files to include.
 
 ```{r}
-# in regex, .* means any character (.) any number of times (*)
-# "locations.*.txt" indicates any file starting with "locations" and ending with ".txt"
-data_files <- list.files(path = "../data_raw/", 
-                         pattern = "locations.*.txt")
-data_files
+
 ```
 
 ### Storing Loop Results in a Data Frame
@@ -313,31 +233,13 @@ Let's say we want to know the file name, count the number of observations, and g
 We would start by creating an empty data frame with `data.frame()`. Each argument is for one column: `column_name = an empty vector of the correct type and length`
 
 ```{r}
-num_files <- length(data_files)
 
-results <- data.frame(file_name = vector("character", num_files), # mode, length
-                      count = vector("integer", num_files),
-                      min_lat = vector("numeric", num_files))
-results
 ```
 
 Then we loop over the files, read each one in, and store the information in the `i`th row of the appropriate column (e.g., `results$count[i]`).
 
 ```{r}
-for (i in 1:num_files){
 
-  # read in the data file
-  filename <- data_files[i]
-  locations <- read.csv(paste0("../data_raw/", filename))
-
-  # add information about the data file into the data frame
-  results$file_name[i] <- filename
-  results$count[i] <- nrow(locations)
-  results$min_lat[i] <- min(locations$lat)
-
-}
-
-results
 ```
 
 ### Let's Practice!
