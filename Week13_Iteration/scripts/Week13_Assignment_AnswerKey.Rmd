@@ -34,7 +34,7 @@ mass_lbs <- c(2.2, 3.5, 9.6, 1.2)
 
 ```{r}
 for (mass in mass_lbs) {
-  mass_kgs <- 2.2 * mass
+  mass_kgs <- mass / 2.2
   print(mass_kgs)
 }
 ```

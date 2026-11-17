@@ -69,7 +69,7 @@ for (number in numbers){
 
 ```
 
-b.  Write a for loop that loops over the following vector and prints out the mass in kilograms (`mass_kg = 2.2 * mass_lb`)
+b.  Write a for loop that loops over the following vector and prints out the mass in kilograms (`mass_kg = mass_lb / 2.2`)
 
 ```{r}
 mass_lbs <- c(2.2, 3.5, 9.6, 1.2)
@@ -78,7 +78,7 @@ mass_lbs <- c(2.2, 3.5, 9.6, 1.2)
 ```{r}
 print("1b")
 for (mass in mass_lbs) {
-  mass_kgs <- 2.2 * mass
+  mass_kgs <- mass / 2.2
   print(mass_kgs)
 }
 ```

@@ -23,9 +23,9 @@ While our lesson today will focus mainly on one way to iterate in R (`for` loops
 
 We can write functions that take either a single value or a vector of values, do element-wise calculations, and return a vector of results.
 
-Many functions automatically work with either a single value or a vector of values. Each function we wrote in our functions lesson in Week 10 can work with vectors.
+Many functions automatically work with either a single value or a vector of values. Each function we wrote in our functions lesson in Week 11 can work with vectors.
 
-NOTE! An important exception it when we use `if`-`else` statements inside our functions; these do not work with vectors.
+NOTE! An important exception is when we use `if`-`else` statements inside our functions; these do not work with vectors.
 
 If you are interested in learning more about vectorized functions, [here](https://towardsdatascience.com/make-your-r-code-10x-faster-vectorization-explained-in-3-minutes-9eb4cdd7a49e/) is a good place to start.
 
@@ -69,7 +69,7 @@ temps_df |>
   dplyr::mutate(tempsC = F_to_C(temps))
 ```
 
-Again, an important exception it when we use `if`-`else` statements inside our functions; these do not work with vectors.
+Again, an important exception is when we use `if`-`else` statements inside our functions; these do not work with vectors.
 
 To do so, we need to use the `rowwise()` function.
 
@@ -287,7 +287,7 @@ for (i in 1:length(volumes)){
 
 Another common thing to do is combine loops with functions by calling one or more functions as a step in our loop.
 
-For example, let's take the non-vectorized version of our `est_biomass` function that returns an estimated biomass if the `volume > 5` and `NA` if it's not.
+For example, let's take the non-vectorized version of our `est_biomass` function that returns an estimated biomass if the `volume < 5` and `NA` if it is not.
 
 ```{r}
 est_biomass <- function(volume, a, b){
@@ -310,7 +310,7 @@ First, we'll create an empty vector to store the results. Then we will loop by i
 # empty vector to store results
 biomasses <- vector(mode = "numeric", length = length(volumes))
 
-# for loop using the `est_mass_max` function
+# for loop using the `est_biomass` function
 for (i in 1:length(volumes)){
    biomass <- est_biomass(volumes[i], a_values[i], b_values[i])
    biomasses[i] <- biomass
