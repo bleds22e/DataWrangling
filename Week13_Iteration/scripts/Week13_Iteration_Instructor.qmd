@@ -17,8 +17,6 @@ As it turns out, computers are really good at repeating tasks. We call this repe
 
 There are many ways to iterate in R (we will look at a few others at the end of the lesson), but this week focuses on loops, which give us complete control over any kind of repetition we want.
 
-Specifically, we will use `for` loops, which perform the same action for each item in a list of things.
-
 ## The `for` Loop
 
 Loops are the fundamental structure for repetition in programming.
@@ -155,7 +153,7 @@ Several vectors of the same length, lined up by position...that is exactly what 
 Most of the time, the values we want to loop over will be in a data frame.
 
 ```{r}
-# create an data frame
+# create a data frame
 data <- data.frame(a = a_values, # column_name = values to fill
                    b = b_values, 
                    volume = volumes)
@@ -173,7 +171,7 @@ This is also where loops really shine: we can put an `if`-`else` statement direc
 data$biomass <- NA
 
 for (i in 1:nrow(data)){
-  # calculate biomass if biomass is less than 5
+  # calculate biomass if volume is less than 5
   if (data$volume[i] < 5) {
     biomass <- data$a[i] * data$volume[i] ^ data$b[i]
   } else {
@@ -250,7 +248,7 @@ Loops are most useful when the repetition involves several steps or goes beyond 
 
 ## Troubleshooting Loops
 
-Occasionally (okay, maybe often...) when you write a for loop, it will either give you an error or it will runn successfully run but give results you didn't anticipated.
+Occasionally (okay, maybe often...) when you write a for loop, it will either give you an error or it will run successfully but give results you didn't anticipate.
 
 Since loops (like functions) have some kind of placeholder in them (such as `i` for index), the best way to figure out what is going on is to set the placeholder equal to a specific value and run each line of code between the `{}` to check every step individually.
 
@@ -310,7 +308,7 @@ data_files
 
 ### Storing Loop Results in a Data Frame
 
-Let's say we want to know the file name, count the number of observations, and get the minimum latitude value for each file. Since we are collecting several pieces of infor
+Let's say we want to know the file name, count the number of observations, and get the minimum latitude value for each file. Since we are collecting several pieces of information, we will store them in a data frame.
 
 We would start by creating an empty data frame with `data.frame()`. Each argument is for one column: `column_name = an empty vector of the correct type and length`
 
