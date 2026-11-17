@@ -218,14 +218,18 @@ for (i in 1:nrow(data)){
 data
 ```
 
-> Do you need a loop? For a calculation within a single data frame, `mutate()` is usually simpler. `if_else()` is vectorized, so it works inside `mutate()` without a loop:
->
-> ```{r}
-> data |>
->   dplyr::mutate(biomass = dplyr::if_else(volume < 5, a * volume ^ b, NA))
-> ```
->
-> Loops are most useful when the repetition goes beyond one data frame, like working through many files (coming up below!).
+::: {.callout-note}
+## Do you need a loop?
+
+For a calculation within a single data frame, `mutate()` is usually simpler. `if_else()` is vectorized, so it works inside `mutate()` without a loop:
+
+```{r}
+data |>
+  dplyr::mutate(biomass = dplyr::if_else(volume < 5, a * volume ^ b, NA))
+```
+
+Loops are most useful when the repetition goes beyond one data frame, like working through many files (coming up below!).
+:::
 
 ### Let's Practice!
 
