@@ -81,7 +81,7 @@ for (i in 1:length(volumes)){       # i takes the values 1, 2, 3
 }
 ```
 
-Same result, but more complicated to read. So why loop by index? The most common reason is to **store the results** in the same order (position) as the values we used to calculate them.
+Same result, but more complicated to read. So why loop by index? The most common reason is to store the results in the same order (position) as the values we used to calculate them.
 
 To store results, we create an empty object *before* the loop starts. The `vector()` function makes an empty vector:
 
@@ -168,7 +168,7 @@ for (i in 1:nrow(data)){
 data
 ```
 
-> **Do you need a loop?** For a calculation within a single data frame, the tidyverse way is usually simpler. `if_else()` is vectorized, so it works inside `mutate()` with no loop:
+> Do you need a loop? For a calculation within a single data frame, the tidyverse way is usually simpler. `if_else()` is vectorized, so it works inside `mutate()` with no loop:
 >
 > ```{r}
 > data |>
@@ -273,9 +273,9 @@ results
 
 Loops aren't the only way to repeat things in R. In fact, we have been iterating all semester without calling it that!
 
--   **Vectorized functions**: most functions (including the ones we wrote in Week 11) work on a whole vector at once. The exception is functions with `if`-`else` statements inside them.
--   **`dplyr` functions**: `mutate()`, `filter()`, and friends repeat a calculation for every row of a data frame. To use a function with `if`-`else` inside `mutate()`, add `rowwise()` first.
--   **`apply` and `map` functions**: apply a function to each item in a list. The `apply` family (`sapply`, `lapply`, etc.) is base R; the `map` family comes from the `purrr` package in the `tidyverse`. See the [`purrr` cheatsheet](https://purrr.tidyverse.org/) or [Chapter 26: Iteration](https://r4ds.hadley.nz/iteration) in "R for Data Science (2e)" if you are curious.
+-   Vectorized functions: most functions (including the ones we wrote in Week 11) work on a whole vector at once. The exception is functions with `if`-`else` statements inside them.
+-   `dplyr` functions: `mutate()`, `filter()`, and friends repeat a calculation for every row of a data frame. To use a function with `if`-`else` inside `mutate()`, add `rowwise()` first.
+-   `apply` and `map` functions: apply a function to each item in a list. The `apply` family (`sapply`, `lapply`, etc.) is base R; the `map` family comes from the `purrr` package in the `tidyverse`. See the [`purrr` cheatsheet](https://purrr.tidyverse.org/) or [Chapter 26: Iteration](https://r4ds.hadley.nz/iteration) in "R for Data Science (2e)" if you are curious.
 
 Here is a function with an `if`-`else` inside, used on every value without writing a loop:
 
