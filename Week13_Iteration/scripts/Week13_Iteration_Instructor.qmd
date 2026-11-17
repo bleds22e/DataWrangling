@@ -71,8 +71,8 @@ The loop above uses each value directly; this is called *looping by value*.
 
 There is another way to loop: *looping by index*. Remember sub-setting by index (position) from the beginning of the course? Looping by index loops through position numbers (1, 2, 3...) and uses them to pull values out of a vector with square brackets.
 
--   We often use `i` (for "index") as the placeholder.
--   We use `1:length(volumes)` so the loop works no matter how many values there are. (For a data frame, we use `nrow()`.)
+- We often use `i` (for "index") as the placeholder.
+- We use `1:length(volumes)` so the loop works no matter how many values there are. (For a data frame, we use `nrow()`.)
 
 ```{r}
 for (i in 1:length(volumes)){       # i takes the values 1, 2, 3
@@ -85,8 +85,8 @@ Same result, but more complicated to read. So why loop by index? The most common
 
 To store results, we create an empty object *before* the loop starts. The `vector()` function makes an empty vector:
 
--   `mode` is the type of data we are going to store
--   `length` is the number of items in the vector
+- `mode` is the type of data we are going to store
+- `length` is the number of items in the vector
 
 ```{r}
 biomasses <- vector(mode = "numeric", length = length(volumes))
@@ -175,7 +175,7 @@ data
 >   dplyr::mutate(biomass = dplyr::if_else(volume < 5, a * volume ^ b, NA))
 > ```
 >
-> Loops are most useful when the repetition goes *beyond* one data frame, like working through many files (coming up next!). We'll see more alternatives to loops at the end of the lesson.
+> Loops are most useful when the repetition goes *beyond* one data frame, such as performing multiple complicated tasks or working through many files (coming up next!). We'll see more alternatives to loops at the end of the lesson.
 
 ### Let's Practice!
 
@@ -190,6 +190,7 @@ Since loops have a placeholder in them (such as `i`), the best way to figure out
 What is wrong with the loop below?
 
 ```{r}
+#| eval: false
 data$biomass <- NA
 
 for (i in 1:nrow(data)){
@@ -273,9 +274,9 @@ results
 
 Loops aren't the only way to repeat things in R. In fact, we have been iterating all semester without calling it that!
 
--   Vectorized functions: most functions (including the ones we wrote in Week 11) work on a whole vector at once. The exception is functions with `if`-`else` statements inside them.
--   `dplyr` functions: `mutate()`, `filter()`, and friends repeat a calculation for every row of a data frame. To use a function with `if`-`else` inside `mutate()`, add `rowwise()` first.
--   `apply` and `map` functions: apply a function to each item in a list. The `apply` family (`sapply`, `lapply`, etc.) is base R; the `map` family comes from the `purrr` package in the `tidyverse`. See the [`purrr` cheatsheet](https://purrr.tidyverse.org/) or [Chapter 26: Iteration](https://r4ds.hadley.nz/iteration) in "R for Data Science (2e)" if you are curious.
+- Vectorized functions: most functions (including the ones we wrote in Week 11) work on a whole vector at once. The exception is functions with `if`-`else` statements inside them.
+- `dplyr` functions: `mutate()`, `filter()`, and friends repeat a calculation for every row of a data frame. To use a function with `if`-`else` inside `mutate()`, add `rowwise()` first.
+- `apply` and `map` functions: apply a function to each item in a list. The `apply` family (`sapply`, `lapply`, etc.) is base R; the `map` family comes from the `purrr` package in the `tidyverse`. See the [`purrr` cheatsheet](https://purrr.tidyverse.org/) or [Chapter 26: Iteration](https://r4ds.hadley.nz/iteration) in "R for Data Science (2e)" if you are curious.
 
 Here is a function with an `if`-`else` inside, used on every value without writing a loop:
 
