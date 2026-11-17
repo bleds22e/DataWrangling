@@ -98,8 +98,8 @@ Loops provide us with complete control to perform of any kind of repetition we w
 
 There are two main kinds of loops:
 
--   `for` loops when you know how many times you want to repeat something
--   `while` loops when you want the loop to stop for a reason other than number of times to repeat.
+- `for` loops when you know how many times you want to repeat something
+- `while` loops when you want the loop to stop for a reason other than number of times to repeat.
 
 ```{r}
 for (i in 1:length(temps)) {
@@ -200,8 +200,8 @@ Let's take our previous loop and modify it to use an index.
 
     Fortunately, we don't have to know the length of the vector. We can add flexibility by using a function to count the number of elements that we will want to loop over.
 
-    -   For a vector, the `length()` function is useful for this.
-    -   For a data frame, the `nrow()` function is often used.
+    - For a vector, the `length()` function is useful for this.
+    - For a data frame, the `nrow()` function is often used.
 
     Because we are currently working with a vector, let's use the `length()` function.
 
@@ -236,8 +236,8 @@ To store results, we start by creating an empty object (vector, column, data fra
 
 To store results in a vector, we can use the function `vector` to create an empty vector of the correct length. For the `vector` function:
 
--   `mode` is the type of data we are going to store
--   `length` is the number of items in the vector
+- `mode` is the type of data we are going to store
+- `length` is the number of items in the vector
 
 ```{r}
 biomasses <- vector(mode = "numeric", length = length(volumes))
@@ -504,7 +504,7 @@ For example, let's say we want to associate the file name with the observation c
 
 We would start by creating an empty data frame that we will then populate with the results of our loop. We can use the `data.frame` function. Each argument is for one column.
 
--   `column_name` = an empty vector of the correct type and length
+- `column_name` = an empty vector of the correct type and length
 
 ```{r}
 results <- data.frame(file_name = vector(mode = "character", length = num_files),
