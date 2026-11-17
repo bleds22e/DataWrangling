@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.13.4",
+  "checkpoint_id": "252a3a8913ee",
+  "strategy": "manual-commit",
+  "branch": "claude/modest-pascal-8xy1zq",
+  "checkpoints_count": 3,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/25/2a3a8913ee/0/metadata.json",
+      "transcript": "/25/2a3a8913ee/0/full.jsonl",
+      "compact_transcript": "/25/2a3a8913ee/0/transcript.jsonl",
+      "content_hash": "/25/2a3a8913ee/0/content_hash.txt",
+      "prompt": "/25/2a3a8913ee/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 27,
+    "cache_creation_tokens": 5984,
+    "cache_read_tokens": 1283020,
+    "output_tokens": 2667,
+    "api_call_count": 11
+  },
+  "redaction": {
+    "replacements": 10,
+    "layers": {
+      "betterleaks": 0,
+      "connection_string": 0,
+      "credential_key": 0,
+      "credential_value": 0,
+      "credentialed_uri": 0,
+      "entropy": 6,
+      "key_context": 4,
+      "provider_token": 0,
+      "shell_stdin": 0
+    }
+  }
+}
