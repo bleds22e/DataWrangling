@@ -1,0 +1,5 @@
+i think this lesson is too long. what are your suggestions for cutting? most students will use dataframes more often than vectors if that is helpful
+
+---
+
+can you also look at the assignment and github history? the question about rna used to use stringr functions, and i would like to go back to that
