@@ -1,0 +1,1 @@
+I pushed changes to the instructor version to GitHub. Can you now edit the student version of the lesson to match? You can leave all the code in--I'll go in an remove the parts I want to remove
