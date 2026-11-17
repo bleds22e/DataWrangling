@@ -1,6 +1,5 @@
 ---
 title: "Week 13 Assignment"
-author: "Ellen Bledsoe"
 date: "`r Sys.Date()`"
 format: gfm
 ---
@@ -33,11 +32,7 @@ Write R code to successfully answer each question below.
 
 ### Due Date
 
-Nov 25 before class
-
-::: {.content-visible when-format="html"}
-[View Answer Key](Week13_Assignment_AnswerKey.html){.btn .btn-primary role="button"}
-:::
+Nov 24 before class
 
 # Assignment Exercises
 
