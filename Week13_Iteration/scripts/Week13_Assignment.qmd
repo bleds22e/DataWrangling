@@ -20,15 +20,15 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
@@ -41,14 +41,14 @@ Nov 24 before class
 Be sure to load the `tidyverse` to use later in the assignment.
 
 ```{r}
-library(tidyverse)
+
 ```
 
 ### 1. For Loop Basics (30 pts)
 
 Complete the following tasks.
 
-I recommend copying the commented code and making changes to the copy. That way, if you have made edits that you haven't kept track of, you have the original code to start over as needed.
+**HINT!** I recommend copying the commented code and making changes to the copy. That way, if you have made edits that you haven't kept track of, you have the original code to start over as needed.
 
 a.  The code below prints the numbers 1 through 5 one line at a time. Modify it to print each of these numbers multiplied by 3.
 
@@ -105,10 +105,10 @@ Download the `dinosaur_lengths.csv` file from D2L and place it in the correct di
 
 Write a function `mass_from_length()` that uses the equation `mass <- a * length^b` to estimate the size of a dinosaur from its length. This function should take two arguments, `length` and `species`. For each of the following inputs for `species`, so use the associated `a` and `b` values to estimate the species mass using these equations:
 
--   *Stegosauria*: `mass = 10.95 * length ^ 2.64` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
--   *Theropoda*: `mass = 0.73 * length ^ 3.63` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
--   *Sauropoda*: `mass = 214.44 * length ^ 1.46` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
--   For any other value of `species`: `mass = 25.37 * length ^ 2.49`
+- *Stegosauria*: `mass = 10.95 * length ^ 2.64` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
+- *Theropoda*: `mass = 0.73 * length ^ 3.63` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
+- *Sauropoda*: `mass = 214.44 * length ^ 1.46` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
+- For any other value of `species`: `mass = 25.37 * length ^ 2.49`
 
 a.  Use this function and a `for` loop to calculate the estimated mass for each dinosaur, store the masses in a vector, and after all of the calculations are complete show the first few items in the vector using `head()`.
 b.  Add the results in the vector back to the original data frame. Show the first few rows of the data frame using `head()`.
@@ -120,19 +120,19 @@ You have satellite collars on a number of different individuals and want to be a
 
 Start your solution by:
 
--   Download the zip file from the link above. Place the zip file in the appropriate sub-directory, if you have them.
--   Unzip it using the `unzip()` function
--   Obtain a list of all of the files with file names matching the pattern `"collar-data-.*.txt"` (using `list.files()`)
+- Download the zip file from the link above. Place the zip file in the appropriate sub-directory, if you have them.
+- Unzip it using the `unzip()` function
+- Obtain a list of all of the files with file names matching the pattern `"collar-data-.*.txt"` (using `list.files()`)
 
 a.  Use a loop to load each of these files into R and make a line plot (using `geom_path()`) for each file with `long` on the `x` axis and `lat` on the `y` axis.
 
-Graphs, like other types of output, won't display inside a loop unless you explicitly display them, so you need put your `ggplot()` command inside a `print()` statement. Do this by saving the output of the ggplot function as an object and then printing that object.
+    Graphs, like other types of output, won't display inside a loop unless you explicitly display them, so you need put your `ggplot()` command inside a `print()` statement. Do this by saving the output of the ggplot function as an object and then printing that object.
 
-Include the name of the file in the graph as the graph title using the `labs` function (`labs(title = ...)`).
+    Include the name of the file in the graph as the graph title using the `labs` function (`labs(title = ...)`).
 
 b.  Add code to the loop to calculate the minimum and maximum latitude in the file, and store these values, along with the name of the file, in a data frame.
 
-Show the data frame as output.
+    Show the data frame as output.
 
 ### 4. DNA or RNA (20 points)
 
@@ -185,6 +185,4 @@ seq_df <- as.data.frame(sequences)
 
 As with the last few weeks, you will be submitting your assignment by submitting the link to your GitHub repository.
 
-**NOTE**: While I won't take points off for not doing this, it is very helpful for grading if you can "Render" your assignments to markdown (.md) files and push the .md files to GitHub.
-
-That way, I (a) know that your code runs successfully and (b) can go to your .md file on GitHub and easily see everything in your assignment, including your outputs, much like in the PDFs you submitted earlier in the semester.
+**Remember!** You should "Render" your assignments to markdown (.md) files and push all files, including the `.md` file, to GitHub.

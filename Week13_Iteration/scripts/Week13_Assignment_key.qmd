@@ -22,15 +22,15 @@ Write R code to successfully answer each question below.
 
 ### Criteria for Success
 
--   Code is within the provided code chunks or new code chunks are created where necessary
--   Code chunks run without errors
--   Code chunks have brief comments indicating which code is answering which part of the question
--   Code will be assessed as follows:
-    -   Produces the correct answer using the requested approach: 100%
-    -   Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
-    -   Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
-    -   Answer demonstrates a lack of understanding of the core concept: 0%
--   Any questions requiring written answers are answered with sufficient detail
+- Code is within the provided code chunks or new code chunks are created where necessary
+- Code chunks run without errors
+- Code chunks have brief comments indicating which code is answering which part of the question
+- Code will be assessed as follows:
+  - Produces the correct answer using the requested approach: 100%
+  - Generally uses the right approach, but a minor mistake results in an incorrect answer: 90%
+  - Attempts to solve the problem and makes some progress using the core concept, but returns the wrong answer and does not demonstrate comfort with the core concept: 50%
+  - Answer demonstrates a lack of understanding of the core concept: 0%
+- Any questions requiring written answers are answered with sufficient detail
 
 ### Due Date
 
@@ -149,10 +149,10 @@ Download the `dinosaur_lengths.csv` file from D2L and place it in the correct di
 
 Write a function `mass_from_length()` that uses the equation `mass <- a * length^b` to estimate the size of a dinosaur from its length. This function should take two arguments, `length` and `species`. For each of the following inputs for `species`, so use the associated `a` and `b` values to estimate the species mass using these equations:
 
--   *Stegosauria*: `mass = 10.95 * length ^ 2.64` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
--   *Theropoda*: `mass = 0.73 * length ^ 3.63` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
--   *Sauropoda*: `mass = 214.44 * length ^ 1.46` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
--   For any other value of `species`: `mass = 25.37 * length ^ 2.49`
+- *Stegosauria*: `mass = 10.95 * length ^ 2.64` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
+- *Theropoda*: `mass = 0.73 * length ^ 3.63` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
+- *Sauropoda*: `mass = 214.44 * length ^ 1.46` ([Seebacher 2001](http://www.jstor.org/stable/4524171)).
+- For any other value of `species`: `mass = 25.37 * length ^ 2.49`
 
 a.  Use this function and a `for` loop to calculate the estimated mass for each dinosaur, store the masses in a vector, and after all of the calculations are complete show the first few items in the vector using `head()`.
 b.  Add the results in the vector back to the original data frame. Show the first few rows of the data frame using `head()`.
@@ -205,9 +205,9 @@ You have satellite collars on a number of different individuals and want to be a
 
 Start your solution by:
 
--   Download the zip file from the link above. Place the zip file in the appropriate sub-directory, if you have them.
--   Unzip it using the `unzip()` function
--   Obtain a list of all of the files with file names matching the pattern `"collar-data-.*.txt"` (using `list.files()`)
+- Download the zip file from the link above. Place the zip file in the appropriate sub-directory, if you have them.
+- Unzip it using the `unzip()` function
+- Obtain a list of all of the files with file names matching the pattern `"collar-data-.*.txt"` (using `list.files()`)
 
 a.  Use a loop to load each of these files into R and make a line plot (using `geom_path()`) for each file with `long` on the `x` axis and `lat` on the `y` axis.
 

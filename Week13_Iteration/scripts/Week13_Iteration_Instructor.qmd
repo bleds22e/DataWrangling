@@ -270,6 +270,8 @@ data
 # in the console, set i = to a number; run the entire code chunk line by line
 # i = 2
 # i = 3
+
+# the fix? data$biomass[i] <- NA
 ```
 
 If part of your loop is working but another part isn't, find a value (or row) that should trigger the part that isn't working and set the index to that value.
