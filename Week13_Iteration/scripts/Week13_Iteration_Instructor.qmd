@@ -15,9 +15,15 @@ In this week's lesson, we will be talking about how to do repetitive tasks.
 
 As it turns out, computers are really good at repeating tasks. We call this repetition of the same task "iteration."
 
-There are many ways to iterate in R (we will look at a few others at the end of the lesson), but this week focuses on loops, which give us complete control over any kind of repetition we want. Specifically, we will use `for` loops, which perform the same action for each item in a list of things.
+There are many ways to iterate in R (we will look at a few others at the end of the lesson), but this week focuses on loops, which give us complete control over any kind of repetition we want.
+
+Specifically, we will use `for` loops, which perform the same action for each item in a list of things.
 
 ## The `for` Loop
+
+Loops are the fundamental structure for repetition in programming.
+
+In particular, `for` loops perform the same action for each item in a list of things.
 
 The general structure of a `for` loop is below:
 
@@ -28,6 +34,8 @@ The general structure of a `for` loop is below:
 ```
 
 To see an example of this, let's calculate biomasses from volumes using a loop. If we want to see the results of the loop, we need to print them out.
+
+In this loop, we are going to use a `print()` function to display our results for each mass.
 
 ```{r}
 # vector of volumes
@@ -40,9 +48,13 @@ for (vol in volumes){           # perform some task inside the {}
 }
 ```
 
-The code inside the curly brackets runs once for each value in `volumes`. The `vol` object is a placeholder, representing one value from `volumes` at a time.
+The code that is inside of the curly brackets will run once for each value in `volumes`. The `vol` object is a placeholder, representing one value from `volumes` at a time.
 
-The loop takes the first value from `volumes`, assigns it to `vol`, and runs everything inside the curly brackets from top to bottom. Then it starts over with the second value, and so on, until it has run through every element.
+The loop takes the first value from `volumes` and assigns it to the object `vol`. It performs the code inside the curly brackets, calculating the biomass and then printing the result.
+
+Once the code hits the end of what is enclosed inside the curly brackets, it starts the code all over again from the beginning using the next item in the list (or the `volumes` vector, in this case). The code takes the second value from `volumes`, assigns it to `vol`, does the calculation and prints the output.
+
+It continues to repeat this process--running the code with one value, then starting the whole process over again with the next value--until it has run through every element in the list.
 
 Ultimately, the loop above is doing the exact same thing as the code below, but in a more condensed and more flexible way.
 
@@ -65,25 +77,31 @@ print(biomass)
 
 | Work on Questions 1a and 1b in the Assignment.
 
-## Looping with an Index and Storing Results
+## Looping with an Index
 
-The loop above uses each value directly; this is called *looping by value*.
+Loops are iterating over a series of elements in a vector or other list-like object. When we use that value directly, this is called looping by value.
 
-There is another way to loop: *looping by index*. Remember sub-setting by index (position) from the beginning of the course? Looping by index loops through position numbers (1, 2, 3...) and uses them to pull values out of a vector with square brackets.
+There is another way to loop: *looping by index*
 
 - We often use `i` (for "index") as the placeholder.
 - We use `1:length(volumes)` so the loop works no matter how many values there are. (For a data frame, we use `nrow()`.)
 
 ```{r}
-for (i in 1:length(volumes)){       # i takes the values 1, 2, 3
-  biomass <- 2.65 * volumes[i] ^ 0.9  # volumes[i] is the ith volume
-  print(biomass)
+volumes <- c(1.6, 3, 8)
+
+for (i in 1:length(volumes)){          # i will be 1, then 2, then 3
+   biomass <- 2.65 * volumes[i] ^ 0.9  # volumes[i] is the ith volume
+   print(biomass)
 }
 ```
 
-Same result, but more complicated to read. So why loop by index? The most common reason is to store the results in the same order (position) as the values we used to calculate them.
+This new version of the loop gives us the same result as our original loop, but it's more complicated to understand. So why would we want to loop by index?
 
-To store results, we create an empty object *before* the loop starts. The `vector()` function makes an empty vector:
+The most common reason is to store the results in the same order (position) as the values we used to calculate them.
+
+### Storing Results
+
+To store results, we create an empty object *before* the loop starts. The `vector` function makes an empty vector:
 
 - `mode` is the type of data we are going to store
 - `length` is the number of items in the vector
@@ -93,7 +111,7 @@ biomasses <- vector(mode = "numeric", length = length(volumes))
 biomasses
 ```
 
-Then, each trip through the loop, we put the output into the `i`th position of the empty vector.
+For each trip through the loop, we put the output into the `i`th position in the empty vector.
 
 ```{r}
 for (i in 1:length(volumes)){
@@ -104,14 +122,23 @@ for (i in 1:length(volumes)){
 biomasses
 ```
 
-Looping by index also lets us pull values from several vectors at the same position.
+So far, we've talked about looping through one group of values (in a vector).
+
+Looping with an index also allows us to access values from multiple vectors.
 
 ```{r}
+# vectors
 a_values <- c(2.65, 1.28, 3.29)
 b_values <- c(0.9, 1.1, 1.2)
+volumes <- c(1.6, 3, 8)
 
+# empty vector for results
+biomasses <- vector(mode = "numeric", length = length(volumes))
+
+# for loop
 for (i in 1:length(volumes)){
-   biomasses[i] <- a_values[i] * volumes[i] ^ b_values[i]
+   biomass <- a_values[i] * volumes[i] ^ b_values[i]
+   biomasses[i] <- biomass
 }
 
 biomasses
@@ -123,21 +150,30 @@ biomasses
 
 ## Looping over Data Frames
 
-Several vectors of the same length, lined up by position...that is exactly what the columns of a data frame are! Most of the time, the values you want to loop over will be in a data frame.
+Several vectors of the same length, lined up by position...that is exactly what the columns of a data frame are!
+
+Most of the time, the values we want to loop over will be in a data frame.
 
 ```{r}
-data <- data.frame(a = a_values, b = b_values, volume = volumes)
+# create an data frame
+data <- data.frame(a = a_values, # column_name = values to fill
+                   b = b_values, 
+                   volume = volumes)
 data
 ```
 
-To loop over rows, we loop by index from 1 to `nrow()`, and use `$` plus `[i]` to grab the value in a specific column for that row. To store results, we can create a new, empty column first.
+To loop over rows, we loop by index from 1 to `nrow()`, and use `$` with `[i]` to grab the value in a specific column for the i-th row.
 
-This is also where loops really shine: we can put an `if`-`else` statement inside a loop. Let's only calculate biomass if the volume is less than 5.
+To store the resulting values, we can create a new, empty column first.
+
+This is also where loops really shine: we can put an `if`-`else` statement directly inside a loop. Let's say we only want to calculate a biomass if the volume is less than 5.
 
 ```{r}
-data$biomass <- NA   # new, empty column
+# new, empty column
+data$biomass <- NA
 
 for (i in 1:nrow(data)){
+  # calculate biomass if biomass is less than 5
   if (data$volume[i] < 5) {
     biomass <- data$a[i] * data$volume[i] ^ data$b[i]
   } else {
@@ -149,10 +185,18 @@ for (i in 1:nrow(data)){
 data
 ```
 
-We can also call a function inside a loop. Remember that functions containing `if`-`else` statements are not vectorized, so we can't just give them a whole column; a loop solves that.
+Realistically, I find myself putting `if`-`else` statements inside `for` loops, like the structure above, rather frequently.
+
+### Looping with Functions
+
+We can also call functions inside of loops.
+
+Remember that functions containing `if`-`else` statements are not vectorized, so we can't just give them a whole column; a loop solves that.
 
 ```{r}
+# write est_biomass function
 est_biomass <- function(volume, a, b){
+  # estimate biomass when volume is less than 5
   if (volume < 5) {
     biomass <- a * volume ^ b
   } else {
@@ -160,22 +204,45 @@ est_biomass <- function(volume, a, b){
   }
   return(biomass)
 }
+```
 
+We can't pass the vector to the function and get back a vector of results because `if`-`else` statements are not vectorized.
+
+```{r}
+#| eval: false
+est_biomass(volume = data$volume,
+            a = data$a,
+            b = data$b)
+```
+
+Instead, we can loop over the values.
+
+```{r}
+# loop through values in est_biomass
 for (i in 1:nrow(data)){
+  # save output into correct position in new column
   data$biomass[i] <- est_biomass(data$volume[i], data$a[i], data$b[i])
 }
 
 data
 ```
 
-> Do you need a loop? For a calculation within a single data frame, the tidyverse way is usually simpler. `if_else()` is vectorized, so it works inside `mutate()` with no loop:
->
-> ```{r}
-> data |>
->   dplyr::mutate(biomass = dplyr::if_else(volume < 5, a * volume ^ b, NA))
-> ```
->
-> Loops are most useful when the repetition goes *beyond* one data frame, such as performing multiple complicated tasks or working through many files (coming up next!). We'll see more alternatives to loops at the end of the lesson.
+::: callout-note
+## Do you need a loop?
+
+For a calculation within a single data frame, using `mutate()` is usually simpler.
+
+Most functions in the `tidyverse`, like `if_else()`, are vectorized so they work inside `mutate()` without a loop:
+
+```{r}
+data |>
+  dplyr::mutate(biomass = dplyr::if_else(volume < 5, 
+                                         true = a * volume ^ b, 
+                                         false = NA))
+```
+
+Loops are most useful when the repetition involves several steps or goes beyond one data frame, like working through many files (coming up below!).
+:::
 
 ### Let's Practice!
 
@@ -183,14 +250,13 @@ data
 
 ## Troubleshooting Loops
 
-Occasionally (okay, maybe often...) when you write a for loop, it will either give you an error or run successfully but give results you didn't anticipate.
+Occasionally (okay, maybe often...) when you write a for loop, it will either give you an error or it will runn successfully run but give results you didn't anticipated.
 
-Since loops have a placeholder in them (such as `i`), the best way to figure out what is going on is to set the placeholder equal to a specific value and run each line of code between the `{}` one at a time.
-
-What is wrong with the loop below?
+Since loops (like functions) have some kind of placeholder in them (such as `i` for index), the best way to figure out what is going on is to set the placeholder equal to a specific value and run each line of code between the `{}` to check every step individually.
 
 ```{r}
 #| eval: false
+
 data$biomass <- NA
 
 for (i in 1:nrow(data)){
@@ -203,51 +269,61 @@ for (i in 1:nrow(data)){
 
 data
 
-# in the console, set i to a number; run the code inside the loop line by line
-# i <- 2
-# i <- 3
+# in the console, set i = to a number; run the entire code chunk line by line
+# i = 2
+# i = 3
 ```
 
-If part of your loop is working but another part isn't, find a value (or row) that should trigger the part that isn't working and set the index to that.
+If part of your loop is working but another part isn't, find a value (or row) that should trigger the part that isn't working and set the index to that value.
 
 ## Looping over Files
 
-Loops are especially handy when we have many similar files and want to do the same tasks to each one.
+While we often want to repeat things within our data, either in vectors or data frames, there are other instances when we might want to repeat the same task.
 
-To demonstrate, let's download some simulated satellite collar data. Make sure you change the file paths to match the sub-directories in your RStudio Project, as needed.
+For example, if we have many similar files, we might want to repeat the same tasks for all of those files.
+
+To demonstrate, let's download some simulated satellite collar data. Make sure you change the file paths accordingly to match the sub-directories in your RStudio Project, as needed.
 
 ```{r}
 download.file(url = "http://www.datacarpentry.org/semester-biology/data/locations.zip",
               destfile = "../data_raw/locations.zip") # where to put the zip file
 
+# unzip() function to open the zip file
 # zipfile argument is the location of the file to be unzipped
 # exdir argument is the location where the "extracted" files should be placed
 unzip(zipfile = "../data_raw/locations.zip", exdir = "../data_raw/")
 ```
 
-Before we can loop through these files, we need their names. The `list.files()` function lists the files in a directory. The optional `pattern` argument lets us keep only the files we want (and can take regular expressions).
+Before we can loop through these files, we need to get the names of all of these files. The `list.files()` function will, well, list the files in the directory.
+
+We want only the data files we downloaded, so we'll add the optional `pattern` argument to only get the text files (end with `.txt`).
+
+The pattern argument can also take regular expressions if you need to be more nuanced about which files to include.
 
 ```{r}
 # in regex, .* means any character (.) any number of times (*)
 # "locations.*.txt" indicates any file starting with "locations" and ending with ".txt"
-data_files <- list.files(path = "../data_raw/", pattern = "locations.*.txt")
+data_files <- list.files(path = "../data_raw/", 
+                         pattern = "locations.*.txt")
 data_files
 ```
 
-Let's say we want the file name, the number of observations, and the minimum latitude for each file. Since we are collecting several pieces of information, we'll store them in a data frame.
+### Storing Loop Results in a Data Frame
 
-We start by creating an empty data frame with `data.frame()`. Each argument is one column: `column_name` = an empty vector of the correct type and length.
+Let's say we want to know the file name, count the number of observations, and get the minimum latitude value for each file. Since we are collecting several pieces of infor
+
+We would start by creating an empty data frame with `data.frame()`. Each argument is for one column: `column_name = an empty vector of the correct type and length`
 
 ```{r}
 num_files <- length(data_files)
 
-results <- data.frame(file_name = vector(mode = "character", length = num_files),
-                      count = vector(mode = "integer", length = num_files),
-                      min_lat = vector(mode = "numeric", length = num_files))
+results <- data.frame(file_name = vector("character", num_files), # mode, length
+                      count = vector("integer", num_files),
+                      min_lat = vector("numeric", num_files))
 results
 ```
 
-Then we loop over the files, read each one in, and store the information in the `i`th row of the appropriate column.
+Then we loop over the files, read each one in, and store the information in the `i`th row of the appropriate column (e.g., `results$count[i]`).
 
 ```{r}
 for (i in 1:num_files){
@@ -270,33 +346,56 @@ results
 
 | Work on Question 3 in the Assignment.
 
-## Other Ways to Iterate
+## Other Ways to Iterate in R
 
-Loops aren't the only way to repeat things in R. In fact, we have been iterating all semester without calling it that!
+While this lesson focused on `for` loops, there are actually many ways to iterate in R. I've included a quick overview below.
 
-- Vectorized functions: most functions (including the ones we wrote in Week 11) work on a whole vector at once. The exception is functions with `if`-`else` statements inside them.
-- `dplyr` functions: `mutate()`, `filter()`, and friends repeat a calculation for every row of a data frame. To use a function with `if`-`else` inside `mutate()`, add `rowwise()` first.
-- `apply` and `map` functions: apply a function to each item in a list. The `apply` family (`sapply`, `lapply`, etc.) is base R; the `map` family comes from the `purrr` package in the `tidyverse`. See the [`purrr` cheatsheet](https://purrr.tidyverse.org/) or [Chapter 26: Iteration](https://r4ds.hadley.nz/iteration) in "R for Data Science (2e)" if you are curious.
+#### 1. Using `apply` or `map` Functions
 
-Here is a function with an `if`-`else` inside, used on every value without writing a loop:
+Both of these are families of functions. They take a function and apply that function to each item in a list of items.
+
+The `apply` functions (e.g., `apply`, `lapply`, `sapply`) are base R; you can learn more about how to use them [here](https://www.r-bloggers.com/2022/03/complete-tutorial-on-using-apply-functions-in-r/).
+
+The `map` functions come from the `purrr` package, part of the `tidyverse`. [Chapter 26: Iteration](https://r4ds.hadley.nz/iteration) in the "R for Data Science (2e)" book is a good starting point, as is the [`purrr` cheatsheet](https://purrr.tidyverse.org/).
 
 ```{r}
-size_class <- function(volume){
-  if (volume < 5) {
-    size <- "small"
+hot_or_cold <- function(temp){
+  if (temp > 72) {
+    category <- "hot"
   } else {
-    size <- "large"
+    category <- "cold"
   }
-  return(size)
+  return(category)
 }
 
-# sapply() runs the function on each value and returns a vector
-sapply(volumes, size_class)
+temps <- c(47.2, 72, 100)
 
-# rowwise() lets mutate() run the function one row at a time
-data |>
+# base R
+sapply(temps, hot_or_cold)
+
+# purrr from tidyverse
+purrr::map(temps, hot_or_cold)
+```
+
+#### 2. In data frames, using `dplyr` (mostly)
+
+We've actually already been iterating quite a bit--specifically in data frames--by using functions from `dplyr`; we can also combine our own functions with `dplyr`.
+
+For example, when we use a `filter` function, we are asking R to check the value in a column in the first row, then determine whether that condition is met (and, therefore, whether to retain the row), then to do the same thing for the next row and the next...
+
+Again, an important exception is when we use `if`-`else` statements inside our functions. To use those functions in `mutate()`, we need to use the `rowwise()` function.
+
+```{r}
+temps_df <- as.data.frame(temps)
+
+# doesn't work; functions with if-else statements are NOT vectorized
+# temps_df |>
+#   dplyr::mutate(category = hot_or_cold(temps))
+
+# this works!
+temps_df |>
   dplyr::rowwise() |>
-  dplyr::mutate(size = size_class(volume))
+  dplyr::mutate(category = hot_or_cold(temps))
 ```
 
 ### Let's Practice!

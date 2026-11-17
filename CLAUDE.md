@@ -6,6 +6,8 @@ Weekly R lessons and assignments for a data wrangling course. Code uses the tidy
 
 When writing or editing lessons and assignments, always mimic the existing style of the materials instead of imposing your own.
 
+- Keep Ellen's phrasing. Only reword where a specific change makes something clearer, and be ready to say why. When shortening, cut whole sentences or passages rather than paraphrasing what stays.
+
 - Don't use bold text. The lessons use plain text; new terms are introduced with *italics* (e.g., *looping by index*).
 - Write in a conversational, first-person voice that speaks to students directly ("Let's...", "I often...", "Remember...?").
 - Point students to the assignment with the existing pattern:
